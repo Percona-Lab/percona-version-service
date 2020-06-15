@@ -23,7 +23,7 @@ func New() *Backend {
 }
 
 // AddUser adds a user to the in-memory store.
-func (b *Backend) AddUser(ctx context.Context, _ *pbExample.AddUserRequest) (*pbExample.User, error) {
+func (b *Backend) AddUser(ctx context.Context, _ *pbExample.EmptyRequest) (*pbExample.User, error) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 
@@ -48,4 +48,27 @@ func (b *Backend) ListUsers(_ *pbExample.ListUsersRequest, srv pbExample.UserSer
 	}
 
 	return nil
+}
+
+func (b *Backend) Apply(context.Context, *pbExample.EmptyRequest) (*pbExample.VersionResponse, error) {
+	return &pbExample.VersionResponse{
+		Versions: []*pbExample.OperatorVersion{
+			{
+				Operator: "1.5.0",
+				Database: "pxc",
+				Matrix: map[string]*pbExample.OperatorVersion_VersionMap{
+					"pxc": {
+						Value: map[string]*pbExample.Version{
+							"8.0.18-9.3": {
+								Imagepath: "http://hub.docker.com",
+								Imagehash: "dhjsgflshjdgkljsdlkfj",
+								Status:    "avaliable",
+								Critilal:  false,
+							},
+						},
+					},
+				},
+			},
+		},
+	}, nil
 }

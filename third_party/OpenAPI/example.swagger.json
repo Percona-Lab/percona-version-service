@@ -70,7 +70,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/exampleAddUserRequest"
+              "$ref": "#/definitions/exampleEmptyRequest"
             }
           }
         ],
@@ -78,17 +78,129 @@
           "Users"
         ]
       }
+    },
+    "/api/versions/v1/{product}/{operatorVersion}/{apply}": {
+      "get": {
+        "summary": "Specific version",
+        "description": "Return specific product version",
+        "operationId": "VersionService_Apply",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/exampleVersionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "product",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "operatorVersion",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "apply",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "VersionService"
+        ]
+      }
     }
   },
   "definitions": {
-    "exampleAddUserRequest": {
-      "type": "object"
+    "OperatorVersionVersionMap": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        }
+      }
+    },
+    "exampleEmptyRequest": {
+      "type": "object",
+      "properties": {
+        "product": {
+          "type": "string"
+        },
+        "operatorVersion": {
+          "type": "string"
+        },
+        "apply": {
+          "type": "string"
+        }
+      }
+    },
+    "exampleOperatorVersion": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "type": "string"
+        },
+        "database": {
+          "type": "string"
+        },
+        "matrix": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/OperatorVersionVersionMap"
+          }
+        }
+      }
     },
     "exampleUser": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
+        }
+      }
+    },
+    "exampleVersion": {
+      "type": "object",
+      "properties": {
+        "imagepath": {
+          "type": "string"
+        },
+        "imagehash": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "critilal": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
+    "exampleVersionResponse": {
+      "type": "object",
+      "properties": {
+        "versions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/exampleOperatorVersion"
+          }
         }
       }
     },

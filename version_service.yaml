@@ -1,0 +1,244 @@
+swagger: "2.0"
+info:
+  description: "This service provides version information and image paths for supporting the use of Percona Kubernetes Operators in a variety of scenarios while enabling specific version deployments and automated upgrades."
+  version: "0.1.0"
+  title: "Percona Version Service"
+  termsOfService: "https://www.percona.com/terms-use"
+  contact:
+    email: "cloud-dev@percona.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "check.percona.com"
+basePath: "/versions/v1"
+tags: []
+schemes:
+- "https"
+- "http"
+paths:
+  /{product}:
+    get:
+      summary: "Get information about versions and images for all operator versions"
+      description: ""
+      operationId: "getAll"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: '#/parameters/productParam'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/VersionBlock'
+        400:
+          $ref: '#/responses/400ClientError'
+        404:
+          $ref: '#/responses/404NotFound'
+      security: []
+  /{product}/{operatorVersion}:
+    get:
+      summary: "Get information about available versions and images for a specific operator version"
+      description: ""
+      operationId: "getVersioned"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: '#/parameters/productParam'
+        - $ref: '#/parameters/operatorVersionParam'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/OperatorVersionBlock'
+        400:
+          $ref: '#/responses/400ClientError'
+        404:
+          $ref: '#/responses/404NotFound'
+  /{product}/{operatorVersion}/{apply}/:
+    get:
+      summary: "Get upgrade information for your current environment"
+      description: "This requires the client to provide environmental information and returns a block that contains only a valid update target or a block which matches the environment"
+      operationId: "getUpgrade"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: '#/parameters/productParam'
+        - $ref: '#/parameters/applyParam'
+        - $ref: '#/parameters/operatorVersionParam'
+        - $ref: '#/parameters/databaseVersionParam'
+        - $ref: '#/parameters/kubeVersionParam'
+        - $ref: '#/parameters/platformParam'
+        - $ref: '#/parameters/pmmVersionParam'
+        - $ref: '#/parameters/backupVersionParam'
+        - $ref: '#/parameters/namespaceOIDParam'
+        - $ref: '#/parameters/customResourceOIDParam'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/UpgradeVersionBlock'
+        400:
+          $ref: '#/responses/400ClientError'
+        404:
+          $ref: '#/responses/404NotFound'
+definitions:
+  VersionBlock:
+    type: "object"
+    properties:
+      versions:
+        type: "array"
+        items:
+          $ref: '#/definitions/OperatorBlock'
+  OperatorBlock:
+    type: "object"
+    properties:
+      operator:
+        type: "string"
+        pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+      product:
+        type: "string"
+        pattern: '^psmdb-operator|pxc-operator$'
+      matrix:
+        $ref: '#/definitions/VersionMatrix'
+  OperatorVersionBlock:
+    $ref: '#/definitions/VersionBlock'
+  UpgradeVersionBlock:
+    $ref: '#/definitions/VersionBlock'
+  VersionMatrix:
+    type: "object"
+    properties:
+      mongod:
+        $ref: '#/definitions/DatabaseObject'
+      pxc:
+        $ref: '#/definitions/DatabaseObject'
+      pmm:
+        $ref: '#/definitions/PMMObject'
+      proxysql:
+        $ref: '#/definitions/ProxySQLObject'
+      haproxy:
+        $ref: '#/definitions/HAProxyObject'
+      backup:
+        $ref: '#/definitions/BackupObject'
+      operator:
+        $ref: '#/definitions/OperatorObject'
+  DatabaseObject:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/VersionObject'
+  PMMObject:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/VersionObject'
+  ProxySQLObject:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/VersionObject'
+  HAProxyObject:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/VersionObject'
+  BackupObject:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/VersionObject'
+  OperatorObject:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/VersionObject'
+  VersionObject:
+    type: "object"
+    properties:
+      imagepath:
+        type: "string"
+        format: "uri"
+      imagehash:
+        type: "string"
+        pattern: '^sha256:[A-Fa-f0-9]{64}$'
+      status:
+        type: "string"
+        pattern: '^recommended|available|required|disabled$'
+      critical:
+        type: "boolean"
+    required:
+      - imagepath
+      - imagehash
+      - status
+      - critical
+parameters:
+  productParam:
+    name: "product"
+    in: "path"
+    required: true
+    description: "The product you are requesting information about."
+    type: "string"
+    pattern: '^psmdb-operator|pxc-operator$'
+  applyParam:
+    name: "apply"
+    in: "path"
+    required: true
+    description: "The content of the apply field in the custom resource."
+    type: "string"
+    pattern: '^((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)|never|disabled|latest|recommended$'
+  operatorVersionParam:
+    name: "operatorVersion"
+    in: "path"
+    required: true
+    description: "The operator version you wish to get information about."
+    type: "string"
+    pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+  kubeVersionParam:
+    name: "kubeVersion"
+    in: "query"
+    required: false
+    description: "The version of kubernetes the Operator is running on"
+    type: "string"
+    pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+  platformParam:
+    name: "platform"
+    in: "query"
+    required: false
+    description: "This is the name and possibly version of the platform you are running.  Could be say 'GKE' or 'OpenShift 4.4'"
+    type: "string"
+  pmmVersionParam:
+    name: "pmmVersion"
+    in: "query"
+    required: false
+    description: "The version of PMM Client that is currently installed/running."
+    type: "string"
+    pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+  backupVersionParam:
+    name: "backupVersion"
+    in: "query"
+    required: true
+    description: "The version of backup software (PXB, PBM) installed"
+    type: "string"
+    pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+  databaseVersionParam:
+    name: "databaseVersion"
+    in: "query"
+    required: true
+    description: "The version of database software (PXC, PS, PSMDB, etc) running"
+    type: "string"
+    pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+  namespaceOIDParam:
+    name: "namespaceOID"
+    in: "query"
+    required: false
+    description: "The UUID of the namespace object which the Operator is running in context of"
+    type: "string"
+    format: "uuid"
+  customResourceOIDParam:
+    name: "customResourceOID"
+    in: "query"
+    required: false
+    description: "The UUID of the CR for the currently running cluster."
+    type: "string"
+    format: "uuid"
+responses:
+  404NotFound:
+    description: "The specificed resource was not found."
+  400ClientError:
+    description: "You have provided invalid input."
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

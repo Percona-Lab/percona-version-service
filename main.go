@@ -54,7 +54,7 @@ func main() {
 		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
 	)
 	pbExample.RegisterUserServiceServer(s, server.New())
-
+	pbExample.RegisterVersionServiceServer(s, server.New())
 	// Serve gRPC Server
 	log.Info("Serving gRPC on https://", addr)
 	go func() {
@@ -82,6 +82,10 @@ func main() {
 		log.Fatalln("Failed to register gateway:", err)
 	}
 
+	err = pbExample.RegisterVersionServiceHandler(context.Background(), gwmux, conn)
+	if err != nil {
+		log.Fatalln("Failed to register gateway:", err)
+	}
 	oa := getOpenAPIHandler()
 
 	port := os.Getenv("PORT")

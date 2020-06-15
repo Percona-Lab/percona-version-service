@@ -22,7 +22,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service UserService {
-  rpc AddUser(AddUserRequest) returns (User) {
+  rpc AddUser(EmptyRequest) returns (User) {
     option (google.api.http) = {
       // Route to this method from POST requests to /api/v1/users
       post: "/api/v1/users"
@@ -47,10 +47,51 @@ service UserService {
   }
 }
 
-message AddUserRequest {}
+service VersionService {
+  rpc Apply(EmptyRequest) returns (VersionResponse) {
+    option (google.api.http) = {
+      // Route to this method from GET requests to /versions/v1/{product}/{operatorVersion}/{apply} 
+      get: "/api/versions/v1/{product}/{operatorVersion}/{apply}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Specific version"
+      description: "Return specific product version"
+    };
+  }
+}
+
+message EmptyRequest {
+  string product = 1;
+  string operatorVersion = 2;
+  string apply = 3;
+}
 
 message ListUsersRequest {}
 
 message User {
   string id = 1;
+}
+
+message Version {
+  string imagepath = 1;
+  string imagehash = 2;
+  string status = 3;
+  bool critilal = 4;
+}
+
+// message VersionMap {
+//   map<string, Version> db = 1;
+// }
+
+message OperatorVersion {
+  string operator = 1;
+  string database = 2;
+  message VersionMap {
+    map<string, Version> value = 3;
+  }
+  map<string, VersionMap> matrix = 4;
+}
+
+message VersionResponse {
+  repeated OperatorVersion versions = 1;
 }
