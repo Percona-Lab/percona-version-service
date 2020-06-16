@@ -53,7 +53,6 @@ func main() {
 		// TODO: Replace with your own certificate!
 		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
 	)
-	pbExample.RegisterUserServiceServer(s, server.New())
 	pbExample.RegisterVersionServiceServer(s, server.New())
 	// Serve gRPC Server
 	log.Info("Serving gRPC on https://", addr)
@@ -77,10 +76,6 @@ func main() {
 	}
 
 	gwmux := runtime.NewServeMux()
-	err = pbExample.RegisterUserServiceHandler(context.Background(), gwmux, conn)
-	if err != nil {
-		log.Fatalln("Failed to register gateway:", err)
-	}
 
 	err = pbExample.RegisterVersionServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {

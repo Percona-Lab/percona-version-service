@@ -14,71 +14,6 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/users": {
-      "get": {
-        "summary": "List users",
-        "description": "List all users on the server.",
-        "operationId": "UserService_ListUsers",
-        "responses": {
-          "200": {
-            "description": "A successful response.(streaming responses)",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "$ref": "#/definitions/exampleUser"
-                },
-                "error": {
-                  "$ref": "#/definitions/rpcStatus"
-                }
-              },
-              "title": "Stream result of exampleUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "Users"
-        ]
-      },
-      "post": {
-        "summary": "Add a user",
-        "description": "Add a user to the server.",
-        "operationId": "UserService_AddUser",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/exampleUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/exampleEmptyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "Users"
-        ]
-      }
-    },
     "/api/versions/v1/{product}/{operatorVersion}/{apply}": {
       "get": {
         "summary": "Specific version",
@@ -125,31 +60,6 @@
     }
   },
   "definitions": {
-    "OperatorVersionVersionMap": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        }
-      }
-    },
-    "exampleEmptyRequest": {
-      "type": "object",
-      "properties": {
-        "product": {
-          "type": "string"
-        },
-        "operatorVersion": {
-          "type": "string"
-        },
-        "apply": {
-          "type": "string"
-        }
-      }
-    },
     "exampleOperatorVersion": {
       "type": "object",
       "properties": {
@@ -160,24 +70,16 @@
           "type": "string"
         },
         "matrix": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/OperatorVersionVersionMap"
-          }
-        }
-      }
-    },
-    "exampleUser": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
+          "$ref": "#/definitions/exampleVersionMatrix"
         }
       }
     },
     "exampleVersion": {
       "type": "object",
       "properties": {
+        "version": {
+          "type": "string"
+        },
         "imagepath": {
           "type": "string"
         },
@@ -190,6 +92,53 @@
         "critilal": {
           "type": "boolean",
           "format": "boolean"
+        }
+      }
+    },
+    "exampleVersionMatrix": {
+      "type": "object",
+      "properties": {
+        "mongod": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        },
+        "pxc": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        },
+        "pmm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        },
+        "proxysql": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        },
+        "haproxy": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        },
+        "backup": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
+        },
+        "operator": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/exampleVersion"
+          }
         }
       }
     },

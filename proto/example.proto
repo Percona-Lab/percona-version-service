@@ -21,32 +21,6 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   schemes: HTTPS;
 };
 
-service UserService {
-  rpc AddUser(EmptyRequest) returns (User) {
-    option (google.api.http) = {
-      // Route to this method from POST requests to /api/v1/users
-      post: "/api/v1/users"
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Add a user"
-      description: "Add a user to the server."
-      tags: "Users"
-    };
-  }
-  rpc ListUsers(ListUsersRequest) returns (stream User) {
-    option (google.api.http) = {
-      // Route to this method from GET requests to /api/v1/users
-      get: "/api/v1/users"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "List users"
-      description: "List all users on the server."
-      tags: "Users"
-    };
-  }
-}
-
 service VersionService {
   rpc Apply(EmptyRequest) returns (VersionResponse) {
     option (google.api.http) = {
@@ -66,30 +40,28 @@ message EmptyRequest {
   string apply = 3;
 }
 
-message ListUsersRequest {}
-
-message User {
-  string id = 1;
-}
-
 message Version {
-  string imagepath = 1;
-  string imagehash = 2;
-  string status = 3;
-  bool critilal = 4;
+  string version = 1;
+  string imagepath = 2;
+  string imagehash = 3;
+  string status = 4;
+  bool critilal = 5;
 }
 
-// message VersionMap {
-//   map<string, Version> db = 1;
-// }
+message VersionMatrix {
+  map<string, Version> mongod = 1;
+  map<string, Version> pxc = 2;
+  map<string, Version> pmm = 3;
+  map<string, Version> proxysql = 4;
+  map<string, Version> haproxy = 5;
+  map<string, Version> backup = 6;
+  map<string, Version> operator = 7;
+}
 
 message OperatorVersion {
   string operator = 1;
   string database = 2;
-  message VersionMap {
-    map<string, Version> value = 3;
-  }
-  map<string, VersionMap> matrix = 4;
+  VersionMatrix matrix = 3;
 }
 
 message VersionResponse {
