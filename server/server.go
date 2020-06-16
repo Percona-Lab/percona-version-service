@@ -24,7 +24,6 @@ func (b *Backend) Apply(ctx context.Context, req *pbExample.EmptyRequest) (*pbEx
 				Matrix: &pbExample.VersionMatrix{
 					Pxc: map[string]*pbExample.Version{
 						req.Apply: {
-							Version:   req.Apply,
 							Imagepath: "percona/percona-xtradb-cluster-operator:1.4.0-pxc8.0",
 							Imagehash: "some-hash",
 							Status:    "recommended",
@@ -33,7 +32,6 @@ func (b *Backend) Apply(ctx context.Context, req *pbExample.EmptyRequest) (*pbEx
 					},
 					Proxysql: map[string]*pbExample.Version{
 						"master": {
-							Version:   "master",
 							Imagepath: "perconalab/percona-xtradb-cluster-operator:master-proxysql",
 							Imagehash: "some-hash",
 							Status:    "recommended",
@@ -42,7 +40,6 @@ func (b *Backend) Apply(ctx context.Context, req *pbExample.EmptyRequest) (*pbEx
 					},
 					Backup: map[string]*pbExample.Version{
 						"master": {
-							Version:   "master",
 							Imagepath: "perconalab/percona-xtradb-cluster-operator:master-pxc8.0",
 							Imagehash: "some-hash",
 							Status:    "recommended",
@@ -51,7 +48,6 @@ func (b *Backend) Apply(ctx context.Context, req *pbExample.EmptyRequest) (*pbEx
 					},
 					Pmm: map[string]*pbExample.Version{
 						"master": {
-							Version:   "master",
 							Imagepath: "perconalab/percona-xtradb-cluster-operator:master-pmm",
 							Imagehash: "some-hash",
 							Status:    "recommended",

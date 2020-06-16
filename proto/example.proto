@@ -41,11 +41,10 @@ message EmptyRequest {
 }
 
 message Version {
-  string version = 1;
-  string imagepath = 2;
-  string imagehash = 3;
-  string status = 4;
-  bool critilal = 5;
+  string imagepath = 1;
+  string imagehash = 2;
+  string status = 3;
+  bool critilal = 4;
 }
 
 message VersionMatrix {
