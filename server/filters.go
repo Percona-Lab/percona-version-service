@@ -36,19 +36,34 @@ func filter(versions map[string]*pbExample.Version, apply string, current string
 
 	if (strings.ToLower(apply) == "recommended" && current == "") || strings.ToLower(apply) == "latest" {
 		desired := sorted[0]
-		deleteOtherBut(desired, versions)
+		deleteOtherBut(desired.String(), versions)
 		return nil
 	}
-	switch strings.ToLower(apply) {
-	case "recommended":
-	default:
-		//assume version number
-		deleteOtherBut(apply, versions)
-		if len(versions) == 0 {
-			return fmt.Errorf("version %s does not exist", apply)
+
+	recommended := apply //assume version number
+	if strings.ToLower(apply) == "recommended" {
+		recommended = current
+
+		c, err := semver.NewVersion(current)
+		if err != nil {
+			return fmt.Errorf("invalid current version: %s", current)
 		}
 
-		return nil
+		// TODO: this recommended logic if for pxc only
+		// should be passed as a parameter to this func
+		for _, s := range sorted {
+			if s.Equal(c) || s.LessThan(c) {
+				break
+			}
+			if versions[s.String()].Status == "recommended" && c.Major() == s.Major() {
+				recommended = s.String()
+			}
+		}
+	}
+
+	deleteOtherBut(recommended, versions)
+	if len(versions) == 0 {
+		return fmt.Errorf("version %s does not exist", apply)
 	}
 
 	return nil
@@ -62,9 +77,9 @@ func deleteOtherBut(v string, versions map[string]*pbExample.Version) {
 	}
 }
 
-func sortedVersions(versions map[string]*pbExample.Version) ([]string, error) {
+func sortedVersions(versions map[string]*pbExample.Version) ([]*semver.Version, error) {
 	v := make([]*semver.Version, 0, len(versions))
-	res := make([]string, 0, len(versions))
+	// res := make([]string, 0, len(versions))
 
 	for k := range versions {
 		sv, err := semver.NewVersion(k)
@@ -75,9 +90,9 @@ func sortedVersions(versions map[string]*pbExample.Version) ([]string, error) {
 	}
 
 	sort.Sort(sort.Reverse(semver.Collection(v)))
-	for _, sv := range v {
-		res = append(res, sv.String())
-	}
+	// for _, sv := range v {
+	// 	res = append(res, sv.String())
+	// }
 
-	return res, nil
+	return v, nil
 }
