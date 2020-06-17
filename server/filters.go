@@ -8,11 +8,11 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver"
-	pbExample "github.com/Percona-Lab/percona-version-service/proto"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
 
-func parse(product string, operatorVersion string) (*pbExample.VersionResponse, error) {
-	vs := &pbExample.VersionResponse{}
+func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, error) {
+	vs := &pbVersion.VersionResponse{}
 	source := fmt.Sprintf("operator.%s.%s.json", operatorVersion, product)
 
 	content, err := ioutil.ReadFile("./sources/" + source)
@@ -28,7 +28,7 @@ func parse(product string, operatorVersion string) (*pbExample.VersionResponse, 
 	return vs, nil
 }
 
-func filter(versions map[string]*pbExample.Version, apply string, current string) error {
+func filter(versions map[string]*pbVersion.Version, apply string, current string) error {
 	sorted, err := sortedVersions(versions)
 	if err != nil {
 		return fmt.Errorf("failed to sort versions: %v", err)
@@ -69,7 +69,7 @@ func filter(versions map[string]*pbExample.Version, apply string, current string
 	return nil
 }
 
-func deleteOtherBut(v string, versions map[string]*pbExample.Version) {
+func deleteOtherBut(v string, versions map[string]*pbVersion.Version) {
 	for k := range versions {
 		if k != v {
 			delete(versions, k)
@@ -77,9 +77,8 @@ func deleteOtherBut(v string, versions map[string]*pbExample.Version) {
 	}
 }
 
-func sortedVersions(versions map[string]*pbExample.Version) ([]*semver.Version, error) {
+func sortedVersions(versions map[string]*pbVersion.Version) ([]*semver.Version, error) {
 	v := make([]*semver.Version, 0, len(versions))
-	// res := make([]string, 0, len(versions))
 
 	for k := range versions {
 		sv, err := semver.NewVersion(k)
@@ -90,9 +89,6 @@ func sortedVersions(versions map[string]*pbExample.Version) ([]*semver.Version, 
 	}
 
 	sort.Sort(sort.Reverse(semver.Collection(v)))
-	// for _, sv := range v {
-	// 	res = append(res, sv.String())
-	// }
 
 	return v, nil
 }

@@ -1,16 +1,16 @@
 .PHONY: generate
 generate:
 	protoc \
-		-I proto \
+		-I versionpb \
 		-I third_party/grpc-gateway/ \
 		-I third_party/googleapis \
-		--go_out=plugins=grpc,paths=source_relative:./proto \
-		--grpc-gateway_out=./proto \
+		--go_out=plugins=grpc,paths=source_relative:./versionpb \
+		--grpc-gateway_out=./versionpb \
 		--openapiv2_out=third_party/OpenAPI/ \
-		proto/example.proto
+		versionpb/version.proto
 
-	mv ./proto/github.com/Percona-Lab/percona-version-service/proto/* ./proto/
-	rm -r ./proto/github.com
+	mv ./versionpb/github.com/Percona-Lab/percona-version-service/proto/* ./versionpb/
+	rm -r ./versionpb/github.com
 
 	statik -m -f -src third_party/OpenAPI/
 

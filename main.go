@@ -18,8 +18,8 @@ import (
 	"google.golang.org/grpc/grpclog"
 
 	"github.com/Percona-Lab/percona-version-service/insecure"
-	pbExample "github.com/Percona-Lab/percona-version-service/proto"
 	"github.com/Percona-Lab/percona-version-service/server"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 
 	// Static files
 	_ "github.com/Percona-Lab/percona-version-service/statik"
@@ -51,7 +51,7 @@ func main() {
 	s := grpc.NewServer(
 		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
 	)
-	pbExample.RegisterVersionServiceServer(s, server.New())
+	pbVersion.RegisterVersionServiceServer(s, server.New())
 	// Serve gRPC Server
 	log.Info("Serving gRPC on https://", addr)
 	go func() {
@@ -75,7 +75,7 @@ func main() {
 
 	gwmux := runtime.NewServeMux()
 
-	err = pbExample.RegisterVersionServiceHandler(context.Background(), gwmux, conn)
+	err = pbVersion.RegisterVersionServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}
