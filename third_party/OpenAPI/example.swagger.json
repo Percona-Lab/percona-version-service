@@ -5,6 +5,7 @@
     "version": "1.0"
   },
   "schemes": [
+    "http",
     "https"
   ],
   "consumes": [
@@ -51,6 +52,48 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "databaseVersion",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "kubeVersion",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pmmVersion",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "backupVersion",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "namespaceOID",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "customResourceOID",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -77,9 +120,6 @@
     "exampleVersion": {
       "type": "object",
       "properties": {
-        "version": {
-          "type": "string"
-        },
         "imagepath": {
           "type": "string"
         },

@@ -39,7 +39,6 @@ func getOpenAPIHandler() http.Handler {
 }
 
 func main() {
-	// Adds gRPC internal logs. This is quite verbose, so adjust as desired!
 	log := grpclog.NewLoggerV2(os.Stdout, ioutil.Discard, ioutil.Discard)
 	grpclog.SetLoggerV2(log)
 
@@ -50,7 +49,6 @@ func main() {
 	}
 
 	s := grpc.NewServer(
-		// TODO: Replace with your own certificate!
 		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
 	)
 	pbExample.RegisterVersionServiceServer(s, server.New())

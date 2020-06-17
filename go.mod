@@ -3,6 +3,7 @@ module github.com/Percona-Lab/percona-version-service
 go 1.13
 
 require (
+	github.com/Masterminds/semver v1.5.0
 	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.0-beta.3

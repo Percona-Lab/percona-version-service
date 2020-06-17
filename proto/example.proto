@@ -18,11 +18,11 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     url: "https://github.com/Percona-Lab/percona-version-service";
     description: "gRPC-gateway boilerplate repository";
   }
-  schemes: HTTPS;
+  schemes: [HTTP, HTTPS];
 };
 
 service VersionService {
-  rpc Apply(EmptyRequest) returns (VersionResponse) {
+  rpc Apply(ApplyRequest) returns (VersionResponse) {
     option (google.api.http) = {
       // Route to this method from GET requests to /versions/v1/{product}/{operatorVersion}/{apply} 
       get: "/api/versions/v1/{product}/{operatorVersion}/{apply}"
@@ -34,10 +34,17 @@ service VersionService {
   }
 }
 
-message EmptyRequest {
+message ApplyRequest {
   string product = 1;
   string operatorVersion = 2;
   string apply = 3;
+  string databaseVersion = 4;
+  string kubeVersion = 5;
+  string platform = 6;
+  string pmmVersion = 7;
+  string backupVersion = 8;
+  string namespaceOID = 9;
+  string customResourceOID = 10; 
 }
 
 message Version {
@@ -45,7 +52,7 @@ message Version {
   string imagehash = 2;
   string status = 3;
   bool critilal = 4;
-}
+ }
 
 message VersionMatrix {
   map<string, Version> mongod = 1;

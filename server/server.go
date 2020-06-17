@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 
 	pbExample "github.com/Percona-Lab/percona-version-service/proto"
 )
@@ -15,47 +16,28 @@ func New() *Backend {
 	return &Backend{}
 }
 
-func (b *Backend) Apply(ctx context.Context, req *pbExample.EmptyRequest) (*pbExample.VersionResponse, error) {
-	return &pbExample.VersionResponse{
-		Versions: []*pbExample.OperatorVersion{
-			{
-				Operator: "1.5.0",
-				Database: "pxc",
-				Matrix: &pbExample.VersionMatrix{
-					Pxc: map[string]*pbExample.Version{
-						req.Apply: {
-							Imagepath: "percona/percona-xtradb-cluster-operator:1.4.0-pxc8.0",
-							Imagehash: "some-hash",
-							Status:    "recommended",
-							Critilal:  false,
-						},
-					},
-					Proxysql: map[string]*pbExample.Version{
-						"master": {
-							Imagepath: "perconalab/percona-xtradb-cluster-operator:master-proxysql",
-							Imagehash: "some-hash",
-							Status:    "recommended",
-							Critilal:  false,
-						},
-					},
-					Backup: map[string]*pbExample.Version{
-						"master": {
-							Imagepath: "perconalab/percona-xtradb-cluster-operator:master-pxc8.0",
-							Imagehash: "some-hash",
-							Status:    "recommended",
-							Critilal:  false,
-						},
-					},
-					Pmm: map[string]*pbExample.Version{
-						"master": {
-							Imagepath: "perconalab/percona-xtradb-cluster-operator:master-pmm",
-							Imagehash: "some-hash",
-							Status:    "recommended",
-							Critilal:  false,
-						},
-					},
-				},
-			},
-		},
-	}, nil
+func (b *Backend) Apply(ctx context.Context, req *pbExample.ApplyRequest) (*pbExample.VersionResponse, error) {
+	vs, err := parse(req.Product, req.OperatorVersion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse: %v", err)
+	}
+
+	err = filter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to filter versions: %v", err)
+	}
+	err = filter(vs.Versions[0].Matrix.Proxysql, "latest", req.DatabaseVersion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to filter versions: %v", err)
+	}
+	err = filter(vs.Versions[0].Matrix.Pmm, "latest", req.DatabaseVersion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to filter versions: %v", err)
+	}
+	err = filter(vs.Versions[0].Matrix.Backup, "latest", req.DatabaseVersion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to filter versions: %v", err)
+	}
+
+	return vs, nil
 }
