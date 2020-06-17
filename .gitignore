@@ -1,4 +1,4 @@
 .vscode
 main
-proto/*.go
+versionpb/*.go
 statik
