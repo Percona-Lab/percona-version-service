@@ -22,19 +22,23 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 		return nil, fmt.Errorf("failed to parse: %v", err)
 	}
 
-	err = filter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
+	err = pxcFilter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
 	if err != nil {
 		return nil, fmt.Errorf("failed to filter versions: %v", err)
 	}
-	err = filter(vs.Versions[0].Matrix.Proxysql, "latest", req.DatabaseVersion)
+
+	//TODO: pxc filter used here
+	//the reason is I have no info how to filter deps versions
+	//so it returns latest version
+	err = pxcFilter(vs.Versions[0].Matrix.Proxysql, "latest", "")
 	if err != nil {
 		return nil, fmt.Errorf("failed to filter versions: %v", err)
 	}
-	err = filter(vs.Versions[0].Matrix.Pmm, "latest", req.DatabaseVersion)
+	err = pxcFilter(vs.Versions[0].Matrix.Pmm, "latest", "")
 	if err != nil {
 		return nil, fmt.Errorf("failed to filter versions: %v", err)
 	}
-	err = filter(vs.Versions[0].Matrix.Backup, "latest", req.DatabaseVersion)
+	err = pxcFilter(vs.Versions[0].Matrix.Backup, "latest", "")
 	if err != nil {
 		return nil, fmt.Errorf("failed to filter versions: %v", err)
 	}

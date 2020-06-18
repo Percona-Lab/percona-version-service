@@ -28,42 +28,43 @@ func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, 
 	return vs, nil
 }
 
-func filter(versions map[string]*pbVersion.Version, apply string, current string) error {
-	sorted, err := sortedVersions(versions)
+func pxcFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
+	if len(versions) == 0 {
+		return fmt.Errorf("no versions to filter")
+	}
+
+	sorted, err := sortedVersionsDesc(versions)
 	if err != nil {
 		return fmt.Errorf("failed to sort versions: %v", err)
 	}
 
-	if (strings.ToLower(apply) == "recommended" && current == "") || strings.ToLower(apply) == "latest" {
-		desired := sorted[0]
-		deleteOtherBut(desired.String(), versions)
+	if (strings.ToLower(apply) == "recommended" || strings.ToLower(apply) == "latest") && current == "" {
+		deleteOtherBut(sorted[0].String(), versions)
 		return nil
 	}
 
-	recommended := apply //assume version number
-	if strings.ToLower(apply) == "recommended" {
-		recommended = current
+	desired := apply //assume version number
+	if strings.ToLower(apply) == "recommended" || strings.ToLower(apply) == "latest" {
+		desired = current
 
 		c, err := semver.NewVersion(current)
 		if err != nil {
 			return fmt.Errorf("invalid current version: %s", current)
 		}
 
-		// TODO: this recommended logic if for pxc only
-		// should be passed as a parameter to this func
 		for _, s := range sorted {
 			if s.Equal(c) || s.LessThan(c) {
 				break
 			}
-			if versions[s.String()].Status == "recommended" && c.Major() == s.Major() {
-				recommended = s.String()
+			if versions[s.String()].Status != "disabled" && c.Major() == s.Major() {
+				desired = s.String()
 			}
 		}
 	}
 
-	deleteOtherBut(recommended, versions)
+	deleteOtherBut(desired, versions)
 	if len(versions) == 0 {
-		return fmt.Errorf("version %s does not exist", apply)
+		return fmt.Errorf("version %s does not exist", desired)
 	}
 
 	return nil
@@ -77,7 +78,7 @@ func deleteOtherBut(v string, versions map[string]*pbVersion.Version) {
 	}
 }
 
-func sortedVersions(versions map[string]*pbVersion.Version) ([]*semver.Version, error) {
+func sortedVersionsDesc(versions map[string]*pbVersion.Version) ([]*semver.Version, error) {
 	v := make([]*semver.Version, 0, len(versions))
 
 	for k := range versions {
