@@ -41,8 +41,11 @@ func getOpenAPIHandler() http.Handler {
 func main() {
 	log := grpclog.NewLoggerV2(os.Stdout, ioutil.Discard, ioutil.Discard)
 	grpclog.SetLoggerV2(log)
-
-	addr := "0.0.0.0:10000"
+	grpcport := os.Getenv("GRPC_PORT")
+	if grpcport == "" {
+		grpcport = "10000"
+	}
+	addr := "0.0.0.0:" + grpcport
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatalln("Failed to listen:", err)
@@ -52,7 +55,6 @@ func main() {
 		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
 	)
 	pbVersion.RegisterVersionServiceServer(s, server.New())
-	// Serve gRPC Server
 	log.Info("Serving gRPC on https://", addr)
 	go func() {
 		log.Fatal(s.Serve(lis))
@@ -61,8 +63,6 @@ func main() {
 	// See https://github.com/grpc/grpc/blob/master/doc/naming.md
 	// for gRPC naming standard information.
 	dialAddr := fmt.Sprintf("dns:///%s", addr)
-	// Create a client connection to the gRPC Server we just started.
-	// This is where the gRPC-Gateway proxies the requests.
 	conn, err := grpc.DialContext(
 		context.Background(),
 		dialAddr,
@@ -81,7 +81,7 @@ func main() {
 	}
 	oa := getOpenAPIHandler()
 
-	port := os.Getenv("PORT")
+	port := os.Getenv("GW_PORT")
 	if port == "" {
 		port = "11000"
 	}
@@ -96,7 +96,7 @@ func main() {
 			oa.ServeHTTP(w, r)
 		}),
 	}
-	// Empty parameters mean use the TLS Config specified with the server.
+
 	if strings.ToLower(os.Getenv("SERVE_HTTP")) == "true" {
 		log.Info("Serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
 		log.Fatalln(gwServer.ListenAndServe())
