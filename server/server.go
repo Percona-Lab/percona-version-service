@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
@@ -19,12 +18,12 @@ func New() *Backend {
 func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
 	vs, err := parse(req.Product, req.OperatorVersion)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse: %v", err)
+		return nil, err
 	}
 
 	err = pxcFilter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
 	if err != nil {
-		return nil, fmt.Errorf("failed to filter versions: %v", err)
+		return nil, err
 	}
 
 	//TODO: pxc filter used here
@@ -32,15 +31,15 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 	//so it returns latest version
 	err = pxcFilter(vs.Versions[0].Matrix.Proxysql, "latest", "")
 	if err != nil {
-		return nil, fmt.Errorf("failed to filter versions: %v", err)
+		return nil, err
 	}
 	err = pxcFilter(vs.Versions[0].Matrix.Pmm, "latest", "")
 	if err != nil {
-		return nil, fmt.Errorf("failed to filter versions: %v", err)
+		return nil, err
 	}
 	err = pxcFilter(vs.Versions[0].Matrix.Backup, "latest", "")
 	if err != nil {
-		return nil, fmt.Errorf("failed to filter versions: %v", err)
+		return nil, err
 	}
 
 	return vs, nil

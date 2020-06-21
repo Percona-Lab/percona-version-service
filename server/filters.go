@@ -9,6 +9,8 @@ import (
 
 	"github.com/Masterminds/semver"
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, error) {
@@ -17,12 +19,12 @@ func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, 
 
 	content, err := ioutil.ReadFile("./sources/" + source)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read versions source file: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to read versions source file: %v", err)
 	}
 
 	err = json.Unmarshal(content, vs)
 	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal content: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to unmarshal content: %v", err)
 	}
 
 	return vs, nil
@@ -30,12 +32,12 @@ func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, 
 
 func pxcFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
 	if len(versions) == 0 {
-		return fmt.Errorf("no versions to filter")
+		return status.Error(codes.Internal, "no versions to filter")
 	}
 
 	sorted, err := sortedVersionsDesc(versions)
 	if err != nil {
-		return fmt.Errorf("failed to sort versions: %v", err)
+		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
 
 	if (strings.ToLower(apply) == "recommended" || strings.ToLower(apply) == "latest") && current == "" {
@@ -49,7 +51,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 
 		c, err := semver.NewVersion(current)
 		if err != nil {
-			return fmt.Errorf("invalid current version: %s", current)
+			return status.Errorf(codes.InvalidArgument, "invalid current version: %s", current)
 		}
 
 		for _, s := range sorted {
@@ -64,7 +66,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 
 	deleteOtherBut(desired, versions)
 	if len(versions) == 0 {
-		return fmt.Errorf("version %s does not exist", desired)
+		return status.Errorf(codes.NotFound, "version %s does not exist", desired)
 	}
 
 	return nil
