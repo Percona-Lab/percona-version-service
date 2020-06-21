@@ -84,13 +84,13 @@
             "type": "string"
           },
           {
-            "name": "namespaceOID",
+            "name": "namespaceOid",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "customResourceOID",
+            "name": "customResourceOid",
             "in": "query",
             "required": false,
             "type": "string"
@@ -120,16 +120,16 @@
     "exampleVersion": {
       "type": "object",
       "properties": {
-        "imagepath": {
+        "imagePath": {
           "type": "string"
         },
-        "imagehash": {
+        "imageHash": {
           "type": "string"
         },
         "status": {
           "type": "string"
         },
-        "critilal": {
+        "critical": {
           "type": "boolean",
           "format": "boolean"
         }

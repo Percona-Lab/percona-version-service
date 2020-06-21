@@ -25,7 +25,7 @@ service VersionService {
   rpc Apply(ApplyRequest) returns (VersionResponse) {
     option (google.api.http) = {
       // Route to this method from GET requests to /versions/v1/{product}/{operatorVersion}/{apply} 
-      get: "/api/versions/v1/{product}/{operatorVersion}/{apply}"
+      get: "/api/versions/v1/{product}/{operator_version}/{apply}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Specific version"
@@ -36,22 +36,22 @@ service VersionService {
 
 message ApplyRequest {
   string product = 1;
-  string operatorVersion = 2;
+  string operator_version = 2;
   string apply = 3;
-  string databaseVersion = 4;
-  string kubeVersion = 5;
+  string database_version = 4;
+  string kube_version = 5;
   string platform = 6;
-  string pmmVersion = 7;
-  string backupVersion = 8;
-  string namespaceOID = 9;
-  string customResourceOID = 10; 
+  string pmm_version = 7;
+  string backup_version = 8;
+  string namespace_oid = 9;
+  string customResource_oid = 10; 
 }
 
 message Version {
-  string imagepath = 1;
-  string imagehash = 2;
+  string image_path = 1;
+  string image_hash = 2;
   string status = 3;
-  bool critilal = 4;
+  bool critical = 4;
  }
 
 message VersionMatrix {
