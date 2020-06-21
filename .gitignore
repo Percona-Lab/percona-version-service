@@ -2,3 +2,4 @@
 main
 versionpb/*.go
 statik
+certs/*.pem

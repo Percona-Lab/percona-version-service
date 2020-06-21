@@ -1,4 +1,3 @@
-.PHONY: generate
 generate:
 	protoc \
 		-I versionpb \
@@ -21,3 +20,6 @@ install:
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
 		github.com/rakyll/statik
+
+cert:
+	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0

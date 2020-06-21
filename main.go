@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"io/ioutil"
 	"mime"
@@ -11,22 +12,17 @@ import (
 	"os"
 	"strings"
 
+	"github.com/Percona-Lab/percona-version-service/server"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
 
-	"github.com/Percona-Lab/percona-version-service/insecure"
-	"github.com/Percona-Lab/percona-version-service/server"
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
-
-	// Static files
 	_ "github.com/Percona-Lab/percona-version-service/statik"
 )
 
-// getOpenAPIHandler serves an OpenAPI UI.
-// Adapted from https://github.com/philips/grpc-gateway-example/blob/a269bcb5931ca92be0ceae6130ac27ae89582ecc/cmd/serve.go#L63
 func getOpenAPIHandler() http.Handler {
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
@@ -48,36 +44,45 @@ func main() {
 	addr := "0.0.0.0:" + grpcport
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
-		log.Fatalln("Failed to listen:", err)
+		log.Fatalf("failed to listen: %v", err)
 	}
 
+	cert, err := tls.LoadX509KeyPair("certs/cert.pem", "certs/key.pem")
+	if err != nil {
+		log.Fatalf("failed to load key pair: %v", err)
+	}
 	s := grpc.NewServer(
-		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
+		grpc.Creds(credentials.NewServerTLSFromCert(&cert)),
 	)
+
 	pbVersion.RegisterVersionServiceServer(s, server.New())
-	log.Info("Serving gRPC on https://", addr)
+	log.Info("serving gRPC on https://", addr)
 	go func() {
 		log.Fatal(s.Serve(lis))
 	}()
 
+	certPool, err := x509.SystemCertPool()
+	if err != nil {
+		log.Fatalf("failed to load system cert pool: %v", err)
+	}
 	// See https://github.com/grpc/grpc/blob/master/doc/naming.md
 	// for gRPC naming standard information.
 	dialAddr := fmt.Sprintf("dns:///%s", addr)
 	conn, err := grpc.DialContext(
 		context.Background(),
 		dialAddr,
-		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(insecure.CertPool, "")),
+		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(certPool, "")),
 		grpc.WithBlock(),
 	)
 	if err != nil {
-		log.Fatalln("Failed to dial server:", err)
+		log.Fatalln("failed to dial server:", err)
 	}
 
 	gwmux := runtime.NewServeMux()
 
 	err = pbVersion.RegisterVersionServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {
-		log.Fatalln("Failed to register gateway:", err)
+		log.Fatalln("failed to register gateway:", err)
 	}
 	oa := getOpenAPIHandler()
 
@@ -98,13 +103,13 @@ func main() {
 	}
 
 	if strings.ToLower(os.Getenv("SERVE_HTTP")) == "true" {
-		log.Info("Serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
+		log.Info("serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
 		log.Fatalln(gwServer.ListenAndServe())
 	}
 
 	gwServer.TLSConfig = &tls.Config{
-		Certificates: []tls.Certificate{insecure.Cert},
+		Certificates: []tls.Certificate{cert},
 	}
-	log.Info("Serving gRPC-Gateway and OpenAPI Documentation on https://", gatewayAddr)
+	log.Info("serving gRPC-Gateway and OpenAPI Documentation on https://", gatewayAddr)
 	log.Fatalln(gwServer.ListenAndServeTLS("", ""))
 }
