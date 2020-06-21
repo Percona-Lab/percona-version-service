@@ -47,16 +47,27 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	cert, err := tls.LoadX509KeyPair("certs/cert.pem", "certs/key.pem")
-	if err != nil {
-		log.Fatalf("failed to load key pair: %v", err)
+	servOpts := []grpc.ServerOption{}
+	var tlsConfig *tls.Config
+	schema := "https"
+	if strings.ToLower(os.Getenv("SERVE_HTTP")) != "true" {
+		cert, err := tls.LoadX509KeyPair("certs/cert.pem", "certs/key.pem")
+		if err != nil {
+			log.Fatalf("failed to load key pair: %v", err)
+		}
+		servOpts = append(servOpts, grpc.Creds(credentials.NewServerTLSFromCert(&cert)))
+
+		tlsConfig = &tls.Config{
+			Certificates: []tls.Certificate{cert},
+		}
+		schema = "http"
 	}
 	s := grpc.NewServer(
-		grpc.Creds(credentials.NewServerTLSFromCert(&cert)),
+		servOpts...,
 	)
 
 	pbVersion.RegisterVersionServiceServer(s, server.New())
-	log.Info("serving gRPC on https://", addr)
+	log.Infof("serving gRPC on %s://%s", schema, addr)
 	go func() {
 		log.Fatal(s.Serve(lis))
 	}()
@@ -68,10 +79,14 @@ func main() {
 	// See https://github.com/grpc/grpc/blob/master/doc/naming.md
 	// for gRPC naming standard information.
 	dialAddr := fmt.Sprintf("dns:///%s", addr)
+	dialCreds := grpc.WithInsecure()
+	if strings.ToLower(os.Getenv("SERVE_HTTP")) != "true" {
+		dialCreds = grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(certPool, ""))
+	}
 	conn, err := grpc.DialContext(
 		context.Background(),
 		dialAddr,
-		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(certPool, "")),
+		dialCreds,
 		grpc.WithBlock(),
 	)
 	if err != nil {
@@ -107,9 +122,7 @@ func main() {
 		log.Fatalln(gwServer.ListenAndServe())
 	}
 
-	gwServer.TLSConfig = &tls.Config{
-		Certificates: []tls.Certificate{cert},
-	}
+	gwServer.TLSConfig = tlsConfig
 	log.Info("serving gRPC-Gateway and OpenAPI Documentation on https://", gatewayAddr)
 	log.Fatalln(gwServer.ListenAndServeTLS("", ""))
 }

@@ -9,5 +9,5 @@ RUN go build -o /app
 
 FROM scratch
 COPY --from=build-env /app /
-
+COPY sources /sources
 ENTRYPOINT ["/app"]
