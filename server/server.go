@@ -6,7 +6,7 @@ import (
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
 
-// Backend implements the protobuf interface
+// Backend implements the protobuf interface.
 type Backend struct {
 }
 
@@ -26,9 +26,9 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 		return nil, err
 	}
 
-	//TODO: pxc filter used here
-	//the reason is I have no info how to filter deps versions
-	//so it returns latest version
+	// pxc filter used here
+	// the reason is I have no info how to filter deps versions
+	// so it returns latest version
 	err = pxcFilter(vs.Versions[0].Matrix.Proxysql, "latest", "")
 	if err != nil {
 		return nil, err

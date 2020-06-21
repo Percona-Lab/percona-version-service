@@ -6,6 +6,7 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"mime"
 	"net"
 	"net/http"
@@ -24,17 +25,22 @@ import (
 )
 
 func getOpenAPIHandler() http.Handler {
-	mime.AddExtensionType(".svg", "image/svg+xml")
+	err := mime.AddExtensionType(".svg", "image/svg+xml")
+	if err != nil {
+		log.Fatalf("creating OpenAPI filesystem: %v", err)
+	}
 
 	statikFS, err := fs.New()
 	if err != nil {
-		panic("creating OpenAPI filesystem: " + err.Error())
+		log.Fatalf("creating OpenAPI filesystem: %v", err)
 	}
 
 	return http.FileServer(statikFS)
 }
 
 func main() {
+	useTLS := strings.ToLower(os.Getenv("SERVE_HTTP")) != "true"
+
 	log := grpclog.NewLoggerV2(os.Stdout, ioutil.Discard, ioutil.Discard)
 	grpclog.SetLoggerV2(log)
 	grpcport := os.Getenv("GRPC_PORT")
@@ -49,8 +55,8 @@ func main() {
 
 	servOpts := []grpc.ServerOption{}
 	var tlsConfig *tls.Config
-	schema := "https"
-	if strings.ToLower(os.Getenv("SERVE_HTTP")) != "true" {
+	schema := "http"
+	if useTLS {
 		cert, err := tls.LoadX509KeyPair("certs/cert.pem", "certs/key.pem")
 		if err != nil {
 			log.Fatalf("failed to load key pair: %v", err)
@@ -60,7 +66,7 @@ func main() {
 		tlsConfig = &tls.Config{
 			Certificates: []tls.Certificate{cert},
 		}
-		schema = "http"
+		schema = "https"
 	}
 	s := grpc.NewServer(
 		servOpts...,
@@ -80,7 +86,7 @@ func main() {
 	// for gRPC naming standard information.
 	dialAddr := fmt.Sprintf("dns:///%s", addr)
 	dialCreds := grpc.WithInsecure()
-	if strings.ToLower(os.Getenv("SERVE_HTTP")) != "true" {
+	if useTLS {
 		dialCreds = grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(certPool, ""))
 	}
 	conn, err := grpc.DialContext(
@@ -117,7 +123,7 @@ func main() {
 		}),
 	}
 
-	if strings.ToLower(os.Getenv("SERVE_HTTP")) == "true" {
+	if !useTLS {
 		log.Info("serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
 		log.Fatalln(gwServer.ListenAndServe())
 	}
