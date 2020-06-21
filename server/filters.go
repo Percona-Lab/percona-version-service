@@ -13,6 +13,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+const (
+	recommended = "recommended"
+	latest      = "latest"
+	disabled    = "disabled"
+)
+
 func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, error) {
 	vs := &pbVersion.VersionResponse{}
 	source := fmt.Sprintf("operator.%s.%s.json", operatorVersion, product)
@@ -24,7 +30,7 @@ func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, 
 
 	err = json.Unmarshal(content, vs)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to unmarshal content: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to unmarshal source file content: %v", err)
 	}
 
 	return vs, nil
@@ -40,13 +46,13 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
 
-	if (strings.ToLower(apply) == "recommended" || strings.ToLower(apply) == "latest") && current == "" {
+	if (strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest) && current == "" {
 		deleteOtherBut(sorted[0].String(), versions)
 		return nil
 	}
 
 	desired := apply //assume version number
-	if strings.ToLower(apply) == "recommended" || strings.ToLower(apply) == "latest" {
+	if strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest {
 		desired = current
 
 		c, err := semver.NewVersion(current)
@@ -58,7 +64,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 			if s.Equal(c) || s.LessThan(c) {
 				break
 			}
-			if versions[s.String()].Status != "disabled" && c.Major() == s.Major() {
+			if versions[s.String()].Status != disabled && c.Major() == s.Major() {
 				desired = s.String()
 			}
 		}
