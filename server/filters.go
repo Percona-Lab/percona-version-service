@@ -1,14 +1,15 @@
 package server
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"sort"
 	"strings"
 
 	"github.com/Masterminds/semver"
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	"github.com/diegoholiveira/jsonlogic"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -19,29 +20,17 @@ const (
 	disabled    = "disabled"
 )
 
-func parse(product string, operatorVersion string) (*pbVersion.VersionResponse, error) {
-	vs := &pbVersion.VersionResponse{}
-	source := fmt.Sprintf("operator.%s.%s.json", operatorVersion, product)
-
-	content, err := ioutil.ReadFile("./sources/" + source)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to read versions source file: %v", err)
-	}
-
-	err = json.Unmarshal(content, vs)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to unmarshal source file content: %v", err)
-	}
-
-	return vs, nil
-}
-
 func pxcFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
 	if len(versions) == 0 {
 		return status.Error(codes.Internal, "no versions to filter")
 	}
 
-	sorted, err := sortedVersionsDesc(versions)
+	keys := make([]string, 0, len(versions))
+	for k := range versions {
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -78,6 +67,69 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 	return nil
 }
 
+func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
+	if len(versions) == 0 {
+		return status.Error(codes.Internal, "no versions to filter")
+	}
+
+	keys := make([]string, 0, len(versions))
+	for k := range versions {
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys)
+	if err != nil {
+		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
+	}
+
+	if apply == "" {
+		apply = sorted[0].String()
+	}
+
+	deleteOtherBut(apply, versions)
+
+	return nil
+}
+
+func depFilter(versions map[string]interface{}, productVersion string) (string, error) {
+	if len(versions) == 0 {
+		return "", nil
+	}
+
+	keys := make([]string, 0, len(versions))
+	for k := range versions {
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys)
+	if err != nil {
+		return "", status.Errorf(codes.Internal, "failed to sort versions: %v", err)
+	}
+
+	desired := sorted[0].String()
+	for _, s := range sorted {
+		b, err := json.Marshal(versions[s.String()])
+		if err != nil {
+			return "", status.Errorf(codes.Internal, "failed to marshal deps logic: %v", err)
+		}
+		logic := bytes.NewReader(b)
+		data := strings.NewReader(fmt.Sprintf(`{  "productVersion" : "%s" }`, productVersion))
+
+		var result bytes.Buffer
+		err = jsonlogic.Apply(logic, data, &result)
+		if err != nil {
+			return "", status.Errorf(codes.Internal, "failed to apply logic: %v", err)
+		}
+
+		if strings.TrimSuffix(result.String(), "\n") == "true" {
+			desired = s.String()
+			break
+		}
+	}
+
+	return desired, nil
+}
+
 func deleteOtherBut(v string, versions map[string]*pbVersion.Version) {
 	for k := range versions {
 		if k != v {
@@ -86,10 +138,10 @@ func deleteOtherBut(v string, versions map[string]*pbVersion.Version) {
 	}
 }
 
-func sortedVersionsDesc(versions map[string]*pbVersion.Version) ([]*semver.Version, error) {
+func sortedVersionsDesc(versions []string) ([]*semver.Version, error) {
 	v := make([]*semver.Version, 0, len(versions))
 
-	for k := range versions {
+	for _, k := range versions {
 		sv, err := semver.NewVersion(k)
 		if err != nil {
 			return nil, err

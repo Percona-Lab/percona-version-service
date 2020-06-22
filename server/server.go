@@ -21,26 +21,39 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 		return nil, err
 	}
 
+	deps, err := parseDep(req.Product, req.OperatorVersion)
+	if err != nil {
+		return nil, err
+	}
+
 	err = pxcFilter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
 	if err != nil {
 		return nil, err
 	}
 
-	// pxc filter used here
-	// the reason is I have no info how to filter deps versions
-	// so it returns latest version
-	err = pxcFilter(vs.Versions[0].Matrix.Proxysql, "latest", "")
+	productVersion := ""
+	for k := range vs.Versions[0].Matrix.Pxc {
+		productVersion = k
+		break
+	}
+
+	backupVersion, err := depFilter(deps.Backup, productVersion)
 	if err != nil {
 		return nil, err
 	}
-	err = pxcFilter(vs.Versions[0].Matrix.Pmm, "latest", "")
+	defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
+
+	pmmVersion, err := depFilter(deps.PMM, productVersion)
 	if err != nil {
 		return nil, err
 	}
-	err = pxcFilter(vs.Versions[0].Matrix.Backup, "latest", "")
+	defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+
+	proxySQL, err := depFilter(deps.ProxySQL, productVersion)
 	if err != nil {
 		return nil, err
 	}
+	defaultFilter(vs.Versions[0].Matrix.Proxysql, proxySQL)
 
 	return vs, nil
 }
