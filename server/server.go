@@ -41,19 +41,28 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 	if err != nil {
 		return nil, err
 	}
-	defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
+	if err != nil {
+		return nil, err
+	}
 
 	pmmVersion, err := depFilter(deps.PMM, productVersion)
 	if err != nil {
 		return nil, err
 	}
-	defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+	if err != nil {
+		return nil, err
+	}
 
 	proxySQL, err := depFilter(deps.ProxySQL, productVersion)
 	if err != nil {
 		return nil, err
 	}
-	defaultFilter(vs.Versions[0].Matrix.Proxysql, proxySQL)
+	err = defaultFilter(vs.Versions[0].Matrix.Proxysql, proxySQL)
+	if err != nil {
+		return nil, err
+	}
 
 	return vs, nil
 }
