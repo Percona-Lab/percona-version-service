@@ -5,12 +5,10 @@ set -o xtrace
 
 src_dir="$(realpath $(dirname $0)/..)"
 git_branch=$(git rev-parse --abbrev-ref HEAD)
-
+image=perconalab/version-service:$git_branch 
 pushd ${src_dir}
-image_hash=$(docker build -t perconalab/percona-version-service:$git_branch . | grep -E "^Successfully built .*" | awk '{print $3}' )
+docker build -t $image .
 popd
 
-echo "$image_hash"
-docker tag "$image_hash" perconalab/percona-xtradb-cluster-operator:$git_branch
-docker push perconalab/version-service:$git_branch
+docker push $image 
 
