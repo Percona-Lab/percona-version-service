@@ -16,12 +16,12 @@ func New() *Backend {
 }
 
 func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
-	vs, err := parse(req.Product, req.OperatorVersion)
+	vs, err := getData(req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
 	}
 
-	deps, err := parseDep(req.Product, req.OperatorVersion)
+	deps, err := getDep(req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
 	}
