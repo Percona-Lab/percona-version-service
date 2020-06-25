@@ -1,4 +1,4 @@
-FROM golang AS build-env
+FROM golang:1.14 AS build-env
 ADD . /src
 ENV CGO_ENABLED=0
 ENV GOOS=linux
