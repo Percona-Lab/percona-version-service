@@ -5,6 +5,12 @@
       "product": "pxc-operator",
       "matrix": {
         "pxc": {
+          "8.0.19-10.1": {
+            "image_path": "percona/percona-xtradb-cluster:8.0.19",
+            "image_hash": "7025f539c3fe4b7ca9ba280c944f39da85bfb680080243480d5a13961fc81554",
+            "status": "recommended",
+            "critical": false
+          },
           "8.0.18-9.3": {
             "image_path": "percona/percona-xtradb-cluster:8.0.18-9.3",
             "image_hash": "7025f539c3fe4b7ca9ba280c944f39da85bfb680080243480d5a13961fc81554",
