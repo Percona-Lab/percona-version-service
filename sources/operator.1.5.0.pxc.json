@@ -11,7 +11,7 @@
             "status": "recommended",
             "critical": false
           },
-          "8.0.18-9.3": {
+          "8.0.18-9": {
             "image_path": "percona/percona-xtradb-cluster:8.0.18-9.3",
             "image_hash": "7025f539c3fe4b7ca9ba280c944f39da85bfb680080243480d5a13961fc81554",
             "status": "recommended",
@@ -64,7 +64,7 @@
         },
         "proxysql": {
           "2.0.10": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.4.0-proxysql",
+            "image_path": "perconalab/percona-xtradb-cluster-operator:master-proxysql",
             "image_hash": "1ee8b9c291dac955dd98441187476fe8c3b5a4930e9e4dc39b9534376d0cc4f2",
             "status": "recommended",
             "critical": false
