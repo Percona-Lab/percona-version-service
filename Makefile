@@ -12,6 +12,7 @@ generate:
 	rm -r ./versionpb/github.com
 
 	statik -m -f -src third_party/OpenAPI/
+	swagger generate client -f third_party/OpenAPI/example.swagger.json -t client
 
 .PHONY: install
 install:
@@ -19,6 +20,7 @@ install:
 		github.com/golang/protobuf/protoc-gen-go \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
+		github.com/go-swagger/go-swagger/cmd/swagger \
 		github.com/rakyll/statik
 
 cert:
