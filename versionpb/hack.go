@@ -1,7 +1,1 @@
-package main
-
-import _ "fmt"
-
-func main() {
-
-}
+package versionpb
