@@ -1,3 +1,7 @@
+init:
+	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
+	go build -modfile=tools/go.mod -o bin/statik github.com/rakyll/statik
+
 generate:
 	protoc \
 		-I versionpb \
@@ -8,21 +12,13 @@ generate:
 		--openapiv2_out=third_party/OpenAPI/ \
 		versionpb/version.proto
 
-	yq r --prettyPrint third_party/OpenAPI/version.swagger.json > third_party/OpenAPI/version.swagger.yaml
+	bin/yq r --prettyPrint third_party/OpenAPI/version.swagger.json > third_party/OpenAPI/version.swagger.yaml
 	rm third_party/OpenAPI/version.swagger.json
 
 	mv ./versionpb/github.com/Percona-Lab/percona-version-service/proto/* ./versionpb/
 	rm -r ./versionpb/github.com
 
-	statik -m -f -src third_party/OpenAPI/
-
-.PHONY: install
-install:
-	go get \
-		github.com/golang/protobuf/protoc-gen-go \
-		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
-		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
-		github.com/rakyll/statik
+	bin/statik -m -f -src third_party/OpenAPI/
 
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
