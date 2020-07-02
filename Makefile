@@ -22,3 +22,6 @@ generate:
 
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
+
+image:
+	scripts/build.sh
