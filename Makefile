@@ -8,6 +8,9 @@ generate:
 		--openapiv2_out=third_party/OpenAPI/ \
 		versionpb/version.proto
 
+	yq r --prettyPrint third_party/OpenAPI/version.swagger.json > third_party/OpenAPI/version.swagger.yaml
+	rm third_party/OpenAPI/version.swagger.json
+
 	mv ./versionpb/github.com/Percona-Lab/percona-version-service/proto/* ./versionpb/
 	rm -r ./versionpb/github.com
 
