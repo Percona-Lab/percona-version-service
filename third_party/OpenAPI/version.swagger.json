@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/exampleVersionResponse"
+              "$ref": "#/definitions/versionVersionResponse"
             }
           },
           "default": {
@@ -103,96 +103,6 @@
     }
   },
   "definitions": {
-    "exampleOperatorVersion": {
-      "type": "object",
-      "properties": {
-        "operator": {
-          "type": "string"
-        },
-        "database": {
-          "type": "string"
-        },
-        "matrix": {
-          "$ref": "#/definitions/exampleVersionMatrix"
-        }
-      }
-    },
-    "exampleVersion": {
-      "type": "object",
-      "properties": {
-        "imagePath": {
-          "type": "string"
-        },
-        "imageHash": {
-          "type": "string"
-        },
-        "status": {
-          "type": "string"
-        },
-        "critical": {
-          "type": "boolean",
-          "format": "boolean"
-        }
-      }
-    },
-    "exampleVersionMatrix": {
-      "type": "object",
-      "properties": {
-        "mongod": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        },
-        "pxc": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        },
-        "pmm": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        },
-        "proxysql": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        },
-        "haproxy": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        },
-        "backup": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        },
-        "operator": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/exampleVersion"
-          }
-        }
-      }
-    },
-    "exampleVersionResponse": {
-      "type": "object",
-      "properties": {
-        "versions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/exampleOperatorVersion"
-          }
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -222,6 +132,96 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "versionOperatorVersion": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "type": "string"
+        },
+        "database": {
+          "type": "string"
+        },
+        "matrix": {
+          "$ref": "#/definitions/versionVersionMatrix"
+        }
+      }
+    },
+    "versionVersion": {
+      "type": "object",
+      "properties": {
+        "imagePath": {
+          "type": "string"
+        },
+        "imageHash": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "critical": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
+    "versionVersionMatrix": {
+      "type": "object",
+      "properties": {
+        "mongod": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        },
+        "pxc": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        },
+        "pmm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        },
+        "proxysql": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        },
+        "haproxy": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        },
+        "backup": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        },
+        "operator": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/versionVersion"
+          }
+        }
+      }
+    },
+    "versionVersionResponse": {
+      "type": "object",
+      "properties": {
+        "versions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/versionOperatorVersion"
           }
         }
       }
