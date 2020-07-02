@@ -4,13 +4,13 @@ init:
 
 generate:
 	protoc \
-		-I versionpb \
+		-I api \
 		-I third_party/grpc-gateway/ \
 		-I third_party/googleapis \
 		--go_out=plugins=grpc,paths=source_relative:./versionpb \
 		--grpc-gateway_out=./versionpb \
 		--openapiv2_out=third_party/OpenAPI/ \
-		versionpb/version.proto
+		api/version.proto
 
 	bin/yq r --prettyPrint third_party/OpenAPI/version.swagger.json > third_party/OpenAPI/version.swagger.yaml
 	rm third_party/OpenAPI/version.swagger.json
@@ -23,5 +23,5 @@ generate:
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
 
-image:
+image: generate
 	scripts/build.sh

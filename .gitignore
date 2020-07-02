@@ -1,7 +1,6 @@
 .vscode
 main
-versionpb/*.go
-!versionpb/hack.go
+versionpb
 statik
 certs/*.pem
 bin
