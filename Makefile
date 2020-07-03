@@ -2,20 +2,16 @@ init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
 	go build -modfile=tools/go.mod -o bin/statik github.com/rakyll/statik
 
-generate:
-	protoc \
-		-I api \
-		-I third_party/grpc-gateway/ \
-		-I third_party/googleapis \
-		--go_out=plugins=grpc,paths=source_relative:./versionpb \
-		--grpc-gateway_out=./versionpb \
-		--openapiv2_out=third_party/OpenAPI/ \
-		api/version.proto
+	curl -L https://github.com/uber/prototool/releases/download/v1.8.0/prototool-$(shell uname -s)-$(shell uname -m) -o ./bin/prototool
+	chmod +x ./bin/prototool
 
-	bin/yq r --prettyPrint third_party/OpenAPI/version.swagger.json > third_party/OpenAPI/version.swagger.yaml
-	rm third_party/OpenAPI/version.swagger.json
+gen:
+	./bin/prototool all ./api
 
-	mv ./versionpb/github.com/Percona-Lab/percona-version-service/proto/* ./versionpb/
+	bin/yq r --prettyPrint third_party/OpenAPI/api/version.swagger.json > third_party/OpenAPI/api/version.swagger.yaml
+	rm third_party/OpenAPI/api/version.swagger.json
+
+	mv ./versionpb/github.com/Percona-Lab/percona-version-service/version/* ./versionpb/
 	rm -r ./versionpb/github.com
 
 	bin/statik -m -f -src third_party/OpenAPI/
@@ -23,5 +19,5 @@ generate:
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
 
-image: generate
+image: gen
 	scripts/build.sh
