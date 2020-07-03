@@ -10,7 +10,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /api/versions/v1/{product}/{operatorVersion}/{apply}:
+  /versions/v1/{product}/{operatorVersion}/{apply}:
     get:
       summary: Specific version
       description: Return specific product version

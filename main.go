@@ -115,10 +115,11 @@ func main() {
 	gwServer := &http.Server{
 		Addr: gatewayAddr,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/api") {
+			if strings.HasPrefix(r.URL.Path, "/versions") {
 				gwmux.ServeHTTP(w, r)
 				return
 			}
+
 			oa.ServeHTTP(w, r)
 		}),
 	}

@@ -28,7 +28,7 @@ service VersionService {
   // Apply provides information about specific product version and its dependencies.
   rpc Apply(ApplyRequest) returns (VersionResponse) {
     option (google.api.http) = {
-      get: "/api/versions/v1/{product}/{operator_version}/{apply}"
+      get: "/versions/v1/{product}/{operator_version}/{apply}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Specific version"
