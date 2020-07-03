@@ -50,11 +50,20 @@ message ApplyRequest {
   string custom_resource_oid = 10;
 }
 
+// Status describes the current version status.
+enum Status {
+  status_invalid = 0;
+  recommended = 1;
+  available = 2;
+  required = 3;
+  disabled = 4;
+}
+
 // Version represents product version information.
 message Version {
   string image_path = 1;
   string image_hash = 2;
-  string status = 3;
+  Status status = 3;
   bool critical = 4;
 }
 
@@ -71,8 +80,8 @@ message VersionMatrix {
 
 // OperatorVersion represents operator version.
 message OperatorVersion {
-  string operator = 1;
-  string database = 2;
+  string product = 1;
+  string operator = 2;
   VersionMatrix matrix = 3;
 }
 

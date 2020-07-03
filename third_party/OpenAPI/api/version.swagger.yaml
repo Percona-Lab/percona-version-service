@@ -23,7 +23,7 @@ paths:
         default:
           description: An unexpected error response
           schema:
-            $ref: '#/definitions/rpcStatus'
+            $ref: '#/definitions/googlerpcStatus'
       parameters:
         - name: product
           in: path
@@ -68,6 +68,18 @@ paths:
       tags:
         - VersionService
 definitions:
+  googlerpcStatus:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          $ref: '#/definitions/protobufAny'
   protobufAny:
     type: object
     properties:
@@ -185,28 +197,26 @@ definitions:
             "@type": "type.googleapis.com/google.protobuf.Duration",
             "value": "1.212s"
           }
-  rpcStatus:
-    type: object
-    properties:
-      code:
-        type: integer
-        format: int32
-      message:
-        type: string
-      details:
-        type: array
-        items:
-          $ref: '#/definitions/protobufAny'
   versionOperatorVersion:
     type: object
     properties:
-      operator:
+      product:
         type: string
-      database:
+      operator:
         type: string
       matrix:
         $ref: '#/definitions/versionVersionMatrix'
     description: OperatorVersion represents operator version.
+  versionStatus:
+    type: string
+    enum:
+      - status_invalid
+      - recommended
+      - available
+      - required
+      - disabled
+    default: status_invalid
+    description: Status describes the current version status.
   versionVersion:
     type: object
     properties:
@@ -215,7 +225,7 @@ definitions:
       imageHash:
         type: string
       status:
-        type: string
+        $ref: '#/definitions/versionStatus'
       critical:
         type: boolean
         format: boolean

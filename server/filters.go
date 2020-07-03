@@ -17,7 +17,6 @@ import (
 const (
 	recommended = "recommended"
 	latest      = "latest"
-	disabled    = "disabled"
 )
 
 func pxcFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
@@ -53,7 +52,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 			if s.Equal(c) || s.LessThan(c) {
 				break
 			}
-			if versions[s.String()].Status != disabled && c.Major() == s.Major() {
+			if versions[s.String()].Status != pbVersion.Status_disabled && c.Major() == s.Major() {
 				desired = s.String()
 			}
 		}

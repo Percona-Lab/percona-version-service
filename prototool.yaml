@@ -19,14 +19,14 @@ lint:
       - ENUMS_NO_ALLOW_ALIAS                                  # Verifies that no enums use the option "allow_alias".
       # - ENUM_FIELDS_HAVE_COMMENTS                             # Verifies that all enum fields have a comment of the form "// FIELD_NAME ...".
       # - ENUM_FIELDS_HAVE_SENTENCE_COMMENTS                    # Verifies that all enum fields have a comment that contains at least one complete sentence.
-      - ENUM_FIELD_NAMES_UPPERCASE                            # Verifies that all enum field names are UPPERCASE.
-      - ENUM_FIELD_NAMES_UPPER_SNAKE_CASE                     # Verifies that all enum field names are UPPER_SNAKE_CASE.
+      # - ENUM_FIELD_NAMES_UPPERCASE                            # Verifies that all enum field names are UPPERCASE.
+      # - ENUM_FIELD_NAMES_UPPER_SNAKE_CASE                     # Verifies that all enum field names are UPPER_SNAKE_CASE.
       # - ENUM_FIELD_PREFIXES                                   # Verifies that all enum fields are prefixed with [NESTED_MESSAGE_NAME_]ENUM_NAME_.
       # - ENUM_FIELD_PREFIXES_EXCEPT_MESSAGE                    # Verifies that all enum fields are prefixed with ENUM_NAME_.
       - ENUM_NAMES_CAMEL_CASE                                 # Verifies that all enum names are CamelCase.
       - ENUM_NAMES_CAPITALIZED                                # Verifies that all enum names are Capitalized.
-      - ENUM_ZERO_VALUES_INVALID                              # Verifies that all enum zero value names are [NESTED_MESSAGE_NAME_]ENUM_NAME_INVALID.
-      - ENUM_ZERO_VALUES_INVALID_EXCEPT_MESSAGE               # Verifies that all enum zero value names are ENUM_NAME_INVALID.
+      # - ENUM_ZERO_VALUES_INVALID                              # Verifies that all enum zero value names are [NESTED_MESSAGE_NAME_]ENUM_NAME_INVALID.
+      # - ENUM_ZERO_VALUES_INVALID_EXCEPT_MESSAGE               # Verifies that all enum zero value names are ENUM_NAME_INVALID.
       - FIELDS_NOT_RESERVED                                   # Verifies that no message or enum has a reserved field.
       - FILE_HEADER                                           # Verifies that the file header matches the expected file header if the file_header option is set in the configuration file.
       - FILE_NAMES_LOWER_SNAKE_CASE                           # Verifies that the file name is lower_snake_case.proto.
