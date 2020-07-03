@@ -2,7 +2,7 @@ init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
 	go build -modfile=tools/go.mod -o bin/statik github.com/rakyll/statik
 
-	curl -L https://github.com/uber/prototool/releases/download/v1.8.0/prototool-$(shell uname -s)-$(shell uname -m) -o ./bin/prototool
+	curl -L https://github.com/uber/prototool/releases/download/v1.10.0/prototool-$(shell uname -s)-$(shell uname -m) -o ./bin/prototool
 	chmod +x ./bin/prototool
 
 gen:
