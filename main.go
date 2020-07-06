@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -18,7 +17,6 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
 
 	_ "github.com/Percona-Lab/percona-version-service/statik"
@@ -47,48 +45,35 @@ func main() {
 	if grpcport == "" {
 		grpcport = "10000"
 	}
-	addr := "0.0.0.0:" + grpcport
+	addr := "127.0.0.1:" + grpcport
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	servOpts := []grpc.ServerOption{}
 	var tlsConfig *tls.Config
-	schema := "http"
 	if useTLS {
 		cert, err := tls.LoadX509KeyPair("certs/cert.pem", "certs/key.pem")
 		if err != nil {
 			log.Fatalf("failed to load key pair: %v", err)
 		}
-		servOpts = append(servOpts, grpc.Creds(credentials.NewServerTLSFromCert(&cert)))
 
 		tlsConfig = &tls.Config{
 			Certificates: []tls.Certificate{cert},
 		}
-		schema = "https"
 	}
-	s := grpc.NewServer(
-		servOpts...,
-	)
+	s := grpc.NewServer()
 
 	pbVersion.RegisterVersionServiceServer(s, server.New())
-	log.Infof("serving gRPC on %s://%s", schema, addr)
+	log.Infof("serving gRPC on http://%s", addr)
 	go func() {
 		log.Fatal(s.Serve(lis))
 	}()
 
-	certPool, err := x509.SystemCertPool()
-	if err != nil {
-		log.Fatalf("failed to load system cert pool: %v", err)
-	}
 	// See https://github.com/grpc/grpc/blob/master/doc/naming.md
 	// for gRPC naming standard information.
 	dialAddr := fmt.Sprintf("dns:///%s", addr)
 	dialCreds := grpc.WithInsecure()
-	if useTLS {
-		dialCreds = grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(certPool, ""))
-	}
 	conn, err := grpc.DialContext(
 		context.Background(),
 		dialAddr,
