@@ -1,7 +1,6 @@
 package server
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,9 +9,9 @@ import (
 	"strings"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
-	"github.com/golang/protobuf/jsonpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 var data = map[string][]byte{}
@@ -47,7 +46,7 @@ func getData(product string, operatorVersion string) (*pbVersion.VersionResponse
 	}
 
 	data := &pbVersion.VersionResponse{}
-	err := jsonpb.Unmarshal(bytes.NewBuffer(v), data)
+	err := protojson.Unmarshal(v, data)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to unmarshal source file: %v", err)
 	}
