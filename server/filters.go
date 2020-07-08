@@ -25,10 +25,11 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 	}
 
 	keys := make([]string, 0, len(versions))
-       for k, v := range versions {
-               if strings.ToLower(apply) == recommended && v.Status != pbVersion.Status_ recommended {
-                       continue
-               }
+	for k, v := range versions {
+		if strings.ToLower(apply) == recommended && v.Status != pbVersion.Status_recommended {
+			continue
+		}
+
 		keys = append(keys, k)
 	}
 
