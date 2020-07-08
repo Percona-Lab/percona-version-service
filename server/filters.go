@@ -39,8 +39,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 	}
 
 	if (strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest) && current == "" {
-		deleteOtherBut(sorted[0].String(), versions)
-		return nil
+		return deleteOtherBut(sorted[0].String(), versions)
 	}
 
 	desired := apply //assume version number
@@ -62,7 +61,10 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 		}
 	}
 
-	deleteOtherBut(desired, versions)
+	err = deleteOtherBut(desired, versions)
+	if err != nil {
+		return err
+	}
 	if len(versions) == 0 {
 		return status.Errorf(codes.NotFound, "version %s does not exist", desired)
 	}
@@ -89,9 +91,7 @@ func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
 		apply = sorted[0].String()
 	}
 
-	deleteOtherBut(apply, versions)
-
-	return nil
+	return deleteOtherBut(apply, versions)
 }
 
 func depFilter(versions map[string]interface{}, productVersion string) (string, error) {
@@ -133,12 +133,35 @@ func depFilter(versions map[string]interface{}, productVersion string) (string, 
 	return desired, nil
 }
 
-func deleteOtherBut(v string, versions map[string]*pbVersion.Version) {
+func deleteOtherBut(v string, versions map[string]*pbVersion.Version) error {
+	sv, err := semver.NewVersion(v)
+	if err != nil {
+		return status.Errorf(codes.Internal, "failed to parse version: %s", v)
+	}
+
 	for k := range versions {
-		if k != v {
+		sk, err := semver.NewVersion(k)
+		if err != nil {
+			return status.Errorf(codes.Internal, "failed to parse version: %s", k)
+		}
+
+		// ignore prerelease/buildmetadata suffix
+		if sk.Major() != sv.Major() && sk.Minor() != sv.Minor() && sk.Patch() != sv.Patch() {
 			delete(versions, k)
 		}
 	}
+
+	// check situation when there are more than 1 version with same major.minor.patch in source file
+	// in such case do not ignore prerelease/buildmetadata
+	if len(versions) > 1 {
+		for k := range versions {
+			if k != v {
+				delete(versions, k)
+			}
+		}
+	}
+
+	return nil
 }
 
 func sortedVersionsDesc(versions []string) ([]*semver.Version, error) {
