@@ -11,12 +11,6 @@
             "status": "recommended",
             "critical": false
           },
-          "8.0.18-9.3": {
-            "image_path": "percona/percona-xtradb-cluster:8.0.18-9.3",
-            "image_hash": "7025f539c3fe4b7ca9ba280c944f39da85bfb680080243480d5a13961fc81554",
-            "status": "recommended",
-            "critical": false
-          },
           "5.7.29-31.43": {
             "image_path": "percona/percona-xtradb-cluster:5.7.29-31.43",
             "image_hash": "85fb479de073770280ae601cf3ec22dc5c8cca4c8b0dc893b09503767338e6f9",
