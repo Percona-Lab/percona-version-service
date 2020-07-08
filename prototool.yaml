@@ -2,10 +2,10 @@ protoc:
   version: 3.12.3
   includes:
     # for importing "google/api/annotations.proto"
-    - ./third_party/googleapis
+    - ./tools/vendor/github.com/grpc-ecosystem/grpc-gateway/v2/third_party/googleapis
 
-    # for importing "protoc-gen-swagger/options/annotations.proto" and
-    - ./third_party/grpc-gateway
+    # for importing "protoc-gen-openapiv2/options/annotations.proto" and
+    - ./tools/vendor/github.com/grpc-ecosystem/grpc-gateway/v2
 
 lint:
   group: empty
@@ -106,11 +106,6 @@ generate:
       type: go
       flags: plugins=grpc
       output: ./versionpb
-
-    # - name: govalidators
-    #   type: go
-    #   flags: gogoimport=false
-    #   output: .
 
     - name: grpc-gateway
       type: go

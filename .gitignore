@@ -4,3 +4,4 @@ versionpb
 statik
 certs/*.pem
 bin
+tools/vendor
