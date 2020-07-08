@@ -57,11 +57,11 @@ paths:
           in: query
           required: false
           type: string
-        - name: namespaceOid
+        - name: namespaceUid
           in: query
           required: false
           type: string
-        - name: customResourceOid
+        - name: customResourceUid
           in: query
           required: false
           type: string

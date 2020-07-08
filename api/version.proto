@@ -46,8 +46,8 @@ message ApplyRequest {
   string platform = 6;
   string pmm_version = 7;
   string backup_version = 8;
-  string namespace_oid = 9;
-  string custom_resource_oid = 10;
+  string namespace_uid = 9;
+  string custom_resource_uid = 10;
 }
 
 // Status describes the current version status.
