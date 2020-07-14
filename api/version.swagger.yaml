@@ -57,6 +57,14 @@ paths:
           in: query
           required: false
           type: string
+        - name: proxysqlVersion
+          in: query
+          required: false
+          type: string
+        - name: haproxyVersion
+          in: query
+          required: false
+          type: string
         - name: namespaceUid
           in: query
           required: false
