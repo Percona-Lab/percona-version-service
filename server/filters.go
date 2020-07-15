@@ -19,6 +19,11 @@ const (
 	latest      = "latest"
 )
 
+func psmdbFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
+	// at that moment logic is identical
+	return pxcFilter(versions, apply, current)
+}
+
 func pxcFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
 	if len(versions) == 0 {
 		return status.Error(codes.Internal, "no versions to filter")

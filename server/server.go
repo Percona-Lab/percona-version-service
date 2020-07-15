@@ -4,6 +4,8 @@ import (
 	"context"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // Backend implements the protobuf interface.
@@ -26,9 +28,28 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 		return nil, err
 	}
 
-	err = pxcFilter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
+	switch req.Product {
+	case "pxc-operator":
+		err := pxc(vs, deps, req)
+		if err != nil {
+			return nil, err
+		}
+	case "psmdb-operator":
+		err := psmdb(vs, deps, req)
+		if err != nil {
+			return nil, err
+		}
+	default:
+		return nil, status.Errorf(codes.InvalidArgument, "invalid product: %s", req.Product)
+	}
+
+	return vs, nil
+}
+
+func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) error {
+	err := pxcFilter(vs.Versions[0].Matrix.Pxc, req.Apply, req.DatabaseVersion)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	productVersion := ""
@@ -39,30 +60,63 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 
 	backupVersion, err := depFilter(deps.Backup, productVersion)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	pmmVersion, err := depFilter(deps.PMM, productVersion)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	proxySQL, err := depFilter(deps.ProxySQL, productVersion)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	err = defaultFilter(vs.Versions[0].Matrix.Proxysql, proxySQL)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return vs, nil
+	return nil
+}
+
+func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) error {
+	err := psmdbFilter(vs.Versions[0].Matrix.Mongod, req.Apply, req.DatabaseVersion)
+	if err != nil {
+		return err
+	}
+
+	productVersion := ""
+	for k := range vs.Versions[0].Matrix.Mongod {
+		productVersion = k
+		break
+	}
+
+	backupVersion, err := depFilter(deps.Backup, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
+	if err != nil {
+		return err
+	}
+
+	pmmVersion, err := depFilter(deps.PMM, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
