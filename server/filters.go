@@ -20,8 +20,58 @@ const (
 )
 
 func psmdbFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
-	// at that moment logic is identical
-	return pxcFilter(versions, apply, current)
+	if len(versions) == 0 {
+		return status.Error(codes.Internal, "no versions to filter")
+	}
+
+	keys := make([]string, 0, len(versions))
+	for k, v := range versions {
+		if strings.ToLower(apply) == recommended && v.Status != pbVersion.Status_recommended {
+			continue
+		}
+
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys)
+	if err != nil {
+		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
+	}
+
+	if (strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest) && current == "" {
+		return deleteOtherBut(sorted[0].String(), versions)
+	}
+
+	desired := apply //assume version number
+	if strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest {
+		desired = current
+
+		c, err := semver.NewVersion(current)
+		if err != nil {
+			return status.Errorf(codes.InvalidArgument, "invalid current version: %s", current)
+		}
+
+		for _, s := range sorted {
+			if s.Equal(c) || s.LessThan(c) {
+				break
+			}
+
+			if versions[s.String()].Status != pbVersion.Status_disabled && c.Major() == s.Major() && c.Minor() == s.Minor() {
+				desired = s.String()
+				break
+			}
+		}
+	}
+
+	err = deleteOtherBut(desired, versions)
+	if err != nil {
+		return err
+	}
+	if len(versions) == 0 {
+		return status.Errorf(codes.NotFound, "version %s does not exist", desired)
+	}
+
+	return nil
 }
 
 func pxcFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
