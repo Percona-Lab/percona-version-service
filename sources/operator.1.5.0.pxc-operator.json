@@ -67,7 +67,7 @@
         "haproxy": {
           "2.1.7": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.5.0-haproxy",
-            "image_hash": "64fbce197899a928a7eadc5b1ba342c315b7cf937ad3e03617e69c32945c3592",
+            "image_hash": "6978a9a4a49515fd8be713312221ab72729a220c180663c5bfdd5bd6d3317504",
             "status": "recommended",
             "critical": false
           }
@@ -75,13 +75,13 @@
         "backup": {
           "8.0.13": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.5.0-pxc8.0-backup",
-            "image_hash": "4da59ee6b841d8ef408c16a0f28fd9984d47f266e66489437f6c523d1f02c662",
+            "image_hash": "7cddeedaa90ec9ba529340e34ee5662c9485139b2b197fc0abdbb6c261a14f62",
             "status": "recommended",
             "critical": false
           },
           "2.4.20": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.5.0-pxc5.7-backup",
-            "image_hash": "9a9d2c75e888be2d1d60cd8a1732d6157bdcbe83c7efcf0f3dcc5384bc9f40bd",
+            "image_hash": "6191dd4f7b8678d69dea9a87e083becfbba1a633ef725a0513babd55e5ac76f3",
             "status": "recommended",
             "critical": false
           }
@@ -89,7 +89,7 @@
         "operator": {
           "1.5.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.5.0",
-            "image_hash": "12015f0df2d9b6b176887d54e9f852bbc58c9db33b336208d130da293aaaadad",
+            "image_hash": "99c551f5437ed5f2fe004877c15a4665260969d0923f7c95fbf7a4c9e7305bb1",
             "status": "recommended",
             "critical": false
           }
