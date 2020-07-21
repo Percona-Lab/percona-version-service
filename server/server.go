@@ -32,7 +32,7 @@ func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) 
 	}, nil
 }
 
-func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
+func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
 	vs, err := operatorProductData(req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
