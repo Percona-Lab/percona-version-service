@@ -8,6 +8,9 @@ init:
 	curl -L https://github.com/uber/prototool/releases/download/v1.10.0/prototool-$(shell uname -s)-$(shell uname -m) -o ./bin/prototool
 	chmod +x ./bin/prototool
 
+	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.25.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
+	chmod +x ./bin/swagger
+
 gen:
 	pushd ${CURDIR}/tools; \
 	go mod vendor; \
@@ -28,6 +31,9 @@ gen:
 	rm -r ./versionpb/github.com
 
 	bin/statik -m -f -src third_party/OpenAPI/
+
+	rm -rf ./client
+	./bin/swagger generate client -m client/models -f ./api/version.swagger.yaml -t ./
 
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
