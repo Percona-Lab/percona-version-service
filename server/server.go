@@ -17,8 +17,23 @@ func New() *Backend {
 	return &Backend{}
 }
 
+func (b *Backend) Product(ctx context.Context, req *pbVersion.ProductRequest) (*pbVersion.ProductResponse, error) {
+	return operatorData(req.Product)
+}
+
+func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) (*pbVersion.OperatorResponse, error) {
+	vs, err := operatorProductData(req.Product, req.OperatorVersion)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pbVersion.OperatorResponse{
+		Versions: vs.Versions,
+	}, nil
+}
+
 func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
-	vs, err := getData(req.Product, req.OperatorVersion)
+	vs, err := operatorProductData(req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
 	}
