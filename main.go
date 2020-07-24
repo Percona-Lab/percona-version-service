@@ -143,6 +143,7 @@ func initLogger() (*zap.Logger, func()) {
 	if logPath == "" {
 		logPath = defaultLogPath
 	}
+
 	ws, closeFN, err := zap.Open(logPath)
 	if err != nil {
 		log.Fatal(err)
@@ -153,11 +154,15 @@ func initLogger() (*zap.Logger, func()) {
 		encoder.AppendInt64(time.Unix())
 	}
 
-	logger := zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(logConf), ws, zap.LevelEnablerFunc(func(_ zapcore.Level) bool {
+	levelEnablerFunc := zap.LevelEnablerFunc(func(_ zapcore.Level) bool {
 		return true
-	})), zap.Fields(zap.String("serviceName", "versionService")))
+	})
+
+	teeCore := zapcore.NewTee(zapcore.NewCore(zapcore.NewJSONEncoder(logConf), ws, levelEnablerFunc), zapcore.NewCore(zapcore.NewJSONEncoder(logConf), zapcore.Lock(os.Stdout), levelEnablerFunc))
+	logger := zap.New(teeCore, zap.Fields(zap.String("serviceName", "versionService")))
 
 	grpc_zap.ReplaceGrpcLoggerV2(logger)
+
 	return logger, closeFN
 }
 
