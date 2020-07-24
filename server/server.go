@@ -18,12 +18,7 @@ func New() *Backend {
 }
 
 func (b *Backend) Product(ctx context.Context, req *pbVersion.ProductRequest) (*pbVersion.ProductResponse, error) {
-	vs, err := operatorData(req.Product)
-	if err != nil {
-		return nil, err
-	}
-
-	return vs, nil
+	return operatorData(req.Product)
 }
 
 func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) (*pbVersion.OperatorResponse, error) {

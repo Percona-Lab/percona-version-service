@@ -42,7 +42,7 @@ service VersionService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Product versions for specific operator version"
-      description: "Return product versions for specifiv operator"
+      description: "Return product versions for specific operator"
     };
   }
   // Product provides information about product versions among all operator versions.
