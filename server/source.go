@@ -38,7 +38,34 @@ func init() {
 	}
 }
 
-func getData(product string, operatorVersion string) (*pbVersion.VersionResponse, error) {
+func operatorData(product string) (*pbVersion.ProductResponse, error) {
+	suffix := fmt.Sprintf(".%s.json", product)
+	r := pbVersion.ProductResponse{}
+
+	for k, v := range data {
+		if strings.HasSuffix(k, suffix) {
+			if r.Versions == nil {
+				err := protojson.Unmarshal(v, &r)
+				if err != nil {
+					return nil, status.Errorf(codes.Internal, "failed to unmarshal source file: %v", err)
+				}
+			} else {
+				pr := pbVersion.ProductResponse{}
+
+				err := protojson.Unmarshal(v, &pr)
+				if err != nil {
+					return nil, status.Errorf(codes.Internal, "failed to unmarshal source file: %v", err)
+				}
+
+				r.Versions = append(r.Versions, pr.Versions...)
+			}
+		}
+	}
+
+	return &r, nil
+}
+
+func operatorProductData(product string, operatorVersion string) (*pbVersion.VersionResponse, error) {
 	source := fmt.Sprintf("operator.%s.%s.json", operatorVersion, product)
 	v, ok := data[source]
 	if !ok {
