@@ -21,11 +21,11 @@ pipeline {
     }
     stages {
         stage ('Code generation') {
-            when {
-                expression {
-                    !skipBranchBulds
-                }
-            }
+            // when {
+            //     expression {
+            //         !skipBranchBulds
+            //     }
+            // }
             steps {
                 sh'''
                    make init
@@ -34,11 +34,11 @@ pipeline {
             }
         }
         stage('Run API tests') {
-            when {
-                expression {
-                    !skipBranchBulds
-                }
-            }
+            // when {
+            //     expression {
+            //         !skipBranchBulds
+            //     }
+            // }
                     steps {
                 script {
                             if ( AUTHOR_NAME == 'null' )  {
