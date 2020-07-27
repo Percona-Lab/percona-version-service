@@ -38,7 +38,7 @@ gen:
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
 
-image: gen
+image:
 	scripts/build.sh
 
 test:

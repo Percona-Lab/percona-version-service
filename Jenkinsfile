@@ -20,19 +20,6 @@ pipeline {
         label 'micro-amazon'
     }
     stages {
-        stage ('Code generation') {
-            // when {
-            //     expression {
-            //         !skipBranchBulds
-            //     }
-            // }
-            steps {
-                sh'''
-                   make init
-                   make gen
-                '''
-            }
-        }
         stage('Run API tests') {
             // when {
             //     expression {
