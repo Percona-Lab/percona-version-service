@@ -1,6 +1,8 @@
 package api_tests
 
 import (
+	"log"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -11,10 +13,7 @@ import (
 )
 
 func Test_apply_should_return_just_one_version(t *testing.T) {
-	cli := client.NewHTTPClientWithConfig(nil, &client.TransportConfig{
-		Host:    "0.0.0.0:11000",
-		Schemes: []string{"http"},
-	})
+	cli := cli()
 
 	pxcParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
@@ -58,10 +57,7 @@ func Test_apply_should_return_just_one_version(t *testing.T) {
 }
 
 func Test_apply_pxc_should_return_same_major_version(t *testing.T) {
-	cli := client.NewHTTPClientWithConfig(nil, &client.TransportConfig{
-		Host:    "0.0.0.0:11000",
-		Schemes: []string{"http"},
-	})
+	cli := cli()
 
 	pxcParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
@@ -85,10 +81,7 @@ func Test_apply_pxc_should_return_same_major_version(t *testing.T) {
 }
 
 func Test_apply_psmdb_should_return_same_major_version(t *testing.T) {
-	cli := client.NewHTTPClientWithConfig(nil, &client.TransportConfig{
-		Host:    "0.0.0.0:11000",
-		Schemes: []string{"http"},
-	})
+	cli := cli()
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
@@ -116,4 +109,23 @@ func getVersion(v map[string]models.VersionVersion) string {
 		return k
 	}
 	return ""
+}
+
+func cli() *client.APIVersionProto {
+	host := "0.0.0.0:11000"
+	if h, ok := os.LookupEnv("VS_HOST"); ok {
+		host = h + ":11000"
+		log.Println("EXISTS", h)
+	} else {
+		log.Println("NOT EXISTS")
+	}
+
+	log.Println(host)
+
+	cli := client.NewHTTPClientWithConfig(nil, &client.TransportConfig{
+		Host:    host,
+		Schemes: []string{"http"},
+	})
+
+	return cli
 }

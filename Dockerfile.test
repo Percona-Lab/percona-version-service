@@ -1,0 +1,9 @@
+FROM golang:1.14
+ADD . /src
+ENV CGO_ENABLED=1
+ENV GOOS=linux
+ENV GOARCH=amd64
+ENV VS_HOST=version-service
+WORKDIR /src
+RUN go mod download
+RUN go test -count=1 -v ./...

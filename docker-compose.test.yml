@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  integration-tests:
+    driver: bridge
+
+services:
+
+  tests:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.test
+    depends_on:
+      - version-service
+    environment:
+      - VS_HOST=version-service
+    networks:
+      - integration-tests
+
+  version-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      - integration-tests
+    ports:
+      - "11000:11000"
+    expose:
+      - "11000"
+    environment:
+      SERVE_HTTP: "true"
+    restart: on-failure
+    networks:
+      - integration-tests
