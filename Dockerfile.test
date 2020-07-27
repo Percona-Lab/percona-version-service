@@ -3,7 +3,8 @@ ADD . /src
 ENV CGO_ENABLED=1
 ENV GOOS=linux
 ENV GOARCH=amd64
-ENV VS_HOST=version-service
+ENV VS_HOST=""
 WORKDIR /src
 RUN go mod download
-RUN go test -count=1 -v ./...
+RUN go test -race -c ./api-tests -o /api-tests
+CMD ["/api-tests","-test.v"]

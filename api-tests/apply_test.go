@@ -1,7 +1,6 @@
 package api_tests
 
 import (
-	"log"
 	"os"
 	"strings"
 	"testing"
@@ -115,12 +114,7 @@ func cli() *client.APIVersionProto {
 	host := "0.0.0.0:11000"
 	if h, ok := os.LookupEnv("VS_HOST"); ok {
 		host = h + ":11000"
-		log.Println("EXISTS", h)
-	} else {
-		log.Println("NOT EXISTS")
 	}
-
-	log.Println(host)
 
 	cli := client.NewHTTPClientWithConfig(nil, &client.TransportConfig{
 		Host:    host,
