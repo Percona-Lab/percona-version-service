@@ -26,23 +26,26 @@ pipeline {
             //         !skipBranchBulds
             //     }
             // }
-                    steps {
+            agent {
+                label 'docker-32gb'
+            }
+            steps {
                 script {
-                            if ( AUTHOR_NAME == 'null' )  {
-                                 AUTHOR_NAME = sh(script: "git show -s --pretty=%ae | awk -F'@' '{print \$1}'", , returnStdout: true).trim()
-                            }
-                            testsReportMap['api-tests'] = 'failed'
-                        }
-                            sh '''
-                                sudo curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                                sudo chmod +x /usr/local/bin/docker-compose
-
-        docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
-                            '''
-                        script {
-                            testsReportMap['api-tests'] = 'passed'
-                        }
+                    if ( AUTHOR_NAME == 'null' )  {
+                        AUTHOR_NAME = sh(script: "git show -s --pretty=%ae | awk -F'@' '{print \$1}'", , returnStdout: true).trim()
                     }
+                    testsReportMap['api-tests'] = 'failed'
+                }
+                sh '''
+                   sudo curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                   sudo chmod +x /usr/local/bin/docker-compose
+
+                   docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
+                   '''
+                script {
+                    testsReportMap['api-tests'] = 'passed'
+                }
+            }
         }
     }
     post {
