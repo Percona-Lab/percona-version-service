@@ -27,8 +27,6 @@ import (
 	_ "github.com/Percona-Lab/percona-version-service/statik"
 )
 
-const defaultLogPath = "/tmp/vsLog.log"
-
 func getOpenAPIHandler() http.Handler {
 	err := mime.AddExtensionType(".svg", "image/svg+xml")
 	if err != nil {
@@ -46,8 +44,7 @@ func getOpenAPIHandler() http.Handler {
 func main() {
 	useTLS := strings.ToLower(os.Getenv("SERVE_HTTP")) != "true"
 
-	logger, closeFunc := initLogger()
-	defer closeFunc()
+	logger := initLogger()
 
 	grpcport := os.Getenv("GRPC_PORT")
 	if grpcport == "" {
@@ -138,17 +135,7 @@ func main() {
 	}
 }
 
-func initLogger() (*zap.Logger, func()) {
-	logPath := os.Getenv("LOG_FILE_PATH")
-	if logPath == "" {
-		logPath = defaultLogPath
-	}
-
-	ws, closeFN, err := zap.Open(logPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func initLogger() *zap.Logger {
 	logConf := zap.NewProductionEncoderConfig()
 	logConf.EncodeTime = func(time time.Time, encoder zapcore.PrimitiveArrayEncoder) {
 		encoder.AppendInt64(time.Unix())
@@ -158,12 +145,11 @@ func initLogger() (*zap.Logger, func()) {
 		return true
 	})
 
-	teeCore := zapcore.NewTee(zapcore.NewCore(zapcore.NewJSONEncoder(logConf), ws, levelEnablerFunc), zapcore.NewCore(zapcore.NewJSONEncoder(logConf), zapcore.Lock(os.Stdout), levelEnablerFunc))
-	logger := zap.New(teeCore, zap.Fields(zap.String("serviceName", "versionService")))
+	logger := zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(logConf), zapcore.Lock(os.Stderr), levelEnablerFunc))
 
 	grpc_zap.ReplaceGrpcLoggerV2(logger)
 
-	return logger, closeFN
+	return logger
 }
 
 func grpcServerLogOpt(logger *zap.Logger) grpc.ServerOption {
