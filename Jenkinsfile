@@ -21,11 +21,11 @@ pipeline {
     }
     stages {
         stage('Run API tests') {
-            // when {
-            //     expression {
-            //         !skipBranchBulds
-            //     }
-            // }
+            when {
+                expression {
+                    !skipBranchBulds
+                }
+            }
             agent {
                 label 'docker-32gb'
             }
