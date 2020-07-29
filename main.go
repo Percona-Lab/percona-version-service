@@ -74,8 +74,7 @@ func main() {
 	logger.Info("serving gRPC", zap.String("Addr", "http://"+addr))
 
 	go func() {
-		err := s.Serve(lis)
-		if err != nil {
+		if err := s.Serve(lis); err != nil {
 			logger.Fatal("Failed to serve grpc server", zap.Error(err))
 		}
 	}()
@@ -121,16 +120,14 @@ func main() {
 
 	if !useTLS {
 		logger.Info("serving gRPC-Gateway and OpenAPI Documentation", zap.String("gatewayAddr", "http://"+gatewayAddr))
-		err = gwServer.ListenAndServe()
-		if err != nil {
+		if err := gwServer.ListenAndServe(); err != nil {
 			logger.Fatal("failed to serve gRPC-Gateway", zap.Error(err), zap.Bool("tls", false))
 		}
 	}
 
 	gwServer.TLSConfig = tlsConfig
 	logger.Info("serving gRPC-Gateway and OpenAPI Documentation", zap.String("gatewayAddr", "https://"+gatewayAddr))
-	err = gwServer.ListenAndServeTLS("", "")
-	if err != nil {
+	if err := gwServer.ListenAndServeTLS("", ""); err != nil {
 		logger.Fatal("failed to serve gRPC-Gateway", zap.Error(err), zap.Bool("tls", true))
 	}
 }
