@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_apply_should_return_just_one_version(t *testing.T) {
+func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	cli := cli()
 
 	pxcParams := &version_service.VersionServiceApplyParams{
@@ -54,7 +54,7 @@ func Test_apply_should_return_just_one_version(t *testing.T) {
 	}
 }
 
-func Test_apply_pxc_should_return_same_major_version(t *testing.T) {
+func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
 	cli := cli()
 
 	pxcParams := &version_service.VersionServiceApplyParams{
@@ -76,7 +76,7 @@ func Test_apply_pxc_should_return_same_major_version(t *testing.T) {
 	}
 }
 
-func Test_apply_psmdb_should_return_same_major_version(t *testing.T) {
+func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 	cli := cli()
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
@@ -98,7 +98,7 @@ func Test_apply_psmdb_should_return_same_major_version(t *testing.T) {
 	}
 }
 
-func Test_apply_pxc_returned_versions(t *testing.T) {
+func TestApplyPxcReturnedVersions(t *testing.T) {
 	cli := cli()
 
 	v57 := "5.7"
@@ -147,7 +147,7 @@ func Test_apply_pxc_returned_versions(t *testing.T) {
 	}
 }
 
-func Test_apply_psmdb_returned_versions(t *testing.T) {
+func TestApplyPsmdbReturnedVersions(t *testing.T) {
 	cli := cli()
 
 	v36 := "3.6"

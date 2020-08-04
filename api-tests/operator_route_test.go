@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_operator_route_should_return_rigth_operator_version(t *testing.T) {
+func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
 	cli := cli()
 
 	cases := []struct {
@@ -37,7 +37,7 @@ func Test_operator_route_should_return_rigth_operator_version(t *testing.T) {
 	}
 }
 
-func Test_operator_route_pxc_should_return_not_empty_responses(t *testing.T) {
+func TestOperatorRoutePxcShouldReturnNotEmptyResponses(t *testing.T) {
 	cli := cli()
 
 	cases := []struct {
@@ -73,7 +73,7 @@ func Test_operator_route_pxc_should_return_not_empty_responses(t *testing.T) {
 	}
 }
 
-func Test_operator_route_psmdb_should_return_not_empty_responses(t *testing.T) {
+func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 	cli := cli()
 
 	cases := []struct {

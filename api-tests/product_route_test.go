@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_product_route_should_return_rigth_product_name(t *testing.T) {
+func TestProductRouteShouldReturnRigthProductName(t *testing.T) {
 	cli := cli()
 
 	cases := []struct {
