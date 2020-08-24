@@ -70,7 +70,7 @@ paths:
   /versions/v1/{product}/{operatorVersion}:
     get:
       summary: Product versions for specific operator version
-      description: Return product versions for specifiv operator
+      description: Return product versions for specific operator
       operationId: VersionService_Operator
       responses:
         "200":
