@@ -142,7 +142,13 @@ func initLogger() *zap.Logger {
 		return true
 	})
 
-	logger := zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(logConf), zapcore.Lock(os.Stderr), levelEnablerFunc))
+	logEncoder := zapcore.NewConsoleEncoder(logConf)
+
+	if os.Getenv("LOGGER_MODE") == "PRODUCTION" {
+		logEncoder = zapcore.NewJSONEncoder(logConf)
+	}
+
+	logger := zap.New(zapcore.NewCore(logEncoder, zapcore.Lock(os.Stderr), levelEnablerFunc))
 
 	grpc_zap.ReplaceGrpcLoggerV2(logger)
 
