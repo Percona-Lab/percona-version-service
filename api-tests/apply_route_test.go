@@ -70,9 +70,7 @@ func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
 		assert.NoError(t, err)
 
 		k := getVersion(pxcResp.Payload.Versions[0].Matrix.Pxc)
-		if !strings.HasPrefix(k, v) {
-			t.Errorf("wrong version returned: %s", k)
-		}
+		assert.True(t, strings.HasPrefix(k, v))
 	}
 }
 
@@ -92,9 +90,7 @@ func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 		assert.NoError(t, err)
 
 		k := getVersion(psmdbResp.Payload.Versions[0].Matrix.Mongod)
-		if !strings.HasPrefix(k, v) {
-			t.Errorf("wrong version returned: %s", k)
-		}
+		assert.True(t, strings.HasPrefix(k, v))
 	}
 }
 
