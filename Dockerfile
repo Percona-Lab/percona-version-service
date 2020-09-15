@@ -1,9 +1,11 @@
-FROM golang:1.14 AS build-env
+FROM golang:1.15 AS build-env
 ADD . /src
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
 WORKDIR /src
+RUN make init
+RUN make gen
 RUN go mod download
 RUN go build -o /app
 

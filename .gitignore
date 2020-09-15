@@ -6,3 +6,4 @@ statik
 certs/*.pem
 bin
 tools/vendor
+client

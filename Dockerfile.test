@@ -1,0 +1,12 @@
+FROM golang:1.15
+ADD . /src
+ENV CGO_ENABLED=1
+ENV GOOS=linux
+ENV GOARCH=amd64
+ENV VS_HOST=""
+WORKDIR /src
+RUN make init
+RUN make gen
+RUN go mod download
+RUN go test -race -c ./api-tests -o /api-tests
+CMD ["/api-tests","-test.v"]
