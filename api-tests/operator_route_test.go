@@ -58,8 +58,8 @@ func TestOperatorRoutePxcShouldReturnNotEmptyResponses(t *testing.T) {
 		resp, err := cli.VersionService.VersionServiceOperator(params)
 		assert.NoError(t, err)
 
-		assert.Equal(t, 1, len(resp.Payload.Versions))
-		assert.Equal(t, 1, len(resp.Payload.Versions[0].Matrix.Operator))
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.Operator, 1)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pxc), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Proxysql), 0)
@@ -93,8 +93,8 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		resp, err := cli.VersionService.VersionServiceOperator(params)
 		assert.NoError(t, err)
 
-		assert.Equal(t, 1, len(resp.Payload.Versions))
-		assert.Equal(t, 1, len(resp.Payload.Versions[0].Matrix.Operator))
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.Operator, 1)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Mongod), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Backup), 0)

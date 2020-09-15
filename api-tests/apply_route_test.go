@@ -25,15 +25,13 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	pxcResp, err := cli.VersionService.VersionServiceApply(pxcParams)
 	assert.NoError(t, err)
 
-	if len(pxcResp.Payload.Versions) != 1 ||
-		len(pxcResp.Payload.Versions[0].Matrix.Pxc) != 1 ||
-		len(pxcResp.Payload.Versions[0].Matrix.Backup) != 1 ||
-		len(pxcResp.Payload.Versions[0].Matrix.Proxysql) != 1 ||
-		len(pxcResp.Payload.Versions[0].Matrix.Pmm) != 1 ||
-		len(pxcResp.Payload.Versions[0].Matrix.Haproxy) != 1 ||
-		len(pxcResp.Payload.Versions[0].Matrix.Operator) != 1 {
-		t.Error("more than one version returned")
-	}
+	assert.Len(t, pxcResp.Payload.Versions, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Pxc, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Backup, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Proxysql, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Pmm, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Haproxy, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
@@ -45,13 +43,11 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	psmdbResp, err := cli.VersionService.VersionServiceApply(psmdbParams)
 	assert.NoError(t, err)
 
-	if len(pxcResp.Payload.Versions) != 1 ||
-		len(psmdbResp.Payload.Versions[0].Matrix.Mongod) != 1 ||
-		len(psmdbResp.Payload.Versions[0].Matrix.Backup) != 1 ||
-		len(psmdbResp.Payload.Versions[0].Matrix.Pmm) != 1 ||
-		len(psmdbResp.Payload.Versions[0].Matrix.Operator) != 1 {
-		t.Error("more than one version returned")
-	}
+	assert.Len(t, psmdbResp.Payload.Versions, 1)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Mongod, 1)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Backup, 1)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 1)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Operator, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
