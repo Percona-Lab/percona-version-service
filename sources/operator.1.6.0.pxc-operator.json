@@ -1,0 +1,100 @@
+{
+  "versions": [
+    {
+      "operator": "1.6.0",
+      "product": "pxc-operator",
+      "matrix": {
+        "pxc": {
+          "8.0.19-10.1": {
+            "image_path": "percona/percona-xtradb-cluster:8.0.19-10.1",
+            "image_hash": "1058ae8eded735ebdf664807aad7187942fc9a1170b3fd0369574cb61206b63a",
+            "status": "recommended",
+            "critical": false
+          },
+          "5.7.30-31.43": {
+            "image_path": "percona/percona-xtradb-cluster:5.7.30-31.43",
+            "image_hash": "b03a060e9261b37288a2153c78f86dcfc53367c36e1bcdcae046dd2d0b0721af",
+            "status": "recommended",
+            "critical": false
+          },
+          "5.7.29-31.43": {
+            "image_path": "percona/percona-xtradb-cluster:5.7.29-31.43",
+            "image_hash": "85fb479de073770280ae601cf3ec22dc5c8cca4c8b0dc893b09503767338e6f9",
+            "status": "available",
+            "critical": false
+          },
+          "5.7.28-31.41.2": {
+            "image_path": "percona/percona-xtradb-cluster:5.7.28-31.41.2",
+            "image_hash": "fccd6525aaeedb5e436e9534e2a63aebcf743c043526dd05dba8519ebddc8b30",
+            "status": "available",
+            "critical": true
+          },
+          "5.7.27-31.39": {
+            "image_path": "percona/percona-xtradb-cluster:5.7.27-31.39",
+            "image_hash": "7d8eb4d2031c32c6e96451655f359d8e5e8e047dc95bada9a28c41c158876c26",
+            "status": "available",
+            "critical": false
+          },
+          "5.7.26-31.37": {
+            "image_path": "percona/percona-xtradb-cluster:5.7.26-31.37",
+            "image_hash": "9d43d8e435e4aca5c694f726cc736667cb938158635c5f01a0e9412905f1327f",
+            "status": "available",
+            "critical": false
+          }
+        },
+        "pmm": {
+          "2.0.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0-pmm",
+            "image_hash": "28bbb6693689a15c407c85053755334cd25d864e632ef7fed890bc85726cfb68",
+            "status": "recommended",
+            "critical": false
+          },
+          "1.17.1": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0-pmm",
+            "image_hash": "28bbb6693689a15c407c85053755334cd25d864e632ef7fed890bc85726cfb68",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "proxysql": {
+          "2.0.13": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0-proxysql",
+            "image_hash": "877e7abcf7787a2105cf1bb4f7c7e6e293d3e51edbb2bfbc9e57d6bd79016319",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "haproxy": {
+          "2.1.7": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0-haproxy",
+            "image_hash": "5b77d5b7dbc3191690e9d785318fa8c87ff2449a666a32a13aa834fa1883de4b",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "backup": {
+          "8.0.14": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0-pxc8.0-backup",
+            "image_hash": "2c2f9bce09598e2ab68db5d8b4ecd85aa3df8c933495c60086fe149c7b635d53",
+            "status": "recommended",
+            "critical": false
+          },
+          "2.4.20": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0-pxc5.7-backup",
+            "image_hash": "8b33eb979c314acf05043e568ad2986ec848e5f944d753814e9a0a81b6130082",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "operator": {
+          "1.6.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0",
+            "image_hash": "0f4334af020f51151bf9756126a55d9135ad29f91bbb372087ff469a8ccee292",
+            "status": "recommended",
+            "critical": false
+          }
+        }
+      }
+    }
+  ]
+}
