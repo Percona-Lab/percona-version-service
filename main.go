@@ -13,18 +13,16 @@ import (
 	"time"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-
-	"github.com/Percona-Lab/percona-version-service/server"
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 
+	"github.com/Percona-Lab/percona-version-service/server"
 	_ "github.com/Percona-Lab/percona-version-service/statik"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
 
 func getOpenAPIHandler() http.Handler {
