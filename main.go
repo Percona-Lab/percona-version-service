@@ -4,22 +4,25 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"mime"
 	"net"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
-	"github.com/Percona-Lab/percona-version-service/server"
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/grpclog"
 
+	"github.com/Percona-Lab/percona-version-service/server"
 	_ "github.com/Percona-Lab/percona-version-service/statik"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
 
 func getOpenAPIHandler() http.Handler {
@@ -39,8 +42,8 @@ func getOpenAPIHandler() http.Handler {
 func main() {
 	useTLS := strings.ToLower(os.Getenv("SERVE_HTTP")) != "true"
 
-	log := grpclog.NewLoggerV2(os.Stdout, ioutil.Discard, ioutil.Discard)
-	grpclog.SetLoggerV2(log)
+	logger := initLogger()
+
 	grpcport := os.Getenv("GRPC_PORT")
 	if grpcport == "" {
 		grpcport = "10000"
@@ -48,26 +51,30 @@ func main() {
 	addr := "127.0.0.1:" + grpcport
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		logger.Fatal("failed to listen interface", zap.Error(err), zap.String("addr", addr))
 	}
 
 	var tlsConfig *tls.Config
 	if useTLS {
 		cert, err := tls.LoadX509KeyPair("certs/cert.pem", "certs/key.pem")
 		if err != nil {
-			log.Fatalf("failed to load key pair: %v", err)
+			logger.Fatal("failed to load key pair", zap.Error(err))
 		}
 
 		tlsConfig = &tls.Config{
 			Certificates: []tls.Certificate{cert},
 		}
 	}
-	s := grpc.NewServer()
 
+	s := grpc.NewServer(grpcServerLogOpt(logger))
 	pbVersion.RegisterVersionServiceServer(s, server.New())
-	log.Infof("serving gRPC on http://%s", addr)
+
+	logger.Info("serving gRPC", zap.String("Addr", "http://"+addr))
+
 	go func() {
-		log.Fatal(s.Serve(lis))
+		if err := s.Serve(lis); err != nil {
+			logger.Fatal("Failed to serve grpc server", zap.Error(err))
+		}
 	}()
 
 	// See https://github.com/grpc/grpc/blob/master/doc/naming.md
@@ -81,14 +88,14 @@ func main() {
 		grpc.WithBlock(),
 	)
 	if err != nil {
-		log.Fatalln("failed to dial server:", err)
+		logger.Fatal("failed to dial server", zap.Error(err), zap.String("dialAddr", dialAddr))
 	}
 
 	gwmux := runtime.NewServeMux()
 
 	err = pbVersion.RegisterVersionServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {
-		log.Fatalln("failed to register gateway:", err)
+		logger.Fatal("failed to register gateway", zap.Error(err))
 	}
 	oa := getOpenAPIHandler()
 
@@ -110,11 +117,47 @@ func main() {
 	}
 
 	if !useTLS {
-		log.Info("serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
-		log.Fatalln(gwServer.ListenAndServe())
+		logger.Info("serving gRPC-Gateway and OpenAPI Documentation", zap.String("gatewayAddr", "http://"+gatewayAddr))
+		if err := gwServer.ListenAndServe(); err != nil {
+			logger.Fatal("failed to serve gRPC-Gateway", zap.Error(err), zap.Bool("tls", false))
+		}
 	}
 
 	gwServer.TLSConfig = tlsConfig
-	log.Info("serving gRPC-Gateway and OpenAPI Documentation on https://", gatewayAddr)
-	log.Fatalln(gwServer.ListenAndServeTLS("", ""))
+	logger.Info("serving gRPC-Gateway and OpenAPI Documentation", zap.String("gatewayAddr", "https://"+gatewayAddr))
+	if err := gwServer.ListenAndServeTLS("", ""); err != nil {
+		logger.Fatal("failed to serve gRPC-Gateway", zap.Error(err), zap.Bool("tls", true))
+	}
+}
+
+func initLogger() *zap.Logger {
+	logConf := zap.NewProductionEncoderConfig()
+	logConf.EncodeTime = func(time time.Time, encoder zapcore.PrimitiveArrayEncoder) {
+		encoder.AppendInt64(time.Unix())
+	}
+
+	levelEnablerFunc := zap.LevelEnablerFunc(func(_ zapcore.Level) bool {
+		return true
+	})
+
+	logEncoder := zapcore.NewConsoleEncoder(logConf)
+
+	if os.Getenv("LOGGER_MODE") == "PRODUCTION" {
+		logEncoder = zapcore.NewJSONEncoder(logConf)
+	}
+
+	logger := zap.New(zapcore.NewCore(logEncoder, zapcore.Lock(os.Stderr), levelEnablerFunc))
+
+	grpc_zap.ReplaceGrpcLoggerV2(logger)
+
+	return logger
+}
+
+func grpcServerLogOpt(logger *zap.Logger) grpc.ServerOption {
+	return grpc_middleware.WithUnaryServerChain(
+		grpc_zap.PayloadUnaryServerInterceptor(logger, func(_ context.Context, _ string, _ interface{}) bool {
+			return true
+		}),
+		grpc_zap.UnaryServerInterceptor(logger),
+	)
 }
