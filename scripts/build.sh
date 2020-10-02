@@ -10,4 +10,4 @@ pushd ${src_dir}
 docker build -t $image .
 popd
 
-# docker push $image
+docker push $image
