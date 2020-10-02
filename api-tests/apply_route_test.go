@@ -94,7 +94,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 	cli := cli()
 
 	v57 := "5.7"
-	vBigPatch := "5.7.31-99-99"
+	vPreRel := "5.7.31-99-99"
 
 	cases := []struct {
 		apply     string
@@ -110,9 +110,9 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"latest", "1.5.0", &v57, "5.7.31-31.45"},
 		{"latest", "1.4.0", &v57, "5.7.28-31.41.2"},
 
-		// test latest when patch part in current version is bigger than in latest
-		{"latest", "1.6.0", &vBigPatch, "5.7.31-31.45"},
-		{"latest", "1.5.0", &vBigPatch, "5.7.31-31.45"},
+		// test latest when prerelease part in current version is bigger than in latest
+		{"latest", "1.6.0", &vPreRel, "5.7.31-31.45"},
+		{"latest", "1.5.0", &vPreRel, "5.7.31-31.45"},
 
 		// test recommended
 		{"recommended", "1.6.0", nil, "8.0.20-11.1"},
