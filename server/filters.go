@@ -107,7 +107,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 		}
 
 		for _, s := range sorted {
-			if s.Equal(c) || (s.Major() < c.Major() && s.Minor() < c.Minor() && s.Patch() < c.Patch()) {
+			if s.Equal(c) || (s.Major() == c.Major() && s.Minor() == c.Minor() && s.Patch() < c.Patch()) {
 				break
 			}
 
