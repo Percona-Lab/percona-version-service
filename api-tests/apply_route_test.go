@@ -17,7 +17,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pxcParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.5.0",
+		OperatorVersion: "1.6.0",
 		Product:         "pxc-operator",
 	}
 	pxcParams.WithTimeout(2 * time.Second)
@@ -55,7 +55,7 @@ func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
 
 	pxcParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.5.0",
+		OperatorVersion: "1.6.0",
 		Product:         "pxc-operator",
 	}
 	pxcParams.WithTimeout(2 * time.Second)
@@ -103,23 +103,23 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.6.0", nil, "8.0.20-11.1"},
-		{"latest", "1.5.0", nil, "8.0.20-11.1"},
+		{"latest", "1.6.0", nil, "8.0.20-11.2"},
+		{"latest", "1.5.0", nil, "8.0.20-11.2"},
 		{"latest", "1.4.0", nil, "8.0.18-9.3"},
-		{"latest", "1.6.0", &v57, "5.7.31-31.45"},
-		{"latest", "1.5.0", &v57, "5.7.31-31.45"},
+		{"latest", "1.6.0", &v57, "5.7.31-31.45.2"},
+		{"latest", "1.5.0", &v57, "5.7.31-31.45.2"},
 		{"latest", "1.4.0", &v57, "5.7.28-31.41.2"},
 
 		// test latest when prerelease part in current version is bigger than in latest
-		{"latest", "1.6.0", &vPreRel, "5.7.31-31.45"},
-		{"latest", "1.5.0", &vPreRel, "5.7.31-31.45"},
+		{"latest", "1.6.0", &vPreRel, "5.7.31-31.45.2"},
+		{"latest", "1.5.0", &vPreRel, "5.7.31-31.45.2"},
 
 		// test recommended
-		{"recommended", "1.6.0", nil, "8.0.20-11.1"},
-		{"recommended", "1.5.0", nil, "8.0.20-11.1"},
+		{"recommended", "1.6.0", nil, "8.0.20-11.2"},
+		{"recommended", "1.5.0", nil, "8.0.20-11.2"},
 		{"recommended", "1.4.0", nil, "8.0.18-9.3"},
-		{"recommended", "1.6.0", &v57, "5.7.31-31.45"},
-		{"recommended", "1.5.0", &v57, "5.7.31-31.45"},
+		{"recommended", "1.6.0", &v57, "5.7.31-31.45.2"},
+		{"recommended", "1.5.0", &v57, "5.7.31-31.45.2"},
 		{"recommended", "1.4.0", &v57, "5.7.28-31.41.2"},
 
 		// test exact
