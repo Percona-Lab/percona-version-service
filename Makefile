@@ -1,5 +1,9 @@
 SHELL = /bin/bash
 
+GIT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD | sed -e 's^/^-^g; s^[.]^-^g;' | tr '[:upper:]' '[:lower:]')
+GIT_COMMIT:=$(shell git rev-parse --short HEAD)
+IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
+
 init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
 	go build -modfile=tools/go.mod -o bin/statik github.com/rakyll/statik
@@ -38,8 +42,17 @@ gen:
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
 
-image:
-	scripts/build.sh
+# Build docker image
+docker-build:
+	docker build . -t ${IMG}
+
+# Run docker image
+docker-run-it:
+	docker run -it --rm ${IMG}
+
+# Build and push docker image
+docker-push: docker-build
+	docker push ${IMG}
 
 test:
 	docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
