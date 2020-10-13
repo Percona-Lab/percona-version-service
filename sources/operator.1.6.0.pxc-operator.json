@@ -5,10 +5,16 @@
       "product": "pxc-operator",
       "matrix": {
         "pxc": {
+          "8.0.20-11.2": {
+            "image_path": "percona/percona-xtradb-cluster:8.0.20-11.2",
+            "image_hash": "feda5612db18da824e971891d6084465aa9cdc9918c18001cd95ba30916da78b",
+            "status": "recommended",
+            "critical": false
+          },
           "8.0.20-11.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.20-11.1",
             "image_hash": "54b1b2f5153b78b05d651034d4603a13e685cbb9b45bfa09a39864fa3f169349",
-            "status": "recommended",
+            "status": "available",
             "critical": false
           },
           "8.0.19-10.1": {
@@ -17,10 +23,16 @@
             "status": "available",
             "critical": false
           },
+          "5.7.31-31.45.2": {
+            "image_path": "percona/percona-xtradb-cluster:5.7.31-31.45.2",
+            "image_hash": "0decf85c7c7afacc438f5fe355dc8320ea7ffc7018ca2cb6bda3ac0c526ae172",
+            "status": "recommended",
+            "critical": false
+          },
           "5.7.31-31.45": {
             "image_path": "percona/percona-xtradb-cluster:5.7.31-31.45",
             "image_hash": "3852cef43cc0c6aa791463ba6279e59dcdac3a4fb1a5616c745c1b3c68041dc2",
-            "status": "recommended",
+            "status": "available",
             "critical": false
           },
           "5.7.30-31.43": {
