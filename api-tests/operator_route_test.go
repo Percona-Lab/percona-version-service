@@ -19,6 +19,7 @@ func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
 		{"pxc-operator", "1.5.0"},
 		{"pxc-operator", "1.6.0"},
 		{"psmdb-operator", "1.5.0"},
+		{"psmdb-operator", "1.6.0"},
 	}
 
 	for _, c := range cases {
@@ -83,6 +84,7 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		version string
 	}{
 		{"psmdb-operator", "1.5.0"},
+		{"psmdb-operator", "1.6.0"},
 	}
 
 	for _, c := range cases {
