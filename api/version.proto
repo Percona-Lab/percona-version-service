@@ -70,6 +70,7 @@ message ApplyRequest {
   string haproxy_version = 10;
   string namespace_uid = 11;
   string custom_resource_uid = 12;
+  string log_collector_version = 13;
 }
 
 message OperatorRequest {
@@ -84,6 +85,7 @@ message OperatorRequest {
   string haproxy_version = 10;
   string namespace_uid = 11;
   string custom_resource_uid = 12;
+  string log_collector_version = 13;
 }
 
 message ProductRequest {
@@ -97,6 +99,7 @@ message ProductRequest {
   string haproxy_version = 10;
   string namespace_uid = 11;
   string custom_resource_uid = 12;
+  string log_collector_version = 13;
 }
 
 // Status describes the current version status.
@@ -125,6 +128,7 @@ message VersionMatrix {
   map<string, Version> haproxy = 5;
   map<string, Version> backup = 6;
   map<string, Version> operator = 7;
+  map<string, Version> log_collector = 8;
 }
 
 // OperatorVersion represents operator version.

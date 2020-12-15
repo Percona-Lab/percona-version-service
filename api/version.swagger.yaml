@@ -65,6 +65,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: logCollectorVersion
+          in: query
+          required: false
+          type: string
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -123,6 +127,10 @@ paths:
           required: false
           type: string
         - name: customResourceUid
+          in: query
+          required: false
+          type: string
+        - name: logCollectorVersion
           in: query
           required: false
           type: string
@@ -188,6 +196,10 @@ paths:
           required: false
           type: string
         - name: customResourceUid
+          in: query
+          required: false
+          type: string
+        - name: logCollectorVersion
           in: query
           required: false
           type: string
@@ -398,6 +410,10 @@ definitions:
         additionalProperties:
           $ref: '#/definitions/versionVersion'
       operator:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      logCollector:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
