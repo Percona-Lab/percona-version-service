@@ -134,7 +134,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 
 func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
 	if len(versions) == 0 {
-		return status.Error(codes.Internal, "no versions to filter")
+		return nil
 	}
 
 	keys := make([]string, 0, len(versions))
