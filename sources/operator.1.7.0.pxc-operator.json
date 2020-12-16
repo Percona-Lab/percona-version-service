@@ -120,7 +120,7 @@
         },
         "operator": {
           "1.6.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.6.0",
+            "image_path": "perconalab/percona-xtradb-cluster-operator:master-logcollector",
             "image_hash": "9871d6fb960b4ec498430a398a44eca08873591a6b6efb8a35349e79e24f3072",
             "status": "recommended",
             "critical": false
