@@ -34,7 +34,7 @@ func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) 
 }
 
 func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
-	err := validate(req)
+	err := transformRequest(req)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +151,7 @@ func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest
 	return nil
 }
 
-func validate(req *pbVersion.ApplyRequest) error {
+func transformRequest(req *pbVersion.ApplyRequest) error {
 	sep := "-"
 	if strings.HasSuffix(req.Apply, sep+recommended) || strings.HasSuffix(req.Apply, sep+latest) {
 		sp := strings.Split(req.Apply, sep)
