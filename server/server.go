@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"strings"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 	"google.golang.org/grpc/codes"
@@ -33,6 +34,11 @@ func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) 
 }
 
 func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
+	err := transformRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
 	vs, err := operatorProductData(req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
@@ -140,6 +146,21 @@ func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest
 	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func transformRequest(req *pbVersion.ApplyRequest) error {
+	sep := "-"
+	if strings.HasSuffix(req.Apply, sep+recommended) || strings.HasSuffix(req.Apply, sep+latest) {
+		sp := strings.Split(req.Apply, sep)
+		if len(sp) != 2 {
+			return status.Errorf(codes.InvalidArgument, "invalid apply option: %s", req.Apply)
+		}
+
+		req.DatabaseVersion = sp[0]
+		req.Apply = sp[1]
 	}
 
 	return nil
