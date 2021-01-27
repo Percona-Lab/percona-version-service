@@ -105,13 +105,13 @@
         "backup": {
           "8.0.22": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.7.0-pxc8.0-backup",
-            "image_hash": "3ab6bdc68c440fdd445baf3654081a0ab5c9deba146db3dd31de34fd3ea3bc19",
+            "image_hash": "5ce65acd74d29d4c63ef5bb3dfac70700f8ddb8ca533084702c796efdf0050ff",
             "status": "recommended",
             "critical": false
           },
           "2.4.21": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.7.0-pxc5.7-backup",
-            "image_hash": "bba24798031ee76a7d01bf87319c58853f625373b97615c5ff610c8d11c800d7",
+            "image_hash": "91a5041103586eec9a23c59761b143a7080bb0b45dc8cd06fb575a48dd4bf846",
             "status": "recommended",
             "critical": false
           }
