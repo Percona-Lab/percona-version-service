@@ -417,6 +417,26 @@ definitions:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
+      postgresql:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgbackrest:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgbackrestRepo:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgbadger:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgbouncer:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
     description: VersionMatrix represents set of possible product versions.
   versionVersionResponse:
     type: object

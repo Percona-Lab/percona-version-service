@@ -22,6 +22,7 @@ func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
 		{"psmdb-operator", "1.5.0"},
 		{"psmdb-operator", "1.6.0"},
 		{"psmdb-operator", "1.7.0"},
+		{"postgresql-operator", "1.0.0"},
 	}
 
 	for _, c := range cases {
@@ -106,5 +107,36 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Mongod), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Backup), 0)
+	}
+}
+
+func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
+	cli := cli()
+
+	cases := []struct {
+		product string
+		version string
+	}{
+		{"postgresql-operator", "1.0.0"},
+	}
+
+	for _, c := range cases {
+		params := &version_service.VersionServiceOperatorParams{
+			OperatorVersion: c.version,
+			Product:         c.product,
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceOperator(params)
+		assert.NoError(t, err)
+
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.Operator, 1)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Postgresql), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.PgbackrestRepo), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbadger), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
 	}
 }

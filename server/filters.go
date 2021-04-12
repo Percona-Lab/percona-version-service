@@ -132,6 +132,75 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 	return nil
 }
 
+func pgFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
+	if len(versions) == 0 {
+		return status.Error(codes.Internal, "no versions to filter")
+	}
+
+	keys := make([]string, 0, len(versions))
+	for k, v := range versions {
+		if strings.ToLower(apply) == recommended && v.Status != pbVersion.Status_recommended {
+			continue
+		}
+
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys)
+	if err != nil {
+		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
+	}
+
+	if (strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest) && current == "" {
+		return deleteOtherBut(sorted[0].String(), versions)
+	}
+
+	desired := apply //assume version number
+	if strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest {
+		desired = current
+
+		c, err := semver.NewVersion(current)
+		if err != nil {
+			return status.Errorf(codes.InvalidArgument, "invalid current version: %s", current)
+		}
+
+		for _, s := range sorted {
+			if s.Equal(c) || s.LessThan(c) {
+				break
+			}
+
+			str := s.String()
+			v, ok := versions[str]
+			if !ok {
+				// let's try to find version witout Patch if Patch is equal to zero
+				if strings.HasSuffix(str, ".0") {
+					v, ok = versions[strings.TrimSuffix(str, ".0")]
+					if !ok {
+						return status.Errorf(codes.Internal, "failed to filter version %s", str)
+					}
+				} else {
+					return status.Errorf(codes.Internal, "failed to filter version %s", str)
+				}
+			}
+
+			if v.Status != pbVersion.Status_disabled && c.Major() == s.Major() {
+				desired = s.String()
+				break
+			}
+		}
+	}
+
+	err = deleteOtherBut(desired, versions)
+	if err != nil {
+		return err
+	}
+	if len(versions) == 0 {
+		return status.Errorf(codes.NotFound, "version %s does not exist", desired)
+	}
+
+	return nil
+}
+
 func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
 	if len(versions) == 0 {
 		return nil
@@ -206,7 +275,7 @@ func deleteOtherBut(v string, versions map[string]*pbVersion.Version) error {
 		}
 
 		// ignore prerelease/buildmetadata suffix
-		if sk.Major() != sv.Major() && sk.Minor() != sv.Minor() && sk.Patch() != sv.Patch() {
+		if sk.Major() != sv.Major() || sk.Minor() != sv.Minor() || sk.Patch() != sv.Patch() {
 			delete(versions, k)
 		}
 	}

@@ -60,6 +60,11 @@ func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVers
 		if err != nil {
 			return nil, err
 		}
+	case "postgresql-operator":
+		err := pg(vs, deps, req)
+		if err != nil {
+			return nil, err
+		}
 	default:
 		return nil, status.Errorf(codes.InvalidArgument, "invalid product: %s", req.Product)
 	}
@@ -144,6 +149,57 @@ func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest
 		return err
 	}
 	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) error {
+	err := pgFilter(vs.Versions[0].Matrix.Postgresql, req.Apply, req.DatabaseVersion)
+	if err != nil {
+		return err
+	}
+
+	productVersion := ""
+	for k := range vs.Versions[0].Matrix.Postgresql {
+		productVersion = k
+		break
+	}
+
+	depVer, err := depFilter(deps.PgBackrest, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Pgbackrest, depVer)
+	if err != nil {
+		return err
+	}
+
+	depVer, err = depFilter(deps.PgBackrestRepo, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.PgbackrestRepo, depVer)
+	if err != nil {
+		return err
+	}
+
+	depVer, err = depFilter(deps.Pgbadger, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Pgbadger, depVer)
+	if err != nil {
+		return err
+	}
+
+	depVer, err = depFilter(deps.Pgbouncer, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Pgbouncer, depVer)
 	if err != nil {
 		return err
 	}
