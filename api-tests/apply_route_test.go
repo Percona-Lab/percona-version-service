@@ -1,7 +1,6 @@
 package api_tests
 
 import (
-	"log"
 	"os"
 	"strings"
 	"testing"
@@ -59,8 +58,6 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgResp, err := cli.VersionService.VersionServiceApply(pgParams)
 	assert.NoError(t, err)
-
-	log.Println(pgResp)
 
 	assert.Len(t, pgResp.Payload.Versions, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
