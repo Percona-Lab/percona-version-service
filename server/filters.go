@@ -151,12 +151,14 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
 
-	if (strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest) && current == "" {
+	apply = strings.ToLower(apply)
+
+	if (apply == recommended || apply == latest) && current == "" {
 		return deleteOtherBut(sorted[0].String(), versions)
 	}
 
 	desired := apply //assume version number
-	if strings.ToLower(apply) == recommended || strings.ToLower(apply) == latest {
+	if apply == recommended || apply == latest {
 		desired = current
 
 		c, err := semver.NewVersion(current)
