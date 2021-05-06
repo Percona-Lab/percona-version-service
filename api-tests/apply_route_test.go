@@ -48,6 +48,25 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Backup, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Operator, 1)
+
+	pgParams := &version_service.VersionServiceApplyParams{
+		Apply:           "latest",
+		OperatorVersion: "1.0.0",
+		Product:         "postgresql-operator",
+	}
+	pgParams.WithTimeout(2 * time.Second)
+
+	pgResp, err := cli.VersionService.VersionServiceApply(pgParams)
+	assert.NoError(t, err)
+
+	assert.Len(t, pgResp.Payload.Versions, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.PgbackrestRepo, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbadger, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
@@ -87,6 +106,26 @@ func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 
 		k := getVersion(psmdbResp.Payload.Versions[0].Matrix.Mongod)
 		assert.True(t, strings.HasPrefix(k, v))
+	}
+}
+
+func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
+	cli := cli()
+
+	pgParams := &version_service.VersionServiceApplyParams{
+		Apply:           "latest",
+		OperatorVersion: "1.0.0",
+		Product:         "postgresql-operator",
+	}
+	pgParams.WithTimeout(2 * time.Second)
+
+	for _, v := range []string{"11.0", "12.0", "13.0"} {
+		pgParams.DatabaseVersion = &v
+		psmdbResp, err := cli.VersionService.VersionServiceApply(pgParams)
+		assert.NoError(t, err)
+
+		k := getVersion(psmdbResp.Payload.Versions[0].Matrix.Postgresql)
+		assert.True(t, strings.HasPrefix(k, strings.Split(v, ".")[0]))
 	}
 }
 

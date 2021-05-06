@@ -16,6 +16,7 @@ func TestProductRouteShouldReturnRigthProductName(t *testing.T) {
 	}{
 		{"pxc-operator"},
 		{"psmdb-operator"},
+		{"postgresql-operator"},
 	}
 
 	for _, c := range cases {

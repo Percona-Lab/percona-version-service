@@ -129,6 +129,11 @@ message VersionMatrix {
   map<string, Version> backup = 6;
   map<string, Version> operator = 7;
   map<string, Version> log_collector = 8;
+  map<string, Version> postgresql = 9;
+  map<string, Version> pgbackrest = 10;
+  map<string, Version> pgbackrest_repo = 11;
+  map<string, Version> pgbadger = 12;
+  map<string, Version> pgbouncer = 13;
 }
 
 // OperatorVersion represents operator version.
