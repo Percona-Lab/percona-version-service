@@ -437,6 +437,14 @@ definitions:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
+      pxcOperator:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      psmdbOperator:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
     description: VersionMatrix represents set of possible product versions.
   versionVersionResponse:
     type: object

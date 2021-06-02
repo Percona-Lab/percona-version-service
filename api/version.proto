@@ -134,6 +134,8 @@ message VersionMatrix {
   map<string, Version> pgbackrest_repo = 11;
   map<string, Version> pgbadger = 12;
   map<string, Version> pgbouncer = 13;
+  map<string, Version> pxc_operator = 14;
+  map<string, Version> psmdb_operator = 15;
 }
 
 // OperatorVersion represents operator version.

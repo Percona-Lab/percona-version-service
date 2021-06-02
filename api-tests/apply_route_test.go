@@ -343,6 +343,20 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 	}
 }
 
+func TestPmmServerUnimplemented(t *testing.T) {
+	cli := cli()
+
+	params := &version_service.VersionServiceApplyParams{
+		Apply:           "latest",
+		OperatorVersion: "1.8.0",
+		Product:         "pmm-server",
+	}
+	params.WithTimeout(2 * time.Second)
+
+	_, err := cli.VersionService.VersionServiceApply(params)
+	assert.Error(t, err, "error expected - apply should not be implemented for pmm-server")
+}
+
 func getVersion(v map[string]models.VersionVersion) string {
 	for k := range v {
 		return k
