@@ -38,8 +38,6 @@ func init() {
 	}
 }
 
-const pmmServerSuffix = ".pmm-server.json"
-
 func operatorData(product string) (*pbVersion.ProductResponse, error) {
 	suffix := fmt.Sprintf(".%s.json", product)
 	r := pbVersion.ProductResponse{}
