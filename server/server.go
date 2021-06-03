@@ -9,6 +9,8 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+const pmmServerProduct = "pmm-server"
+
 // Backend implements the protobuf interface.
 type Backend struct {
 }
@@ -23,7 +25,11 @@ func (b *Backend) Product(ctx context.Context, req *pbVersion.ProductRequest) (*
 }
 
 func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) (*pbVersion.OperatorResponse, error) {
-	vs, err := operatorProductData(req.Product, req.OperatorVersion)
+	productFamily := "operator"
+	if req.Product == pmmServerProduct {
+		productFamily = "pmm"
+	}
+	vs, err := operatorProductData(productFamily, req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
 	}
@@ -34,12 +40,16 @@ func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) 
 }
 
 func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
+	if req.Product == pmmServerProduct {
+		return nil, status.Error(codes.Unimplemented, "not implemented for pmm-server")
+	}
+
 	err := transformRequest(req)
 	if err != nil {
 		return nil, err
 	}
 
-	vs, err := operatorProductData(req.Product, req.OperatorVersion)
+	vs, err := operatorProductData("operator", req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
 	}

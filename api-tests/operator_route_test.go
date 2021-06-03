@@ -144,3 +144,29 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
 	}
 }
+
+func TestOperatorRoutePMMServerShouldReturnNotEmptyResponses(t *testing.T) {
+	cli := cli()
+
+	cases := []struct {
+		product string
+		version string
+	}{
+		{"pmm-server", "2.19.0"},
+	}
+
+	for _, c := range cases {
+		params := &version_service.VersionServiceOperatorParams{
+			OperatorVersion: c.version,
+			Product:         c.product,
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceOperator(params)
+		assert.NoError(t, err)
+
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.PxcOperator, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.PsmdbOperator, 1)
+	}
+}
