@@ -65,8 +65,8 @@ func operatorData(product string) (*pbVersion.ProductResponse, error) {
 	return &r, nil
 }
 
-func operatorProductData(team string, product string, version string) (*pbVersion.VersionResponse, error) {
-	source := fmt.Sprintf("%s.%s.%s.json", team, version, product)
+func operatorProductData(productFamily string, product string, version string) (*pbVersion.VersionResponse, error) {
+	source := fmt.Sprintf("%s.%s.%s.json", productFamily, version, product)
 	v, ok := data[source]
 	if !ok {
 		return nil, status.Errorf(codes.NotFound, "no such source file: %s", source)

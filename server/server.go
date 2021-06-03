@@ -25,11 +25,11 @@ func (b *Backend) Product(ctx context.Context, req *pbVersion.ProductRequest) (*
 }
 
 func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) (*pbVersion.OperatorResponse, error) {
-	team := "operator"
+	productFamily := "operator"
 	if req.Product == pmmServerProduct {
-		team = "pmm"
+		productFamily = "pmm"
 	}
-	vs, err := operatorProductData(team, req.Product, req.OperatorVersion)
+	vs, err := operatorProductData(productFamily, req.Product, req.OperatorVersion)
 	if err != nil {
 		return nil, err
 	}
