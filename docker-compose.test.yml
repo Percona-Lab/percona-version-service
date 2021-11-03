@@ -21,6 +21,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    container_name: version-service
+    hostname: version-service
     networks:
       - integration-tests
     ports:
@@ -30,5 +32,3 @@ services:
     environment:
       SERVE_HTTP: "true"
     restart: on-failure
-    networks:
-      - integration-tests
