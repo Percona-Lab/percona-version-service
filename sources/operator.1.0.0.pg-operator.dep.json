@@ -1,0 +1,122 @@
+{
+    "pgbackrest": {
+      "13.4": {
+        ">=": [
+          {
+            "var": "productVersion"
+          },
+          "13.4"
+        ]
+      },
+      "12.8": {
+        "and": [
+          {
+            ">=": [
+              {
+                "var": "productVersion"
+              },
+              "12.8"
+            ]
+          },
+          {
+            "<": [
+              {
+                "var": "productVersion"
+              },
+              "13"
+            ]
+          }
+        ]
+      }
+    },
+    "pgbackrest_repo": {
+      "13.4": {
+        ">=": [
+          {
+            "var": "productVersion"
+          },
+          "13.4"
+        ]
+      },
+      "12.8": {
+        "and": [
+          {
+            ">=": [
+              {
+                "var": "productVersion"
+              },
+              "12.8"
+            ]
+          },
+          {
+            "<": [
+              {
+                "var": "productVersion"
+              },
+              "13"
+            ]
+          }
+        ]
+      }
+    },
+    "pgbadger": {
+      "13.4": {
+        ">=": [
+          {
+            "var": "productVersion"
+          },
+          "13.4"
+        ]
+      },
+      "12.8": {
+        "and": [
+          {
+            ">=": [
+              {
+                "var": "productVersion"
+              },
+              "12.8"
+            ]
+          },
+          {
+            "<": [
+              {
+                "var": "productVersion"
+              },
+              "13"
+            ]
+          }
+        ]
+      }
+    },
+    "pgbouncer": {
+      "13.4": {
+        ">=": [
+          {
+            "var": "productVersion"
+          },
+          "13.4"
+        ]
+      },
+      "12.8": {
+        "and": [
+          {
+            ">=": [
+              {
+                "var": "productVersion"
+              },
+              "12.8"
+            ]
+          },
+          {
+            "<": [
+              {
+                "var": "productVersion"
+              },
+              "13"
+            ]
+          }
+        ]
+      }
+    }
+}

@@ -136,10 +136,12 @@ message VersionMatrix {
   map<string, Version> pgbouncer = 13;
   map<string, Version> pxc_operator = 14;
   map<string, Version> psmdb_operator = 15;
-  map<string, Version> operator_apiserver = 16;
-  map<string, Version> operator_event = 17;
-  map<string, Version> operator_rmdata = 18;
-  map<string, Version> operator_scheduler = 19;
+  map<string, Version> pg_operator_apiserver = 16;
+  map<string, Version> pg_operator_event = 17;
+  map<string, Version> pg_operator_rmdata = 18;
+  map<string, Version> pg_operator_scheduler = 19;
+  map<string, Version> pg_operator = 20;
+  map<string, Version> pg_operator_deployer = 21;;
 }
 
 // OperatorVersion represents operator version.

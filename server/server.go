@@ -70,7 +70,7 @@ func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVers
 		if err != nil {
 			return nil, err
 		}
-	case "postgresql-operator":
+	case "pg-operator":
 		err := pg(vs, deps, req)
 		if err != nil {
 			return nil, err
