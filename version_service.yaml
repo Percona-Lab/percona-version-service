@@ -171,7 +171,7 @@ parameters:
     required: true
     description: "The product you are requesting information about."
     type: "string"
-    pattern: '^psmdb-operator|pxc-operator$'
+    pattern: '^psmdb-operator|pxc-operator|pg-operator$'
   applyParam:
     name: "apply"
     in: "path"
