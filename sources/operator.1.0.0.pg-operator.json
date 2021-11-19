@@ -5,16 +5,16 @@
       "product": "pg-operator",
       "matrix": {
         "postgresql": {
-          "12.8": {
-            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-postgres-ha",
-            "image_hash": "ee234eef5f5e16f2eeaa894a1ab4593f52dcdc7507bd64245747d6617756ca26",
-            "status": "available",
-            "critical": false
-          },
           "13.4": {
             "image_path": "percona/percona-postgresql-operator:1.0.0-ppg13-postgres-ha",
             "image_hash": "61ee6450cf35ff6267ba766ec3ffe4b67cff483b449be9d5571fe5b66a4a739c",
-            "status": "available",
+            "status": "recommended",
+            "critical": false
+          },
+          "12.8": {
+            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-postgres-ha",
+            "image_hash": "ee234eef5f5e16f2eeaa894a1ab4593f52dcdc7507bd64245747d6617756ca26",
+            "status": "recommended",
             "critical": false
           }
         },
@@ -27,58 +27,58 @@
           }
         },
         "pgbackrest": {
-          "12.8": {
-            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbackrest",
-            "image_hash": "1d8699e1820bc656a6fcae1bb3baac3912a6c917b27a5b57a3b539a85c0f5273",
-            "status": "available",
-            "critical": false
-          },
           "13.4": {
             "image_path": "percona/percona-postgresql-operator:1.0.0-ppg13-pgbackrest",
             "image_hash": "d0c362c7dabfcce021a3cf4bb3a60439e991e8bc18f00c101aac6eab8e9b6743",
-            "status": "available",
+            "status": "recommended",
+            "critical": false
+          },
+          "12.8": {
+            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbackrest",
+            "image_hash": "1d8699e1820bc656a6fcae1bb3baac3912a6c917b27a5b57a3b539a85c0f5273",
+            "status": "recommended",
             "critical": false
           }
         },
         "pgbackrest_repo": {
-          "12.8": {
-            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbackrest-repo",
-            "image_hash": "9b5d69880f6cedf5db028956d5783717786f178f1aa1e2bf25c2e20a412dabab",
-            "status": "available",
-            "critical": false
-          },
           "13.4": {
             "image_path": "percona/percona-postgresql-operator:1.0.0-ppg13-pgbackrest-repo",
             "image_hash": "5fd84c6fd7831284b5a48d698e57d2ce6cc2257a00cc6757408cf0321ee1df71",
-            "status": "available",
+            "status": "recommended",
+            "critical": false
+          },
+          "12.8": {
+            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbackrest-repo",
+            "image_hash": "9b5d69880f6cedf5db028956d5783717786f178f1aa1e2bf25c2e20a412dabab",
+            "status": "recommended",
             "critical": false
           }
         },
         "pgbadger": {
-          "12.8": {
-            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbadger",
-            "image_hash": "476d3ca780878320632b5eef3c4b0fc9855d4226891f3b11c5fe91fc67192d84",
-            "status": "available",
-            "critical": false
-          },
           "13.4": {
             "image_path": "percona/percona-postgresql-operator:1.0.0-ppg13-pgbadger",
             "image_hash": "fe125347e73542a96aeddaba20de13d30933cc3a7835d29484491d2f86c157a4",
-            "status": "available",
+            "status": "recommended",
+            "critical": false
+          },
+          "12.8": {
+            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbadger",
+            "image_hash": "476d3ca780878320632b5eef3c4b0fc9855d4226891f3b11c5fe91fc67192d84",
+            "status": "recommended",
             "critical": false
           }
         },
         "pgbouncer": {
-          "12.8": {
-            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbouncer",
-            "image_hash": "d52e4a335e9ed45ea55a9c96195d379c38bd28038cdc73df4b2645b513481c09",
-            "status": "available",
-            "critical": false
-          },
           "13.4": {
             "image_path": "percona/percona-postgresql-operator:1.0.0-ppg13-pgbouncer",
             "image_hash": "53d0036c9377a6af0a4e6f9271b0dd4f687b7d8968e2885c76d4add76ab01808",
-            "status": "available",
+            "status": "recommended",
+            "critical": false
+          },
+          "12.8": {
+            "image_path": "percona/percona-postgresql-operator:1.0.0-ppg12-pgbouncer",
+            "image_hash": "d52e4a335e9ed45ea55a9c96195d379c38bd28038cdc73df4b2645b513481c09",
+            "status": "recommended",
             "critical": false
           }
         },
