@@ -445,7 +445,7 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		resp, err := cli.VersionService.VersionServiceApply(params)
 		assert.NoError(t, err)
 
-		v := getVersion(resp.Payload.Versions[0].Matrix.Mongod)
+		v := getVersion(resp.Payload.Versions[0].Matrix.Postgresql)
 		assert.Equal(t, c.version, v)
 	}
 }
