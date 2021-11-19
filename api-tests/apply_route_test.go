@@ -398,6 +398,58 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 	}
 }
 
+func TestApplyPGReturnedVersions(t *testing.T) {
+	cli := cli()
+
+	v12 := "12.8"
+	v13 := "13.4"
+
+	cases := []struct {
+		apply     string
+		operator  string
+		dbVersion *string
+		version   string
+	}{
+		// test latest
+		{"latest", "1.0.0", nil, "13.4"},
+		{"latest", "1.0.0", &v12, "12.8"},
+		{"latest", "1.0.0", &v13, "13.4"},
+
+		// test recommended
+		{"recommended", "1.0.0", nil, "13.4"},
+		{"recommended", "1.0.0", &v12, "12.8"},
+		{"recommended", "1.0.0", &v13, "13.4"},
+
+		// test exact
+		{"12.8", "1.0.0", nil, "12.8"},
+		{"13.4", "1.0.0", nil, "13.4"},
+
+		//test with suffix
+		{"12-latest", "1.0.0", nil, "12.8"},
+		{"13-latest", "1.0.0", nil, "13.4"},
+		{"12-recommended", "1.0.0", nil, "12.8"},
+		{"13-recommended", "1.0.0", nil, "13.4"},
+	}
+
+	for _, c := range cases {
+		params := &version_service.VersionServiceApplyParams{
+			Apply:           c.apply,
+			OperatorVersion: c.operator,
+			Product:         "pg-operator",
+		}
+		params.WithTimeout(2 * time.Second)
+		if c.dbVersion != nil {
+			params.DatabaseVersion = c.dbVersion
+		}
+
+		resp, err := cli.VersionService.VersionServiceApply(params)
+		assert.NoError(t, err)
+
+		v := getVersion(resp.Payload.Versions[0].Matrix.Mongod)
+		assert.Equal(t, c.version, v)
+	}
+}
+
 func TestPmmServerUnimplemented(t *testing.T) {
 	cli := cli()
 
