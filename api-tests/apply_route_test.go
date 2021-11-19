@@ -52,7 +52,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
 		OperatorVersion: "1.0.0",
-		Product:         "postgresql-operator",
+		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
 
@@ -115,11 +115,11 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
 		OperatorVersion: "1.0.0",
-		Product:         "postgresql-operator",
+		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"11.0", "12.0", "13.0"} {
+	for _, v := range []string{"12.8", "13.4"} {
 		pgParams.DatabaseVersion = &v
 		psmdbResp, err := cli.VersionService.VersionServiceApply(pgParams)
 		assert.NoError(t, err)
