@@ -9,23 +9,11 @@
       ]
     },
     "12.8": {
-      "and": [
+      ">=": [
         {
-          ">=": [
-            {
-              "var": "productVersion"
-            },
-            "12.8"
-          ]
+          "var": "productVersion"
         },
-        {
-          "<": [
-            {
-              "var": "productVersion"
-            },
-            "13.4"
-          ]
-        }
+        "12.8"
       ]
     }
   },
