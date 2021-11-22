@@ -244,13 +244,18 @@ func depFilter(versions map[string]interface{}, productVersion string) (string, 
 	fmt.Println("desired version is", desired)
 	for _, s := range sorted {
 		fmt.Println("sorted version is", s.String())
-		b, err := json.Marshal(versions[s.String()])
+		versStr := s.String()
+		if strings.HasSuffix(versStr, ".0") {
+			versStr = strings.TrimSuffix(versStr, ".0")
+
+		}
+		b, err := json.Marshal(versions[versStr])
 		if err != nil {
 			return "", status.Errorf(codes.Internal, "failed to marshal deps logic: %v", err)
 		}
 		logic := bytes.NewReader(b)
 		data := strings.NewReader(fmt.Sprintf(`{  "productVersion" : "%s" }`, productVersion))
-
+		fmt.Println("logic is", string(b))
 		var result bytes.Buffer
 		err = jsonlogic.Apply(logic, data, &result)
 		if err != nil {
