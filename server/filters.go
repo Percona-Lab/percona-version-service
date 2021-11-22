@@ -241,6 +241,7 @@ func depFilter(versions map[string]interface{}, productVersion string) (string, 
 	}
 
 	desired := sorted[0].String()
+	fmt.Println("desired version is", desired)
 	for _, s := range sorted {
 		b, err := json.Marshal(versions[s.String()])
 		if err != nil {
@@ -254,11 +255,12 @@ func depFilter(versions map[string]interface{}, productVersion string) (string, 
 		if err != nil {
 			return "", status.Errorf(codes.Internal, "failed to apply logic: %v", err)
 		}
-
+		fmt.Println("result string is", result.String())
 		if strings.TrimSuffix(result.String(), "\n") == "true" {
 			desired = s.String()
 			break
 		}
+		fmt.Println("desired version after is", desired)
 	}
 
 	return desired, nil
