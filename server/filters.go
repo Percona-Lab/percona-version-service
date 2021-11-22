@@ -243,6 +243,7 @@ func depFilter(versions map[string]interface{}, productVersion string) (string, 
 	desired := sorted[0].String()
 	fmt.Println("desired version is", desired)
 	for _, s := range sorted {
+		fmt.Println("sorted version is", s.String())
 		b, err := json.Marshal(versions[s.String()])
 		if err != nil {
 			return "", status.Errorf(codes.Internal, "failed to marshal deps logic: %v", err)
