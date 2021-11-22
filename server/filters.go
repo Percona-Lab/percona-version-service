@@ -225,6 +225,51 @@ func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
 	return deleteOtherBut(apply, versions)
 }
 
+func pgDepFilter(versions map[string]interface{}, productVersion string) (string, error) {
+	if len(versions) == 0 {
+		return "", nil
+	}
+
+	keys := make([]string, 0, len(versions))
+	for k := range versions {
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys)
+	if err != nil {
+		return "", status.Errorf(codes.Internal, "failed to sort versions: %v", err)
+	}
+
+	desired := sorted[0].String()
+	for _, s := range sorted {
+		versStr := s.String()
+		if strings.HasSuffix(versStr, ".0") {
+			versStr = strings.TrimSuffix(versStr, ".0")
+
+		}
+		b, err := json.Marshal(versions[versStr])
+		if err != nil {
+			return "", status.Errorf(codes.Internal, "failed to marshal deps logic: %v", err)
+		}
+
+		logic := bytes.NewReader(b)
+		data := strings.NewReader(fmt.Sprintf(`{  "productVersion" : "%s" }`, productVersion))
+
+		var result bytes.Buffer
+		err = jsonlogic.Apply(logic, data, &result)
+		if err != nil {
+			return "", status.Errorf(codes.Internal, "failed to apply logic: %v", err)
+		}
+
+		if strings.TrimSuffix(result.String(), "\n") == "true" {
+			desired = s.String()
+			break
+		}
+	}
+
+	return desired, nil
+}
+
 func depFilter(versions map[string]interface{}, productVersion string) (string, error) {
 	if len(versions) == 0 {
 		return "", nil
