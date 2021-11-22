@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
@@ -177,11 +178,12 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		productVersion = k
 		break
 	}
-
+	fmt.Println("Product version is", productVersion)
 	depVer, err := depFilter(deps.PgBackrest, productVersion)
 	if err != nil {
 		return err
 	}
+	fmt.Println("pgbackrest dep version is", depVer)
 	err = defaultFilter(vs.Versions[0].Matrix.Pgbackrest, depVer)
 	if err != nil {
 		return err

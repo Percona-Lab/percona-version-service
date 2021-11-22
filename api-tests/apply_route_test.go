@@ -1,6 +1,7 @@
 package api_tests
 
 import (
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -125,6 +126,7 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 		assert.NoError(t, err)
 
 		k := getVersion(psmdbResp.Payload.Versions[0].Matrix.Postgresql)
+		fmt.Println("psql version is", k)
 		assert.True(t, strings.HasPrefix(k, strings.Split(v, ".")[0]))
 	}
 }
