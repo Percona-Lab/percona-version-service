@@ -21,6 +21,7 @@ func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
 		{"pxc-operator", "1.7.0"},
 		{"pxc-operator", "1.8.0"},
 		{"pxc-operator", "1.9.0"},
+		{"pxc-operator", "1.10.0"},
 		{"psmdb-operator", "1.5.0"},
 		{"psmdb-operator", "1.6.0"},
 		{"psmdb-operator", "1.7.0"},
@@ -60,6 +61,7 @@ func TestOperatorRoutePxcShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pxc-operator", "1.7.0"},
 		{"pxc-operator", "1.8.0"},
 		{"pxc-operator", "1.9.0"},
+		{"pxc-operator", "1.10.0"},
 	}
 
 	for _, c := range cases {
@@ -79,7 +81,7 @@ func TestOperatorRoutePxcShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Proxysql), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Backup), 0)
 
-		if c.version >= "1.5.0" {
+		if c.version != "1.4.0" {
 			assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Haproxy), 0)
 		} else {
 			assert.Equal(t, 0, len(resp.Payload.Versions[0].Matrix.Haproxy))
