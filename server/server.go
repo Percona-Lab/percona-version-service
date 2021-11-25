@@ -70,7 +70,7 @@ func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVers
 		if err != nil {
 			return nil, err
 		}
-	case "postgresql-operator":
+	case "pg-operator":
 		err := pg(vs, deps, req)
 		if err != nil {
 			return nil, err
@@ -178,7 +178,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		break
 	}
 
-	depVer, err := depFilter(deps.PgBackrest, productVersion)
+	depVer, err := pgDepFilter(deps.PgBackrest, productVersion)
 	if err != nil {
 		return err
 	}
@@ -187,7 +187,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		return err
 	}
 
-	depVer, err = depFilter(deps.PgBackrestRepo, productVersion)
+	depVer, err = pgDepFilter(deps.PgBackrestRepo, productVersion)
 	if err != nil {
 		return err
 	}
@@ -196,7 +196,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		return err
 	}
 
-	depVer, err = depFilter(deps.Pgbadger, productVersion)
+	depVer, err = pgDepFilter(deps.Pgbadger, productVersion)
 	if err != nil {
 		return err
 	}
@@ -205,7 +205,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		return err
 	}
 
-	depVer, err = depFilter(deps.Pgbouncer, productVersion)
+	depVer, err = pgDepFilter(deps.Pgbouncer, productVersion)
 	if err != nil {
 		return err
 	}

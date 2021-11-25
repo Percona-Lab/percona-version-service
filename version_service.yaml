@@ -97,7 +97,7 @@ definitions:
         pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
       product:
         type: "string"
-        pattern: '^psmdb-operator|pxc-operator$'
+        pattern: '^psmdb-operator|pxc-operator|pg-operator$'
       matrix:
         $ref: '#/definitions/VersionMatrix'
   OperatorVersionBlock:
@@ -171,7 +171,7 @@ parameters:
     required: true
     description: "The product you are requesting information about."
     type: "string"
-    pattern: '^psmdb-operator|pxc-operator$'
+    pattern: '^psmdb-operator|pxc-operator|pg-operator$'
   applyParam:
     name: "apply"
     in: "path"
