@@ -129,7 +129,7 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		product string
 		version string
 	}{
-		{"pg-operator", "1.0.0"},
+		{"pg-operator", "1.1.0"},
 	}
 
 	for _, c := range cases {
