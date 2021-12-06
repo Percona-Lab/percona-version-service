@@ -443,9 +443,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12-latest", "1.1.0", nil, "12.8"},
 		{"13-latest", "1.1.0", nil, "13.5"},
 		{"14-latest", "1.1.0", nil, "14.1"},
-		{"12-recommended", "1.1.0", nil, "12.8"},
-		{"13-recommended", "1.1.0", nil, "13.5"},
-		{"14-recommended", "1.1.0", nil, "14.1"},
+		// {"12-recommended", "1.1.0", nil, "12.8"},
+		// {"13-recommended", "1.1.0", nil, "13.5"},
+		// {"14-recommended", "1.1.0", nil, "14.1"},
 	}
 
 	for _, c := range cases {
