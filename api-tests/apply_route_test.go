@@ -429,7 +429,7 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"latest", "1.1.0", &v14, "14.1"},
 
 		// test recommended
-		{"recommended", "1.1.0", nil, "13.4"},
+		{"recommended", "1.1.0", nil, "14.1"},
 		{"recommended", "1.1.0", &v12, "12.8"},
 		{"recommended", "1.1.0", &v13, "13.4"},
 		{"recommended", "1.1.0", &v14, "14.1"},
