@@ -28,7 +28,7 @@ func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
 		{"psmdb-operator", "1.8.0"},
 		{"psmdb-operator", "1.9.0"},
 		{"psmdb-operator", "1.10.0"},
-		{"pg-operator", "1.0.0"},
+		{"pg-operator", "1.1.0"},
 	}
 
 	for _, c := range cases {
