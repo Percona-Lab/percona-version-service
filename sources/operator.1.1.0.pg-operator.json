@@ -8,13 +8,13 @@
           "12.8": {
             "image_path": "percona/percona-postgresql-operator:1.1.0-ppg12-postgres-ha",
             "image_hash": "f7ca98c2d3c325a87700fd5a3833e6a5e22c93b12b35fa0aef72373e40a2474a",
-            "status": "available",
+            "status": "recommended",
             "critical": false
           },
           "13.5": {
             "image_path": "percona/percona-postgresql-operator:1.1.0-ppg13-postgres-ha",
             "image_hash": "83985cdd73d4531eebcd2a2bab11848036744caf4e4e31559a0c994ac49d88f0",
-            "status": "available",
+            "status": "recommended",
             "critical": false
           },
           "14.1": {
