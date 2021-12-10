@@ -1,0 +1,50 @@
+{
+  "versions": [
+    {
+      "operator": "2.26.0",
+      "product": "pmm-server",
+      "matrix": {
+        "pxcOperator": {
+          "1.8.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.8.0",
+            "image_hash": "8ae74434882f19f3b7bc324d1ba1cb62ab405b63f654147b559c86571fd184e2",
+            "status": "available",
+            "critical": false
+          },
+          "1.9.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.9.0",
+            "image_hash": "3783173df8b833028184de686cc98890179a249c7ed5cde8391cdfd751cf990d",
+            "status": "available",
+            "critical": false
+          },
+          "1.10.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0",
+            "image_hash": "73d2266258b700a691db6196f4b5c830845d34d57bdef5be5ffbd45e88407309",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "psmdbOperator": {
+          "1.8.0": {
+            "image_path": "percona/percona-server-mongodb-operator:1.8.0",
+            "image_hash": "c9d8253acb97d2bfe3d1cf1120216d20565da4eb5dfd0f3f6385bab7eeea2110",
+            "status": "available",
+            "critical": false
+          },
+          "1.9.0": {
+            "image_path": "percona/percona-server-mongodb-operator:1.9.0",
+            "image_hash": "2daab5999a3a5bc407cc63ce8ae4d18d985f636685273c6678b118d770c3c014",
+            "status": "available",
+            "critical": false
+          },
+          "1.10.0": {
+            "image_path": "percona/percona-server-mongodb-operator:1.10.0",
+            "image_hash": "1b6b5dda3c9ec50128f8e4fd0a9e07feb16bb262b92f8d31f09fe19df51b069a",
+            "status": "recommended",
+            "critical": false
+          }
+        }
+      }
+    }
+  ]
+}
