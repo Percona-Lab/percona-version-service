@@ -142,8 +142,8 @@
         },
         "log_collector": {
           "1.10.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-logcollector",
-            "image_hash": "d4fd89c4d1a2c880bb85d405c053ba8d70caf673e91371c0bfd4aa8261ef2ecc",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-1-logcollector",
+            "image_hash": "8f106b1e9134812b77f4e210ad0fcd7d8d3515a90fe53554d24cd49defc9e044",
             "status": "recommended",
             "critical": false
           }
