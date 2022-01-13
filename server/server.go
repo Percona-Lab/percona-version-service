@@ -121,6 +121,15 @@ func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) 
 		return err
 	}
 
+	haproxy, err := depFilter(deps.Haproxy, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Haproxy, haproxy)
+	if err != nil {
+		return err
+	}
+
 	logCollectorVersion, err := depFilter(deps.LogCollector, productVersion)
 	if err != nil {
 		return err
