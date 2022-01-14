@@ -33,7 +33,7 @@ func psmdbFilter(versions map[string]*pbVersion.Version, apply string, current s
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys)
+	sorted, err := sortedVersionsDesc(keys, true)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -88,7 +88,7 @@ func pxcFilter(versions map[string]*pbVersion.Version, apply string, current str
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys)
+	sorted, err := sortedVersionsDesc(keys, true)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -146,7 +146,7 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys)
+	sorted, err := sortedVersionsDesc(keys, true)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -203,7 +203,7 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 	return nil
 }
 
-func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
+func defaultFilter(versions map[string]*pbVersion.Version, apply string, preVerIsLower bool) error {
 	if len(versions) == 0 {
 		return nil
 	}
@@ -213,7 +213,7 @@ func defaultFilter(versions map[string]*pbVersion.Version, apply string) error {
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys)
+	sorted, err := sortedVersionsDesc(keys, preVerIsLower)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -235,7 +235,7 @@ func pgDepFilter(versions map[string]interface{}, productVersion string) (string
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys)
+	sorted, err := sortedVersionsDesc(keys, true)
 	if err != nil {
 		return "", status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -280,7 +280,7 @@ func depFilter(versions map[string]interface{}, productVersion string) (string, 
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys)
+	sorted, err := sortedVersionsDesc(keys, true)
 	if err != nil {
 		return "", status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -340,7 +340,9 @@ func deleteOtherBut(v string, versions map[string]*pbVersion.Version) error {
 	return nil
 }
 
-func sortedVersionsDesc(versions []string) ([]*semver.Version, error) {
+// sortedVersionsDesc sorts versions and returns array of *semver.Version.
+// Set preVerIsLower to true if you want prerelease versions to be lower than versions without it
+func sortedVersionsDesc(versions []string, preVerIsLower bool) ([]*semver.Version, error) {
 	v := make([]*semver.Version, 0, len(versions))
 
 	for _, k := range versions {
@@ -351,7 +353,16 @@ func sortedVersionsDesc(versions []string) ([]*semver.Version, error) {
 		v = append(v, sv)
 	}
 
-	sort.Sort(sort.Reverse(semver.Collection(v)))
+	if preVerIsLower {
+		sort.Sort(sort.Reverse(semver.Collection(v)))
+		return v, nil
+	}
+	sort.Slice(v, func(i, j int) bool {
+		if v[i].Major() == v[j].Major() && v[i].Minor() == v[j].Minor() && v[i].Patch() == v[i].Patch() {
+			return v[i].Prerelease() > v[j].Prerelease()
+		}
+		return v[i].GreaterThan(v[j])
+	})
 
 	return v, nil
 }
