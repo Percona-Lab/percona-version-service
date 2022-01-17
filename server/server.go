@@ -98,7 +98,7 @@ func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) 
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion, true)
 	if err != nil {
 		return err
 	}
@@ -107,7 +107,7 @@ func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) 
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion, true)
 	if err != nil {
 		return err
 	}
@@ -116,7 +116,16 @@ func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) 
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Proxysql, proxySQL)
+	err = defaultFilter(vs.Versions[0].Matrix.Proxysql, proxySQL, false)
+	if err != nil {
+		return err
+	}
+
+	haproxy, err := depFilter(deps.Haproxy, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Haproxy, haproxy, true)
 	if err != nil {
 		return err
 	}
@@ -125,7 +134,7 @@ func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) 
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.LogCollector, logCollectorVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.LogCollector, logCollectorVersion, false)
 	if err != nil {
 		return err
 	}
@@ -149,7 +158,7 @@ func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion, true)
 	if err != nil {
 		return err
 	}
@@ -158,7 +167,7 @@ func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion)
+	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion, true)
 	if err != nil {
 		return err
 	}
@@ -182,7 +191,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pgbackrest, depVer)
+	err = defaultFilter(vs.Versions[0].Matrix.Pgbackrest, depVer, true)
 	if err != nil {
 		return err
 	}
@@ -191,7 +200,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.PgbackrestRepo, depVer)
+	err = defaultFilter(vs.Versions[0].Matrix.PgbackrestRepo, depVer, true)
 	if err != nil {
 		return err
 	}
@@ -200,7 +209,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pgbadger, depVer)
+	err = defaultFilter(vs.Versions[0].Matrix.Pgbadger, depVer, true)
 	if err != nil {
 		return err
 	}
@@ -209,7 +218,7 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 	if err != nil {
 		return err
 	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pgbouncer, depVer)
+	err = defaultFilter(vs.Versions[0].Matrix.Pgbouncer, depVer, true)
 	if err != nil {
 		return err
 	}
