@@ -1,6 +1,6 @@
 module github.com/Percona-Lab/percona-version-service
 
-go 1.15
+go 1.17
 
 require (
 	github.com/Masterminds/semver v1.5.0
