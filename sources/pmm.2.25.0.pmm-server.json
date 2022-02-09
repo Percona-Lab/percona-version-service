@@ -30,6 +30,12 @@
             "image_hash": "2daab5999a3a5bc407cc63ce8ae4d18d985f636685273c6678b118d770c3c014",
             "status": "recommended",
             "critical": false
+          },
+          "1.11.0": {
+            "image_path": "percona/percona-server-mongodb-operator:1.11.0",
+            "image_hash": "662a64a539a23a8bbad653c71af3bee3dd1038ea575e1d67293b9e2ad4a1d3f1",
+            "status": "recommended",
+            "critical": false
           }
         }
       }
