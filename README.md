@@ -9,7 +9,7 @@ For example `pmm.2.29.0.pmm-server.json` contains supported components for PMM S
 
 ## How to add new product version into supported versions list.
 
-In this example I'll use PMM Server and PSMDB operator.
+In this example I'll use PMM Server which uses PSMDB operator.
 PMM Server uses PSMDB Operator.
 
 ### Add new version of PMM
