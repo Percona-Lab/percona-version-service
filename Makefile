@@ -44,7 +44,7 @@ cert:
 
 # Build docker image
 docker-build:
-	docker build . -t ${IMG}
+	docker build --platform=linux/amd64 . -t ${IMG}
 
 # Run docker image
 docker-run-it:
