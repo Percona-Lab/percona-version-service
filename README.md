@@ -1,28 +1,33 @@
 # percona-version-service
 
-Percona version service provides API to share support matrix for PMM products.
+Percona version service provides an API to share a support matrix for PMM
+products.
 
-For each product we have multiple files in `sources` directory.
-Each file contains supported components list for exact version of product.  
-For example `pmm.2.29.0.pmm-server.json` contains supported components for PMM Server 2.29.0.
+For each product, there are multiple files in the `sources` directory. Each file
+contains a list of supported components for a specific version of product.  
+For example `pmm.2.29.0.pmm-server.json` contains the list of supported
+components for PMM Server 2.29.0.
 
 
-## How to add new product version into supported versions list.
+## How to add new product version into the list of supported versions
 
-In this example I'll use PMM Server which uses PSMDB operator.
+In this example, we'll use PMM Server which uses PSMDB operator.
 
 ### Add new version of PMM
-To be able to add new version of PMM to version service we can copy body of file for latest version of PMM with a new name.  
-For example if we want to add new version of PMM 2.30.0:
-1. we should create new file `pmm.2.30.0.pmm-server.json`. 
-2. Copy body of `pmm.2.29.0.pmm-server.json` to a newly created file.
-3. Update version in `operator` field
+To add a new version of PMM to the version service you can copy the
+body of a file for latest version of PMM with a new name.  
+For example, if we want to add new version of PMM 2.30.0:
+1. Create create a new file `pmm.2.30.0.pmm-server.json`. 
+2. Copy the body of file  `pmm.2.29.0.pmm-server.json` to the newly created
+   file.
+3. Update the version in `operator` field
 
-### Add new version of PSMDB operator
-To be able to add new version of PSMDB operator to PMM you should update existed `pmm.*.pmm-server.json` file.  
-For example if we want to add PSMDB Operator version `1.12.0` to PMM 2.28.0:
-1. Add new child to `psmdbOperator` field
-2. this child should have the following format
+### Add a new version of PSMDB operator
+To add a new version of PSMDB operator to PMM, you should update the existing
+`pmm.*.pmm-server.json` file.  
+For example, if you want to add PSMDB Operator version `1.12.0` to PMM 2.28.0:
+1. Add a new child to the `psmdbOperator` field
+2. This child should have the following format:
 ```json lines
 {
     "image_path": "[docker image name]",
@@ -31,16 +36,24 @@ For example if we want to add PSMDB Operator version `1.12.0` to PMM 2.28.0:
     "critical": false // or true
 }
 ```
-3. image path and image hash can be taken from docker hub or by running `docker inspect`
-4. status can be `recommended` or `available`
+3. The values for `image_path` and `image_hash` can be obtained from docker hub
+   or by running `docker inspect`
+4. The `status` can be set to `recommended` or `available`
 
 ## How to create a new docker image
-`make docker-push` will create and push docker image with your changes.  
-If you don't want to push docker image to docker hub just run `make docker-build`.  
-By default image name is `perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)` but it can be overridden by setting `IMG` environment variable.
+`make docker-push` will create and push a docker image with your changes.  
+If you don't want to push your docker image to DockerHub just run `make
+docker-build`.  
 
-## How to publish
-To publish your changes to dev environment please create PR to merge your changes to `main` branch.
-CI will automatically publish the latest changes in `main` branch to dev environment.
+By default, the image name is
+`perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)` but it can be
+overridden by setting the `IMG` environment variable.
 
-To publish changes to prod environment please ask responsible person to deploy your docker image manually.
+## How to publish your changes
+To publish your changes to the developent environment, please create a PR to get your changes merged to the `main` branch.
+
+Once merged, our CI will automatically publish these changes to the dev
+environment.
+
+To publish changes to the production environment, please ask responsible person
+to deploy your docker image manually.
