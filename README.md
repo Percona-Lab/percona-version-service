@@ -10,7 +10,6 @@ For example `pmm.2.29.0.pmm-server.json` contains supported components for PMM S
 ## How to add new product version into supported versions list.
 
 In this example I'll use PMM Server which uses PSMDB operator.
-PMM Server uses PSMDB Operator.
 
 ### Add new version of PMM
 To be able to add new version of PMM to version service we can copy body of file for latest version of PMM with a new name.  
@@ -38,10 +37,10 @@ For example if we want to add PSMDB Operator version `1.12.0` to PMM 2.28.0:
 ## How to create a new docker image
 `make docker-push` will create and push docker image with your changes.  
 If you don't want to push docker image to docker hub just run `make docker-build`.  
-Both commands support `IMG` environment variable to set docker image name.
+By default image name is `perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)` but it can be overridden by setting `IMG` environment variable.
 
 ## How to publish
 To publish your changes to dev environment please create PR to merge your changes to `main` branch.
-CI will automatically publish the latest state of repository to dev environment.
+CI will automatically publish the latest changes in `main` branch to dev environment.
 
 To publish changes to prod environment please ask responsible person to deploy your docker image manually.
