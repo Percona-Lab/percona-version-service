@@ -140,18 +140,6 @@
             "image_hash": "5ca4d85015d0501492462efedc22d4e860423cdf2fa07f1eafbcc11a60bb0844",
             "status": "recommended",
             "critical": false
-          },
-          "2.0.18-2": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-proxysql-8.0.25",
-            "image_hash": "b84701c47a11c6f5ca46481f25f1b6086c0a30014d05584c7987f1d42a17b584",
-            "status": "available",
-            "critical": false
-          },
-          "2.0.18": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-proxysql",
-            "image_hash": "f109a62eb316732d59dd80ed0e013fc9594cbae601586b94023b8c068f7ced7b",
-            "status": "available",
-            "critical": false
           }
         },
         "haproxy": {
@@ -159,18 +147,6 @@
             "image_path": "percona/percona-xtradb-cluster-operator:1.11.0-haproxy",
             "image_hash": "ebeb5b882394fd2a2c5ab302ecb410745a34bbe472a0846efb17ed8f234cf933",
             "status": "recommended",
-            "critical": false
-          },
-          "2.3.15": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-haproxy-8.0.25",
-            "image_hash": "62479be2a21192a3215f03d3f9541decd5ef1737741245ac33ee439915a15128",
-            "status": "available",
-            "critical": false
-          },
-          "2.3.14": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-haproxy",
-            "image_hash": "2f06ac4a0f39b2c0253421c3d024291d5ba19d41e35e633ff6ddcf4ba67fd51a",
-            "status": "available",
             "critical": false
           }
         },
@@ -181,34 +157,10 @@
             "status": "recommended",
             "critical": false
           },
-          "8.0.25": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-pxc8.0.25-backup",
-            "image_hash": "c3991f0959a3b4114d7ff629d9d3cdf0dc200c58443ca8ebb1446d8b1cbe416d",
-            "status": "available",
-            "critical": false
-          },
-          "8.0.23": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-pxc8.0-backup",
-            "image_hash": "6ab8efb3804d1e519e49ee10eb46b428a837cfdcee222cc5ae2089cc1dc02a6d",
-            "status": "available",
-            "critical": false
-          },
           "2.4.26-1": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-pxc5.7-backup",
             "image_hash": "0424bb866cb171bd380c87ad3aa98047af90c1e6e61bf4d81d2c36864cb36e4d",
             "status": "recommended",
-            "critical": false
-          },
-          "2.4.24-2": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-pxc5.7.35-backup",
-            "image_hash": "ac9fcd3078107c6492c687eb98215d4e5daf27a02fb3c78ba4b9e9c01f2078b3",
-            "status": "available",
-            "critical": false
-          },
-          "2.4.24": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-pxc5.7-backup",
-            "image_hash": "2ff5992220ba251cf064cc2b4d5929e0fdb963db18e35d6c672f9aacb0be3bed",
-            "status": "available",
             "critical": false
           }
         },
@@ -217,18 +169,6 @@
             "image_path": "percona/percona-xtradb-cluster-operator:1.11.0-logcollector",
             "image_hash": "fda6ca8f7bf95e86808ae60e305cda8007f7a886688f9bcfa5a566d2b43d05c0",
             "status": "recommended",
-            "critical": false
-          },
-          "1.10.0-2": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-logcollector-8.0.25",
-            "image_hash": "d69dad98900532e2ad6d0bf12c34a148462816fa3ee4697e9b73efef7583901a",
-            "status": "available",
-            "critical": false
-          },
-          "1.10.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.10.0-1-logcollector",
-            "image_hash": "8f106b1e9134812b77f4e210ad0fcd7d8d3515a90fe53554d24cd49defc9e044",
-            "status": "available",
             "critical": false
           }
         },
