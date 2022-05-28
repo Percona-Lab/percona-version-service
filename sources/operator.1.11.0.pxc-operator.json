@@ -175,7 +175,7 @@
         "operator": {
           "1.11.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.11.0",
-            "image_hash": "e23d267db2d981c2ba229a197056d29b3d6b84a4aefacb923a6a308d2c7cc99d",
+            "image_hash": "30ac94f335ca2a75ad2a52e5367a253b802e6915e8219756027da4b5b76a98b6",
             "status": "recommended",
             "critical": false
           }
