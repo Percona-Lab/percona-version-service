@@ -50,10 +50,13 @@ By default, the image name is
 overridden by setting the `IMG` environment variable.
 
 ## How to publish your changes
-To publish your changes to the developent environment, please create a PR to get your changes merged to the `main` branch.
+We use Continuous Integration and Continuous Deployment paradigms to have the latest changes on server.  
+For that we have 2 main branches for 2 different environments.
+* Development environment is automatically deployed based on sources in `main` branch.  
+* Production environment is automatically deployed based on sources in `production` branch.
 
-Once merged, our CI will automatically publish these changes to the dev
-environment.
+They are independent of each other. Which means that to get your changes on both environments you have to create 2 different branches.
+Each of them should be based on the branch related to the environment you want to deploy and PRs should be created to the same branch. 
 
-To publish changes to the production environment, please ask responsible person
-to deploy your docker image manually.
+e.g.: To publish your changes to the `development` environment, you should create new branch from `main` branch and then create a PR to get your changes merged to the `main` branch.  
+Once your PR is merged, our CI will automatically publish these changes to corresponding environment.
