@@ -16,6 +16,12 @@
             "image_hash": "73d2266258b700a691db6196f4b5c830845d34d57bdef5be5ffbd45e88407309",
             "status": "recommended",
             "critical": false
+          },
+          "1.11.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.11.0",
+            "image_hash": "69501813d433aba1b9bd0babf7b7033000696da2a4c7fc582dac00c79a100c82",
+            "status": "recommended",
+            "critical": false
           }
         },
         "psmdbOperator": {
