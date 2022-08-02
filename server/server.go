@@ -44,6 +44,10 @@ func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVers
 		return nil, status.Error(codes.Unimplemented, "not implemented for pmm-server")
 	}
 
+	if req.Apply == disabled || req.Apply == never {
+		return &pbVersion.VersionResponse{}, nil
+	}
+
 	err := transformRequest(req)
 	if err != nil {
 		return nil, err
