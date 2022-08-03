@@ -71,6 +71,9 @@ message ApplyRequest {
   string namespace_uid = 11;
   string custom_resource_uid = 12;
   string log_collector_version = 13;
+  bool sharding_enabled = 14;
+  bool hashicorp_vault_enabled = 15;
+  bool cluster_wide_enabled = 16;
 }
 
 message OperatorRequest {
@@ -86,6 +89,9 @@ message OperatorRequest {
   string namespace_uid = 11;
   string custom_resource_uid = 12;
   string log_collector_version = 13;
+  bool sharding_enabled = 14;
+  bool hashicorp_vault_enabled = 15;
+  bool cluster_wide_enabled = 16;
 }
 
 message ProductRequest {
@@ -100,6 +106,9 @@ message ProductRequest {
   string namespace_uid = 11;
   string custom_resource_uid = 12;
   string log_collector_version = 13;
+  bool sharding_enabled = 14;
+  bool hashicorp_vault_enabled = 15;
+  bool cluster_wide_enabled = 16;
 }
 
 // Status describes the current version status.
@@ -141,7 +150,7 @@ message VersionMatrix {
   map<string, Version> pg_operator_rmdata = 18;
   map<string, Version> pg_operator_scheduler = 19;
   map<string, Version> pg_operator = 20;
-  map<string, Version> pg_operator_deployer = 21;;
+  map<string, Version> pg_operator_deployer = 21;
 }
 
 // OperatorVersion represents operator version.
