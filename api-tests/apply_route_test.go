@@ -114,12 +114,12 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.1.0",
+		OperatorVersion: "1.3.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"12.8", "13.5", "14.1"} {
+	for _, v := range []string{"12.11", "13.7", "14.4"} {
 		pgParams.DatabaseVersion = &v
 		psmdbResp, err := cli.VersionService.VersionServiceApply(pgParams)
 		assert.NoError(t, err)
@@ -456,9 +456,9 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 func TestApplyPGReturnedVersions(t *testing.T) {
 	cli := cli()
 
-	v12 := "12.8"
-	v13 := "13.5"
-	v14 := "14.1"
+	v12 := "12.11"
+	v13 := "13.7"
+	v14 := "14.4"
 
 	cases := []struct {
 		apply     string
@@ -467,26 +467,32 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.1.0", nil, "14.1"},
-		{"latest", "1.1.0", &v12, "12.8"},
-		{"latest", "1.1.0", &v13, "13.5"},
-		{"latest", "1.1.0", &v14, "14.1"},
+		{"latest", "1.3.0", nil, "14.4"},
+		{"latest", "1.3.0", &v12, "12.11"},
+		{"latest", "1.3.0", &v13, "13.7"},
+		{"latest", "1.3.0", &v14, "14.4"},
 
 		// test recommended
-		{"recommended", "1.1.0", nil, "14.1"},
-		{"recommended", "1.1.0", &v12, "12.8"},
-		{"recommended", "1.1.0", &v13, "13.5"},
-		{"recommended", "1.1.0", &v14, "14.1"},
+		{"recommended", "1.3.0", nil, "14.4"},
+		{"recommended", "1.3.0", &v12, "12.11"},
+		{"recommended", "1.3.0", &v13, "13.7"},
+		{"recommended", "1.3.0", &v14, "14.4"},
 
 		// test exact
 		{"12.8", "1.1.0", nil, "12.8"},
 		{"13.5", "1.1.0", nil, "13.5"},
 		{"14.1", "1.1.0", nil, "14.1"},
+		{"12.11", "1.3.0", nil, "12.11"},
+		{"13.7", "1.3.0", nil, "13.7"},
+		{"14.4", "1.3.0", nil, "14.4"},
 
 		//test with suffix
 		{"12-latest", "1.1.0", nil, "12.8"},
 		{"13-latest", "1.1.0", nil, "13.5"},
 		{"14-latest", "1.1.0", nil, "14.1"},
+		{"12-latest", "1.3.0", nil, "12.11"},
+		{"13-latest", "1.3.0", nil, "13.7"},
+		{"14-latest", "1.3.0", nil, "14.4"},
 	}
 
 	for _, c := range cases {

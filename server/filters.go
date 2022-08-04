@@ -15,6 +15,8 @@ import (
 )
 
 const (
+	disabled    = "disabled"
+	never       = "never"
 	recommended = "recommended"
 	latest      = "latest"
 )
