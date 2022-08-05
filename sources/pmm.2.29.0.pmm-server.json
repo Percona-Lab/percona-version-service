@@ -14,6 +14,12 @@
           "1.10.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.10.0",
             "image_hash": "73d2266258b700a691db6196f4b5c830845d34d57bdef5be5ffbd45e88407309",
+            "status": "available",
+            "critical": false
+          },
+          "1.11.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.11.0",
+            "image_hash": "69501813d433aba1b9bd0babf7b7033000696da2a4c7fc582dac00c79a100c82",
             "status": "recommended",
             "critical": false
           }
@@ -29,12 +35,6 @@
             "image_path": "percona/percona-server-mongodb-operator:1.11.0",
             "image_hash": "662a64a539a23a8bbad653c71af3bee3dd1038ea575e1d67293b9e2ad4a1d3f1",
             "status": "recommended",
-            "critical": false
-          },
-          "1.12.0": {
-            "image_path": "percona/percona-server-mongodb-operator:1.12.0",
-            "image_hash": "e9ed11994cef3f7ab33e126484d5d5991cccc00b54d066183d1c7abe8e29b802",
-            "status": "available",
             "critical": false
           }
         }
