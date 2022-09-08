@@ -5,12 +5,6 @@
       "product": "ps-operator",
       "matrix": {
         "mysql": {
-          "8.0.29-21": {
-            "image_path": "percona/percona-server:8.0.29-21",
-            "image_hash": "4d1683f44ae57f4c40759d4397c4c90951f77bdf39bc01b2d4a4ac5c211200f7",
-            "status": "available",
-            "critical": false
-          },
           "8.0.28-20": {
             "image_path": "percona/percona-server:8.0.28-20",
             "image_hash": "7f4fc6f0323dcafa4e0efbc3318906d453e432de86f152625024db3ac38ce833",

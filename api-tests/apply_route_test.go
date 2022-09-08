@@ -562,7 +562,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		version  string
 	}{
 		// test latest
-		{"latest", "0.2.0", "8.0.29-21"},
+		{"latest", "0.2.0", "8.0.28-20"},
 
 		// test recommended
 		{"recommended", "0.2.0", "8.0.28-20"},
@@ -571,7 +571,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0.27", "0.2.0", "8.0.27-18"},
 
 		//test with suffix
-		{"8-latest", "0.2.0", "8.0.29-21"},
+		{"8-latest", "0.2.0", "8.0.28-20"},
 		{"8-recommended", "0.2.0", "8.0.28-20"},
 	}
 
