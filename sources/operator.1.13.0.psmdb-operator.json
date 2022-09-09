@@ -73,7 +73,7 @@
         "operator": {
           "1.13.0": {
             "image_path": "percona/percona-server-mongodb-operator:1.13.0",
-            "image_hash": "sha256:66f25e0944a606b97cf50a1e6825c708eb3fc88571e54248bdf5cef2a7518594",
+            "image_hash": "sha256:2944bd217f4da247a8dff01eedd0a08fd1bb397df81587a90ab432631a62f8b2",
             "status": "recommended",
             "critical": false
           }
