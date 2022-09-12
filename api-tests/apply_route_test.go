@@ -1,6 +1,7 @@
 package api_tests
 
 import (
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -204,7 +205,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"8.0.19-10.1", "1.5.0", nil, "8.0.19-10.1"},
 		{"8.0.18-9.3", "1.4.0", nil, "8.0.18-9.3"},
 
-		//test with suffix
+		// test with suffix
 		{"8.0-latest", "1.11.0", nil, "8.0.27-18.1"},
 		{"8.0-latest", "1.10.0", nil, "8.0.25-15.1"},
 		{"8.0-latest", "1.9.0", nil, "8.0.23-14.1"},
@@ -275,8 +276,8 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		// test latest
 		{"latest", "1.13.0", nil, "5.0.11-10"},
 		{"latest", "1.12.0", nil, "5.0.7-6"},
-		{"latest", "1.11.0", nil, "5.0.4-3"},
-		{"latest", "1.10.0", nil, "5.0.2-1"},
+		{"latest", "1.11.0", nil, "5.0.7-6"},
+		{"latest", "1.10.0", nil, "5.0.7-6"},
 		{"latest", "1.9.0", nil, "4.4.6-8"},
 		{"latest", "1.8.0", nil, "4.4.5-7"},
 		{"latest", "1.7.0", nil, "4.4.3-5"},
@@ -384,11 +385,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.6.0", nil, "3.6.18-5.0"},
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
-		//test with suffix
+		// test with suffix
 		{"5.0-latest", "1.13.0", nil, "5.0.11-10"},
 		{"5.0-latest", "1.12.0", nil, "5.0.7-6"},
-		{"5.0-latest", "1.11.0", nil, "5.0.4-3"},
-		{"5.0-latest", "1.10.0", nil, "5.0.2-1"},
+		{"5.0-latest", "1.11.0", nil, "5.0.7-6"},
+		{"5.0-latest", "1.10.0", nil, "5.0.7-6"},
 		{"4.4-latest", "1.13.0", nil, "4.4.16-16"},
 		{"4.4-latest", "1.12.0", nil, "4.4.13-13"},
 		{"4.4-latest", "1.11.0", nil, "4.4.10-11"},
@@ -464,7 +465,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		assert.NoError(t, err)
 
 		v := getVersion(resp.Payload.Versions[0].Matrix.Mongod)
-		assert.Equal(t, c.version, v)
+		assert.Equal(t, c.version, v, fmt.Sprintf("operator: %v, apply: %v", c.operator, c.apply))
 	}
 }
 
@@ -501,7 +502,7 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"13.7", "1.3.0", nil, "13.7"},
 		{"14.4", "1.3.0", nil, "14.4"},
 
-		//test with suffix
+		// test with suffix
 		{"12-latest", "1.1.0", nil, "12.8"},
 		{"13-latest", "1.1.0", nil, "13.5"},
 		{"14-latest", "1.1.0", nil, "14.1"},
