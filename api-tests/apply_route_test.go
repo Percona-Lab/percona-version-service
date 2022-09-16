@@ -586,8 +586,8 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0.27", "0.2.0", "8.0.27-18"},
 
 		//test with suffix
-		{"8-latest", "0.2.0", "8.0.28-20"},
-		{"8-recommended", "0.2.0", "8.0.28-20"},
+		{"8.0-latest", "0.2.0", "8.0.28-20"},
+		{"8.0-recommended", "0.2.0", "8.0.28-20"},
 	}
 
 	for _, c := range cases {
