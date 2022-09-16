@@ -1,7 +1,7 @@
 {
     "versions": [
       {
-        "operator": "2.31.0",
+        "operator": "2.32.0",
         "product": "pmm-server",
         "matrix": {
           "pxcOperator": {
