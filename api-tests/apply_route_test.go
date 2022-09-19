@@ -6,10 +6,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/Percona-Lab/percona-version-service/client"
 	"github.com/Percona-Lab/percona-version-service/client/models"
 	"github.com/Percona-Lab/percona-version-service/client/version_service"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestApplyShouldReturnJustOneVersion(t *testing.T) {
@@ -67,6 +68,24 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbadger, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
+
+	psParams := &version_service.VersionServiceApplyParams{
+		Apply:           "latest",
+		OperatorVersion: "0.2.0",
+		Product:         "ps-operator",
+	}
+	psParams.WithTimeout(2 * time.Second)
+
+	psResp, err := cli.VersionService.VersionServiceApply(psParams)
+	assert.NoError(t, err)
+
+	assert.Len(t, psResp.Payload.Versions, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Mysql, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Pmm, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Backup, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Orchestrator, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Router, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Operator, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
@@ -125,6 +144,26 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 		assert.NoError(t, err)
 
 		k := getVersion(psmdbResp.Payload.Versions[0].Matrix.Postgresql)
+		assert.True(t, strings.HasPrefix(k, strings.Split(v, ".")[0]))
+	}
+}
+
+func TestApplyPsShouldReturnSameMajorVersion(t *testing.T) {
+	cli := cli()
+
+	params := &version_service.VersionServiceApplyParams{
+		Apply:           "latest",
+		OperatorVersion: "0.2.0",
+		Product:         "ps-operator",
+	}
+	params.WithTimeout(2 * time.Second)
+
+	for _, v := range []string{"8.0.27"} {
+		params.DatabaseVersion = &v
+		resp, err := cli.VersionService.VersionServiceApply(params)
+		assert.NoError(t, err)
+
+		k := getVersion(resp.Payload.Versions[0].Matrix.Mysql)
 		assert.True(t, strings.HasPrefix(k, strings.Split(v, ".")[0]))
 	}
 }
@@ -556,6 +595,44 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		assert.NoError(t, err)
 
 		v := getVersion(resp.Payload.Versions[0].Matrix.Postgresql)
+		assert.Equal(t, c.version, v)
+	}
+}
+
+func TestApplyPSReturnedVersions(t *testing.T) {
+	cli := cli()
+
+	cases := []struct {
+		apply    string
+		operator string
+		version  string
+	}{
+		// test latest
+		{"latest", "0.2.0", "8.0.28-20"},
+
+		// test recommended
+		{"recommended", "0.2.0", "8.0.28-20"},
+
+		// test exact
+		{"8.0.27", "0.2.0", "8.0.27-18"},
+
+		//test with suffix
+		{"8.0-latest", "0.2.0", "8.0.28-20"},
+		{"8.0-recommended", "0.2.0", "8.0.28-20"},
+	}
+
+	for _, c := range cases {
+		params := &version_service.VersionServiceApplyParams{
+			Apply:           c.apply,
+			OperatorVersion: c.operator,
+			Product:         "ps-operator",
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceApply(params)
+		assert.NoError(t, err)
+
+		v := getVersion(resp.Payload.Versions[0].Matrix.Mysql)
 		assert.Equal(t, c.version, v)
 	}
 }

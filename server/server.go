@@ -79,6 +79,11 @@ func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVers
 		if err != nil {
 			return nil, err
 		}
+	case "ps-operator":
+		err := ps(vs, deps, req)
+		if err != nil {
+			return nil, err
+		}
 	default:
 		return nil, status.Errorf(codes.InvalidArgument, "invalid product: %s", req.Product)
 	}
@@ -223,6 +228,71 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		return err
 	}
 	err = defaultFilter(vs.Versions[0].Matrix.Pgbouncer, depVer, true)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func ps(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) error {
+	err := psFilter(vs.Versions[0].Matrix.Mysql, req.Apply, req.DatabaseVersion)
+	if err != nil {
+		return err
+	}
+
+	productVersion := ""
+	for k := range vs.Versions[0].Matrix.Mysql {
+		productVersion = k
+		break
+	}
+
+	backupVersion, err := depFilter(deps.Backup, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Backup, backupVersion, true)
+	if err != nil {
+		return err
+	}
+
+	pmmVersion, err := depFilter(deps.PMM, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion, true)
+	if err != nil {
+		return err
+	}
+	orchestratorVersion, err := depFilter(deps.Orchestrator, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Orchestrator, orchestratorVersion, true)
+	if err != nil {
+		return err
+	}
+	routerVersion, err := depFilter(deps.Router, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Router, routerVersion, true)
+	if err != nil {
+		return err
+	}
+	haproxyVersion, err := depFilter(deps.Haproxy, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Haproxy, haproxyVersion, true)
+	if err != nil {
+		return err
+	}
+	toolkitVersion, err := depFilter(deps.Toolkit, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Toolkit, toolkitVersion, true)
 	if err != nil {
 		return err
 	}
