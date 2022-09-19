@@ -4,11 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Percona-Lab/percona-version-service/client/version_service"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/Percona-Lab/percona-version-service/client/version_service"
 )
 
-func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
+func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 	cli := cli()
 
 	cases := []struct {
@@ -35,6 +36,7 @@ func TestOperatorRouteShouldReturnRigthOperatorVersion(t *testing.T) {
 		{"pg-operator", "1.1.0"},
 		{"pg-operator", "1.2.0"},
 		{"pg-operator", "1.3.0"},
+		{"ps-operator", "0.2.0"},
 	}
 
 	for _, c := range cases {
@@ -162,6 +164,36 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.PgbackrestRepo), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbadger), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
+	}
+}
+
+func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
+	cli := cli()
+
+	cases := []struct {
+		product string
+		version string
+	}{
+		{"ps-operator", "0.2.0"},
+	}
+
+	for _, c := range cases {
+		params := &version_service.VersionServiceOperatorParams{
+			OperatorVersion: c.version,
+			Product:         c.product,
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceOperator(params)
+		assert.NoError(t, err)
+
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.Operator, 1)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Mysql), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Backup), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Orchestrator), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Router), 0)
 	}
 }
 
