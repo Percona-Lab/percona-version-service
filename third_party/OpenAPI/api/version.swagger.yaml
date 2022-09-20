@@ -69,6 +69,21 @@ paths:
           in: query
           required: false
           type: string
+        - name: shardingEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: hashicorpVaultEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: clusterWideEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -134,6 +149,21 @@ paths:
           in: query
           required: false
           type: string
+        - name: shardingEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: hashicorpVaultEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: clusterWideEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -203,6 +233,21 @@ paths:
           in: query
           required: false
           type: string
+        - name: shardingEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: hashicorpVaultEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: clusterWideEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
       tags:
         - VersionService
 definitions:
@@ -442,6 +487,30 @@ definitions:
         additionalProperties:
           $ref: '#/definitions/versionVersion'
       psmdbOperator:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgOperatorApiserver:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgOperatorEvent:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgOperatorRmdata:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgOperatorScheduler:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgOperator:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgOperatorDeployer:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
