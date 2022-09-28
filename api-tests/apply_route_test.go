@@ -71,7 +71,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "0.2.0",
+		OperatorVersion: "0.3.0",
 		Product:         "ps-operator",
 	}
 	psParams.WithTimeout(2 * time.Second)
@@ -153,12 +153,12 @@ func TestApplyPsShouldReturnSameMajorVersion(t *testing.T) {
 
 	params := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "0.2.0",
+		OperatorVersion: "0.3.0",
 		Product:         "ps-operator",
 	}
 	params.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"8.0.27"} {
+	for _, v := range []string{"8.0.29"} {
 		params.DatabaseVersion = &v
 		resp, err := cli.VersionService.VersionServiceApply(params)
 		assert.NoError(t, err)
@@ -578,16 +578,21 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 	}{
 		// test latest
 		{"latest", "0.2.0", "8.0.28-20"},
+		{"latest", "0.3.0", "8.0.29-21"},
 
 		// test recommended
 		{"recommended", "0.2.0", "8.0.28-20"},
+		{"recommended", "0.3.0", "8.0.29-21"},
 
 		// test exact
 		{"8.0.27", "0.2.0", "8.0.27-18"},
+		{"8.0.29", "0.3.0", "8.0.29-21"},
 
 		//test with suffix
 		{"8.0-latest", "0.2.0", "8.0.28-20"},
+		{"8.0-latest", "0.3.0", "8.0.29-21"},
 		{"8.0-recommended", "0.2.0", "8.0.28-20"},
+		{"8.0-recommended", "0.3.0", "8.0.29-21"},
 	}
 
 	for _, c := range cases {
