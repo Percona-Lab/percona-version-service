@@ -7,7 +7,7 @@
         "pxc": {
           "8.0.29-21.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.29-21.1",
-            "image_hash": "8abbca8427ec010419e53afc2a646ebe6f4874f7f2273fdd46b1cf33eb3a16a5",
+            "image_hash": "96c6bb8189280aeb773e74ed46aa41c01781b62947ed70c89efeb9f41c367ee7",
             "status": "recommended",
             "critical": false
           },
@@ -61,7 +61,7 @@
           },
           "5.7.39-31.61": {
             "image_path": "percona/percona-xtradb-cluster:5.7.39-31.61",
-            "image_hash": "a007bb0cd63df0df476f7cf3f6952eca6780ac85333685039023bf3dd45a00ce",
+            "image_hash": "9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7",
             "status": "recommended",
             "critical": false
           },
@@ -187,7 +187,7 @@
         "operator": {
           "1.12.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.12.0",
-            "image_hash": "8139ee430a961f05059e98e633dd2382c96133152d25a904a160a3abd90d57b2",
+            "image_hash": "fbbf093bf7681e0784dd817ac311dea815140ce53aa9cdc79ada0bba067b06a8",
             "status": "recommended",
             "critical": false
           }
