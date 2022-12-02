@@ -147,9 +147,9 @@
           }
         },
         "proxysql": {
-          "2.4.3-1.1": {
+          "2.4.4-1.2": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.12.0-proxysql",
-            "image_hash": "44c8e68b6ee8f2c74d1a4f2ba6548ed53914ffc06766427628f292d84129f83b",
+            "image_hash": "a0352f7491ba32f4cb1fb8edb1ad9248235f4ae1186932965383f47e3239e0f7",
             "status": "recommended",
             "critical": false
           }
