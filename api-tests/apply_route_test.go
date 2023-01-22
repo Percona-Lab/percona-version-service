@@ -375,6 +375,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.7.0", nil, "4.4.3-5"},
 		{"recommended", "1.6.0", nil, "4.4.2-4"},
 		{"recommended", "1.5.0", nil, "4.2.8-8"},
+		{"recommended", "1.14.0", &v44, "4.4.16-16"},
 		{"recommended", "1.13.0", &v44, "4.4.16-16"},
 		{"recommended", "1.12.0", &v44, "4.4.13-13"},
 		{"recommended", "1.11.0", &v44, "4.4.10-11"},
@@ -441,7 +442,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
 		//test with suffix
-		{"6.0-latest", "1.14.0", nil, "66.0.3-2"},
+		{"6.0-latest", "1.14.0", nil, "6.0.3-2"},
 		{"5.0-latest", "1.13.0", nil, "5.0.11-10"},
 		{"5.0-latest", "1.12.0", nil, "5.0.7-6"},
 		{"5.0-latest", "1.11.0", nil, "5.0.4-3"},
