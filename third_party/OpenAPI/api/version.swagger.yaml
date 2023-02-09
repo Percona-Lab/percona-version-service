@@ -84,6 +84,41 @@ paths:
           required: false
           type: boolean
           format: boolean
+        - name: pmmEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: helmDeploy
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: sidecarsUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: backupsUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: clusterSize
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: pitrUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: physicalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -160,6 +195,41 @@ paths:
           type: boolean
           format: boolean
         - name: clusterWideEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: pmmEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: helmDeploy
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: sidecarsUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: backupsUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: clusterSize
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: pitrUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: physicalBackupScheduled
           in: query
           required: false
           type: boolean
@@ -244,6 +314,41 @@ paths:
           type: boolean
           format: boolean
         - name: clusterWideEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: pmmEnabled
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: helmDeploy
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: sidecarsUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: backupsUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: clusterSize
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: pitrUsed
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: physicalBackupScheduled
           in: query
           required: false
           type: boolean
