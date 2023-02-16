@@ -89,7 +89,12 @@ paths:
           required: false
           type: boolean
           format: boolean
-        - name: helmDeploy
+        - name: helmDeployOperator
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: helmDeployCr
           in: query
           required: false
           type: boolean
@@ -204,7 +209,12 @@ paths:
           required: false
           type: boolean
           format: boolean
-        - name: helmDeploy
+        - name: helmDeployOperator
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: helmDeployCr
           in: query
           required: false
           type: boolean
@@ -323,7 +333,12 @@ paths:
           required: false
           type: boolean
           format: boolean
-        - name: helmDeploy
+        - name: helmDeployOperator
+          in: query
+          required: false
+          type: boolean
+          format: boolean
+        - name: helmDeployCr
           in: query
           required: false
           type: boolean
