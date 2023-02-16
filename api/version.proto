@@ -74,6 +74,14 @@ message ApplyRequest {
   bool sharding_enabled = 14;
   bool hashicorp_vault_enabled = 15;
   bool cluster_wide_enabled = 16;
+  bool pmm_enabled = 17;
+  bool helm_deploy_operator = 18;
+  bool helm_deploy_cr = 19;
+  bool sidecars_used = 20;
+  bool backups_enabled = 21;
+  int32 cluster_size = 22;
+  bool pitr_enabled = 23;
+  bool physical_backup_scheduled = 24;
 }
 
 message OperatorRequest {
@@ -92,6 +100,14 @@ message OperatorRequest {
   bool sharding_enabled = 14;
   bool hashicorp_vault_enabled = 15;
   bool cluster_wide_enabled = 16;
+  bool pmm_enabled = 17;
+  bool helm_deploy_operator = 18;
+  bool helm_deploy_cr = 19;
+  bool sidecars_used = 20;
+  bool backups_enabled = 21;
+  int32 cluster_size = 22;
+  bool pitr_enabled = 23;
+  bool physical_backup_scheduled = 24;
 }
 
 message ProductRequest {
@@ -109,6 +125,14 @@ message ProductRequest {
   bool sharding_enabled = 14;
   bool hashicorp_vault_enabled = 15;
   bool cluster_wide_enabled = 16;
+  bool pmm_enabled = 17;
+  bool helm_deploy_operator = 18;
+  bool helm_deploy_cr = 19;
+  bool sidecars_used = 20;
+  bool backups_enabled = 21;
+  int32 cluster_size = 22;
+  bool pitr_enabled = 23;
+  bool physical_backup_scheduled = 24;
 }
 
 // Status describes the current version status.
