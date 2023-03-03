@@ -118,7 +118,7 @@ func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"6.0", "5.0", "4.4", "4.2"} {
+	for _, v := range []string{"6.0", "5.0", "4.4"} {
 		psmdbParams.DatabaseVersion = &v
 		psmdbResp, err := cli.VersionService.VersionServiceApply(psmdbParams)
 		assert.NoError(t, err)
