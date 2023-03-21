@@ -280,6 +280,22 @@ func ps(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 	if err != nil {
 		return err
 	}
+	haproxyVersion, err := depFilter(deps.Haproxy, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Haproxy, haproxyVersion, true)
+	if err != nil {
+		return err
+	}
+	toolkitVersion, err := depFilter(deps.Toolkit, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Toolkit, toolkitVersion, true)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

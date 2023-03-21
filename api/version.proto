@@ -82,6 +82,7 @@ message ApplyRequest {
   int32 cluster_size = 22;
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
+  string toolkit_version = 25;
 }
 
 message OperatorRequest {
@@ -108,6 +109,7 @@ message OperatorRequest {
   int32 cluster_size = 22;
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
+  string toolkit_version = 25;
 }
 
 message ProductRequest {
@@ -133,6 +135,7 @@ message ProductRequest {
   int32 cluster_size = 22;
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
+  string toolkit_version = 25;
 }
 
 // Status describes the current version status.
@@ -179,6 +182,7 @@ message VersionMatrix {
   map<string, Version> mysql = 23;
   map<string, Version> router = 24;
   map<string, Version> orchestrator = 25;
+  map<string, Version> toolkit = 26;
 }
 
 // OperatorVersion represents operator version.

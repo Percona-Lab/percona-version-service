@@ -12,4 +12,5 @@ type Deps struct {
 	Pgbouncer      map[string]interface{} `json:"pgbouncer,omitempty"`
 	Orchestrator   map[string]interface{} `json:"orchestrator,omitempty"`
 	Router         map[string]interface{} `json:"router,omitempty"`
+	Toolkit        map[string]interface{} `json:"toolkit,omitempty"`
 }

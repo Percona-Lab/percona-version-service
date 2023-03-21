@@ -124,6 +124,10 @@ paths:
           required: false
           type: boolean
           format: boolean
+        - name: toolkitVersion
+          in: query
+          required: false
+          type: string
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -244,6 +248,10 @@ paths:
           required: false
           type: boolean
           format: boolean
+        - name: toolkitVersion
+          in: query
+          required: false
+          type: string
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -368,6 +376,10 @@ paths:
           required: false
           type: boolean
           format: boolean
+        - name: toolkitVersion
+          in: query
+          required: false
+          type: string
       tags:
         - VersionService
 definitions:
@@ -647,6 +659,10 @@ definitions:
         additionalProperties:
           $ref: '#/definitions/versionVersion'
       orchestrator:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      toolkit:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
