@@ -179,6 +179,7 @@ message VersionMatrix {
   map<string, Version> mysql = 23;
   map<string, Version> router = 24;
   map<string, Version> orchestrator = 25;
+  map<string, Version> toolkit = 26;
 }
 
 // OperatorVersion represents operator version.
