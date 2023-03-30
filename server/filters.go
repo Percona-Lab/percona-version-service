@@ -205,6 +205,66 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 	return nil
 }
 
+func psFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
+	if len(versions) == 0 {
+		return status.Error(codes.Internal, "no versions to filter")
+	}
+
+	keys := make([]string, 0, len(versions))
+	for k, v := range versions {
+		if strings.ToLower(apply) == recommended && v.Status != pbVersion.Status_recommended {
+			continue
+		}
+
+		keys = append(keys, k)
+	}
+
+	sorted, err := sortedVersionsDesc(keys, true)
+	if err != nil {
+		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
+	}
+
+	apply = strings.ToLower(apply)
+
+	if (apply == recommended || apply == latest) && current == "" {
+		return deleteOtherBut(sorted[0].String(), versions)
+	}
+
+	desired := apply //assume version number
+	if apply == recommended || apply == latest {
+		desired = current
+
+		c, err := semver.NewVersion(current)
+		if err != nil {
+			return status.Errorf(codes.InvalidArgument, "invalid current version: %s", current)
+		}
+
+		for _, s := range sorted {
+			if s.Equal(c) || s.LessThan(c) {
+				break
+			}
+
+			if versions[s.String()].Status != pbVersion.Status_disabled &&
+				c.Major() == s.Major() && c.Minor() == s.Minor() {
+				desired = s.String()
+				if strings.ToLower(apply) == latest {
+					break
+				}
+			}
+		}
+	}
+
+	err = deleteOtherBut(desired, versions)
+	if err != nil {
+		return err
+	}
+	if len(versions) == 0 {
+		return status.Errorf(codes.NotFound, "version %s does not exist", desired)
+	}
+
+	return nil
+}
+
 func defaultFilter(versions map[string]*pbVersion.Version, apply string, preVerIsLower bool) error {
 	if len(versions) == 0 {
 		return nil

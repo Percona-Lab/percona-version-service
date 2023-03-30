@@ -4,11 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Percona-Lab/percona-version-service/client/version_service"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/Percona-Lab/percona-version-service/client/version_service"
 )
 
-func TestProductRouteShouldReturnRigthProductName(t *testing.T) {
+func TestProductRouteShouldReturnRightProductName(t *testing.T) {
 	cli := cli()
 
 	cases := []struct {
@@ -17,6 +18,7 @@ func TestProductRouteShouldReturnRigthProductName(t *testing.T) {
 		{"pxc-operator"},
 		{"psmdb-operator"},
 		{"pg-operator"},
+		{"ps-operator"},
 		{"pmm-server"},
 	}
 
