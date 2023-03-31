@@ -52,7 +52,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.1.0",
+		OperatorVersion: "1.4.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -133,12 +133,12 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.3.0",
+		OperatorVersion: "1.4.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"12.11", "13.7", "14.4"} {
+	for _, v := range []string{"12.14", "13.10", "14.7"} {
 		pgParams.DatabaseVersion = &v
 		psmdbResp, err := cli.VersionService.VersionServiceApply(pgParams)
 		assert.NoError(t, err)
@@ -541,9 +541,9 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 func TestApplyPGReturnedVersions(t *testing.T) {
 	cli := cli()
 
-	v12 := "12.11"
-	v13 := "13.7"
-	v14 := "14.4"
+	v12 := "12.14"
+	v13 := "13.10"
+	v14 := "14.7"
 
 	cases := []struct {
 		apply     string
@@ -552,16 +552,16 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.3.0", nil, "14.4"},
-		{"latest", "1.3.0", &v12, "12.11"},
-		{"latest", "1.3.0", &v13, "13.7"},
-		{"latest", "1.3.0", &v14, "14.4"},
+		{"latest", "1.4.0", nil, "14.7"},
+		{"latest", "1.4.0", &v12, "12.14"},
+		{"latest", "1.4.0", &v13, "13.10"},
+		{"latest", "1.4.0", &v14, "14.7"},
 
 		// test recommended
-		{"recommended", "1.3.0", nil, "14.4"},
-		{"recommended", "1.3.0", &v12, "12.11"},
-		{"recommended", "1.3.0", &v13, "13.7"},
-		{"recommended", "1.3.0", &v14, "14.4"},
+		{"recommended", "1.4.0", nil, "14.7"},
+		{"recommended", "1.4.0", &v12, "12.14"},
+		{"recommended", "1.4.0", &v13, "13.10"},
+		{"recommended", "1.4.0", &v14, "14.7"},
 
 		// test exact
 		{"12.8", "1.1.0", nil, "12.8"},
@@ -570,6 +570,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12.11", "1.3.0", nil, "12.11"},
 		{"13.7", "1.3.0", nil, "13.7"},
 		{"14.4", "1.3.0", nil, "14.4"},
+		{"12.14", "1.4.0", nil, "12.14"},
+		{"13.10", "1.4.0", nil, "13.10"},
+		{"14.7", "1.4.0", nil, "14.7"},
 
 		//test with suffix
 		{"12-latest", "1.1.0", nil, "12.8"},
@@ -578,6 +581,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12-latest", "1.3.0", nil, "12.11"},
 		{"13-latest", "1.3.0", nil, "13.7"},
 		{"14-latest", "1.3.0", nil, "14.4"},
+		{"12-latest", "1.4.0", nil, "12.14"},
+		{"13-latest", "1.4.0", nil, "13.10"},
+		{"14-latest", "1.4.0", nil, "14.7"},
 	}
 
 	for _, c := range cases {
