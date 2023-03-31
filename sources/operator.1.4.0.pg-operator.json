@@ -25,7 +25,7 @@
           }
         },
         "pmm": {
-          "2.29.0": {
+          "2.36.0": {
             "image_path": "percona/pmm-client:2.36.0",
             "image_hash": "82042826ee8cce6767f32d591fb0ae772a49f06741e56fe0dafa2df2ce6d9780",
             "status": "recommended",
