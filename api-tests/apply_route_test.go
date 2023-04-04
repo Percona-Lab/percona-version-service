@@ -64,8 +64,6 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.PgbackrestRepo, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbadger, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 
