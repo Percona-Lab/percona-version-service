@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -20,6 +21,8 @@ const (
 	recommended = "recommended"
 	latest      = "latest"
 )
+
+var majorMinorRegexp = regexp.MustCompile(`^(\d+\.)?(\d+)`)
 
 func psmdbFilter(versions map[string]*pbVersion.Version, apply string, current string) error {
 	if len(versions) == 0 {
@@ -159,13 +162,15 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 		return deleteOtherBut(sorted[0].String(), versions)
 	}
 
+	currentVer := majorMinorRegexp.FindString(current)
+
 	desired := apply //assume version number
 	if apply == recommended || apply == latest {
-		desired = current
+		desired = currentVer
 
-		c, err := semver.NewVersion(current)
+		c, err := semver.NewVersion(currentVer)
 		if err != nil {
-			return status.Errorf(codes.InvalidArgument, "invalid current version: %s", current)
+			return status.Errorf(codes.InvalidArgument, "invalid current version: %s", currentVer)
 		}
 
 		for _, s := range sorted {

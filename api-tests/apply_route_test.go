@@ -541,49 +541,51 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 func TestApplyPGReturnedVersions(t *testing.T) {
 	cli := cli()
 
-	v12 := "12.14"
-	v13 := "13.10"
-	v14 := "14.7"
-
 	cases := []struct {
 		apply     string
 		operator  string
-		dbVersion *string
+		dbVersion string
 		version   string
 	}{
 		// test latest
-		{"latest", "1.4.0", nil, "14.7"},
-		{"latest", "1.4.0", &v12, "12.14"},
-		{"latest", "1.4.0", &v13, "13.10"},
-		{"latest", "1.4.0", &v14, "14.7"},
+		{"latest", "1.4.0", "", "14.7"},
+		{"latest", "1.4.0", "12.14", "12.14"},
+		{"latest", "1.4.0", "13.10", "13.10"},
+		{"latest", "1.4.0", "14.7", "14.7"},
 
 		// test recommended
-		{"recommended", "1.4.0", nil, "14.7"},
-		{"recommended", "1.4.0", &v12, "12.14"},
-		{"recommended", "1.4.0", &v13, "13.10"},
-		{"recommended", "1.4.0", &v14, "14.7"},
+		{"recommended", "1.4.0", "", "14.7"},
+		{"recommended", "1.4.0", "12.14", "12.14"},
+		{"recommended", "1.4.0", "13.10", "13.10"},
+		{"recommended", "1.4.0", "14.7", "14.7"},
 
 		// test exact
-		{"12.8", "1.1.0", nil, "12.8"},
-		{"13.5", "1.1.0", nil, "13.5"},
-		{"14.1", "1.1.0", nil, "14.1"},
-		{"12.11", "1.3.0", nil, "12.11"},
-		{"13.7", "1.3.0", nil, "13.7"},
-		{"14.4", "1.3.0", nil, "14.4"},
-		{"12.14", "1.4.0", nil, "12.14"},
-		{"13.10", "1.4.0", nil, "13.10"},
-		{"14.7", "1.4.0", nil, "14.7"},
+		{"12.8", "1.1.0", "", "12.8"},
+		{"13.5", "1.1.0", "", "13.5"},
+		{"14.1", "1.1.0", "", "14.1"},
+		{"12.11", "1.3.0", "", "12.11"},
+		{"13.7", "1.3.0", "", "13.7"},
+		{"14.4", "1.3.0", "", "14.4"},
+		{"12.14", "1.4.0", "", "12.14"},
+		{"13.10", "1.4.0", "", "13.10"},
+		{"14.7", "1.4.0", "", "14.7"},
 
 		//test with suffix
-		{"12-latest", "1.1.0", nil, "12.8"},
-		{"13-latest", "1.1.0", nil, "13.5"},
-		{"14-latest", "1.1.0", nil, "14.1"},
-		{"12-latest", "1.3.0", nil, "12.11"},
-		{"13-latest", "1.3.0", nil, "13.7"},
-		{"14-latest", "1.3.0", nil, "14.4"},
-		{"12-latest", "1.4.0", nil, "12.14"},
-		{"13-latest", "1.4.0", nil, "13.10"},
-		{"14-latest", "1.4.0", nil, "14.7"},
+		{"12-latest", "1.1.0", "", "12.8"},
+		{"13-latest", "1.1.0", "", "13.5"},
+		{"14-latest", "1.1.0", "", "14.1"},
+		{"12-latest", "1.3.0", "", "12.11"},
+		{"13-latest", "1.3.0", "", "13.7"},
+		{"14-latest", "1.3.0", "", "14.4"},
+		{"12-latest", "1.4.0", "", "12.14"},
+		{"13-latest", "1.4.0", "", "13.10"},
+		{"14-latest", "1.4.0", "", "14.7"},
+
+		// test with distribution suffix
+		{"latest", "1.4.0", "12.8 - Percona Distribution", "12.14"},
+		{"latest", "1.4.0", "13.3 (Ubuntu 13.3-1.pgdg20.04+1)", "13.10"},
+		{"latest", "1.4.0", "13.8 (Debian 13.8-0+deb11u1)", "13.10"},
+		{"latest", "1.4.0", "14.7 - Percona Distribution", "14.7"},
 	}
 
 	for _, c := range cases {
@@ -593,8 +595,8 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 			Product:         "pg-operator",
 		}
 		params.WithTimeout(2 * time.Second)
-		if c.dbVersion != nil {
-			params.DatabaseVersion = c.dbVersion
+		if c.dbVersion != "" {
+			params.DatabaseVersion = &c.dbVersion
 		}
 
 		resp, err := cli.VersionService.VersionServiceApply(params)
