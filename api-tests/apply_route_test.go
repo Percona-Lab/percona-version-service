@@ -569,6 +569,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12.14", "1.4.0", "", "12.14"},
 		{"13.10", "1.4.0", "", "13.10"},
 		{"14.7", "1.4.0", "", "14.7"},
+		{"14.6", "2.0.0", "", "14.6"},
+		{"13.9", "2.0.0", "", "13.9"},
+		{"12.13", "2.0.0", "", "12.13"},
 
 		//test with suffix
 		{"12-latest", "1.1.0", "", "12.8"},
@@ -580,6 +583,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12-latest", "1.4.0", "", "12.14"},
 		{"13-latest", "1.4.0", "", "13.10"},
 		{"14-latest", "1.4.0", "", "14.7"},
+		{"12-latest", "2.0.0", "", "12.13"},
+		{"13-latest", "2.0.0", "", "13.9"},
+		{"14-latest", "2.0.0", "", "14.6"},
 
 		// test with distribution suffix
 		{"latest", "1.4.0", "12.8 - Percona Distribution", "12.14"},
