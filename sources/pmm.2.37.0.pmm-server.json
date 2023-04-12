@@ -57,7 +57,7 @@
             },
             "1.14.0": {
               "image_path": "percona/percona-server-mongodb-operator:1.14.0",
-              "image_hash": "7137ee6ff918bd2366033f198f2919e7aa291ae3b76460e267896bf052251837",
+              "image_hash": "b5db0eae838e338f43633163a43579f57468b05144bde1fa161825a132b29bd2",
               "status": "recommended",
               "critical": false
             }
