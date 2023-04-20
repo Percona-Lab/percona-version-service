@@ -1,21 +1,21 @@
 {
   "pgbackrest":{
-     "14.7":{
+     "14.6":{
         ">=":[
            {
               "var":"productVersion"
            },
-           "14.7"
+           "14.6"
         ]
      },
-     "13.10":{
+     "13.9":{
         "and":[
            {
               ">=":[
                  {
                     "var":"productVersion"
                  },
-                 "13.10"
+                 "13.9"
               ]
            },
            {
@@ -28,164 +28,14 @@
            }
         ]
      },
-     "12.14":{
+     "12.13":{
         "and":[
            {
               ">=":[
                  {
                     "var":"productVersion"
                  },
-                 "12.14"
-              ]
-           },
-           {
-              "<":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "13.0"
-              ]
-           }
-        ]
-     }
-  },
-  "pgbackrest_repo":{
-     "14.7":{
-        ">=":[
-           {
-              "var":"productVersion"
-           },
-           "14.7"
-        ]
-     },
-     "13.10":{
-        "and":[
-           {
-              ">=":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "13.10"
-              ]
-           },
-           {
-              "<":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "14.0"
-              ]
-           }
-        ]
-     },
-     "12.14":{
-        "and":[
-           {
-              ">=":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "12.14"
-              ]
-           },
-           {
-              "<":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "13.0"
-              ]
-           }
-        ]
-     }
-  },
-  "pgbadger":{
-     "14.7":{
-        ">=":[
-           {
-              "var":"productVersion"
-           },
-           "14.7"
-        ]
-     },
-     "13.10":{
-        "and":[
-           {
-              ">=":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "13.10"
-              ]
-           },
-           {
-              "<":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "14.0"
-              ]
-           }
-        ]
-     },
-     "12.14":{
-        "and":[
-           {
-              ">=":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "12.14"
-              ]
-           },
-           {
-              "<":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "13.0"
-              ]
-           }
-        ]
-     }
-  },
-  "pgbouncer":{
-     "14.7":{
-        ">=":[
-           {
-              "var":"productVersion"
-           },
-           "14.7"
-        ]
-     },
-     "13.10":{
-        "and":[
-           {
-              ">=":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "13.10"
-              ]
-           },
-           {
-              "<":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "14.0"
-              ]
-           }
-        ]
-     },
-     "12.14":{
-        "and":[
-           {
-              ">=":[
-                 {
-                    "var":"productVersion"
-                 },
-                 "12.14"
+                 "12.13"
               ]
            },
            {
@@ -200,53 +50,103 @@
      }
   },
   "postgresql":{
-   "14.7":{
-      ">=":[
-         {
-            "var":"productVersion"
-         },
-         "14.7"
-      ]
-   },
-   "13.10":{
-      "and":[
-         {
-            ">=":[
-               {
-                  "var":"productVersion"
-               },
-               "13.10"
-            ]
-         },
-         {
-            "<":[
-               {
-                  "var":"productVersion"
-               },
-               "14.0"
-            ]
-         }
-      ]
-   },
-   "12.14":{
-      "and":[
-         {
-            ">=":[
-               {
-                  "var":"productVersion"
-               },
-               "12.14"
-            ]
-         },
-         {
-            "<":[
-               {
-                  "var":"productVersion"
-               },
-               "13.0"
-            ]
-         }
-      ]
-   }
-}
+     "14.6":{
+        ">=":[
+           {
+              "var":"productVersion"
+           },
+           "14.6"
+        ]
+     },
+     "13.9":{
+        "and":[
+           {
+              ">=":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "13.9"
+              ]
+           },
+           {
+              "<":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "14.0"
+              ]
+           }
+        ]
+     },
+     "12.13":{
+        "and":[
+           {
+              ">=":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "12.13"
+              ]
+           },
+           {
+              "<":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "13.0"
+              ]
+           }
+        ]
+     }
+  },
+  "pgbouncer":{
+     "14.6":{
+        ">=":[
+           {
+              "var":"productVersion"
+           },
+           "14.6"
+        ]
+     },
+     "13.9":{
+        "and":[
+           {
+              ">=":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "13.9"
+              ]
+           },
+           {
+              "<":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "14.0"
+              ]
+           }
+        ]
+     },
+     "12.13":{
+        "and":[
+           {
+              ">=":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "12.13"
+              ]
+           },
+           {
+              "<":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "13.0"
+              ]
+           }
+        ]
+     }
+  }
 }

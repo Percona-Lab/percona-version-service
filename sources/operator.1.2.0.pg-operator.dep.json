@@ -198,5 +198,55 @@
            }
         ]
      }
+  },
+  "postgresql":{
+     "14.2":{
+        ">=":[
+           {
+              "var":"productVersion"
+           },
+           "14.2"
+        ]
+     },
+     "13.6":{
+        "and":[
+           {
+              ">=":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "13.6"
+              ]
+           },
+           {
+              "<":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "14.0"
+              ]
+           }
+        ]
+     },
+     "12.10":{
+        "and":[
+           {
+              ">=":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "12.10"
+              ]
+           },
+           {
+              "<":[
+                 {
+                    "var":"productVersion"
+                 },
+                 "13.0"
+              ]
+           }
+        ]
+     }
   }
 }
