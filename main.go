@@ -156,7 +156,7 @@ func initLogger() *zap.Logger {
 func grpcServerLogOpt(logger *zap.Logger) grpc.ServerOption {
 	return grpc_middleware.WithUnaryServerChain(
 		grpc_zap.PayloadUnaryServerInterceptor(logger, func(_ context.Context, _ string, _ interface{}) bool {
-			return true
+			return false
 		}),
 		grpc_zap.UnaryServerInterceptor(logger),
 	)
