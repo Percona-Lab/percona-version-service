@@ -603,7 +603,7 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 
 		// test with distribution suffix
 		{"latest", "2.0.1", "12.14 - Percona Distribution", "12.14"},
-        {"latest", "2.0.1", "13.9 - Percona Distribution", "13.9"},
+        {"latest", "2.0.1", "13.10 - Percona Distribution", "13.10"},
         {"latest", "2.0.1", "14.7 - Percona Distribution", "14.7"},
         {"latest", "2.0.1", "15.2 - Percona Distribution", "15.2"},
 		{"latest", "2.0.0", "12.8 - Percona Distribution", "12.13"},
