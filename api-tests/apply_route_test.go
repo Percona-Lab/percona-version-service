@@ -52,7 +52,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "2.0.0",
+		OperatorVersion: "2.0.1",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -131,7 +131,7 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "2.0.0",
+		OperatorVersion: "2.0.1",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -546,12 +546,20 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "2.0.1", "", "15.2"},
+		{"latest", "2.0.1", "14.7", "14.7"},
+		{"latest", "2.0.1", "13.10", "13.10"},
+		{"latest", "2.0.1", "12.14", "12.14"},
 		{"latest", "2.0.0", "", "14.6"},
 		{"latest", "2.0.0", "12.3", "12.13"},
 		{"latest", "2.0.0", "13.9", "13.9"},
 		{"latest", "2.0.0", "14.6", "14.6"},
 
 		// test recommended
+		{"recommended", "2.0.1", "", "15.2"},
+		{"recommended", "2.0.1", "14.7", "14.7"},
+		{"recommended", "2.0.1", "13.10", "13.10"},
+		{"recommended", "2.0.1", "12.14", "12.14"},
 		{"recommended", "2.0.0", "", "14.6"},
 		{"recommended", "2.0.0", "12.13", "12.13"},
 		{"recommended", "2.0.0", "13.9", "13.9"},
@@ -567,6 +575,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12.14", "1.4.0", "", "12.14"},
 		{"13.10", "1.4.0", "", "13.10"},
 		{"14.7", "1.4.0", "", "14.7"},
+		{"15.2", "2.0.1", "", "15.2"},
+		{"14.7", "2.0.1", "", "14.7"},
+		{"13.10", "2.0.1", "", "13.10"},
+		{"12.14", "2.0.1", "", "12.14"},
 		{"14.6", "2.0.0", "", "14.6"},
 		{"13.9", "2.0.0", "", "13.9"},
 		{"12.13", "2.0.0", "", "12.13"},
@@ -584,8 +596,16 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12-latest", "2.0.0", "", "12.13"},
 		{"13-latest", "2.0.0", "", "13.9"},
 		{"14-latest", "2.0.0", "", "14.6"},
+		{"12-latest", "2.0.1", "", "12.14"},
+		{"13-latest", "2.0.1", "", "13.10"},
+		{"14-latest", "2.0.1", "", "14.7"},
+		{"15-latest", "2.0.1", "", "15.2"},
 
 		// test with distribution suffix
+		{"latest", "2.0.1", "12.14 - Percona Distribution", "12.14"},
+		{"latest", "2.0.1", "13.10 - Percona Distribution", "13.10"},
+		{"latest", "2.0.1", "14.7 - Percona Distribution", "14.7"},
+		{"latest", "2.0.1", "15.2 - Percona Distribution", "15.2"},
 		{"latest", "2.0.0", "12.8 - Percona Distribution", "12.13"},
 		{"latest", "2.0.0", "13.3 (Ubuntu 13.3-1.pgdg20.04+1)", "13.9"},
 		{"latest", "2.0.0", "13.8 (Debian 13.8-0+deb11u1)", "13.9"},
