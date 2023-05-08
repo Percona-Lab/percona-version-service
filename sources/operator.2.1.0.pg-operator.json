@@ -1,7 +1,7 @@
 {
   "versions": [
     {
-      "operator": "2.0.1",
+      "operator": "2.1.0",
       "product": "pg-operator",
       "matrix": {
         "postgresql": {
@@ -91,7 +91,7 @@
           }
         },
         "operator": {
-          "2.0.1": {
+          "2.1.0": {
             "image_path": "percona/percona-postgresql-operator:2.1.0",
             "image_hash": "538076c55e2fb2e7c8964a793dfaf56dea4ce276e839e0cd8ac7da54966784a8",
             "status": "recommended",
