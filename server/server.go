@@ -1,15 +1,47 @@
 package server
 
 import (
+	"bytes"
 	"context"
+	"fmt"
 	"strings"
+	"time"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
+	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"
+	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/ctxzap"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 const pmmServerProduct = "pmm-server"
+
+type jsonpbObjectMarshaler struct {
+	pb proto.Message
+}
+
+func (j *jsonpbObjectMarshaler) MarshalLogObject(e zapcore.ObjectEncoder) error {
+	// ZAP jsonEncoder deals with AddReflect by using json.MarshalObject. The same thing applies for consoleEncoder.
+	return e.AddReflected("msg", j)
+}
+
+func (j *jsonpbObjectMarshaler) MarshalJSON() ([]byte, error) {
+	b := &bytes.Buffer{}
+	if err := JsonPbMarshaller.Marshal(b, j.pb); err != nil {
+		return nil, fmt.Errorf("jsonpb serializer failed: %v", err)
+	}
+	return b.Bytes(), nil
+}
+
+var (
+	// JsonPbMarshaller is the marshaller used for serializing protobuf messages.
+	// If needed, this variable can be reassigned with a different marshaller with the same Marshal() signature.
+	JsonPbMarshaller grpc_logging.JsonPbMarshaler = &jsonpb.Marshaler{}
+)
 
 // Backend implements the protobuf interface.
 type Backend struct {
@@ -39,7 +71,19 @@ func (b *Backend) Operator(ctx context.Context, req *pbVersion.OperatorRequest) 
 	}, nil
 }
 
-func (b *Backend) Apply(_ context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
+func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVersion.VersionResponse, error) {
+	logger := ctxzap.Extract(ctx)
+
+	logger.Info(
+		"server request payload logged as grpc.request.content field",
+		zap.String("grcp.start_time", time.Now().Format("2006-01-02T15:04:05Z07:00")),
+		zap.String("system", "grpc"),
+		zap.String("span.kind", "server"),
+		zap.String("grpc.service", "version.VersionService"),
+		zap.String("grpc.method", "Apply"),
+		zap.Object("grpc.request.content", &jsonpbObjectMarshaler{req}),
+	)
+
 	if req.Product == pmmServerProduct {
 		return nil, status.Error(codes.Unimplemented, "not implemented for pmm-server")
 	}
