@@ -82,6 +82,7 @@ message ApplyRequest {
   int32 cluster_size = 22;
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
+  string proxysql_scheduler = 25;
 }
 
 message OperatorRequest {
@@ -108,6 +109,7 @@ message OperatorRequest {
   int32 cluster_size = 22;
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
+  string proxysql_scheduler = 25;
 }
 
 message ProductRequest {
@@ -133,6 +135,7 @@ message ProductRequest {
   int32 cluster_size = 22;
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
+  string proxysql_scheduler = 25;
 }
 
 // Status describes the current version status.
