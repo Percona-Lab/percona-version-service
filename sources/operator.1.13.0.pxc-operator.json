@@ -6,13 +6,13 @@
       "matrix": {
         "pxc": {
           "8.0.32-24.2": {
-            "image_path": "perconalab/percona-xtradb-cluster:8.0.32-24.2",
+            "image_path": "percona/percona-xtradb-cluster:8.0.32-24.2",
             "image_hash": "1f978ab8912e1b5fc66570529cb7e7a4ec6a38adbfce1ece78159b0fcfa7d47a",
             "status": "recommended",
             "critical": false
           },
           "8.0.31-23.2": {
-            "image_path": "perconalab/percona-xtradb-cluster:8.0.31-23.2",
+            "image_path": "percona/percona-xtradb-cluster:8.0.31-23.2",
             "image_hash": "e47110307e9733fbcc55e5587652e41bbcf794063b021533d5e705062da97927",
             "status": "available",
             "critical": false
@@ -92,7 +92,7 @@
         },
         "backup": {
           "8.0.32": {
-            "image_path": "perconalab/percona-xtradb-cluster-operator:1.13.0-pxc8.0-backup-pxb8.0.32",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.13.0-pxc8.0-backup-pxb8.0.32",
             "image_hash": "45ad618f9a76acc1ffaf0a72ba2dc6cb32a44ee2d6e0e493dd7d30603fd06e38",
             "status": "recommended",
             "critical": false
