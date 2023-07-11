@@ -169,7 +169,7 @@
           }
         },
         "backup": {
-          "8.0.31": {
+          "8.0.32": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.12.0-pxc8.0.31-backup",
             "image_hash": "b267b73b9a78b04452c9cdbd7cd0d9b153393c75ed4a96eeb0fb40279973d025",
             "status": "recommended",
