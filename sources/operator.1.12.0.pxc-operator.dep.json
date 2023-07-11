@@ -1,6 +1,6 @@
 {
   "backup": {
-    "8.0.31": {
+    "8.0.32": {
       ">=": [
         {
           "var": "productVersion"
