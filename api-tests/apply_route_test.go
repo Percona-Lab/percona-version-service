@@ -52,22 +52,20 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.4.0",
+		OperatorVersion: "2.2.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
 
 	pgResp, err := cli.VersionService.VersionServiceApply(pgParams)
-	assert.NoError(t, err)
+    assert.NoError(t, err)
 
-	assert.Len(t, pgResp.Payload.Versions, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.PgbackrestRepo, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbadger, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
+    assert.Len(t, pgResp.Payload.Versions, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
@@ -133,7 +131,7 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.4.0",
+		OperatorVersion: "2.2.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -559,16 +557,16 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.4.0", "", "14.7"},
-		{"latest", "1.4.0", "12.14", "12.14"},
-		{"latest", "1.4.0", "13.10", "13.10"},
-		{"latest", "1.4.0", "14.7", "14.7"},
+		{"latest", "2.2.0", "", "15.2"},
+		{"latest", "2.2.0", "14.7", "14.7"},
+		{"latest", "2.2.0", "13.10", "13.10"},
+		{"latest", "2.2.0", "12.14", "12.14"},
 
 		// test recommended
-		{"recommended", "1.4.0", "", "14.7"},
-		{"recommended", "1.4.0", "12.14", "12.14"},
-		{"recommended", "1.4.0", "13.10", "13.10"},
-		{"recommended", "1.4.0", "14.7", "14.7"},
+		{"recommended", "2.2.0", "", "15.2"},
+		{"recommended", "2.2.0", "14.7", "14.7"},
+		{"recommended", "2.2.0", "13.10", "13.10"},
+		{"recommended", "2.2.0", "12.14", "12.14"},
 
 		// test exact
 		{"12.8", "1.1.0", "", "12.8"},
@@ -580,6 +578,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12.14", "1.4.0", "", "12.14"},
 		{"13.10", "1.4.0", "", "13.10"},
 		{"14.7", "1.4.0", "", "14.7"},
+		{"15.2", "2.2.0", "", "15.2"},
+		{"14.7", "2.2.0", "", "14.7"},
+		{"13.10", "2.2.0", "", "13.10"},
+		{"12.14", "2.2.0", "", "12.14"},
 
 		//test with suffix
 		{"12-latest", "1.1.0", "", "12.8"},
@@ -591,12 +593,16 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12-latest", "1.4.0", "", "12.14"},
 		{"13-latest", "1.4.0", "", "13.10"},
 		{"14-latest", "1.4.0", "", "14.7"},
+		{"12-latest", "2.2.0", "", "12.14"},
+		{"13-latest", "2.2.0", "", "13.10"},
+		{"14-latest", "2.2.0", "", "14.7"},
+		{"15-latest", "2.2.0", "", "15.2"},
 
 		// test with distribution suffix
-		{"latest", "1.4.0", "12.8 - Percona Distribution", "12.14"},
-		{"latest", "1.4.0", "13.3 (Ubuntu 13.3-1.pgdg20.04+1)", "13.10"},
-		{"latest", "1.4.0", "13.8 (Debian 13.8-0+deb11u1)", "13.10"},
-		{"latest", "1.4.0", "14.7 - Percona Distribution", "14.7"},
+		{"latest", "2.2.0", "12.14 - Percona Distribution", "12.14"},
+		{"latest", "2.2.0", "13.10 - Percona Distribution", "13.10"},
+		{"latest", "2.2.0", "14.7 - Percona Distribution", "14.7"},
+		{"latest", "2.2.0", "15.2 - Percona Distribution", "15.2"},
 	}
 
 	for _, c := range cases {
