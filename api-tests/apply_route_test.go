@@ -91,7 +91,7 @@ func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
 
 	pxcParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.12.0",
+		OperatorVersion: "1.13.0",
 		Product:         "pxc-operator",
 	}
 	pxcParams.WithTimeout(2 * time.Second)
