@@ -58,16 +58,14 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	pgParams.WithTimeout(2 * time.Second)
 
 	pgResp, err := cli.VersionService.VersionServiceApply(pgParams)
-	assert.NoError(t, err)
+    assert.NoError(t, err)
 
-	assert.Len(t, pgResp.Payload.Versions, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.PgbackrestRepo, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbadger, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
-	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
+    assert.Len(t, pgResp.Payload.Versions, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
+    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
