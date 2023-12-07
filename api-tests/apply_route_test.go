@@ -58,14 +58,14 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	pgParams.WithTimeout(2 * time.Second)
 
 	pgResp, err := cli.VersionService.VersionServiceApply(pgParams)
-    assert.NoError(t, err)
+	assert.NoError(t, err)
 
-    assert.Len(t, pgResp.Payload.Versions, 1)
-    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
-    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
-    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
-    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
-    assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
+	assert.Len(t, pgResp.Payload.Versions, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgresql, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
@@ -590,6 +590,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12.14", "1.4.0", "", "12.14"},
 		{"13.10", "1.4.0", "", "13.10"},
 		{"14.7", "1.4.0", "", "14.7"},
+		{"12.16", "1.5.0", "", "12.16"},
+		{"13.12", "1.5.0", "", "13.12"},
+		{"14.9", "1.5.0", "", "14.9"},
 		{"15.2", "2.2.0", "", "15.2"},
 		{"14.7", "2.2.0", "", "14.7"},
 		{"13.10", "2.2.0", "", "13.10"},
@@ -605,6 +608,9 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"12-latest", "1.4.0", "", "12.14"},
 		{"13-latest", "1.4.0", "", "13.10"},
 		{"14-latest", "1.4.0", "", "14.7"},
+		{"12-latest", "1.5.0", "", "12.16"},
+		{"13-latest", "1.5.0", "", "13.12"},
+		{"14-latest", "1.5.0", "", "14.9"},
 		{"12-latest", "2.2.0", "", "12.14"},
 		{"13-latest", "2.2.0", "", "13.10"},
 		{"14-latest", "2.2.0", "", "14.7"},
