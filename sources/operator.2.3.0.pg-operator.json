@@ -108,7 +108,7 @@
             "critical": false
           }
         },
-        "postgres-gis": {
+        "postgis": {
           "12.17": {
             "image_path": "percona/percona-postgresql-operator:2.3.0-ppg12-postgres-gis",
             "image_hash": "cc7310322e6982ae0218de532665bc906636737a2c8a13e692ebea320f7631e0",

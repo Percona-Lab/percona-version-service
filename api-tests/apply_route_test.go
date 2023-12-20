@@ -65,6 +65,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pmm, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbackrest, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgbouncer, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgis, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	psParams := &version_service.VersionServiceApplyParams{
