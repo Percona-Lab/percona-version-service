@@ -10,6 +10,7 @@ type Deps struct {
 	PgBackrestRepo map[string]interface{} `json:"pgbackrest_repo,omitempty"`
 	Pgbadger       map[string]interface{} `json:"pgbadger,omitempty"`
 	Pgbouncer      map[string]interface{} `json:"pgbouncer,omitempty"`
+	Postgis        map[string]interface{} `json:"postgis,omitempty"`
 	Orchestrator   map[string]interface{} `json:"orchestrator,omitempty"`
 	Router         map[string]interface{} `json:"router,omitempty"`
 	Toolkit        map[string]interface{} `json:"toolkit,omitempty"`
