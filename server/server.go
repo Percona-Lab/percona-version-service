@@ -276,6 +276,15 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		return err
 	}
 
+	depVer, err = pgDepFilter(deps.Postgis, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.Postgis, depVer, true)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
