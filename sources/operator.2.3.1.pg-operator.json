@@ -143,7 +143,7 @@
         "operator": {
           "2.3.1": {
             "image_path": "percona/percona-postgresql-operator:2.3.1",
-            "image_hash": "49f98e9d519b325c2951fc648c63e269f0fec00d2c2894a25a82ef1ffb92519c",
+            "image_hash": "a6495c8e13d9fe3f50df12219e9d9cf64fa610fe5680a0a78d0e5c4fb3be2456",
             "status": "recommended",
             "critical": false
           }
