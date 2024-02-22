@@ -116,6 +116,7 @@
           "1.14.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.14.0",
             "image_hash": "370f425280233a6beaed74d8173a2b836145596d1feb05fe1c8831d382a101db",
+            "image_hash_arm64": "5aaddf5d88fbe34cb5ee5ee042b116a162273a4863c856f66909231fe6f8d502",
             "status": "recommended",
             "critical": false
           }
