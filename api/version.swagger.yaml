@@ -553,6 +553,8 @@ definitions:
         type: string
       imageHash:
         type: string
+      imageHashArm64:
+        type: string
       status:
         $ref: '#/definitions/versionStatus'
       critical:
