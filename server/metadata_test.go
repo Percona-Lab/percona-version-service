@@ -49,8 +49,8 @@ func TestMetadata_Product(t *testing.T) {
 							"k8s": "1.28",
 						},
 						Supported: map[string]string{
-							"pg":  "2.2.0",
-							"pxc": "1.2.3",
+							"pg":  "2.2.0 || 2.3.0",
+							"pxc": "^1.2.3",
 						},
 					},
 				},

@@ -3,5 +3,5 @@ recommended:
   cli: 0.5.0
   k8s: 1.28
 supported:
-  pg: 2.2.0
-  pxc: 1.2.3
+  pg: 2.2.0 || 2.3.0
+  pxc: ^1.2.3
