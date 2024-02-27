@@ -99,7 +99,7 @@
           },
           "2.4.29": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.14.0-pxc5.7-backup-pxb2.4.29",
-            "image_hash": "44a854b71ef727d4c8277772aff5594193b6efec9b682b5d3bdb40e687e77d71",
+            "image_hash": "e4871437d1a6952f67c43bd10a236dd36c72519220971a8ce644e9320a2a642e",
             "status": "recommended",
             "critical": false
           }
