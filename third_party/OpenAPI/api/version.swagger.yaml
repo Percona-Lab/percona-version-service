@@ -10,6 +10,27 @@ consumes:
 produces:
   - application/json
 paths:
+  /metadata/v1/{product}:
+    get:
+      summary: Metadata for a product
+      description: Return metadata information for a product
+      operationId: VersionService_Metadata
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/versionMetadataResponse'
+        default:
+          description: An unexpected error response
+          schema:
+            $ref: '#/definitions/googlerpcStatus'
+      parameters:
+        - name: product
+          in: path
+          required: true
+          type: string
+      tags:
+        - VersionService
   /versions/v1/{product}:
     get:
       summary: Product versions for all operator version
@@ -512,6 +533,29 @@ definitions:
             "@type": "type.googleapis.com/google.protobuf.Duration",
             "value": "1.212s"
           }
+  versionMetadataResponse:
+    type: object
+    properties:
+      versions:
+        type: array
+        items:
+          $ref: '#/definitions/versionMetadataVersion'
+  versionMetadataVersion:
+    type: object
+    properties:
+      version:
+        type: string
+      recommended:
+        type: object
+        additionalProperties:
+          type: string
+        description: Recommended is the recommended version for a given component.
+      supported:
+        type: object
+        additionalProperties:
+          type: string
+        description: Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
+    description: MetadataVersion represents metadata for a given version.
   versionOperatorResponse:
     type: object
     properties:

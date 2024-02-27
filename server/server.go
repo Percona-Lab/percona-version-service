@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io/fs"
 	"strings"
 	"time"
 
@@ -45,11 +46,16 @@ var (
 
 // Backend implements the protobuf interface.
 type Backend struct {
+	metadata *Metadata
 }
 
 // New initializes a new Backend struct.
-func New() *Backend {
-	return &Backend{}
+func New(metadata fs.FS) (*Backend, error) {
+	m, err := NewMetadata(metadata)
+	if err != nil {
+		return nil, err
+	}
+	return &Backend{metadata: m}, nil
 }
 
 func (b *Backend) Product(ctx context.Context, req *pbVersion.ProductRequest) (*pbVersion.ProductResponse, error) {
@@ -133,6 +139,10 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 	}
 
 	return vs, nil
+}
+
+func (b *Backend) Metadata(ctx context.Context, req *pbVersion.MetadataRequest) (*pbVersion.MetadataResponse, error) {
+	return b.metadata.Product(req.Product)
 }
 
 func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) error {

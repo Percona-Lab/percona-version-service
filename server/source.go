@@ -2,9 +2,10 @@ package server
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"path"
 	"strings"
 
@@ -18,13 +19,20 @@ var data = map[string][]byte{}
 var deps = map[string][]byte{}
 
 func init() {
-	files, err := ioutil.ReadDir("./sources")
+	files, err := os.ReadDir("./sources")
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return
+		}
 		log.Fatal(err)
 	}
 	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+
 		fname := file.Name()
-		content, err := ioutil.ReadFile(path.Join("./sources", fname))
+		content, err := os.ReadFile(path.Join("./sources", fname))
 		if err != nil {
 			log.Fatalf("failed to read source file: %v", err)
 		}
