@@ -37,7 +37,7 @@
           },
           "5.7.44-31.65": {
             "image_path": "percona/percona-xtradb-cluster:5.7.44-31.66",
-            "image_hash": "ecba06d11d31e1797ab0fe74b389ffd893fdebbb4666471b6b1f61f84045f9d6",
+            "image_hash": "36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85",
             "status": "recommended",
             "critical": false
           },
@@ -115,8 +115,8 @@
         "operator": {
           "1.14.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.14.0",
-            "image_hash": "7b0f3b7013511b56e1e6d6b170f74019a9f6ff0598eeb14bf84baace6e50e742",
-            "image_hash_arm64": "ac9ba1ba3fb618cd81254dcbb07477717462636632131133388795c9c96d09a0",
+            "image_hash": "e1b5b1d9db19f394f47b32f374a017d9debcf1e06325ab7bcc4b233da59f6f19",
+            "image_hash_arm64": "2652b81a26be7b07e084e1ccbfe42e64143eb6a32e4529f1e4b27e1061dbc0b1",
             "status": "recommended",
             "critical": false
           }
