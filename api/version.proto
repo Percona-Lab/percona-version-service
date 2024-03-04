@@ -151,8 +151,9 @@ enum Status {
 message Version {
   string image_path = 1;
   string image_hash = 2;
-  Status status = 3;
-  bool critical = 4;
+  string image_hash_arm64 = 3;
+  Status status = 4;
+  bool critical = 5;
 }
 
 // VersionMatrix represents set of possible product versions.
