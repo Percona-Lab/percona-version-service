@@ -6,7 +6,6 @@ IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
 
 init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
-	go build -modfile=tools/go.mod -o bin/statik github.com/rakyll/statik
 	go build -modfile=tools/go.mod -o tools/bin/modvendor github.com/goware/modvendor
 
 	curl -L https://github.com/uber/prototool/releases/download/v1.10.0/prototool-$(shell uname -s)-$(shell uname -m) -o ./bin/prototool
@@ -33,8 +32,6 @@ gen:
 
 	mv ./versionpb/github.com/Percona-Lab/percona-version-service/version/* ./versionpb/
 	rm -r ./versionpb/github.com
-
-	bin/statik -m -f -src third_party/OpenAPI/
 
 	rm -rf ./client
 	./bin/swagger generate client -m client/models -f ./api/version.swagger.yaml -t ./

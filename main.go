@@ -17,18 +17,20 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	statikFS "github.com/rakyll/statik/fs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 
 	"github.com/Percona-Lab/percona-version-service/server"
-	_ "github.com/Percona-Lab/percona-version-service/statik"
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
 
-//go:embed sources/metadata
-var metaSources embed.FS
+var (
+	//go:embed sources/metadata
+	metaSources embed.FS
+	//go:embed third_party/OpenAPI
+	openAPI embed.FS
+)
 
 func getOpenAPIHandler() http.Handler {
 	err := mime.AddExtensionType(".svg", "image/svg+xml")
@@ -36,12 +38,7 @@ func getOpenAPIHandler() http.Handler {
 		log.Fatalf("creating OpenAPI filesystem: %v", err)
 	}
 
-	statikFS, err := statikFS.New()
-	if err != nil {
-		log.Fatalf("creating OpenAPI filesystem: %v", err)
-	}
-
-	return http.FileServer(statikFS)
+	return http.FileServer(http.FS(openAPI))
 }
 
 func main() {
