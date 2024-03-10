@@ -36,7 +36,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.15.0",
+		OperatorVersion: "1.16.0",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
@@ -112,7 +112,7 @@ func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.15.0",
+		OperatorVersion: "1.16.0",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
@@ -345,6 +345,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "1.16.0", nil, "7.0.5-3"},
 		{"latest", "1.15.0", nil, "6.0.9-7"},
 		{"latest", "1.14.0", nil, "6.0.5-4"},
 		{"latest", "1.13.0", nil, "5.0.11-10"},
@@ -392,6 +393,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test recommended
+		{"recommended", "1.16.0", nil, "7.0.5-3"},
 		{"recommended", "1.15.0", nil, "6.0.9-7"},
 		{"recommended", "1.14.0", nil, "6.0.5-4"},
 		{"recommended", "1.13.0", nil, "5.0.11-10"},
@@ -439,6 +441,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test exact
+		{"7.0.5-3", "1.16.0", nil, "7.0.5-3"},
 		{"6.0.5-4", "1.15.0", nil, "6.0.5-4"},
 		{"6.0.4-3", "1.14.0", nil, "6.0.4-3"},
 		{"5.0.14-12", "1.15.0", nil, "5.0.14-12"},
@@ -479,6 +482,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
 		//test with suffix
+		{"7.0-latest", "1.16.0", nil, "7.0.5-3"},
 		{"6.0-latest", "1.15.0", nil, "6.0.9-7"},
 		{"6.0-latest", "1.14.0", nil, "6.0.5-4"},
 		{"5.0-latest", "1.15.0", nil, "5.0.20-17"},
