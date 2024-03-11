@@ -28,5 +28,5 @@ require (
 	google.golang.org/protobuf v1.23.0 // indirect
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
 	gopkg.in/yaml.v2 v2.2.3 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200605160147-a5ece683394c // indirect
+	gopkg.in/yaml.v3 v3.0.0 // indirect
 )
