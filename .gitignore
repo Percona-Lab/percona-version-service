@@ -1,7 +1,6 @@
 .vscode
 .projectile
 main
-statik
 certs/*.pem
 bin
 tools/vendor

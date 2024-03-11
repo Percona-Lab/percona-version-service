@@ -18,7 +18,6 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1
 	github.com/hashicorp/go-version v1.6.0
-	github.com/rakyll/statik v0.1.7
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.26.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20240205150955-31a09d347014
