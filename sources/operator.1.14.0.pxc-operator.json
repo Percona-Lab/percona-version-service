@@ -36,7 +36,7 @@
             "critical": false
           },
           "5.7.44-31.65": {
-            "image_path": "percona/percona-xtradb-cluster:5.7.44-31.66",
+            "image_path": "percona/percona-xtradb-cluster:5.7.44-31.65",
             "image_hash": "36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85",
             "status": "recommended",
             "critical": false
