@@ -3,7 +3,7 @@ module github.com/Percona-Lab/percona-version-service/tools
 go 1.21
 
 require (
-	github.com/golang/protobuf v1.4.2
+	github.com/golang/protobuf v1.5.0
 	github.com/goware/modvendor v0.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.0-beta.3
 	github.com/mikefarah/yq/v3 v3.0.0-20200615114226-086f0ec6b9aa
@@ -25,7 +25,7 @@ require (
 	golang.org/x/sys v0.1.0 // indirect
 	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 	google.golang.org/genproto v0.0.0-20200521103424-e9a78aa275b7 // indirect
-	google.golang.org/protobuf v1.23.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
 	gopkg.in/yaml.v2 v2.2.3 // indirect
 	gopkg.in/yaml.v3 v3.0.0 // indirect
