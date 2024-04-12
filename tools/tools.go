@@ -1,3 +1,4 @@
+//go:build tools
 // +build tools
 
 package tools
@@ -9,5 +10,4 @@ import (
 
 	_ "github.com/goware/modvendor"
 	_ "github.com/mikefarah/yq/v3"
-	_ "github.com/rakyll/statik"
 )

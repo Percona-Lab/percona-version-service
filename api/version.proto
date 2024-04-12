@@ -55,6 +55,16 @@ service VersionService {
       description: "Return product versions for all operator"
     };
   }
+  // Metadata provides metadata information about products.
+  rpc Metadata(MetadataRequest) returns (MetadataResponse) {
+    option (google.api.http) = {
+      get: "/metadata/v1/{product}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Metadata for a product"
+      description: "Return metadata information for a product"
+    };
+  }
 }
 
 message ApplyRequest {
@@ -138,6 +148,10 @@ message ProductRequest {
   string extensions = 25;
 }
 
+message MetadataRequest {
+  string product = 1;
+}
+
 // Status describes the current version status.
 enum Status {
   status_invalid = 0;
@@ -204,4 +218,17 @@ message OperatorResponse {
 
 message ProductResponse {
   repeated OperatorVersion versions = 1;
+}
+
+// MetadataVersion represents metadata for a given version.
+message MetadataVersion {
+  string version = 1;
+  // Recommended is the recommended version for a given component.
+  map<string, string> recommended = 2;
+  // Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
+  map<string, string> supported = 3;
+}
+
+message MetadataResponse {
+  repeated MetadataVersion versions = 1;
 }

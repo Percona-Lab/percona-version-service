@@ -40,6 +40,25 @@ For example, if you want to add PSMDB Operator version `1.12.0` to PMM 2.28.0:
    or by running `docker inspect`
 4. The `status` can be set to `recommended` or `available`
 
+
+## How to add new metadata for a product
+Add a file to `sources/metadata/{product_name}/{any-identifier}.yaml`.  
+The file supports the following format:
+```
+version: 0.6.0
+recommended:
+  cli: 0.4.0
+  k8s: 1.27
+supported:
+  pg: ^2.1.0
+  pxc: 0.0.0 || 1.1.1
+```
+
+`recommended` and `supported` are `map[string]string`.  
+`recommended` field holds a specific version. `supported` hold a semver constraint.
+
+Making a request to `/metadata/v1/{product}` will return all stored metadata for the given product.
+
 ## How to create a new docker image
 `make docker-push` will create and push a docker image with your changes.  
 If you don't want to push your docker image to DockerHub just run `make

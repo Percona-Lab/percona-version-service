@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"embed"
 	"fmt"
+	"io/fs"
 	"log"
 	"mime"
 	"net"
@@ -15,14 +17,19 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/rakyll/statik/fs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 
 	"github.com/Percona-Lab/percona-version-service/server"
-	_ "github.com/Percona-Lab/percona-version-service/statik"
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+)
+
+var (
+	//go:embed sources/metadata
+	metaSources embed.FS
+	//go:embed third_party/OpenAPI
+	openAPI embed.FS
 )
 
 func getOpenAPIHandler() http.Handler {
@@ -31,12 +38,7 @@ func getOpenAPIHandler() http.Handler {
 		log.Fatalf("creating OpenAPI filesystem: %v", err)
 	}
 
-	statikFS, err := fs.New()
-	if err != nil {
-		log.Fatalf("creating OpenAPI filesystem: %v", err)
-	}
-
-	return http.FileServer(statikFS)
+	return http.FileServer(http.FS(openAPI))
 }
 
 func main() {
@@ -67,7 +69,15 @@ func main() {
 	}
 
 	s := grpc.NewServer(grpcServerLogOpt(logger))
-	pbVersion.RegisterVersionServiceServer(s, server.New())
+	sub, err := fs.Sub(metaSources, "sources/metadata")
+	if err != nil {
+		logger.Fatal("could not create sub for sources/metadata", zap.Error(err))
+	}
+	backend, err := server.New(sub)
+	if err != nil {
+		logger.Fatal("could not create backend", zap.Error(err))
+	}
+	pbVersion.RegisterVersionServiceServer(s, backend)
 
 	logger.Info("serving gRPC", zap.String("Addr", "http://"+addr))
 
@@ -107,7 +117,7 @@ func main() {
 	gwServer := &http.Server{
 		Addr: gatewayAddr,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/versions") {
+			if strings.HasPrefix(r.URL.Path, "/versions") || strings.HasPrefix(r.URL.Path, "/metadata") {
 				gwmux.ServeHTTP(w, r)
 				return
 			}
