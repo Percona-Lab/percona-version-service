@@ -5,10 +5,16 @@
       "product": "pxc-operator",
       "matrix": {
         "pxc": {
+          "8.0.36-28.1": {
+            "image_path": "percona/percona-xtradb-cluster:8.0.36-28.1",
+            "image_hash": "ed99f585a27257726a985fee5f50cd957f94f5b9ae70a5d2f0fa1e68336f3abe",
+            "status": "recommended",
+            "critical": false
+          },
           "8.0.35-27.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.35-27.1",
             "image_hash": "1ef24953591ef1c1ce39576843d5615d4060fd09458c7a39ebc3e2eda7ef486b",
-            "status": "recommended",
+            "status": "available",
             "critical": false
           },
           "8.0.32-24.2": {
@@ -67,18 +73,30 @@
           }
         },
         "pmm": {
+          "2.41.2": {
+            "image_path": "percona/pmm-client:2.41.2",
+            "image_hash": "16d2499c1cbcc1af51bd3752fe7623b0d0a319ee128b12d41cadf8080d1ce56b",
+            "status": "recommended",
+            "critical": false
+          },
           "2.41.1": {
             "image_path": "percona/pmm-client:2.41.1",
             "image_hash": "b10b771da20150390c8151cd1a3213a43348ec699064c953b2ad10783f8d7b1c",
-            "status": "recommended",
+            "status": "available",
             "critical": false
           }
         },
         "proxysql": {
+          "2.5.5-1.2": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.14.0-proxysql2.5.5-1.2",
+            "image_hash": "fcd7c1366f26f3dbaeff65d7ee08c43bbb88838cec9a0085447c1b56c717870d",
+            "status": "recommended",
+            "critical": false
+          },
           "2.5.5-1.1": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.14.0-proxysql",
             "image_hash": "333d0949eb048e927ac62389a5ced838dfdffe89605b30e543c10c59feb6dca2",
-            "status": "recommended",
+            "status": "available",
             "critical": false
           }
         },
