@@ -6,16 +6,14 @@
       "matrix": {
         "mongod": {
           "7.0.8-5": {
-            "image_path": "percona/percona-server-mongodb:7.0.8-5-multi",
+            "image_path": "percona/percona-server-mongodb:7.0.8-5",
             "image_hash": "f81d1353d5497c5be36ee525f742d498ee6e1df9aba9502660c50f0fc98743b6",
-            "image_hash_arm64":"20928c9c223c8540475f09eb4156e964eb27db240069872bfab579e34d2d4a51",
             "status": "recommended",
             "critical": false
           },
           "6.0.15-12": {
-            "image_path": "percona/percona-server-mongodb:6.0.15-12-multi",
+            "image_path": "percona/percona-server-mongodb:6.0.15-12",
             "image_hash": "f12dd271d78cf3e70088fea0c420e8c03703457d8a5959b645053546bff94dea",
-            "image_hash_arm64":"19d29586831746f6cfb07861f5378ac38486603bb8f80271da2c401da0e6db3f",
             "status": "recommended",
             "critical": false
           },
@@ -40,7 +38,6 @@
           "5.0.26-22": {
             "image_path": "percona/percona-server-mongodb:5.0.26-22",
             "image_hash": "50873aa99f36319c5590ad2bddf407b4df44728bee86025ccae1bfed9329a0d1",
-            "image_hash_arm64":"0c836ae53ec4c1aff99da5cc784b491210377d2a79b009a115dc0c559f49d665",
             "status": "recommended",
             "critical": false
           },
@@ -79,9 +76,8 @@
         },
         "backup": {
           "2.4.1": {
-            "image_path": "percona/percona-backup-mongodb:2.4.1-multi",
+            "image_path": "percona/percona-backup-mongodb:2.4.1",
             "image_hash": "a45d277af98090781a6149ccfb99d5bc4431ec53ba3b36ea644332851412a17e",
-            "image_hash_arm64": "cda12e305380a379b6f2d7a6a62ed7626e047187546727ae972542adb25592e1",
             "status": "recommended",
             "critical": false
           }
