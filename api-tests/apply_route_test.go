@@ -36,7 +36,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.15.0",
+		OperatorVersion: "1.16.0",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
@@ -112,12 +112,12 @@ func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.15.0",
+		OperatorVersion: "1.16.0",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"6.0", "5.0", "4.4"} {
+	for _, v := range []string{"7.0", "6.0", "5.0"} {
 		psmdbParams.DatabaseVersion = &v
 		psmdbResp, err := cli.VersionService.VersionServiceApply(psmdbParams)
 		assert.NoError(t, err)
@@ -337,6 +337,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 	v42 := "4.2"
 	v44 := "4.4"
 	v50 := "5.0"
+	v60 := "6.0"
 
 	cases := []struct {
 		apply     string
@@ -345,6 +346,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "1.16.0", nil, "7.0.8-5"},
 		{"latest", "1.15.0", nil, "6.0.9-7"},
 		{"latest", "1.14.0", nil, "6.0.5-4"},
 		{"latest", "1.13.0", nil, "5.0.11-10"},
@@ -356,10 +358,12 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.7.0", nil, "4.4.3-5"},
 		{"latest", "1.6.0", nil, "4.4.2-4"},
 		{"latest", "1.5.0", nil, "4.2.8-8"},
+		{"latest", "1.16.0", &v60, "6.0.15-12"},
 		{"latest", "1.15.0", &v50, "5.0.20-17"},
 		{"latest", "1.14.0", &v50, "5.0.15-13"},
 		{"latest", "1.13.0", &v50, "5.0.11-10"},
 		{"latest", "1.12.0", &v50, "5.0.7-6"},
+		{"latest", "1.16.0", &v50, "5.0.26-22"},
 		{"latest", "1.15.0", &v44, "4.4.24-23"},
 		{"latest", "1.14.0", &v44, "4.4.19-19"},
 		{"latest", "1.13.0", &v44, "4.4.16-16"},
@@ -392,6 +396,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test recommended
+		{"recommended", "1.16.0", nil, "7.0.8-5"},
 		{"recommended", "1.15.0", nil, "6.0.9-7"},
 		{"recommended", "1.14.0", nil, "6.0.5-4"},
 		{"recommended", "1.13.0", nil, "5.0.11-10"},
@@ -403,6 +408,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.7.0", nil, "4.4.3-5"},
 		{"recommended", "1.6.0", nil, "4.4.2-4"},
 		{"recommended", "1.5.0", nil, "4.2.8-8"},
+		{"recommended", "1.16.0", &v50, "5.0.26-22"},
 		{"recommended", "1.15.0", &v50, "5.0.20-17"},
 		{"recommended", "1.14.0", &v50, "5.0.15-13"},
 		{"recommended", "1.13.0", &v50, "5.0.11-10"},
@@ -439,14 +445,17 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test exact
+		{"7.0.8-5", "1.16.0", nil, "7.0.8-5"},
 		{"6.0.5-4", "1.15.0", nil, "6.0.5-4"},
 		{"6.0.4-3", "1.14.0", nil, "6.0.4-3"},
+		{"6.0.15-12", "1.16.0", nil, "6.0.15-12"},
 		{"5.0.14-12", "1.15.0", nil, "5.0.14-12"},
 		{"5.0.14-12", "1.14.0", nil, "5.0.14-12"},
 		{"5.0.7-6", "1.13.0", nil, "5.0.7-6"},
 		{"5.0.2-1", "1.12.0", nil, "5.0.2-1"},
 		{"5.0.2-1", "1.11.0", nil, "5.0.2-1"},
 		{"5.0.2-1", "1.10.0", nil, "5.0.2-1"},
+		{"5.0.26-22", "1.16.0", nil, "5.0.26-22"},
 		{"4.4.18-18", "1.15.0", nil, "4.4.18-18"},
 		{"4.4.18-18", "1.14.0", nil, "4.4.18-18"},
 		{"4.4.13-13", "1.13.0", nil, "4.4.13-13"},
@@ -479,14 +488,17 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
 		//test with suffix
+		{"7.0-latest", "1.16.0", nil, "7.0.8-5"},
 		{"6.0-latest", "1.15.0", nil, "6.0.9-7"},
 		{"6.0-latest", "1.14.0", nil, "6.0.5-4"},
+		{"6.0-latest", "1.16.0", nil, "6.0.15-12"},
 		{"5.0-latest", "1.15.0", nil, "5.0.20-17"},
 		{"5.0-latest", "1.14.0", nil, "5.0.15-13"},
 		{"5.0-latest", "1.13.0", nil, "5.0.11-10"},
 		{"5.0-latest", "1.12.0", nil, "5.0.7-6"},
 		{"5.0-latest", "1.11.0", nil, "5.0.4-3"},
 		{"5.0-latest", "1.10.0", nil, "5.0.2-1"},
+		{"5.0-latest", "1.16.0", nil, "5.0.26-22"},
 		{"4.4-latest", "1.15.0", nil, "4.4.24-23"},
 		{"4.4-latest", "1.14.0", nil, "4.4.19-19"},
 		{"4.4-latest", "1.13.0", nil, "4.4.16-16"},
