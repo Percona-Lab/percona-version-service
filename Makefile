@@ -3,6 +3,8 @@ SHELL = /bin/bash
 GIT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD | sed -e 's^/^-^g; s^[.]^-^g;' | tr '[:upper:]' '[:lower:]')
 GIT_COMMIT:=$(shell git rev-parse --short HEAD)
 IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
+OS=$(shell uname | tr '[:upper:]' '[:lower:]')
+ARCH=$(shell uname -m)
 
 init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
@@ -48,7 +50,7 @@ docker-run-it:
 	docker run -it --rm -p 10000:10000 -p 11000:11000 -e SERVE_HTTP=true ${IMG}
 
 build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o ./bin/app
+	CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -a -o ./bin/app
 
 run: build
 	SERVE_HTTP=true ./bin/app
