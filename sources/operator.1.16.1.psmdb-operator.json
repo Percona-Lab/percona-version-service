@@ -1,0 +1,97 @@
+{
+  "versions": [
+    {
+      "operator": "1.16.1",
+      "product": "psmdb-operator",
+      "matrix": {
+        "mongod": {
+          "7.0.8-5": {
+            "image_path": "percona/percona-server-mongodb:7.0.8-5",
+            "image_hash": "f81d1353d5497c5be36ee525f742d498ee6e1df9aba9502660c50f0fc98743b6",
+            "status": "recommended",
+            "critical": false
+          },
+          "6.0.15-12": {
+            "image_path": "percona/percona-server-mongodb:6.0.15-12",
+            "image_hash": "f12dd271d78cf3e70088fea0c420e8c03703457d8a5959b645053546bff94dea",
+            "status": "recommended",
+            "critical": false
+          },
+          "6.0.9-7": {
+            "image_path": "percona/percona-server-mongodb:6.0.9-7",
+            "image_hash": "5ef8404e200a680a67f0a94599963e17c029ebe5e0045b60b45062bba127c505",
+            "status": "available",
+            "critical": false
+          },
+          "6.0.5-4": {
+            "image_path": "percona/percona-server-mongodb:6.0.5-4",
+            "image_hash": "b6f875974c59d8ea0174675c85f41668460233784cbf2cbe7ce5eca212ac5f6a",
+            "status": "available",
+            "critical": false
+          },
+          "6.0.4-3": {
+            "image_path": "percona/percona-server-mongodb:6.0.4-3",
+            "image_hash": "df46c596e6f7339badec3b36f7f209689c3f31e5391ef714be0701deef555570",
+            "status": "available",
+            "critical": false
+          },
+          "5.0.26-22": {
+            "image_path": "percona/percona-server-mongodb:5.0.26-22",
+            "image_hash": "50873aa99f36319c5590ad2bddf407b4df44728bee86025ccae1bfed9329a0d1",
+            "status": "recommended",
+            "critical": false
+          },
+          "5.0.20-17": {
+            "image_path": "percona/percona-server-mongodb:5.0.20-17",
+            "image_hash": "9d1a440f602318551b9e1003a7f01c6af3e6b3f6a633eed37ed2ad6e7d176b9d",
+            "status": "available",
+            "critical": false
+          },
+          "5.0.15-13": {
+            "image_path": "percona/percona-server-mongodb:5.0.15-13",
+            "image_hash": "f0b5a8291d778d7419c20dcf0d1985a0f33770d05e94dba41db8f071957e9929",
+            "status": "available",
+            "critical": false
+          },
+          "5.0.14-12": {
+            "image_path": "percona/percona-server-mongodb:5.0.14-12",
+            "image_hash": "38ced404ec798d78943c234ab4f39ee237f3013095a5cd581978cfdf0fbce2f9",
+            "status": "available",
+            "critical": false
+          },
+          "5.0.11-10": {
+            "image_path": "percona/percona-server-mongodb:5.0.11-10",
+            "image_hash": "da3713525d76a354435e1ab8fda12a06407e7eca8b8e72b9ac0163a34c8eb735",
+            "status": "available",
+            "critical": false
+          }
+        },
+        "pmm": {
+          "2.41.2": {
+            "image_path": "percona/pmm-client:2.41.2",
+            "image_hash": "16d2499c1cbcc1af51bd3752fe7623b0d0a319ee128b12d41cadf8080d1ce56b",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "backup": {
+          "2.4.1": {
+            "image_path": "percona/percona-backup-mongodb:2.4.1",
+            "image_hash": "a45d277af98090781a6149ccfb99d5bc4431ec53ba3b36ea644332851412a17e",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "operator": {
+          "1.16.1": {
+            "image_path": "percona/percona-server-mongodb-operator:1.16.1",
+            "image_hash": "6326fefd8a2b20316a8a805edc18d577c23e9472046bee82e42e51fbb00efc91",
+            "image_hash_arm64": "3e28da59fbb56b4d7c4f9412203a6638ddf1d7439dcbe84ee71a4dc3bde697d2",
+            "status": "recommended",
+            "critical": false
+          }
+        }
+      }
+    }
+  ]
+}
