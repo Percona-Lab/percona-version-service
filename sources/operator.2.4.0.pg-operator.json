@@ -30,7 +30,7 @@
             "critical": false
           },
           "16.3": {
-            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16-postgres",
+            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16.3-postgres",
             "image_hash": "8248b290a88b881f1871fbca0de7da1acace31f94f795d1990e3ca3ca5dd3636",
             "status": "recommended",
             "critical": false
@@ -70,7 +70,7 @@
             "critical": false
           },
           "16.3": {
-            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16-pgbackrest",
+            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16.3-pgbackrest2.51-1",
             "image_hash": "3e59b19b619e5580292c4fa8f9efedea3e9d05b79af8e186643490b13a6f83a5",
             "status": "recommended",
             "critical": false
@@ -102,7 +102,7 @@
             "critical": false
           },
           "16.3": {
-            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16-pgbouncer",
+            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16.3-pgbouncer1.22.1",
             "image_hash": "37f466cea2330939f16c890a327b1d88b16cd85063ce45aff8255b8108accb08",
             "status": "recommended",
             "critical": false
@@ -134,7 +134,7 @@
             "critical": false
           },
           "16.3": {
-            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16-postgres-gis",
+            "image_path": "percona/percona-postgresql-operator:2.4.0-ppg16.3-postgres-gis3.3.6",
             "image_hash": "7ca3172329ade3be97b9bd837a3315fcb87179357e420f76662a9d0e9a4a74d3",
             "status": "recommended",
             "critical": false
