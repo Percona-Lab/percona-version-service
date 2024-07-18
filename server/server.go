@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
 	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"
