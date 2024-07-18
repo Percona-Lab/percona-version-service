@@ -8,6 +8,5 @@ import (
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2"
 
-	_ "github.com/goware/modvendor"
 	_ "github.com/mikefarah/yq/v3"
 )
