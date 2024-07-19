@@ -15,6 +15,10 @@ plugins:
     out: versionpb
     opt:
       - paths=source_relative
+  - local: bin/protoc-gen-go-grpc
+    out: versionpb
+    opt:
+      - paths=source_relative
   - local: bin/protoc-gen-grpc-gateway
     out: versionpb
     opt:

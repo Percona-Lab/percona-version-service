@@ -5,10 +5,11 @@ import (
 	"io/fs"
 	"testing"
 
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/testing/protocmp"
+
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 )
 
 //go:embed metadata_test
