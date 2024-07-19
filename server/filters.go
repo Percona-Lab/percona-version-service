@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver"
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 	"github.com/diegoholiveira/jsonlogic"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
