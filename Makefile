@@ -22,7 +22,6 @@ gen:
 
 	bin/buf generate
 
-	rm -f third_party/OpenAPI/api/version.swagger.yaml
 	bin/yq r --prettyPrint third_party/OpenAPI/api/version.swagger.json > third_party/OpenAPI/api/version.swagger.yaml
 	rm third_party/OpenAPI/api/version.swagger.json
 	cp third_party/OpenAPI/api/version.swagger.yaml api/
