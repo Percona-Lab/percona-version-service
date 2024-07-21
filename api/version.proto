@@ -22,6 +22,7 @@ option go_package = "github.com/Percona-Lab/percona-version-service/version";
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 // VersionService provides public API methods for version service usage.
 service VersionService {
@@ -166,6 +167,10 @@ message Version {
   string image_path = 1;
   string image_hash = 2;
   string image_hash_arm64 = 3;
+
+  // release_timestamp is the release time of this image.
+  google.protobuf.Timestamp image_release_timestamp = 6;
+
   Status status = 4;
   bool critical = 5;
 }
@@ -227,6 +232,8 @@ message MetadataVersion {
   map<string, string> recommended = 2;
   // Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
   map<string, string> supported = 3;
+  // ImageInfo holds information about the docker image for this version.
+  Version imageInfo = 4;
 }
 
 message MetadataResponse {
