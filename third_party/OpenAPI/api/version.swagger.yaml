@@ -418,6 +418,9 @@ definitions:
         additionalProperties:
           type: string
         description: Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
+      imageInfo:
+        $ref: '#/definitions/versionVersion'
+        description: ImageInfo holds information about the docker image for this version.
     description: MetadataVersion represents metadata for a given version.
   versionOperatorResponse:
     type: object
@@ -464,6 +467,10 @@ definitions:
         type: string
       imageHashArm64:
         type: string
+      imageReleaseTimestamp:
+        type: string
+        format: date-time
+        description: release_timestamp is the release time of this image.
       status:
         $ref: '#/definitions/versionStatus'
       critical:

@@ -1,0 +1,7 @@
+version: 2.42.0
+imageInfo:
+  image_path: "idoqo/pmm-server:2.42.0"
+  image_hash: "aaa"
+  image_hash_arm64: "bbb"
+  image_release_timestamp: "2021-09-30T00:00:00Z"
+  "status": "available"
