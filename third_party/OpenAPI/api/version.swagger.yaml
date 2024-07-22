@@ -33,6 +33,33 @@ paths:
           type: string
       tags:
         - VersionService
+  /release-notes/v1/{product}/{version}:
+    get:
+      summary: Gets the release notes for a product version
+      description: Return release notes for a product version
+      operationId: VersionService_GetReleaseNotes
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/versionGetReleaseNotesResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/googlerpcStatus'
+      parameters:
+        - name: product
+          description: Product name.
+          in: path
+          required: true
+          type: string
+        - name: version
+          description: Product version.
+          in: path
+          required: true
+          type: string
+      tags:
+        - VersionService
   /versions/v1/{product}:
     get:
       summary: Product versions for all operator version
@@ -395,6 +422,17 @@ definitions:
       '@type':
         type: string
     additionalProperties: {}
+  versionGetReleaseNotesResponse:
+    type: object
+    properties:
+      product:
+        type: string
+        description: The product name.
+      version:
+        type: string
+      releaseNote:
+        type: string
+        description: release_notes is the release note for this version.
   versionMetadataResponse:
     type: object
     properties:

@@ -66,6 +66,16 @@ service VersionService {
       description: "Return metadata information for a product"
     };
   }
+
+  rpc GetReleaseNotes(GetReleaseNotesRequest) returns (GetReleaseNotesResponse) {
+    option (google.api.http) = {
+      get: "/release-notes/v1/{product}/{version}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Gets the release notes for a product version"
+      description: "Return release notes for a product version"
+    };
+  }
 }
 
 message ApplyRequest {
@@ -238,4 +248,19 @@ message MetadataVersion {
 
 message MetadataResponse {
   repeated MetadataVersion versions = 1;
+}
+
+message GetReleaseNotesRequest {
+  // Product name.
+  string product = 1;
+  // Product version.
+  string version = 2;
+}
+
+message GetReleaseNotesResponse {
+  // The product name.
+  string product = 1;
+  string version = 2;
+  // release_notes is the release note for this version.
+  string release_note = 3;
 }

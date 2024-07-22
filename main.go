@@ -30,6 +30,9 @@ var (
 	metaSources embed.FS
 	//go:embed third_party/OpenAPI
 	openAPI embed.FS
+
+	//go:embed sources/release-notes
+	releaseNoteSources embed.FS
 )
 
 func getOpenAPIHandler() http.Handler {
@@ -69,11 +72,16 @@ func main() {
 	}
 
 	s := grpc.NewServer(grpcServerLogOpt(logger))
-	sub, err := fs.Sub(metaSources, "sources/metadata")
+	metadataSub, err := fs.Sub(metaSources, "sources/metadata")
 	if err != nil {
-		logger.Fatal("could not create sub for sources/metadata", zap.Error(err))
+		logger.Fatal("could not create sub directory for sources/metadata", zap.Error(err))
 	}
-	backend, err := server.New(sub)
+	releaseNotesSub, err := fs.Sub(releaseNoteSources, "sources/release-notes")
+	if err != nil {
+		logger.Fatal("could not create sub directory for sources/release-notes", zap.Error(err))
+	}
+
+	backend, err := server.New(metadataSub, releaseNotesSub)
 	if err != nil {
 		logger.Fatal("could not create backend", zap.Error(err))
 	}
@@ -117,7 +125,7 @@ func main() {
 	gwServer := &http.Server{
 		Addr: gatewayAddr,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/versions") || strings.HasPrefix(r.URL.Path, "/metadata") {
+			if strings.HasPrefix(r.URL.Path, "/versions") || strings.HasPrefix(r.URL.Path, "/metadata") || strings.HasPrefix(r.URL.Path, "/release-notes") {
 				gwmux.ServeHTTP(w, r)
 				return
 			}
