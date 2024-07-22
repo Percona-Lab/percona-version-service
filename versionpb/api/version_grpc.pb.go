@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	VersionService_Apply_FullMethodName    = "/version.VersionService/Apply"
-	VersionService_Operator_FullMethodName = "/version.VersionService/Operator"
-	VersionService_Product_FullMethodName  = "/version.VersionService/Product"
-	VersionService_Metadata_FullMethodName = "/version.VersionService/Metadata"
+	VersionService_Apply_FullMethodName           = "/version.VersionService/Apply"
+	VersionService_Operator_FullMethodName        = "/version.VersionService/Operator"
+	VersionService_Product_FullMethodName         = "/version.VersionService/Product"
+	VersionService_Metadata_FullMethodName        = "/version.VersionService/Metadata"
+	VersionService_GetReleaseNotes_FullMethodName = "/version.VersionService/GetReleaseNotes"
 )
 
 // VersionServiceClient is the client API for VersionService service.
@@ -39,6 +40,7 @@ type VersionServiceClient interface {
 	Product(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 	// Metadata provides metadata information about products.
 	Metadata(ctx context.Context, in *MetadataRequest, opts ...grpc.CallOption) (*MetadataResponse, error)
+	GetReleaseNotes(ctx context.Context, in *GetReleaseNotesRequest, opts ...grpc.CallOption) (*GetReleaseNotesResponse, error)
 }
 
 type versionServiceClient struct {
@@ -89,6 +91,16 @@ func (c *versionServiceClient) Metadata(ctx context.Context, in *MetadataRequest
 	return out, nil
 }
 
+func (c *versionServiceClient) GetReleaseNotes(ctx context.Context, in *GetReleaseNotesRequest, opts ...grpc.CallOption) (*GetReleaseNotesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetReleaseNotesResponse)
+	err := c.cc.Invoke(ctx, VersionService_GetReleaseNotes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VersionServiceServer is the server API for VersionService service.
 // All implementations must embed UnimplementedVersionServiceServer
 // for forward compatibility
@@ -103,6 +115,7 @@ type VersionServiceServer interface {
 	Product(context.Context, *ProductRequest) (*ProductResponse, error)
 	// Metadata provides metadata information about products.
 	Metadata(context.Context, *MetadataRequest) (*MetadataResponse, error)
+	GetReleaseNotes(context.Context, *GetReleaseNotesRequest) (*GetReleaseNotesResponse, error)
 	mustEmbedUnimplementedVersionServiceServer()
 }
 
@@ -121,6 +134,9 @@ func (UnimplementedVersionServiceServer) Product(context.Context, *ProductReques
 }
 func (UnimplementedVersionServiceServer) Metadata(context.Context, *MetadataRequest) (*MetadataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Metadata not implemented")
+}
+func (UnimplementedVersionServiceServer) GetReleaseNotes(context.Context, *GetReleaseNotesRequest) (*GetReleaseNotesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetReleaseNotes not implemented")
 }
 func (UnimplementedVersionServiceServer) mustEmbedUnimplementedVersionServiceServer() {}
 
@@ -207,6 +223,24 @@ func _VersionService_Metadata_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VersionService_GetReleaseNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReleaseNotesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VersionServiceServer).GetReleaseNotes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VersionService_GetReleaseNotes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VersionServiceServer).GetReleaseNotes(ctx, req.(*GetReleaseNotesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VersionService_ServiceDesc is the grpc.ServiceDesc for VersionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +263,10 @@ var VersionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Metadata",
 			Handler:    _VersionService_Metadata_Handler,
+		},
+		{
+			MethodName: "GetReleaseNotes",
+			Handler:    _VersionService_GetReleaseNotes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

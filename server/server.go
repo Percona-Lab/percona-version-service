@@ -3,6 +3,7 @@ package server
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io/fs"
 	"strings"
@@ -21,6 +22,8 @@ import (
 )
 
 const pmmServerProduct = "pmm-server"
+
+var ErrNotFound = errors.New("requested resource was not found")
 
 type jsonpbObjectMarshaler struct {
 	pb proto.Message
@@ -47,17 +50,20 @@ var (
 
 // Backend implements the protobuf interface.
 type Backend struct {
-	metadata *Metadata
+	metadata     *Metadata
+	releaseNotes *ReleaseNotes
 	pbVersion.UnimplementedVersionServiceServer
 }
 
 // New initializes a new Backend struct.
-func New(metadata fs.FS) (*Backend, error) {
+func New(metadata fs.FS, releaseNotes fs.FS) (*Backend, error) {
 	m, err := NewMetadata(metadata)
 	if err != nil {
 		return nil, err
 	}
-	return &Backend{metadata: m}, nil
+
+	rn := NewReleaseNotes(releaseNotes)
+	return &Backend{metadata: m, releaseNotes: rn}, nil
 }
 
 func (b *Backend) Product(ctx context.Context, req *pbVersion.ProductRequest) (*pbVersion.ProductResponse, error) {
@@ -145,6 +151,10 @@ func (b *Backend) Apply(ctx context.Context, req *pbVersion.ApplyRequest) (*pbVe
 
 func (b *Backend) Metadata(ctx context.Context, req *pbVersion.MetadataRequest) (*pbVersion.MetadataResponse, error) {
 	return b.metadata.Product(req.Product)
+}
+
+func (b *Backend) GetReleaseNotes(ctx context.Context, req *pbVersion.GetReleaseNotesRequest) (*pbVersion.GetReleaseNotesResponse, error) {
+	return b.releaseNotes.GetReleaseNote(req.Product, req.Version)
 }
 
 func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) error {
