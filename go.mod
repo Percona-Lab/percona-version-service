@@ -1,8 +1,8 @@
 module github.com/Percona-Lab/percona-version-service
 
-go 1.21
+go 1.22
 
-toolchain go1.21.6
+toolchain go1.22.2
 
 require (
 	github.com/Masterminds/semver v1.5.0
