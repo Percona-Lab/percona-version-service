@@ -22,7 +22,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/Percona-Lab/percona-version-service/server"
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 )
 
 var (

@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
 	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"
@@ -17,6 +16,8 @@ import (
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 )
 
 const pmmServerProduct = "pmm-server"
@@ -47,6 +48,7 @@ var (
 // Backend implements the protobuf interface.
 type Backend struct {
 	metadata *Metadata
+	pbVersion.UnimplementedVersionServiceServer
 }
 
 // New initializes a new Backend struct.
