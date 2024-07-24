@@ -1,1 +1,3 @@
 version: 0.0.0
+supported:
+  kubernetes: '>= 1.27'
