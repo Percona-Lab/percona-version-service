@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"log"
 	"path/filepath"
 	"sync"
 
@@ -50,7 +49,6 @@ func (r *ReleaseNotes) GetReleaseNote(product, version string) (*pbVersion.GetRe
 		return notes, nil
 	}
 
-	log.Println("cache miss")
 	rn, err := r.refreshReleaseNotes(product, version)
 	if err != nil {
 		return nil, err
