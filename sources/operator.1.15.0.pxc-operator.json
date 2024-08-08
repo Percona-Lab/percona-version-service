@@ -82,8 +82,8 @@
         },
         "proxysql": {
           "2.6.3": {
-            "image_path": "percona/proxysql2:2.6.3",
-            "image_hash": "9e573dcec9961cd916c43a5a9dded7b3c03822f682171a22a7417dac7aeec521",
+            "image_path": "percona/proxysql2:2.5.5",
+            "image_hash": "d95b0c6782447fef22adea3e8b8143e79a6a757666ffd34a8c3eddd9f82d629c",
             "status": "recommended",
             "critical": false
           }
