@@ -78,18 +78,6 @@
             "image_hash": "14cb96de47e3bc239bf285f22ec6f170b4a1181301b19100f5b7dc22c210bf8c",
             "status": "recommended",
             "critical": false
-          },
-          "2.41.2": {
-            "image_path": "percona/pmm-client:2.41.2",
-            "image_hash": "16d2499c1cbcc1af51bd3752fe7623b0d0a319ee128b12d41cadf8080d1ce56b",
-            "status": "available",
-            "critical": false
-          },
-          "2.41.1": {
-            "image_path": "percona/pmm-client:2.41.1",
-            "image_hash": "b10b771da20150390c8151cd1a3213a43348ec699064c953b2ad10783f8d7b1c",
-            "status": "available",
-            "critical": false
           }
         },
         "proxysql": {
