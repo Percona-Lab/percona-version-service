@@ -47,9 +47,9 @@
             "status": "available",
             "critical": false
           },
-          "5.0.27-23": {
-            "image_path": "percona/percona-server-mongodb:5.0.27-23",
-            "image_hash": "4564e5a6f3aead4648bf69494b36e396d01a7d94fe12fec23571a711e46b526e",
+          "5.0.28-24": {
+            "image_path": "percona/percona-server-mongodb:5.0.28-24",
+            "image_hash": "7f9ac418bcd22fc8fbcf6ddba9aff3142a07ddfdfbe58efd5d55d5f7c9f43aaf",
             "status": "recommended",
             "critical": false
           },
