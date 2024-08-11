@@ -71,14 +71,28 @@ func main() {
 		}
 	}
 
+	customMetadataDir := os.Getenv("DEV_METADATA_DIR")
+	customReleaseNotesDir := os.Getenv("DEV_RELEASE_NOTES_DIR")
+	var metadataSub fs.FS
+	var releaseNotesSub fs.FS
+
 	s := grpc.NewServer(grpcServerLogOpt(logger))
-	metadataSub, err := fs.Sub(metaSources, "sources/metadata")
-	if err != nil {
-		logger.Fatal("could not create sub directory for sources/metadata", zap.Error(err))
+	if customMetadataDir != "" {
+		metadataSub, err = fs.Sub(os.DirFS(customMetadataDir), ".")
+	} else {
+		metadataSub, err = fs.Sub(metaSources, "sources/metadata")
 	}
-	releaseNotesSub, err := fs.Sub(releaseNoteSources, "sources/release-notes")
 	if err != nil {
-		logger.Fatal("could not create sub directory for sources/release-notes", zap.Error(err))
+		logger.Fatal("could not create sub directory for metadata directory", zap.Error(err))
+	}
+
+	if customReleaseNotesDir == "" {
+		releaseNotesSub, err = fs.Sub(releaseNoteSources, "sources/release-notes")
+	} else {
+		releaseNotesSub, err = fs.Sub(os.DirFS(customReleaseNotesDir), ".")
+	}
+	if err != nil {
+		logger.Fatal("could not create sub directory for release notes directory", zap.Error(err))
 	}
 
 	backend, err := server.New(metadataSub, releaseNotesSub)
