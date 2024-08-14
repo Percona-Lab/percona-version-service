@@ -102,6 +102,12 @@
             "image_hash": "6395019766db6118f61b8085c720d1d574c73511f84c9db5d222460f790649fb",
             "status": "recommended",
             "critical": false
+          },
+          "2.4.29": {
+            "image_path": "perconalab/percona-xtradb-cluster-operator:1.15.0-pxc5.7-backup-pxb2.4.29",
+            "image_hash": "dfe6545b83b18450a3243441e6b43c3a6ed05dcc24a464286ffb9a7328fdb13f",
+            "status": "recommended",
+            "critical": false
           }
         },
         "log_collector": {
