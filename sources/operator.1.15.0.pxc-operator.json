@@ -98,13 +98,13 @@
         },
         "backup": {
           "8.0.35": {
-            "image_path": "perconalab/percona-xtradb-cluster-operator:1.15.0-pxc8.0-backup-pxb8.0.35",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0-pxc8.0-backup-pxb8.0.35",
             "image_hash": "6395019766db6118f61b8085c720d1d574c73511f84c9db5d222460f790649fb",
             "status": "recommended",
             "critical": false
           },
           "2.4.29": {
-            "image_path": "perconalab/percona-xtradb-cluster-operator:1.15.0-pxc5.7-backup-pxb2.4.29",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0-pxc5.7-backup-pxb2.4.29",
             "image_hash": "dfe6545b83b18450a3243441e6b43c3a6ed05dcc24a464286ffb9a7328fdb13f",
             "status": "recommended",
             "critical": false
@@ -112,7 +112,7 @@
         },
         "log_collector": {
           "1.15.0": {
-            "image_path": "perconalab/percona-xtradb-cluster-operator:1.15.0-logcollector-fluentbit3.1.4",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0-logcollector-fluentbit3.1.4",
             "image_hash": "24b068d55559cbe5dbadc2f52e5c096f7df60374e47c6b4d1a5e331fd2a75014",
             "status": "recommended",
             "critical": false
@@ -120,7 +120,7 @@
         },
         "operator": {
           "1.15.0": {
-            "image_path": "perconalab/percona-xtradb-cluster-operator:1.15.0",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0",
             "image_hash": "3e137389d6fb6fc2910dc9a7bec6d3902d559fb56d0589eb2cc5cffaa95cca54",
             "image_hash_arm64": "86ee938b9907a89ec987e5e69d732ae551f8f46beae1b08307111c8e6a4be5c6",
             "status": "recommended",
