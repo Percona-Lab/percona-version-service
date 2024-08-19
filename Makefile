@@ -17,6 +17,8 @@ init:
 	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
 	chmod +x ./bin/swagger
 
+	go build -race -o bin/format-release-notes ./cmd/format-release-notes
+
 gen:
 	bin/buf dep update
 
@@ -29,6 +31,9 @@ gen:
 
 	rm -rf ./client
 	./bin/swagger generate client -m client/models -f ./api/version.swagger.yaml -t ./
+
+format-release-notes:
+	./bin/format-release-notes --dir=docs/release-notes
 
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
