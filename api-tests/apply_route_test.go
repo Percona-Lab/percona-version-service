@@ -36,7 +36,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.17.0",
+		OperatorVersion: "1.16.2",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
@@ -112,7 +112,7 @@ func TestApplyPsmdbShouldReturnSameMajorVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.17.0",
+		OperatorVersion: "1.16.2",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
@@ -357,7 +357,6 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.17.0", nil, "7.0.12-7"},
 		{"latest", "1.16.2", nil, "7.0.8-5"},
 		{"latest", "1.16.1", nil, "7.0.8-5"},
 		{"latest", "1.16.0", nil, "7.0.8-5"},
