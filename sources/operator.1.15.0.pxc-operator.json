@@ -25,19 +25,13 @@
           },
           "8.0.31-23.2": {
             "image_path": "percona/percona-xtradb-cluster:8.0.31-23.2",
-            "image_hash": "e47110307e9733fbcc55e5587652e41bbcf794063b021533d5e705062da97927",
+            "image_hash": "ed1ceea0b594ae34a92c891b4e42bc543d24999c82e47382cf53e33be4ae1d71",
             "status": "available",
             "critical": false
           },
           "8.0.29-21.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.29-21.1",
             "image_hash": "96c6bb8189280aeb773e74ed46aa41c01781b62947ed70c89efeb9f41c367ee7",
-            "status": "available",
-            "critical": false
-          },
-          "8.0.25-15.1": {
-            "image_path": "percona/percona-xtradb-cluster:8.0.25-15.1",
-            "image_hash": "529e979c86442429e6feabef9a2d9fc362f4626146f208fbfac704e145a492dd",
             "status": "available",
             "critical": false
           },
