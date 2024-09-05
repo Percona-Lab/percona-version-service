@@ -76,12 +76,6 @@
             "image_hash": "38ced404ec798d78943c234ab4f39ee237f3013095a5cd581978cfdf0fbce2f9",
             "status": "available",
             "critical": false
-          },
-          "5.0.11-10": {
-            "image_path": "percona/percona-server-mongodb:5.0.11-10",
-            "image_hash": "da3713525d76a354435e1ab8fda12a06407e7eca8b8e72b9ac0163a34c8eb735",
-            "status": "available",
-            "critical": false
           }
         },
         "pmm": {
@@ -102,9 +96,9 @@
         },
         "operator": {
           "1.17.0": {
-            "image_path": "perconalab/percona-server-mongodb-operator:1.17.0",
-            "image_hash": "6d4f7caf083a45f31d5968916ec3247712b882e8bd8a1b78b6f4cdfc854a2df2",
-            "image_hash_arm64": "d8457ebf2954f44ca2e176e155fe6dcc2b0202b6ecc553ae00919031e212496f",
+            "image_path": "percona/percona-server-mongodb-operator:1.17.0",
+            "image_hash": "34bfbaa85fa4dcdd1652603cfeab6e1afbd6282fd556d3fb32e94211ecab85c2",
+            "image_hash_arm64": "788168be72386bcf94607ec0fd083f689cc3133227133abb938e628fe651259cf",
             "status": "recommended",
             "critical": false
           }
