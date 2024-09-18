@@ -1,3 +1,3 @@
-version: 1.2.0-rc3
+version: 1.2.0-rc4
 supported:
   cli: '>= 1.2.0'
