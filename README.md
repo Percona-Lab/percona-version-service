@@ -58,6 +58,12 @@ supported:
 `recommended` field holds a specific version. `supported` hold a semver constraint.
 
 Making a request to `/metadata/v1/{product}` will return all stored metadata for the given product.
+## How to add new release notes for a product
+Add a file to `sources/release-notes/{product_name}/{version-tag}.md`.  
+
+Making a request to `/release-notes/v1/{product}/{version-tag}` will return the release note for that version in raw markdown format.
+You can also run `make format-release-notes` to format the release notes. This command will:
+- Replace all relative links and image sources with absolute links.
 
 ## How to create a new docker image
 `make docker-push` will create and push a docker image with your changes.  
