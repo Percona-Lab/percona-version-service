@@ -3,4 +3,4 @@ imageInfo:
   image_path: "percona/pmm-server:3-dev-container"
   image_hash: "sha256:sha256:599fcfbefa483d652d346b24dc7b81d806c3065c49c31c6381eedf7ce96db1ee"
   image_release_timestamp: "2024-09-24T09:03:33.343594Z"
-  "status": "available"
+  status: "available"
