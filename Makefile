@@ -42,7 +42,7 @@ docker-run-it:
 	docker run -it --rm -p 10000:10000 -p 11000:11000 -e SERVE_HTTP=true ${IMG}
 
 build:
-	CGO_ENABLED=0 go build -a -o ./bin/app
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o ./bin/app
 
 run: build
 	SERVE_HTTP=true ./bin/app
