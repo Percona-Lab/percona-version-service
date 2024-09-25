@@ -53,7 +53,7 @@ func main() {
 	if grpcport == "" {
 		grpcport = "10000"
 	}
-	addr := "127.0.0.1:" + grpcport
+	addr := ":" + grpcport
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		logger.Fatal("failed to listen interface", zap.Error(err), zap.String("addr", addr))
@@ -121,7 +121,7 @@ func main() {
 	if port == "" {
 		port = "11000"
 	}
-	gatewayAddr := "0.0.0.0:" + port
+	gatewayAddr := ":" + port
 	gwServer := &http.Server{
 		Addr: gatewayAddr,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
