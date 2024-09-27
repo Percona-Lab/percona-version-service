@@ -283,8 +283,8 @@
         "operator": {
           "2.5.0": {
             "image_path": "percona/percona-postgresql-operator:2.5.0",
-            "image_hash": "096502a43b212e7323deefca95e280badd358e930aef14b6247641cbcbec7e0b",
-            "image_hash_arm64": "c1bb5ecb06b5164a9acbf9e5a4b7e6f0c4ee707fa6a6b1b95cab71290e03cc47",
+            "image_hash": "82eb50c110a29dc112326286bbdd6f2a3fba0bd697f241038de2bf29557d930a",
+            "image_hash_arm64": "b1dc1debbdf2399d526db288cdb5ee05c3fd0e1d2e3982a27910e08772ac022d",
             "status": "recommended",
             "critical": false
           }
