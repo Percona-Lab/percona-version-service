@@ -72,9 +72,9 @@
           
         },
         "pmm": {
-          "2.43.0": {
-            "image_path": "percona/pmm-client:2.43.0",
-            "image_hash": "91c55792d0a645c4e0c5d72818c0987eaaedbf4cb2bcde1ab7050587ce0c3dec",
+          "2.43.1": {
+            "image_path": "percona/pmm-client:2.43.1",
+            "image_hash": "aad0a51ec5dadc80b1821964045a67c367dc0e75c17885961b5a4937f409490c",
             "status": "recommended",
             "critical": false
           }
@@ -283,8 +283,8 @@
         "operator": {
           "2.5.0": {
             "image_path": "percona/percona-postgresql-operator:2.5.0",
-            "image_hash": "82eb50c110a29dc112326286bbdd6f2a3fba0bd697f241038de2bf29557d930a",
-            "image_hash_arm64": "b1dc1debbdf2399d526db288cdb5ee05c3fd0e1d2e3982a27910e08772ac022d",
+            "image_hash": "bebe17db0f2a33a23424b67c5d41654c16e546b6545a8cb4c2b9af1f4d73bd7b",
+            "image_hash_arm64": "d22b19c5ab0cd7267bb013f98b40465bc8669a533aeb571a98899c233b92e9e4",
             "status": "recommended",
             "critical": false
           }
