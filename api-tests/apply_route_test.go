@@ -52,7 +52,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "2.4.1",
+		OperatorVersion: "2.5.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
