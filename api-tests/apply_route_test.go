@@ -181,6 +181,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 	}{
 		// test latest
 		{"latest", "1.15.0", nil, "8.0.36-28.1"},
+		{"latest", "1.14.1", nil, "8.0.36-28.1"},
 		{"latest", "1.14.0", nil, "8.0.36-28.1"},
 		{"latest", "1.13.0", nil, "8.0.32-24.2"},
 		{"latest", "1.12.0", nil, "8.0.31-23.2"},
@@ -193,6 +194,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"latest", "1.5.0", nil, "8.0.20-11.2"},
 		{"latest", "1.4.0", nil, "8.0.18-9.3"},
 		{"latest", "1.15.0", &v57, "5.7.44-31.65"},
+		{"latest", "1.14.1", &v57, "5.7.44-31.65"},
 		{"latest", "1.14.0", &v57, "5.7.44-31.65"},
 		{"latest", "1.13.0", &v57, "5.7.42-31.65"},
 		{"latest", "1.12.0", &v57, "5.7.39-31.61"},
@@ -207,6 +209,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 
 		// test latest when prerelease part in current version is bigger than in latest
 		{"latest", "1.15.0", &vPreRel, "5.7.44-31.65"},
+		{"latest", "1.14.1", &vPreRel, "5.7.44-31.65"},
 		{"latest", "1.14.0", &vPreRel, "5.7.44-31.65"},
 		{"latest", "1.13.0", &vPreRel, "5.7.42-31.65"},
 		{"latest", "1.12.0", &vPreRel, "5.7.39-31.61"},
@@ -220,6 +223,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 
 		// test recommended
 		{"recommended", "1.15.0", nil, "8.0.36-28.1"},
+		{"recommended", "1.14.1", nil, "8.0.36-28.1"},
 		{"recommended", "1.14.0", nil, "8.0.36-28.1"},
 		{"recommended", "1.13.0", nil, "8.0.32-24.2"},
 		{"recommended", "1.12.0", nil, "8.0.31-23.2"},
@@ -232,6 +236,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"recommended", "1.5.0", nil, "8.0.20-11.2"},
 		{"recommended", "1.4.0", nil, "8.0.18-9.3"},
 		{"recommended", "1.15.0", &v57, "5.7.44-31.65"},
+		{"recommended", "1.14.1", &v57, "5.7.44-31.65"},
 		{"recommended", "1.14.0", &v57, "5.7.44-31.65"},
 		{"recommended", "1.13.0", &v57, "5.7.42-31.65"},
 		{"recommended", "1.12.0", &v57, "5.7.39-31.61"},
@@ -246,6 +251,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 
 		// test exact
 		{"5.7.36-31.55", "1.15.0", nil, "5.7.36-31.55"},
+		{"5.7.36-31.55", "1.14.1", nil, "5.7.36-31.55"},
 		{"5.7.36-31.55", "1.14.0", nil, "5.7.36-31.55"},
 		{"5.7.36-31.55", "1.13.0", nil, "5.7.36-31.55"},
 		{"5.7.36-31.55", "1.12.0", nil, "5.7.36-31.55"},
@@ -258,6 +264,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"5.7.28-31.41.2", "1.5.0", nil, "5.7.28-31.41.2"},
 		{"5.7.28-31.41.2", "1.4.0", nil, "5.7.28-31.41.2"},
 		{"8.0.29-21.1", "1.15.0", nil, "8.0.29-21.1"},
+		{"8.0.29-21.1", "1.14.1", nil, "8.0.29-21.1"},
 		{"8.0.29-21.1", "1.14.0", nil, "8.0.29-21.1"},
 		{"8.0.29-21.1", "1.13.0", nil, "8.0.29-21.1"},
 		{"8.0.27-18.1", "1.12.0", nil, "8.0.27-18.1"},
@@ -272,6 +279,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 
 		//test with suffix
 		{"8.0-latest", "1.15.0", nil, "8.0.36-28.1"},
+		{"8.0-latest", "1.14.1", nil, "8.0.36-28.1"},
 		{"8.0-latest", "1.14.0", nil, "8.0.36-28.1"},
 		{"8.0-latest", "1.13.0", nil, "8.0.32-24.2"},
 		{"8.0-latest", "1.12.0", nil, "8.0.31-23.2"},
@@ -284,6 +292,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"8.0-latest", "1.5.0", nil, "8.0.20-11.2"},
 		{"8.0-latest", "1.4.0", nil, "8.0.18-9.3"},
 		{"5.7-latest", "1.15.0", nil, "5.7.44-31.65"},
+		{"5.7-latest", "1.14.1", nil, "5.7.44-31.65"},
 		{"5.7-latest", "1.14.0", nil, "5.7.44-31.65"},
 		{"5.7-latest", "1.13.0", nil, "5.7.42-31.65"},
 		{"5.7-latest", "1.12.0", nil, "5.7.39-31.61"},
@@ -296,6 +305,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"5.7-latest", "1.5.0", nil, "5.7.31-31.45.2"},
 		{"5.7-latest", "1.4.0", nil, "5.7.28-31.41.2"},
 		{"8.0-recommended", "1.15.0", nil, "8.0.36-28.1"},
+		{"8.0-recommended", "1.14.1", nil, "8.0.36-28.1"},
 		{"8.0-recommended", "1.14.0", nil, "8.0.36-28.1"},
 		{"8.0-recommended", "1.13.0", nil, "8.0.32-24.2"},
 		{"8.0-recommended", "1.12.0", nil, "8.0.31-23.2"},
@@ -308,6 +318,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"8.0-recommended", "1.5.0", nil, "8.0.20-11.2"},
 		{"8.0-recommended", "1.4.0", nil, "8.0.18-9.3"},
 		{"5.7-recommended", "1.15.0", nil, "5.7.44-31.65"},
+		{"5.7-recommended", "1.14.1", nil, "5.7.44-31.65"},
 		{"5.7-recommended", "1.14.0", nil, "5.7.44-31.65"},
 		{"5.7-recommended", "1.13.0", nil, "5.7.42-31.65"},
 		{"5.7-recommended", "1.12.0", nil, "5.7.39-31.61"},
