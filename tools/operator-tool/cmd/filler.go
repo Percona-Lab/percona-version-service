@@ -138,6 +138,9 @@ func getVersionMap(rc *registry.RegistryClient, image string, versions []string)
 		}
 		m[v] = vm
 	}
+	if len(m) == 0 {
+		return nil, fmt.Errorf("image %s with %v tags was not found", image, versions)
+	}
 	return m, nil
 }
 

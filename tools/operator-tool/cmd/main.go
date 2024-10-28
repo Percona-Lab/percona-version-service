@@ -40,21 +40,18 @@ func main() {
 	flag.Parse()
 
 	if *version == "" {
-		log.Println("ERROR: --version should be provided")
-		os.Exit(1)
+		log.Fatalln("ERROR: --version should be provided")
 	}
 
 	if *filePath != "" {
 		product, err := readBaseFile(*filePath)
 		if err != nil {
-			log.Println("ERROR: failed to read base file:", err.Error())
-			os.Exit(1)
+			log.Fatalln("ERROR: failed to read base file:", err.Error())
 		}
 		*operatorName = product.Versions[0].Product
 	} else {
 		if *operatorName == "" {
-			log.Println("ERROR: --operator or --file should be provided")
-			os.Exit(1)
+			log.Fatalln("ERROR: --operator or --file should be provided")
 		}
 	}
 
@@ -65,12 +62,11 @@ func main() {
 		}
 
 		if err := printSourceFile(*operatorName, *version, *filePath); err != nil {
-			log.Println("ERROR: failed to generate source file: ", err.Error())
-			os.Exit(1)
+			log.SetOutput(os.Stderr)
+			log.Fatalln("ERROR: failed to generate source file:", err.Error())
 		}
 	default:
-		log.Printf("ERROR: Unknown operator name: %s. Available values: %v\n", *operatorName, validOperatorNames)
-		os.Exit(1)
+		log.Fatalf("ERROR: Unknown operator name: %s. Available values: %v\n", *operatorName, validOperatorNames)
 	}
 }
 
