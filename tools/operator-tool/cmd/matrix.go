@@ -12,17 +12,12 @@ func pgVersionMatrix(f *VersionMapFiller, operatorName, version string) (*vsAPI.
 		return nil, err
 	}
 
-	pmmVersions, err := productsapi.GetProductVersions("", "pmm2")
-	if err != nil {
-		return nil, err
-	}
-
 	matrix := &vsAPI.VersionMatrix{
 		Postgresql: f.Regex("percona/percona-postgresql-operator", `(?:^\d+\.\d+\.\d+-ppg)(\d+\.\d+)(?:-postgres$)`, pgVersions),
 		Pgbackrest: f.Regex("percona/percona-postgresql-operator", `(?:^\d+\.\d+\.\d+-ppg)(\d+\.\d+)(?:-pgbackrest)`, pgVersions),
 		Pgbouncer:  f.Regex("percona/percona-postgresql-operator", `(?:^\d+\.\d+\.\d+-ppg)(\d+\.\d+)(?:-pgbouncer)`, pgVersions),
 		Postgis:    f.Regex("percona/percona-postgresql-operator", `(?:^\d+\.\d+\.\d+-ppg)(\d+\.\d+)(?:-postgres-gis)`, pgVersions),
-		Pmm:        f.Normal("percona/pmm-client", pmmVersions),
+		Pmm:        f.Latest("percona/pmm-client"),
 		Operator:   f.Normal("percona/percona-postgresql-operator", []string{version}),
 	}
 	if err := f.Error(); err != nil {
@@ -37,14 +32,9 @@ func psVersionMatrix(f *VersionMapFiller, operatorName, version string) (*vsAPI.
 		return nil, err
 	}
 
-	pmmVersions, err := productsapi.GetProductVersions("", "pmm2")
-	if err != nil {
-		return nil, err
-	}
-
 	matrix := &vsAPI.VersionMatrix{
 		Mysql:        f.Normal("percona/percona-server", psVersions),
-		Pmm:          f.Normal("percona/pmm-client", pmmVersions),
+		Pmm:          f.Latest("percona/pmm-client"),
 		Router:       f.Normal("percona/percona-mysql-router", psVersions),
 		Backup:       f.Normal("percona/percona-xtrabackup", psVersions),
 		Operator:     f.Normal("percona/percona-server-mysql-operator", []string{version}),
@@ -65,11 +55,6 @@ func psmdbVersionMatrix(f *VersionMapFiller, operatorName, version string) (*vsA
 		return nil, err
 	}
 
-	pmmVersions, err := productsapi.GetProductVersions("", "pmm2")
-	if err != nil {
-		return nil, err
-	}
-
 	pbmVersions, err := productsapi.GetProductVersions("percona-backup-mongodb-", "percona-backup-mongodb")
 	if err != nil {
 		return nil, err
@@ -77,7 +62,7 @@ func psmdbVersionMatrix(f *VersionMapFiller, operatorName, version string) (*vsA
 
 	matrix := &vsAPI.VersionMatrix{
 		Mongod:   f.Normal("percona/percona-server-mongodb", mongoVersions),
-		Pmm:      f.Normal("percona/pmm-client", pmmVersions),
+		Pmm:      f.Latest("percona/pmm-client"),
 		Backup:   f.Normal("percona/percona-backup-mongodb", pbmVersions),
 		Operator: f.Normal("percona/percona-server-mongodb-operator", []string{version}),
 	}
@@ -95,18 +80,13 @@ func pxcVersionMatrix(f *VersionMapFiller, operatorName, version string) (*vsAPI
 		return nil, err
 	}
 
-	pmmVersions, err := productsapi.GetProductVersions("", "pmm2")
-	if err != nil {
-		return nil, err
-	}
-
 	xtrabackupVersions, err := productsapi.GetProductVersions("Percona-XtraBackup-", "Percona-XtraBackup-8.0", "Percona-XtraBackup-2.4")
 	if err != nil {
 		return nil, err
 	}
 	matrix := &vsAPI.VersionMatrix{
 		Pxc:          f.Normal("percona/percona-xtradb-cluster", pxcVersions),
-		Pmm:          f.Normal("percona/pmm-client", pmmVersions),
+		Pmm:          f.Latest("percona/pmm-client"),
 		Proxysql:     f.Latest("percona/proxysql"),
 		Haproxy:      f.Latest("percona/haproxy"),
 		Backup:       f.Regex("percona/percona-xtradb-cluster-operator", `(?:^\d+\.\d+\.\d+-pxc\d+\.\d+-backup-pxb)(.*)`, xtrabackupVersions),
