@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
+	gover "github.com/hashicorp/go-version"
 
 	"operator-tool/registry"
 )
@@ -20,9 +21,13 @@ type VersionMapFiller struct {
 	errs           []error
 }
 
+func (f *VersionMapFiller) addErr(err error) {
+	f.errs = append(f.errs, err)
+}
+
 func (f *VersionMapFiller) exec(vm map[string]*vsAPI.Version, err error) map[string]*vsAPI.Version {
 	if err != nil {
-		f.errs = append(f.errs, err)
+		f.addErr(err)
 		return nil
 	}
 
@@ -50,11 +55,48 @@ func (f *VersionMapFiller) setRecommended(vm map[string]*vsAPI.Version) {
 	}
 }
 
+// addVersionsFromRegistry searches Docker Hub for all tags associated with the specified image
+// and appends any missing tags that match the MAJOR.MINOR.PATCH version format to the returned versions slice.
+//
+// Tags with a "-debug" suffix are excluded.
+func (f *VersionMapFiller) addVersionsFromRegistry(image string, versions []string) []string {
+	wantedVerisons := make(map[string]struct{}, len(versions))
+	coreVersions := make(map[string]struct{})
+	for _, v := range versions {
+		wantedVerisons[v] = struct{}{}
+		coreVersions[goversion(v).Core().String()] = struct{}{}
+	}
+
+	tags, err := f.RegistryClient.GetTags(image)
+	if err != nil {
+		f.addErr(err)
+		return nil
+	}
+
+	for _, tag := range tags {
+		if strings.HasSuffix(tag, "-debug") {
+			continue
+		}
+		if _, err := gover.NewVersion(tag); err != nil {
+			continue
+		}
+		if _, ok := coreVersions[goversion(tag).Core().String()]; !ok {
+			continue
+		}
+		if _, ok := wantedVerisons[tag]; ok {
+			continue
+		}
+		versions = append(versions, tag)
+	}
+	return versions
+}
+
 // Normal returns a map[string]*Version for the specified image by filtering tags
 // with the given list of versions.
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
 func (f *VersionMapFiller) Normal(image string, versions []string) map[string]*vsAPI.Version {
+	versions = f.addVersionsFromRegistry(image, versions)
 	return f.exec(getVersionMap(f.RegistryClient, image, versions))
 }
 

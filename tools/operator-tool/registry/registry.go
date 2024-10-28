@@ -145,6 +145,22 @@ func (r *RegistryClient) GetLatestImage(imageName string) (Image, error) {
 	return Image{}, errors.New("image not found")
 }
 
+func (r *RegistryClient) GetTags(imageName string) ([]string, error) {
+	tags := []string{}
+	for page := 1; ; page++ {
+		resp, err := r.get(imageName, page)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get page %d: %w", page, err)
+		}
+		for _, result := range resp.Results {
+			tags = append(tags, result.Name)
+		}
+		if resp.NextPage == "" || len(resp.Results) < defaultPageSize {
+			return tags, nil
+		}
+	}
+}
+
 func (r *RegistryClient) GetImages(imageName string, filterFunc func(tag string) bool) ([]Image, error) {
 	images := []Image{}
 	for page := 1; ; page++ {
