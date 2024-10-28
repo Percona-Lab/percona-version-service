@@ -14,7 +14,7 @@ Usage of ./bin/operator-tool:
   -file string
         Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file.
   -operator string
-        Operator name. Available values: [psmdb-operator pxc-operator ps-operator pg-operator]
+        Operator name. Available values: [psmdb pxc ps pg]
   -verbose
         Show logs
   -version string
@@ -25,13 +25,13 @@ Usage of ./bin/operator-tool:
 ### Generating source file from zero
 
 ```
-$ ./bin/operator-tool --operator "psmdb-operator" --version "1.17.0" # outputs source file for psmdb-operator
+$ ./bin/operator-tool --operator "psmdb" --version "1.17.0" # outputs source file for psmdb-operator
 ...
-$ ./bin/operator-tool --operator "pg-operator" --version "2.5.0"     # outputs source file for pg-operator
+$ ./bin/operator-tool --operator "pg" --version "2.5.0"     # outputs source file for pg-operator
 ...
-$ ./bin/operator-tool --operator "ps-operator" --version "0.8.0"     # outputs source file for ps-operator
+$ ./bin/operator-tool --operator "ps" --version "0.8.0"     # outputs source file for ps-operator
 ...
-$ ./bin/operator-tool --operator "pxc-operator" --version "1.15.1"   # outputs source file for pxc-operator
+$ ./bin/operator-tool --operator "pxc" --version "1.15.1"   # outputs source file for pxc-operator
 ...
 ```
 

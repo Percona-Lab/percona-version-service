@@ -14,10 +14,12 @@ import (
 )
 
 const (
-	operatorNamePSMDB = "psmdb-operator"
-	operatorNamePXC   = "pxc-operator"
-	operatorNamePS    = "ps-operator"
-	operatorNamePG    = "pg-operator"
+	operatorNameSuffix = "-operator"
+
+	operatorNamePSMDB = "psmdb"
+	operatorNamePXC   = "pxc"
+	operatorNamePS    = "ps"
+	operatorNamePG    = "pg"
 )
 
 var validOperatorNames = []string{
@@ -101,13 +103,13 @@ func getProductResponse(operatorName, version string) (*vsAPI.ProductResponse, e
 	}
 	switch operatorName {
 	case operatorNamePG:
-		versionMatrix, err = pgVersionMatrix(f, operatorName, version)
+		versionMatrix, err = pgVersionMatrix(f, version)
 	case operatorNamePS:
-		versionMatrix, err = psVersionMatrix(f, operatorName, version)
+		versionMatrix, err = psVersionMatrix(f, version)
 	case operatorNamePSMDB:
-		versionMatrix, err = psmdbVersionMatrix(f, operatorName, version)
+		versionMatrix, err = psmdbVersionMatrix(f, version)
 	case operatorNamePXC:
-		versionMatrix, err = pxcVersionMatrix(f, operatorName, version)
+		versionMatrix, err = pxcVersionMatrix(f, version)
 	default:
 		panic("problems with validation. unknown operator name " + operatorName)
 	}
@@ -117,7 +119,7 @@ func getProductResponse(operatorName, version string) (*vsAPI.ProductResponse, e
 	return &vsAPI.ProductResponse{
 		Versions: []*vsAPI.OperatorVersion{
 			{
-				Product:  operatorName,
+				Product:  operatorName + operatorNameSuffix,
 				Operator: version,
 				Matrix:   versionMatrix,
 			},
