@@ -30,29 +30,7 @@ func (f *VersionMapFiller) exec(vm map[string]*vsAPI.Version, err error) map[str
 		f.addErr(err)
 		return nil
 	}
-
-	f.setRecommended(vm)
-
 	return vm
-}
-
-// setRecommended sets a recommended status to the latest version.
-func (f *VersionMapFiller) setRecommended(vm map[string]*vsAPI.Version) {
-	maxVer := ""
-	for k := range vm {
-		if maxVer == "" {
-			maxVer = k
-			continue
-		}
-
-		if goversion(k).Compare(goversion(maxVer)) > 0 {
-			maxVer = k
-		}
-	}
-
-	if _, ok := vm[maxVer]; ok {
-		vm[maxVer].Status = vsAPI.Status_recommended
-	}
 }
 
 // addVersionsFromRegistry searches Docker Hub for all tags associated with the specified image
@@ -252,6 +230,5 @@ func versionMapFromImages(baseTag string, images []registry.Image) (*vsAPI.Versi
 		ImagePath:      imagePath,
 		ImageHash:      imageHash,
 		ImageHashArm64: imageHashArm64,
-		Status:         vsAPI.Status_available,
 	}, nil
 }

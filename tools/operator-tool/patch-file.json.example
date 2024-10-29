@@ -1,0 +1,12 @@
+{
+  "backup": {
+    "2.4.28": {
+      "image_path": "some-path:tag"
+    }
+  },
+  "pmm": {
+    "2.50.1": {
+      "image_path": "some-path:tag"
+    }
+  }
+}

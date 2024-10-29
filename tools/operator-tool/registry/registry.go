@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -84,22 +85,64 @@ func (i Image) FullName() string {
 
 type RegistryClient struct {
 	c     *http.Client
-	cache map[string]tagResp
+	cache map[string]any
 }
 
 const defaultPageSize = 100
 
-func (r *RegistryClient) get(imageName string, page int) (tagResp, error) {
+func (r *RegistryClient) readTag(imageName string, tag string) (tagRespResult, error) {
+	u := url.URL{
+		Scheme: "https",
+		Host:   "registry.hub.docker.com",
+		Path:   path.Join("v2", "repositories", imageName, "tags", tag),
+	}
+
+	var result tagRespResult
+	cachedResult, ok := r.cache[u.String()]
+	if ok {
+		result, ok = cachedResult.(tagRespResult)
+		if ok {
+			return result, nil
+		}
+		panic("caching error")
+	}
+
+	resp, err := http.Get(u.String())
+	if err != nil {
+		return result, fmt.Errorf("get: %w", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return result, fmt.Errorf("invalid status from docker hub registry: %s", resp.Status)
+	}
+
+	content, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return result, fmt.Errorf("failed to read body: %w", err)
+	}
+	if err := json.Unmarshal(content, &result); err != nil {
+		return result, fmt.Errorf("failed to unmarshal: %w", err)
+	}
+	r.cache[u.String()] = result
+	return result, nil
+}
+
+func (r *RegistryClient) listTags(imageName string, page int) (tagResp, error) {
 	u := url.URL{
 		Scheme:   "https",
 		Host:     "registry.hub.docker.com",
-		Path:     "v2/repositories/" + imageName + "/tags",
+		Path:     path.Join("v2", "repositories", imageName, "tags"),
 		RawQuery: "page_size=" + strconv.Itoa(defaultPageSize) + "&page=" + strconv.Itoa(page),
 	}
 
-	result, ok := r.cache[u.String()]
+	var result tagResp
+	cachedResult, ok := r.cache[u.String()]
 	if ok {
-		return result, nil
+		result, ok = cachedResult.(tagResp)
+		if ok {
+			return result, nil
+		}
+		panic("caching error")
 	}
 
 	resp, err := http.Get(u.String())
@@ -125,12 +168,12 @@ func (r *RegistryClient) get(imageName string, page int) (tagResp, error) {
 func NewClient() *RegistryClient {
 	return &RegistryClient{
 		c:     new(http.Client),
-		cache: make(map[string]tagResp),
+		cache: make(map[string]any),
 	}
 }
 
 func (r *RegistryClient) GetLatestImage(imageName string) (Image, error) {
-	resp, err := r.get(imageName, 1)
+	resp, err := r.listTags(imageName, 1)
 	if err != nil {
 		return Image{}, fmt.Errorf("failed to get latest image: %w", err)
 	}
@@ -145,10 +188,18 @@ func (r *RegistryClient) GetLatestImage(imageName string) (Image, error) {
 	return Image{}, errors.New("image not found")
 }
 
+func (r *RegistryClient) GetTag(image, tag string) (Image, error) {
+	resp, err := r.readTag(image, tag)
+	if err != nil {
+		return Image{}, fmt.Errorf("failed to read tag: %w", err)
+	}
+	return resp.Image(image), nil
+}
+
 func (r *RegistryClient) GetTags(imageName string) ([]string, error) {
 	tags := []string{}
 	for page := 1; ; page++ {
-		resp, err := r.get(imageName, page)
+		resp, err := r.listTags(imageName, page)
 		if err != nil {
 			return nil, fmt.Errorf("failed to get page %d: %w", page, err)
 		}
@@ -164,7 +215,7 @@ func (r *RegistryClient) GetTags(imageName string) ([]string, error) {
 func (r *RegistryClient) GetImages(imageName string, filterFunc func(tag string) bool) ([]Image, error) {
 	images := []Image{}
 	for page := 1; ; page++ {
-		resp, err := r.get(imageName, page)
+		resp, err := r.listTags(imageName, page)
 		if err != nil {
 			return nil, fmt.Errorf("failed to get page %d: %w", page, err)
 		}

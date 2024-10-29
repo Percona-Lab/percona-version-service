@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"slices"
+	"strings"
 
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 
@@ -33,13 +34,14 @@ var (
 	operatorName = flag.String("operator", "", fmt.Sprintf("Operator name. Available values: %v", validOperatorNames))
 	version      = flag.String("version", "", "Operator version")
 	filePath     = flag.String("file", "", "Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file.")
+	patch        = flag.String("patch", "", "Provide a path to a patch file to add additional images. Must be used together with the --file option.")
 	verbose      = flag.Bool("verbose", false, "Show logs")
 )
 
 func main() {
 	flag.Parse()
 
-	if *version == "" {
+	if *version == "" && *patch == "" {
 		log.Fatalln("ERROR: --version should be provided")
 	}
 
@@ -48,10 +50,13 @@ func main() {
 		if err != nil {
 			log.Fatalln("ERROR: failed to read base file:", err.Error())
 		}
-		*operatorName = product.Versions[0].Product
+		*operatorName = strings.TrimSuffix(product.Versions[0].Product, operatorNameSuffix)
 	} else {
 		if *operatorName == "" {
 			log.Fatalln("ERROR: --operator or --file should be provided")
+		}
+		if *patch != "" {
+			log.Fatalln("ERROR: --file should be provided when --patch is used")
 		}
 	}
 
@@ -61,7 +66,7 @@ func main() {
 			log.SetOutput(io.Discard)
 		}
 
-		if err := printSourceFile(*operatorName, *version, *filePath); err != nil {
+		if err := printSourceFile(*operatorName, *version, *filePath, *patch); err != nil {
 			log.SetOutput(os.Stderr)
 			log.Fatalln("ERROR: failed to generate source file:", err.Error())
 		}
@@ -70,18 +75,32 @@ func main() {
 	}
 }
 
-func printSourceFile(operatorName, version, file string) error {
-	r, err := getProductResponse(operatorName, version)
-	if err != nil {
-		return fmt.Errorf("failed to get product response: %w", err)
-	}
-	if file != "" {
-		if err := deleteOldVersions(file, r.Versions[0].Matrix); err != nil {
-			return fmt.Errorf("failed to delete old verisons from version matrix: %w", err)
+func printSourceFile(operatorName, version, file, patchFile string) error {
+	var productResponse *vsAPI.ProductResponse
+	var err error
+
+	registryClient := registry.NewClient()
+
+	if file == "" || patchFile == "" {
+		productResponse, err = getProductResponse(registryClient, operatorName, version)
+		if err != nil {
+			return fmt.Errorf("failed to get product response: %w", err)
+		}
+		if file != "" {
+			if err := deleteOldVersions(file, productResponse.Versions[0].Matrix); err != nil {
+				return fmt.Errorf("failed to delete old verisons from version matrix: %w", err)
+			}
+		}
+	} else {
+		productResponse, err = patchProductResponse(registryClient, file, patchFile)
+		if err != nil {
+			return fmt.Errorf("failed to patch product response: %w", err)
 		}
 	}
 
-	content, err := marshal(r)
+	updateMatrixStatuses(productResponse.Versions[0].Matrix)
+
+	content, err := marshal(productResponse)
 	if err != nil {
 		return fmt.Errorf("failed to marshal product response: %w", err)
 	}
@@ -90,12 +109,12 @@ func printSourceFile(operatorName, version, file string) error {
 	return nil
 }
 
-func getProductResponse(operatorName, version string) (*vsAPI.ProductResponse, error) {
+func getProductResponse(rc *registry.RegistryClient, operatorName, version string) (*vsAPI.ProductResponse, error) {
 	var versionMatrix *vsAPI.VersionMatrix
 	var err error
 
 	f := &VersionMapFiller{
-		RegistryClient: registry.NewClient(),
+		RegistryClient: rc,
 	}
 	switch operatorName {
 	case operatorNamePG:
