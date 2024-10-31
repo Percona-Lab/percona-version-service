@@ -73,8 +73,10 @@ func (f *VersionMapFiller) addVersionsFromRegistry(image string, versions []stri
 // with the given list of versions.
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
-func (f *VersionMapFiller) Normal(image string, versions []string) map[string]*vsAPI.Version {
-	versions = f.addVersionsFromRegistry(image, versions)
+func (f *VersionMapFiller) Normal(image string, versions []string, addVersionsFromRegistry bool) map[string]*vsAPI.Version {
+	if addVersionsFromRegistry {
+		versions = f.addVersionsFromRegistry(image, versions)
+	}
 	return f.exec(getVersionMap(f.RegistryClient, image, versions))
 }
 
