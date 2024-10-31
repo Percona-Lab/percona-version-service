@@ -3,7 +3,7 @@ package main
 import (
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 
-	productsapi "operator-tool/products-api"
+	productsapi "operator-tool/pkg/products-api"
 )
 
 func pgVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix, error) {

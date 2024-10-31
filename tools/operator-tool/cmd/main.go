@@ -11,7 +11,7 @@ import (
 
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 
-	"operator-tool/registry"
+	"operator-tool/pkg/registry"
 )
 
 const (

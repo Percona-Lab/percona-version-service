@@ -11,7 +11,7 @@ import (
 	gover "github.com/hashicorp/go-version"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	"operator-tool/registry"
+	"operator-tool/pkg/registry"
 )
 
 func readBaseFile(path string) (*vsAPI.ProductResponse, error) {

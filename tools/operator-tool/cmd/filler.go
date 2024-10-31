@@ -11,7 +11,7 @@ import (
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 	gover "github.com/hashicorp/go-version"
 
-	"operator-tool/registry"
+	"operator-tool/pkg/registry"
 )
 
 // VersionMapFiller is a helper type for creating a map[string]*vsAPI.Version
