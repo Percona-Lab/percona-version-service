@@ -87,7 +87,7 @@ func pxcVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix
 	matrix := &vsAPI.VersionMatrix{
 		Pxc:          f.Normal("percona/percona-xtradb-cluster", pxcVersions, true),
 		Pmm:          f.Latest("percona/pmm-client"),
-		Proxysql:     f.Latest("percona/proxysql"),
+		Proxysql:     f.Latest("percona/proxysql2"),
 		Haproxy:      f.Latest("percona/haproxy"),
 		Backup:       f.Regex("percona/percona-xtradb-cluster-operator", `(?:^\d+\.\d+\.\d+-pxc\d+\.\d+-backup-pxb)(.*)`, xtrabackupVersions),
 		LogCollector: f.Regex("percona/percona-xtradb-cluster-operator", `(^.*)(?:-logcollector)`, []string{version}),

@@ -246,22 +246,24 @@ func updateMatrixStatuses(matrix *vsAPI.VersionMatrix) error {
 	return nil
 }
 
-// setStatus sets a recommended status to the latest version and available status to other versions.
+// setStatus updates the statuses of version map.
+// For each major version, it sets the highest version as "recommended"
+// and all other versions as "available".
 func setStatus(vm map[string]*vsAPI.Version) {
-	maxVer := ""
-	for k := range vm {
-		vm[k].Status = vsAPI.Status_available
-		if maxVer == "" {
-			maxVer = k
-			continue
-		}
+	highestVersions := make(map[int]string)
+	for version := range vm {
+		vm[version].Status = vsAPI.Status_available
 
-		if goversion(k).Compare(goversion(maxVer)) > 0 {
-			maxVer = k
+		majorVersion := goversion(version).Segments()[0]
+
+		currentHighestVersion, ok := highestVersions[majorVersion]
+
+		if !ok || goversion(version).Compare(goversion(currentHighestVersion)) > 0 {
+			highestVersions[majorVersion] = version
 		}
 	}
 
-	if _, ok := vm[maxVer]; ok {
-		vm[maxVer].Status = vsAPI.Status_recommended
+	for _, version := range highestVersions {
+		vm[version].Status = vsAPI.Status_recommended
 	}
 }
