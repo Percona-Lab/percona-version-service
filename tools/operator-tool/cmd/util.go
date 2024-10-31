@@ -50,8 +50,7 @@ func deleteOldVersions(file string, matrix *vsAPI.VersionMatrix) error {
 	return nil
 }
 
-// deleteOldVersionsWithMap removes versions from the matrix that are older than those specified in oldestVersions.
-func deleteOldVersionsWithMap(matrix *vsAPI.VersionMatrix, oldestVersions map[string]*gover.Version) {
+func iterateOverMatrixFields(matrix *vsAPI.VersionMatrix, f func(fieldName string, fieldValue reflect.Value) error) error {
 	matrixType := reflect.TypeOf(matrix).Elem()
 	matrixValue := reflect.ValueOf(matrix).Elem()
 
@@ -61,24 +60,33 @@ func deleteOldVersionsWithMap(matrix *vsAPI.VersionMatrix, oldestVersions map[st
 		if field.PkgPath != "" {
 			continue
 		}
-		oldestVersion, ok := oldestVersions[field.Name]
+		if err := f(field.Name, matrixValue.Field(i)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// deleteOldVersionsWithMap removes versions from the matrix that are older than those specified in oldestVersions.
+func deleteOldVersionsWithMap(matrix *vsAPI.VersionMatrix, oldestVersions map[string]*gover.Version) {
+	iterateOverMatrixFields(matrix, func(fieldName string, fieldValue reflect.Value) error {
+		oldestVersion, ok := oldestVersions[fieldName]
 		if !ok {
-			continue
+			return nil
 		}
 
-		value := matrixValue.Field(i)
-
-		m := value.Interface().(map[string]*vsAPI.Version)
+		m := fieldValue.Interface().(map[string]*vsAPI.Version)
 		if len(m) == 0 {
-			continue
+			return nil
 		}
 
 		for k := range m {
 			if goversion(k).Compare(oldestVersion) < 0 {
-				value.SetMapIndex(reflect.ValueOf(k), reflect.Value{}) // delete old version from map
+				fieldValue.SetMapIndex(reflect.ValueOf(k), reflect.Value{}) // delete old version from map
 			}
 		}
-	}
+		return nil
+	})
 }
 
 // getOldestVersions returns a map where each key is a struct field name from the VersionMatrix
@@ -89,21 +97,11 @@ func getOldestVersions(filePath string) (map[string]*gover.Version, error) {
 		return nil, fmt.Errorf("failed to read base file: %w", err)
 	}
 
-	matrixType := reflect.TypeOf(prod.Versions[0].Matrix).Elem()
-	matrixValue := reflect.ValueOf(prod.Versions[0].Matrix).Elem()
-
 	versions := make(map[string]*gover.Version)
-	for i := 0; i < matrixValue.NumField(); i++ {
-		field := matrixType.Field(i)
-		// ignore if value is not exported
-		if field.PkgPath != "" {
-			continue
-		}
-		versionMapValue := matrixValue.Field(i)
-
-		versionMap := versionMapValue.Interface().(map[string]*vsAPI.Version)
+	iterateOverMatrixFields(prod.Versions[0].Matrix, func(fieldName string, fieldValue reflect.Value) error {
+		versionMap := fieldValue.Interface().(map[string]*vsAPI.Version)
 		if len(versionMap) == 0 {
-			continue
+			return nil
 		}
 		oldestVersion := ""
 		for k := range versionMap {
@@ -115,8 +113,9 @@ func getOldestVersions(filePath string) (map[string]*gover.Version, error) {
 				oldestVersion = k
 			}
 		}
-		versions[field.Name] = goversion(oldestVersion)
-	}
+		versions[fieldName] = goversion(oldestVersion)
+		return nil
+	})
 
 	return versions, nil
 }
@@ -191,20 +190,10 @@ func patchProductResponse(rc *registry.RegistryClient, baseFilepath, patchFilepa
 }
 
 func updateMatrixHashes(rc *registry.RegistryClient, matrix *vsAPI.VersionMatrix) error {
-	matrixType := reflect.TypeOf(matrix).Elem()
-	matrixValue := reflect.ValueOf(matrix).Elem()
-
-	for i := 0; i < matrixValue.NumField(); i++ {
-		field := matrixType.Field(i)
-		// ignore if value is not exported
-		if field.PkgPath != "" {
-			continue
-		}
-		versionMapValue := matrixValue.Field(i)
-
-		versionMap := versionMapValue.Interface().(map[string]*vsAPI.Version)
+	return iterateOverMatrixFields(matrix, func(fieldName string, fieldValue reflect.Value) error {
+		versionMap := fieldValue.Interface().(map[string]*vsAPI.Version)
 		if len(versionMap) == 0 {
-			continue
+			return nil
 		}
 
 		for k, v := range versionMap {
@@ -221,29 +210,19 @@ func updateMatrixHashes(rc *registry.RegistryClient, matrix *vsAPI.VersionMatrix
 			versionMap[k].ImageHash = image.DigestAMD64
 			versionMap[k].ImageHashArm64 = image.DigestARM64
 		}
-	}
-	return nil
+		return nil
+	})
 }
 
 func updateMatrixStatuses(matrix *vsAPI.VersionMatrix) error {
-	matrixType := reflect.TypeOf(matrix).Elem()
-	matrixValue := reflect.ValueOf(matrix).Elem()
-
-	for i := 0; i < matrixValue.NumField(); i++ {
-		field := matrixType.Field(i)
-		// ignore if value is not exported
-		if field.PkgPath != "" {
-			continue
-		}
-		versionMapValue := matrixValue.Field(i)
-
-		versionMap := versionMapValue.Interface().(map[string]*vsAPI.Version)
+	return iterateOverMatrixFields(matrix, func(fieldName string, fieldValue reflect.Value) error {
+		versionMap := fieldValue.Interface().(map[string]*vsAPI.Version)
 		if len(versionMap) == 0 {
-			continue
+			return nil
 		}
 		setStatus(versionMap)
-	}
-	return nil
+		return nil
+	})
 }
 
 // setStatus updates the statuses of version map.
