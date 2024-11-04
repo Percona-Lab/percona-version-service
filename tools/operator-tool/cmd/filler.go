@@ -93,11 +93,51 @@ func (f *VersionMapFiller) addVersionsFromRegistry(image string, versions []stri
 // with the given list of versions.
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
+// Prerelease versions are preferred for each core version when available. See preferPrereleaseVersionsFilter function.
 func (f *VersionMapFiller) Normal(image string, versions []string, addVersionsFromRegistry bool) map[string]*vsAPI.Version {
 	if addVersionsFromRegistry {
 		versions = f.addVersionsFromRegistry(image, versions)
 	}
+
+	versions = preferPrereleaseVersionsFilter(versions)
+
 	return f.exec(getVersionMap(f.RegistryClient, image, versions, f.includeArchSuffixes))
+}
+
+// preferPrereleaseVersionsFilter filters a slice of version strings to prioritize prerelease versions
+// for each unique core version. For example, if the input is []string{"4.0.4-40", "4.0.4"}, the output
+// will be []string{"4.0.4-40"}, as the prerelease version is preferred.
+//
+// If no prerelease versions are found for a core version, the function returns the non-prerelease versions
+// for that core version instead.
+func preferPrereleaseVersionsFilter(versions []string) []string {
+	verMap := make(map[string][]string)
+
+	// Group versions by core version
+	for _, v := range versions {
+		coreVer := goversion(v).Core().String()
+		verMap[coreVer] = append(verMap[coreVer], v)
+	}
+
+	result := []string{}
+	for _, versionSlice := range verMap {
+		prereleaseVersions := []string{}
+
+		// Get prerelease versions
+		for _, version := range versionSlice {
+			if goversion(version).Prerelease() != "" {
+				prereleaseVersions = append(prereleaseVersions, version)
+			}
+		}
+
+		if len(prereleaseVersions) == 0 {
+			result = append(result, versionSlice...)
+			continue
+		}
+		result = append(result, prereleaseVersions...)
+	}
+
+	return result
 }
 
 // Regex returns a map[string]*Version for the specified image by filtering tags
@@ -248,22 +288,13 @@ func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*
 		}
 	}
 
-	extractSuffix := func(tag string) string {
-		for _, suffix := range archSuffixes {
-			if strings.HasSuffix(tag, suffix) {
-				return suffix
-			}
-		}
-		return ""
-	}
-
 	if multiImage == nil && amd64Image == nil && arm64Image == nil {
 		return nil, fmt.Errorf("necessary tags for %s image were not found", images[0].Name)
 	}
 
 	versions := make(map[string]*vsAPI.Version)
 	if multiImage != nil {
-		versions[baseTag+extractSuffix(multiImage.Tag)] = &vsAPI.Version{
+		versions[baseTag+getArchSuffix(multiImage.Tag)] = &vsAPI.Version{
 			ImagePath:      multiImage.FullName(),
 			ImageHash:      multiImage.DigestAMD64,
 			ImageHashArm64: multiImage.DigestARM64,
@@ -273,18 +304,27 @@ func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*
 		}
 	}
 	if amd64Image != nil {
-		versions[baseTag+extractSuffix(amd64Image.Tag)] = &vsAPI.Version{
+		versions[baseTag+getArchSuffix(amd64Image.Tag)] = &vsAPI.Version{
 			ImagePath: amd64Image.FullName(),
 			ImageHash: amd64Image.DigestAMD64,
 		}
 	}
 	// Include arm64 if multi image is not specified
 	if multiImage == nil && arm64Image != nil {
-		versions[baseTag+extractSuffix(arm64Image.Tag)] = &vsAPI.Version{
+		versions[baseTag+getArchSuffix(arm64Image.Tag)] = &vsAPI.Version{
 			ImagePath:      arm64Image.FullName(),
 			ImageHashArm64: arm64Image.DigestARM64,
 		}
 	}
 
 	return versions, nil
+}
+
+func getArchSuffix(tag string) string {
+	for _, suffix := range archSuffixes {
+		if strings.HasSuffix(tag, suffix) {
+			return suffix
+		}
+	}
+	return ""
 }
