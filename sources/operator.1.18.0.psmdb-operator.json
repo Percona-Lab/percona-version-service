@@ -93,9 +93,9 @@
           }
         },
         "backup": {
-          "2.6.0": {
-            "image_path": "percona/percona-backup-mongodb:2.6.0",
-            "image_hash": "03fd15663c3ea174fe039d40a067dbd5b2dc3c62948747e177c9a01bbb7810d3",
+          "2.7.0": {
+            "image_path": "percona/percona-backup-mongodb:2.7.0",
+            "image_hash": "4e29486419f06be69e5ce15490ff46b68cf44958c9ca716fa1eaba17cf32701b",
             "status": "recommended",
             "critical": false
           }
