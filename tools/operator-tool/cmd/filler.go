@@ -24,8 +24,9 @@ var archSuffixes = []string{
 // VersionMapFiller is a helper type for creating a map[string]*vsAPI.Version
 // using information retrieved from Docker Hub.
 type VersionMapFiller struct {
-	RegistryClient *registry.RegistryClient
-	errs           []error
+	RegistryClient      *registry.RegistryClient
+	errs                []error
+	includeArchSuffixes bool
 }
 
 func (f *VersionMapFiller) addErr(err error) {
@@ -96,7 +97,7 @@ func (f *VersionMapFiller) Normal(image string, versions []string, addVersionsFr
 	if addVersionsFromRegistry {
 		versions = f.addVersionsFromRegistry(image, versions)
 	}
-	return f.exec(getVersionMap(f.RegistryClient, image, versions))
+	return f.exec(getVersionMap(f.RegistryClient, image, versions, f.includeArchSuffixes))
 }
 
 // Regex returns a map[string]*Version for the specified image by filtering tags
@@ -156,11 +157,14 @@ func getVersionMapRegex(rc *registry.RegistryClient, image string, regex string,
 	return m, nil
 }
 
-func getVersionMap(rc *registry.RegistryClient, image string, versions []string) (map[string]*vsAPI.Version, error) {
+func getVersionMap(rc *registry.RegistryClient, image string, versions []string, includeArchSuffixes bool) (map[string]*vsAPI.Version, error) {
 	m := make(map[string]*vsAPI.Version)
 	for _, v := range versions {
 		images, err := rc.GetImages(image, func(tag string) bool {
-			allowedSuffixes := append(archSuffixes, "")
+			allowedSuffixes := []string{""}
+			if includeArchSuffixes {
+				allowedSuffixes = append(allowedSuffixes, archSuffixes...)
+			}
 			for _, s := range allowedSuffixes {
 				tagWithoutSuffix := tag
 				if s != "" {

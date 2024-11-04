@@ -12,11 +12,13 @@ Build it using `make init`.
 $ ./bin/operator-tool --help
 Usage of ./bin/operator-tool:
   -file string
-        Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file.
+        Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file
+  -include-arch-images
+        Include images with "-multi", "-arm64", "-aarch64" suffixes in the output file
   -operator string
         Operator name. Available values: [psmdb pxc ps pg]
   -patch string
-        Provide a path to a patch file to add additional images. Must be used together with the --file option.
+        Provide a path to a patch file to add additional images. Must be used together with the --file option
   -verbose
         Show logs
   -version string

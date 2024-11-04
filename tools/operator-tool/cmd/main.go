@@ -31,11 +31,12 @@ var validOperatorNames = []string{
 }
 
 var (
-	operatorName = flag.String("operator", "", fmt.Sprintf("Operator name. Available values: %v", validOperatorNames))
-	version      = flag.String("version", "", "Operator version")
-	filePath     = flag.String("file", "", "Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file.")
-	patch        = flag.String("patch", "", "Provide a path to a patch file to add additional images. Must be used together with the --file option.")
-	verbose      = flag.Bool("verbose", false, "Show logs")
+	operatorName       = flag.String("operator", "", fmt.Sprintf("Operator name. Available values: %v", validOperatorNames))
+	version            = flag.String("version", "", "Operator version")
+	filePath           = flag.String("file", "", "Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file")
+	patch              = flag.String("patch", "", "Provide a path to a patch file to add additional images. Must be used together with the --file option")
+	verbose            = flag.Bool("verbose", false, "Show logs")
+	includeMultiImages = flag.Bool("include-arch-images", false, `Include images with "-multi", "-arm64", "-aarch64" suffixes in the output file`)
 )
 
 func main() {
@@ -66,7 +67,7 @@ func main() {
 			log.SetOutput(io.Discard)
 		}
 
-		if err := printSourceFile(*operatorName, *version, *filePath, *patch); err != nil {
+		if err := printSourceFile(*operatorName, *version, *filePath, *patch, *includeMultiImages); err != nil {
 			log.SetOutput(os.Stderr)
 			log.Fatalln("ERROR: failed to generate source file:", err.Error())
 		}
@@ -75,14 +76,14 @@ func main() {
 	}
 }
 
-func printSourceFile(operatorName, version, file, patchFile string) error {
+func printSourceFile(operatorName, version, file, patchFile string, includeArchSuffixes bool) error {
 	var productResponse *vsAPI.ProductResponse
 	var err error
 
 	registryClient := registry.NewClient()
 
 	if file == "" || patchFile == "" {
-		productResponse, err = getProductResponse(registryClient, operatorName, version)
+		productResponse, err = getProductResponse(registryClient, operatorName, version, includeArchSuffixes)
 		if err != nil {
 			return fmt.Errorf("failed to get product response: %w", err)
 		}
@@ -109,12 +110,13 @@ func printSourceFile(operatorName, version, file, patchFile string) error {
 	return nil
 }
 
-func getProductResponse(rc *registry.RegistryClient, operatorName, version string) (*vsAPI.ProductResponse, error) {
+func getProductResponse(rc *registry.RegistryClient, operatorName, version string, includeArchSuffixes bool) (*vsAPI.ProductResponse, error) {
 	var versionMatrix *vsAPI.VersionMatrix
 	var err error
 
 	f := &VersionMapFiller{
-		RegistryClient: rc,
+		RegistryClient:      rc,
+		includeArchSuffixes: includeArchSuffixes,
 	}
 	switch operatorName {
 	case operatorNamePG:
