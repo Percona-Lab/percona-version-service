@@ -87,7 +87,7 @@
         "pmm": {
           "2.43.2": {
             "image_path": "percona/pmm-client:2.43.2",
-            "image_hash": "c927c9ff7113132aaf153799bc5cded3ad924040d16cb010a891a76c03deeecf",
+            "image_hash": "e381f607a48ce6dccf24e732067323dce751115228f1f377936b9ed2bf31942d",
             "status": "recommended",
             "critical": false
           }
@@ -103,8 +103,8 @@
         "operator": {
           "1.18.0": {
             "image_path": "percona/percona-server-mongodb-operator:1.18.0",
-            "image_hash": "4dfe04e8e874cb7bd331aa86539d67e6e2746f87165047db729ffea3086ef7c7",
-            "image_hash_arm64": "c0ad41af83e571be5a51d71ae846cc53ddcabba97eb1569475b18a96913fc544",
+            "image_hash": "3a01029b3103c8234a95ebb02bdf1bbab2fea7a29a47016c8b7aa5baa84f9d89",
+            "image_hash_arm64": "4acf943c08fe799d89377eb046be6e8b23ef22479a91cfe6924c09f377dac7ea",
             "status": "recommended",
             "critical": false
           }
