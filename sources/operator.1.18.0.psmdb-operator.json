@@ -25,8 +25,9 @@
             "critical": false
           },
           "6.0.18-15": {
-            "image_path": "percona/percona-server-mongodb:6.0.18-15",
+            "image_path": "percona/percona-server-mongodb:6.0.18-15-multi",
             "image_hash": "d197ce16ab0eed6df25e632b92dea5ce448e549e02028f39b78f5730c2ffef36",
+            "image_hash_arm64": "7fd1d8f74f71dea6ad423e8e202a0617bdd1e8783f2b5cb071b5281685ce0adf",
             "status": "recommended",
             "critical": false
           },
@@ -55,8 +56,9 @@
             "critical": false
           },
           "5.0.29-25": {
-            "image_path": "percona/percona-server-mongodb:5.0.29-25",
+            "image_path": "percona/percona-server-mongodb:5.0.29-25-multi",
             "image_hash": "732eb60f2d3750aaf654ada7f52d2869928be885f6b7012666d6777f85411b74",
+            "image_hash_arm64": "sha256:4fef96a66df35e0ad3c28003970ef3b7fb5ebbcbb61c23172dc3bc8c77cc13a3",
             "status": "recommended",
             "critical": false
           },
