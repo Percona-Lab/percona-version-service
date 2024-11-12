@@ -31,7 +31,7 @@ var (
 	//go:embed third_party/OpenAPI
 	openAPI embed.FS
 
-	//go:embed sources/release-notes
+	//go:embed all:sources/release-notes
 	releaseNoteSources embed.FS
 )
 
