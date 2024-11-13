@@ -828,7 +828,7 @@ type Version struct {
 	ImagePath      string `protobuf:"bytes,1,opt,name=image_path,json=imagePath,proto3" json:"image_path,omitempty"`
 	ImageHash      string `protobuf:"bytes,2,opt,name=image_hash,json=imageHash,proto3" json:"image_hash,omitempty"`
 	ImageHashArm64 string `protobuf:"bytes,3,opt,name=image_hash_arm64,json=imageHashArm64,proto3" json:"image_hash_arm64,omitempty"`
-	// release_timestamp is the release time of this image.
+	// image_release_timestamp is the release time of this image.
 	ImageReleaseTimestamp *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=image_release_timestamp,json=imageReleaseTimestamp,proto3" json:"image_release_timestamp,omitempty"`
 	Status                Status                 `protobuf:"varint,4,opt,name=status,proto3,enum=version.Status" json:"status,omitempty"`
 	Critical              bool                   `protobuf:"varint,5,opt,name=critical,proto3" json:"critical,omitempty"`
@@ -1556,7 +1556,7 @@ type GetReleaseNotesResponse struct {
 	// The product name.
 	Product string `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
 	Version string `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	// release_notes is the release note for this version.
+	// release_note is the release note for this version.
 	ReleaseNote string `protobuf:"bytes,3,opt,name=release_note,json=releaseNote,proto3" json:"release_note,omitempty"`
 }
 

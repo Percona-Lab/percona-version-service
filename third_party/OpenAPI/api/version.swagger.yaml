@@ -432,7 +432,7 @@ definitions:
         type: string
       releaseNote:
         type: string
-        description: release_notes is the release note for this version.
+        description: release_note is the release note for this version.
   versionMetadataResponse:
     type: object
     properties:
@@ -508,7 +508,7 @@ definitions:
       imageReleaseTimestamp:
         type: string
         format: date-time
-        description: release_timestamp is the release time of this image.
+        description: image_release_timestamp is the release time of this image.
       status:
         $ref: '#/definitions/versionStatus'
       critical:

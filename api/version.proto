@@ -178,7 +178,7 @@ message Version {
   string image_hash = 2;
   string image_hash_arm64 = 3;
 
-  // release_timestamp is the release time of this image.
+  // image_release_timestamp is the release time of this image.
   google.protobuf.Timestamp image_release_timestamp = 6;
 
   Status status = 4;
@@ -261,6 +261,6 @@ message GetReleaseNotesResponse {
   // The product name.
   string product = 1;
   string version = 2;
-  // release_notes is the release note for this version.
+  // release_note is the release note for this version.
   string release_note = 3;
 }
