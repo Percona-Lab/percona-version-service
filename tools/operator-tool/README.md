@@ -11,6 +11,8 @@ Build it using `make init`.
 ```sh
 $ ./bin/operator-tool --help
 Usage of ./bin/operator-tool:
+  -cap int
+        Sets a limit on the number of versions allowed for each major version of a product
   -file string
         Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file
   -include-arch-images

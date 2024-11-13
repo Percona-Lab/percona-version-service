@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"slices"
 	"strings"
 
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
@@ -210,6 +211,35 @@ func updateMatrixHashes(rc *registry.RegistryClient, matrix *vsAPI.VersionMatrix
 			versionMap[k].ImageHash = image.DigestAMD64
 			versionMap[k].ImageHashArm64 = image.DigestARM64
 		}
+		return nil
+	})
+}
+
+func limitMajorVersions(matrix *vsAPI.VersionMatrix, capacity int) error {
+	if capacity <= 0 {
+		return nil
+	}
+	return iterateOverMatrixFields(matrix, func(fieldName string, fieldValue reflect.Value) error {
+		versionMap := fieldValue.Interface().(map[string]*vsAPI.Version)
+		versionsByMajorVer := make(map[int][]string)
+		for v := range versionMap {
+			majorVer := goversion(v).Segments()[0]
+			versionsByMajorVer[majorVer] = append(versionsByMajorVer[majorVer], v)
+		}
+		for _, versions := range versionsByMajorVer {
+			if len(versions) <= capacity {
+				return nil
+			}
+			slices.SortFunc(versions, func(a, b string) int {
+				return goversion(b).Compare(goversion(a))
+			})
+
+			versionsToDelete := versions[capacity:]
+			for _, v := range versionsToDelete {
+				fieldValue.SetMapIndex(reflect.ValueOf(v), reflect.Value{})
+			}
+		}
+
 		return nil
 	})
 }

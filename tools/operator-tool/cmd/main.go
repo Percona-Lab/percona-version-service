@@ -37,6 +37,7 @@ var (
 	patch              = flag.String("patch", "", "Provide a path to a patch file to add additional images. Must be used together with the --file option")
 	verbose            = flag.Bool("verbose", false, "Show logs")
 	includeMultiImages = flag.Bool("include-arch-images", false, `Include images with "-multi", "-arm64", "-aarch64" suffixes in the output file`)
+	versionCap         = flag.Int("cap", 0, `Sets a limit on the number of versions allowed for each major version of a product`)
 )
 
 func main() {
@@ -67,7 +68,7 @@ func main() {
 			log.SetOutput(io.Discard)
 		}
 
-		if err := printSourceFile(*operatorName, *version, *filePath, *patch, *includeMultiImages); err != nil {
+		if err := printSourceFile(*operatorName, *version, *filePath, *patch, *includeMultiImages, *versionCap); err != nil {
 			log.SetOutput(os.Stderr)
 			log.Fatalln("ERROR: failed to generate source file:", err.Error())
 		}
@@ -76,7 +77,7 @@ func main() {
 	}
 }
 
-func printSourceFile(operatorName, version, file, patchFile string, includeArchSuffixes bool) error {
+func printSourceFile(operatorName, version, file, patchFile string, includeArchSuffixes bool, capacity int) error {
 	var productResponse *vsAPI.ProductResponse
 	var err error
 
@@ -99,7 +100,12 @@ func printSourceFile(operatorName, version, file, patchFile string, includeArchS
 		}
 	}
 
-	updateMatrixStatuses(productResponse.Versions[0].Matrix)
+	if err := updateMatrixStatuses(productResponse.Versions[0].Matrix); err != nil {
+		return fmt.Errorf("failed to update matrix statuses: %w", err)
+	}
+	if err := limitMajorVersions(productResponse.Versions[0].Matrix, capacity); err != nil {
+		return fmt.Errorf("failed to delete versions exceeding capacity: %w", err)
+	}
 
 	content, err := marshal(productResponse)
 	if err != nil {
