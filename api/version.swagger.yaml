@@ -172,6 +172,18 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: roleManagementEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: mcsEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: volumeExpansionEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -287,6 +299,18 @@ paths:
           required: false
           type: string
         - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: roleManagementEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: mcsEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: volumeExpansionEnabled
           in: query
           required: false
           type: boolean
@@ -409,6 +433,18 @@ paths:
           required: false
           type: string
         - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: roleManagementEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: mcsEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: volumeExpansionEnabled
           in: query
           required: false
           type: boolean

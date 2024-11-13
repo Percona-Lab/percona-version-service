@@ -105,6 +105,9 @@ message ApplyRequest {
   bool physical_backup_scheduled = 24;
   string extensions = 25;
   bool user_management_enabled = 26;
+  bool role_management_enabled = 27;
+  bool mcs_enabled = 28;
+  bool volume_expansion_enabled = 29;
 }
 
 message OperatorRequest {
@@ -133,6 +136,9 @@ message OperatorRequest {
   bool physical_backup_scheduled = 24;
   string extensions = 25;
   bool user_management_enabled = 26;
+  bool role_management_enabled = 27;
+  bool mcs_enabled = 28;
+  bool volume_expansion_enabled = 29;
 }
 
 message ProductRequest {
@@ -160,6 +166,9 @@ message ProductRequest {
   bool physical_backup_scheduled = 24;
   string extensions = 25;
   bool user_management_enabled = 26;
+  bool role_management_enabled = 27;
+  bool mcs_enabled = 28;
+  bool volume_expansion_enabled = 29;
 }
 
 message MetadataRequest {
