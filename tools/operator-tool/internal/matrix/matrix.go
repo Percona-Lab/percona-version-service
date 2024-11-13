@@ -1,12 +1,13 @@
-package main
+package matrix
 
 import (
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 
+	"operator-tool/internal/filler"
 	productsapi "operator-tool/pkg/products-api"
 )
 
-func pgVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix, error) {
+func PG(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
 	pgVersions, err := productsapi.GetProductVersions("", "postgresql-distribution-16", "postgresql-distribution-15", "postgresql-distribution-14", "postgresql-distribution-13", "postgresql-distribution-12")
 	if err != nil {
 		return nil, err
@@ -26,7 +27,7 @@ func pgVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix,
 	return matrix, nil
 }
 
-func psVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix, error) {
+func PS(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
 	psVersions, err := productsapi.GetProductVersions("Percona-Server-", "Percona-Server-8.0")
 	if err != nil {
 		return nil, err
@@ -49,7 +50,7 @@ func psVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix,
 	return matrix, nil
 }
 
-func psmdbVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix, error) {
+func PSMDB(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
 	mongoVersions, err := productsapi.GetProductVersions("percona-server-mongodb-", "percona-server-mongodb-7.0", "percona-server-mongodb-6.0", "percona-server-mongodb-5.0")
 	if err != nil {
 		return nil, err
@@ -69,7 +70,7 @@ func psmdbVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatr
 	return matrix, nil
 }
 
-func pxcVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix, error) {
+func PXC(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
 	pxcVersions, err := productsapi.GetProductVersions("Percona-XtraDB-Cluster-", "Percona-XtraDB-Cluster-80", "Percona-XtraDB-Cluster-57")
 	if err != nil {
 		return nil, err

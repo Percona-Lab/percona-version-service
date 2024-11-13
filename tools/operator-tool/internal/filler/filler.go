@@ -1,4 +1,4 @@
-package main
+package filler
 
 import (
 	"errors"
@@ -11,6 +11,7 @@ import (
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 	gover "github.com/hashicorp/go-version"
 
+	"operator-tool/internal/util"
 	"operator-tool/pkg/registry"
 )
 
@@ -21,19 +22,20 @@ var archSuffixes = []string{
 	"-amd64",
 }
 
-// VersionMapFiller is a helper type for creating a map[string]*vsAPI.Version
+// VersionFiller is a helper type for creating a map[string]*vsAPI.Version
 // using information retrieved from Docker Hub.
-type VersionMapFiller struct {
+type VersionFiller struct {
 	RegistryClient      *registry.RegistryClient
-	errs                []error
-	includeArchSuffixes bool
+	IncludeArchSuffixes bool
+
+	errs []error
 }
 
-func (f *VersionMapFiller) addErr(err error) {
+func (f *VersionFiller) addErr(err error) {
 	f.errs = append(f.errs, err)
 }
 
-func (f *VersionMapFiller) exec(vm map[string]*vsAPI.Version, err error) map[string]*vsAPI.Version {
+func (f *VersionFiller) exec(vm map[string]*vsAPI.Version, err error) map[string]*vsAPI.Version {
 	if err != nil {
 		f.addErr(err)
 		return nil
@@ -45,12 +47,12 @@ func (f *VersionMapFiller) exec(vm map[string]*vsAPI.Version, err error) map[str
 // and appends any missing tags that match the MAJOR.MINOR.PATCH version format to the returned versions slice.
 //
 // Tags with a "-debug" suffix are excluded.
-func (f *VersionMapFiller) addVersionsFromRegistry(image string, versions []string) []string {
+func (f *VersionFiller) addVersionsFromRegistry(image string, versions []string) []string {
 	wantedVerisons := make(map[string]struct{}, len(versions))
 	coreVersions := make(map[string]struct{})
 	for _, v := range versions {
 		wantedVerisons[v] = struct{}{}
-		coreVersions[goversion(v).Core().String()] = struct{}{}
+		coreVersions[util.Goversion(v).Core().String()] = struct{}{}
 	}
 
 	tags, err := f.RegistryClient.GetTags(image)
@@ -78,7 +80,7 @@ func (f *VersionMapFiller) addVersionsFromRegistry(image string, versions []stri
 		if _, err := gover.NewVersion(tag); err != nil {
 			continue
 		}
-		if _, ok := coreVersions[goversion(tag).Core().String()]; !ok {
+		if _, ok := coreVersions[util.Goversion(tag).Core().String()]; !ok {
 			continue
 		}
 		if _, ok := wantedVerisons[tag]; ok {
@@ -94,14 +96,14 @@ func (f *VersionMapFiller) addVersionsFromRegistry(image string, versions []stri
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
 // Prerelease versions are preferred for each core version when available. See preferPrereleaseVersionsFilter function.
-func (f *VersionMapFiller) Normal(image string, versions []string, addVersionsFromRegistry bool) map[string]*vsAPI.Version {
+func (f *VersionFiller) Normal(image string, versions []string, addVersionsFromRegistry bool) map[string]*vsAPI.Version {
 	if addVersionsFromRegistry {
 		versions = f.addVersionsFromRegistry(image, versions)
 	}
 
 	versions = preferPrereleaseVersionsFilter(versions)
 
-	return f.exec(getVersionMap(f.RegistryClient, image, versions, f.includeArchSuffixes))
+	return f.exec(getVersionMap(f.RegistryClient, image, versions, f.IncludeArchSuffixes))
 }
 
 // preferPrereleaseVersionsFilter filters a slice of version strings to prioritize prerelease versions
@@ -115,7 +117,7 @@ func preferPrereleaseVersionsFilter(versions []string) []string {
 
 	// Group versions by core version
 	for _, v := range versions {
-		coreVer := goversion(v).Core().String()
+		coreVer := util.Goversion(v).Core().String()
 		verMap[coreVer] = append(verMap[coreVer], v)
 	}
 
@@ -125,7 +127,7 @@ func preferPrereleaseVersionsFilter(versions []string) []string {
 
 		// Get prerelease versions
 		for _, version := range versionSlice {
-			if goversion(version).Prerelease() != "" {
+			if util.Goversion(version).Prerelease() != "" {
 				prereleaseVersions = append(prereleaseVersions, version)
 			}
 		}
@@ -149,18 +151,18 @@ func preferPrereleaseVersionsFilter(versions []string) []string {
 // while "1.3.1-logcollector", "1.2.1-some-string", and "1.2.1" will not be included.
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
-func (f *VersionMapFiller) Regex(image string, regex string, versions []string) map[string]*vsAPI.Version {
+func (f *VersionFiller) Regex(image string, regex string, versions []string) map[string]*vsAPI.Version {
 	return f.exec(getVersionMapRegex(f.RegistryClient, image, regex, versions))
 }
 
 // Latest returns a map[string]*Version with latest version tag of the specified image.
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
-func (f *VersionMapFiller) Latest(image string) map[string]*vsAPI.Version {
+func (f *VersionFiller) Latest(image string) map[string]*vsAPI.Version {
 	return f.exec(getVersionMapLatestVer(f.RegistryClient, image))
 }
 
-func (f *VersionMapFiller) Error() error {
+func (f *VersionFiller) Error() error {
 	return errors.Join(f.errs...)
 }
 
@@ -268,7 +270,7 @@ func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*
 	baseTag = trimArchSuffix(baseTag)
 
 	slices.SortFunc(images, func(a, b registry.Image) int {
-		return goversion(b.Tag).Compare(goversion(a.Tag))
+		return util.Goversion(b.Tag).Compare(util.Goversion(a.Tag))
 	})
 
 	var multiImage, amd64Image, arm64Image *registry.Image

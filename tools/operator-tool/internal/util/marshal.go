@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"encoding/json"
@@ -10,11 +10,11 @@ import (
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 )
 
-// marshal marshals ProductResponse to JSON, ensuring the "critical" field is always included,
+// Marshal marshals ProductResponse to JSON, ensuring the "critical" field is always included,
 // without requiring modifications to the `versionpb/api` package or creating custom types that
 // implement the json.Marshaler interface.
 // Use protojson.Marshal instead if omitting the "critical" field is acceptable.
-func marshal(product *vsAPI.ProductResponse) ([]byte, error) {
+func Marshal(product *vsAPI.ProductResponse) ([]byte, error) {
 	m, err := productToMap(product)
 	if err != nil {
 		return nil, fmt.Errorf("json conversion: %w", err)

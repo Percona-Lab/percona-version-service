@@ -11,6 +11,9 @@ import (
 
 	vsAPI "github.com/Percona-Lab/percona-version-service/versionpb/api"
 
+	"operator-tool/internal/filler"
+	"operator-tool/internal/matrix"
+	"operator-tool/internal/util"
 	"operator-tool/pkg/registry"
 )
 
@@ -48,7 +51,7 @@ func main() {
 	}
 
 	if *filePath != "" {
-		product, err := readBaseFile(*filePath)
+		product, err := util.ReadBaseFile(*filePath)
 		if err != nil {
 			log.Fatalln("ERROR: failed to read base file:", err.Error())
 		}
@@ -107,7 +110,7 @@ func printSourceFile(operatorName, version, file, patchFile string, includeArchS
 		return fmt.Errorf("failed to delete versions exceeding capacity: %w", err)
 	}
 
-	content, err := marshal(productResponse)
+	content, err := util.Marshal(productResponse)
 	if err != nil {
 		return fmt.Errorf("failed to marshal product response: %w", err)
 	}
@@ -120,19 +123,19 @@ func getProductResponse(rc *registry.RegistryClient, operatorName, version strin
 	var versionMatrix *vsAPI.VersionMatrix
 	var err error
 
-	f := &VersionMapFiller{
+	f := &filler.VersionFiller{
 		RegistryClient:      rc,
-		includeArchSuffixes: includeArchSuffixes,
+		IncludeArchSuffixes: includeArchSuffixes,
 	}
 	switch operatorName {
 	case operatorNamePG:
-		versionMatrix, err = pgVersionMatrix(f, version)
+		versionMatrix, err = matrix.PG(f, version)
 	case operatorNamePS:
-		versionMatrix, err = psVersionMatrix(f, version)
+		versionMatrix, err = matrix.PS(f, version)
 	case operatorNamePSMDB:
-		versionMatrix, err = psmdbVersionMatrix(f, version)
+		versionMatrix, err = matrix.PSMDB(f, version)
 	case operatorNamePXC:
-		versionMatrix, err = pxcVersionMatrix(f, version)
+		versionMatrix, err = matrix.PXC(f, version)
 	default:
 		panic("problems with validation. unknown operator name " + operatorName)
 	}
