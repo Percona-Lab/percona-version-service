@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 	"github.com/bufbuild/protoyaml-go"
 	"google.golang.org/protobuf/encoding/protojson"
 )
