@@ -265,6 +265,8 @@ func getVersionMapLatestVer(rc *registry.RegistryClient, imageName string) (map[
 //   - If no image with both amd64 and arm64 builds is found, separate images for amd64 and arm64
 //     are added individually.
 func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*vsAPI.Version, error) {
+	baseTag = trimArchSuffix(baseTag)
+
 	slices.SortFunc(images, func(a, b registry.Image) int {
 		return goversion(b.Tag).Compare(goversion(a.Tag))
 	})
@@ -318,6 +320,10 @@ func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*
 	}
 
 	return versions, nil
+}
+
+func trimArchSuffix(tag string) string {
+	return strings.TrimSuffix(tag, getArchSuffix(tag))
 }
 
 func getArchSuffix(tag string) string {

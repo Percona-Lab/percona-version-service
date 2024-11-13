@@ -36,7 +36,7 @@ func psVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatrix,
 		Mysql:        f.Normal("percona/percona-server", psVersions, true),
 		Pmm:          f.Latest("percona/pmm-client"),
 		Router:       f.Normal("percona/percona-mysql-router", psVersions, true),
-		Backup:       f.Normal("percona/percona-xtrabackup", psVersions, true),
+		Backup:       f.Latest("percona/percona-xtrabackup"),
 		Operator:     f.Normal("percona/percona-server-mysql-operator", []string{version}, false),
 		Haproxy:      f.Latest("percona/haproxy"),
 		Orchestrator: f.Latest("percona/percona-orchestrator"),
@@ -55,15 +55,10 @@ func psmdbVersionMatrix(f *VersionMapFiller, version string) (*vsAPI.VersionMatr
 		return nil, err
 	}
 
-	pbmVersions, err := productsapi.GetProductVersions("percona-backup-mongodb-", "percona-backup-mongodb")
-	if err != nil {
-		return nil, err
-	}
-
 	matrix := &vsAPI.VersionMatrix{
 		Mongod:   f.Normal("percona/percona-server-mongodb", mongoVersions, true),
 		Pmm:      f.Latest("percona/pmm-client"),
-		Backup:   f.Normal("percona/percona-backup-mongodb", pbmVersions, true),
+		Backup:   f.Latest("percona/percona-backup-mongodb"),
 		Operator: f.Normal("percona/percona-server-mongodb-operator", []string{version}, false),
 	}
 
