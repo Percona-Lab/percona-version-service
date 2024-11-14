@@ -73,7 +73,7 @@ service VersionService {
       get: "/metadata/v2/{product}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "v2 Metadata for a product"
+      summary: "v2 metadata for a product"
       description: "Return metadata information based with additional image information (v2) for a product"
     };
   }
@@ -268,7 +268,7 @@ message MetadataVersion {
   map<string, string> supported = 3;
 }
 
-// MetadataVersion represents metadata for a given version.
+// MetadataV2Version represents metadata for a given version with additional fields.
 message MetadataV2Version {
   string version = 1;
   // Recommended is the recommended version for a given component.

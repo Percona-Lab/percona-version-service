@@ -12,11 +12,11 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
-type metadataVersion string
+type metadataVersionDir string
 
 const (
-	metadataV1 metadataVersion = "v1"
-	metadataV2 metadataVersion = "v2"
+	metadataV1 metadataVersionDir = "v1"
+	metadataV2 metadataVersionDir = "v2"
 )
 
 type Metadata struct {
@@ -55,7 +55,7 @@ func (m *Metadata) readAll() error {
 	m.v1Data = make(map[string]*pbVersion.MetadataResponse)
 	m.v2Data = make(map[string]*pbVersion.MetadataV2Response)
 
-	dirs := []metadataVersion{metadataV1, metadataV2}
+	dirs := []metadataVersionDir{metadataV1, metadataV2}
 	for _, dir := range dirs {
 		files, err := fs.ReadDir(m.fs, string(dir))
 		if err != nil {
@@ -75,8 +75,7 @@ func (m *Metadata) readAll() error {
 			}
 			if v1Data != nil {
 				m.v1Data[f.Name()] = &pbVersion.MetadataResponse{Versions: v1Data}
-			}
-			if v2Data != nil {
+			} else if v2Data != nil {
 				m.v2Data[f.Name()] = &pbVersion.MetadataV2Response{Versions: v2Data}
 			}
 		}
@@ -85,7 +84,7 @@ func (m *Metadata) readAll() error {
 	return nil
 }
 
-func (m *Metadata) getAllMetadataFromFiles(product string, version metadataVersion) ([]*pbVersion.MetadataVersion, []*pbVersion.MetadataV2Version, error) {
+func (m *Metadata) getAllMetadataFromFiles(product string, version metadataVersionDir) ([]*pbVersion.MetadataVersion, []*pbVersion.MetadataV2Version, error) {
 	if !filepath.IsLocal(product) {
 		return nil, nil, errors.New("product name is invalid")
 	}

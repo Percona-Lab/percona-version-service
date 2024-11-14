@@ -35,7 +35,7 @@ paths:
         - VersionService
   /metadata/v2/{product}:
     get:
-      summary: v2 Metadata for a product
+      summary: v2 metadata for a product
       description: Return metadata information based with additional image information (v2) for a product
       operationId: VersionService_MetadataV2
       responses:
@@ -500,7 +500,7 @@ definitions:
       imageInfo:
         $ref: '#/definitions/versionVersionV2'
         description: ImageInfo holds information about the docker image for this version.
-    description: MetadataVersion represents metadata for a given version.
+    description: MetadataV2Version represents metadata for a given version with additional fields.
   versionMetadataVersion:
     type: object
     properties:
