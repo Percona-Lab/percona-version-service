@@ -67,6 +67,17 @@ service VersionService {
     };
   }
 
+  // Metadata v2 provides metadata information about products. It is an extension of Metadata with new fields.
+  rpc MetadataV2(MetadataRequest) returns (MetadataV2Response) {
+    option (google.api.http) = {
+      get: "/metadata/v2/{product}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Metadata for a product"
+      description: "Return metadata information for a product"
+    };
+  }
+
   rpc GetReleaseNotes(GetReleaseNotesRequest) returns (GetReleaseNotesResponse) {
     option (google.api.http) = {
       get: "/release-notes/v1/{product}/{version}"
@@ -181,6 +192,16 @@ message Version {
   string image_hash = 2;
   string image_hash_arm64 = 3;
 
+  Status status = 4;
+  bool critical = 5;
+}
+
+// Version represents product version information.
+message VersionV2 {
+  string image_path = 1;
+  string image_hash = 2;
+  string image_hash_arm64 = 3;
+
   // release_timestamp is the release time of this image.
   google.protobuf.Timestamp image_release_timestamp = 6;
 
@@ -245,12 +266,25 @@ message MetadataVersion {
   map<string, string> recommended = 2;
   // Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
   map<string, string> supported = 3;
+}
+
+// MetadataVersion represents metadata for a given version.
+message MetadataV2Version {
+  string version = 1;
+  // Recommended is the recommended version for a given component.
+  map<string, string> recommended = 2;
+  // Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
+  map<string, string> supported = 3;
   // ImageInfo holds information about the docker image for this version.
-  Version image_info = 4;
+  VersionV2 image_info = 4;
 }
 
 message MetadataResponse {
   repeated MetadataVersion versions = 1;
+}
+
+message MetadataV2Response {
+  repeated MetadataV2Version versions = 1;
 }
 
 message GetReleaseNotesRequest {

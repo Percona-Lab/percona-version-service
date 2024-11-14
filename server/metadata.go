@@ -12,9 +12,17 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
+type metadataVersion string
+
+const (
+	metadataV1 metadataVersion = "v1"
+	metadataV2 metadataVersion = "v2"
+)
+
 type Metadata struct {
-	data map[string]*pbVersion.MetadataResponse
-	fs   fs.FS
+	v1Data map[string]*pbVersion.MetadataResponse
+	v2Data map[string]*pbVersion.MetadataV2Response
+	fs     fs.FS
 }
 
 func NewMetadata(fs fs.FS) (*Metadata, error) {
@@ -26,7 +34,7 @@ func NewMetadata(fs fs.FS) (*Metadata, error) {
 }
 
 func (m *Metadata) Product(product string) (*pbVersion.MetadataResponse, error) {
-	res, ok := m.data[product]
+	res, ok := m.v1Data[product]
 	if !ok {
 		return &pbVersion.MetadataResponse{}, nil
 	}
@@ -34,62 +42,116 @@ func (m *Metadata) Product(product string) (*pbVersion.MetadataResponse, error) 
 	return res, nil
 }
 
-func (m *Metadata) readAll() error {
-	m.data = make(map[string]*pbVersion.MetadataResponse)
-
-	files, err := fs.ReadDir(m.fs, ".")
-	if err != nil {
-		if errors.Is(err, os.ErrNotExist) {
-			return nil
-		}
-		return err
+func (m *Metadata) ProductV2(product string) (*pbVersion.MetadataV2Response, error) {
+	res, ok := m.v2Data[product]
+	if !ok {
+		return &pbVersion.MetadataV2Response{}, nil
 	}
 
-	for _, f := range files {
-		if !f.IsDir() {
-			continue
-		}
-		d, err := m.getAllMetadataFromFiles(f.Name())
+	return res, nil
+}
+
+func (m *Metadata) readAll() error {
+	m.v1Data = make(map[string]*pbVersion.MetadataResponse)
+	m.v2Data = make(map[string]*pbVersion.MetadataV2Response)
+
+	dirs := []metadataVersion{metadataV1, metadataV2}
+	for _, dir := range dirs {
+		files, err := fs.ReadDir(m.fs, string(dir))
 		if err != nil {
+			if errors.Is(err, os.ErrNotExist) {
+				return nil
+			}
 			return err
 		}
-		m.data[f.Name()] = &pbVersion.MetadataResponse{Versions: d}
+
+		for _, f := range files {
+			if !f.IsDir() {
+				continue
+			}
+			v1Data, v2Data, err := m.getAllMetadataFromFiles(f.Name(), dir)
+			if err != nil {
+				return err
+			}
+			if v1Data != nil {
+				m.v1Data[f.Name()] = &pbVersion.MetadataResponse{Versions: v1Data}
+			}
+			if v2Data != nil {
+				m.v2Data[f.Name()] = &pbVersion.MetadataV2Response{Versions: v2Data}
+			}
+		}
 	}
 
 	return nil
 }
 
-func (m *Metadata) getAllMetadataFromFiles(product string) ([]*pbVersion.MetadataVersion, error) {
+func (m *Metadata) getAllMetadataFromFiles(product string, version metadataVersion) ([]*pbVersion.MetadataVersion, []*pbVersion.MetadataV2Version, error) {
 	if !filepath.IsLocal(product) {
-		return nil, errors.New("product name is invalid")
+		return nil, nil, errors.New("product name is invalid")
 	}
 
-	dir := filepath.Join(".", product)
+	dir := filepath.Join(".", string(version), product)
 	files, err := fs.ReadDir(m.fs, dir)
 	if err != nil {
-		return nil, errors.Join(err, errors.New("could not read metadata from directory"))
+		return nil, nil, errors.Join(err, errors.New("could not read metadata from directory"))
 	}
 
-	ret := make([]*pbVersion.MetadataVersion, 0, len(files))
-	for _, f := range files {
-		p := filepath.Join(dir, f.Name())
-		c, err := fs.ReadFile(m.fs, p)
-		if err != nil {
-			return nil, errors.Join(err, fmt.Errorf("could not read file %s", p))
-		}
+	if version == metadataV2 {
+		ret := make([]*pbVersion.MetadataV2Version, 0, len(files))
+		for _, f := range files {
+			p := filepath.Join(dir, f.Name())
+			c, err := fs.ReadFile(m.fs, p)
+			if err != nil {
+				return nil, nil, errors.Join(err, fmt.Errorf("could not read file %s", p))
+			}
 
-		metaV, err := m.parseFile(c, filepath.Ext(f.Name()))
-		if err != nil {
-			return nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
+			metaV, err := m.parseV2File(c, filepath.Ext(f.Name()))
+			if err != nil {
+				return nil, nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
+			}
+			ret = append(ret, metaV)
 		}
-		ret = append(ret, metaV)
+		return nil, ret, nil
+	} else {
+		ret := make([]*pbVersion.MetadataVersion, 0, len(files))
+		for _, f := range files {
+			p := filepath.Join(dir, f.Name())
+			c, err := fs.ReadFile(m.fs, p)
+			if err != nil {
+				return nil, nil, errors.Join(err, fmt.Errorf("could not read file %s", p))
+			}
+
+			metaV, err := m.parseFile(c, filepath.Ext(f.Name()))
+			if err != nil {
+				return nil, nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
+			}
+			ret = append(ret, metaV)
+		}
+		return ret, nil, nil
 	}
-
-	return ret, nil
 }
 
 func (m *Metadata) parseFile(c []byte, fileExt string) (*pbVersion.MetadataVersion, error) {
 	meta := &pbVersion.MetadataVersion{}
+	switch fileExt {
+	case ".yaml", ".yml":
+		if err := protoyaml.Unmarshal(c, meta); err != nil {
+			return nil, errors.Join(err, errors.New("could not unmarshal yaml"))
+		}
+
+	case ".json":
+		if err := protojson.Unmarshal(c, meta); err != nil {
+			return nil, errors.Join(err, errors.New("could not unmarshal json"))
+		}
+	default:
+		return nil, fmt.Errorf("extension %s not supported", fileExt)
+	}
+
+	return meta, nil
+}
+
+func (m *Metadata) parseV2File(c []byte, fileExt string) (*pbVersion.MetadataV2Version, error) {
+	meta := &pbVersion.MetadataV2Version{}
 	switch fileExt {
 	case ".yaml", ".yml":
 		if err := protoyaml.Unmarshal(c, meta); err != nil {

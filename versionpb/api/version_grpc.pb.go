@@ -23,6 +23,7 @@ const (
 	VersionService_Operator_FullMethodName        = "/version.VersionService/Operator"
 	VersionService_Product_FullMethodName         = "/version.VersionService/Product"
 	VersionService_Metadata_FullMethodName        = "/version.VersionService/Metadata"
+	VersionService_MetadataV2_FullMethodName      = "/version.VersionService/MetadataV2"
 	VersionService_GetReleaseNotes_FullMethodName = "/version.VersionService/GetReleaseNotes"
 )
 
@@ -40,6 +41,8 @@ type VersionServiceClient interface {
 	Product(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 	// Metadata provides metadata information about products.
 	Metadata(ctx context.Context, in *MetadataRequest, opts ...grpc.CallOption) (*MetadataResponse, error)
+	// Metadata v2 provides metadata information about products. It is an extension of Metadata with new fields.
+	MetadataV2(ctx context.Context, in *MetadataRequest, opts ...grpc.CallOption) (*MetadataV2Response, error)
 	GetReleaseNotes(ctx context.Context, in *GetReleaseNotesRequest, opts ...grpc.CallOption) (*GetReleaseNotesResponse, error)
 }
 
@@ -91,6 +94,16 @@ func (c *versionServiceClient) Metadata(ctx context.Context, in *MetadataRequest
 	return out, nil
 }
 
+func (c *versionServiceClient) MetadataV2(ctx context.Context, in *MetadataRequest, opts ...grpc.CallOption) (*MetadataV2Response, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MetadataV2Response)
+	err := c.cc.Invoke(ctx, VersionService_MetadataV2_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *versionServiceClient) GetReleaseNotes(ctx context.Context, in *GetReleaseNotesRequest, opts ...grpc.CallOption) (*GetReleaseNotesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetReleaseNotesResponse)
@@ -115,6 +128,8 @@ type VersionServiceServer interface {
 	Product(context.Context, *ProductRequest) (*ProductResponse, error)
 	// Metadata provides metadata information about products.
 	Metadata(context.Context, *MetadataRequest) (*MetadataResponse, error)
+	// Metadata v2 provides metadata information about products. It is an extension of Metadata with new fields.
+	MetadataV2(context.Context, *MetadataRequest) (*MetadataV2Response, error)
 	GetReleaseNotes(context.Context, *GetReleaseNotesRequest) (*GetReleaseNotesResponse, error)
 	mustEmbedUnimplementedVersionServiceServer()
 }
@@ -134,6 +149,9 @@ func (UnimplementedVersionServiceServer) Product(context.Context, *ProductReques
 }
 func (UnimplementedVersionServiceServer) Metadata(context.Context, *MetadataRequest) (*MetadataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Metadata not implemented")
+}
+func (UnimplementedVersionServiceServer) MetadataV2(context.Context, *MetadataRequest) (*MetadataV2Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MetadataV2 not implemented")
 }
 func (UnimplementedVersionServiceServer) GetReleaseNotes(context.Context, *GetReleaseNotesRequest) (*GetReleaseNotesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReleaseNotes not implemented")
@@ -223,6 +241,24 @@ func _VersionService_Metadata_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VersionService_MetadataV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MetadataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VersionServiceServer).MetadataV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VersionService_MetadataV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VersionServiceServer).MetadataV2(ctx, req.(*MetadataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VersionService_GetReleaseNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetReleaseNotesRequest)
 	if err := dec(in); err != nil {
@@ -263,6 +299,10 @@ var VersionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Metadata",
 			Handler:    _VersionService_Metadata_Handler,
+		},
+		{
+			MethodName: "MetadataV2",
+			Handler:    _VersionService_MetadataV2_Handler,
 		},
 		{
 			MethodName: "GetReleaseNotes",
