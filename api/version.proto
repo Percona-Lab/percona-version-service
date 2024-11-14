@@ -73,8 +73,8 @@ service VersionService {
       get: "/metadata/v2/{product}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Metadata for a product"
-      description: "Return metadata information for a product"
+      summary: "v2 Metadata for a product"
+      description: "Return metadata information based with additional image information (v2) for a product"
     };
   }
 
