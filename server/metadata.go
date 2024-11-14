@@ -64,11 +64,8 @@ func (m *Metadata) readAll() error {
 		if err != nil {
 			return err
 		}
-		if len(v1Data) > 0 {
-			m.v1Data[f.Name()] = &pbVersion.MetadataResponse{Versions: v1Data}
-		} else if len(v2Data) > 0 {
-			m.v2Data[f.Name()] = &pbVersion.MetadataV2Response{Versions: v2Data}
-		}
+		m.v1Data[f.Name()] = &pbVersion.MetadataResponse{Versions: v1Data}
+		m.v2Data[f.Name()] = &pbVersion.MetadataV2Response{Versions: v2Data}
 	}
 	return nil
 }
@@ -96,14 +93,13 @@ func (m *Metadata) getAllMetadataFromFiles(product string) ([]*pbVersion.Metadat
 		if err != nil {
 			return nil, nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
 		}
+		v2Data = append(v2Data, metaV)
 		if metaV.ImageInfo == nil {
 			v1Data = append(v1Data, &pbVersion.MetadataVersion{
 				Version:     metaV.Version,
 				Recommended: metaV.Recommended,
 				Supported:   metaV.Supported,
 			})
-		} else {
-			v2Data = append(v2Data, metaV)
 		}
 	}
 	return v1Data, v2Data, nil
