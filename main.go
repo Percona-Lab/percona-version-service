@@ -22,7 +22,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/Percona-Lab/percona-version-service/server"
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 )
 
 var (
@@ -30,9 +30,6 @@ var (
 	metaSources embed.FS
 	//go:embed third_party/OpenAPI
 	openAPI embed.FS
-
-	//go:embed all:sources/release-notes
-	releaseNoteSources embed.FS
 )
 
 func getOpenAPIHandler() http.Handler {
@@ -72,16 +69,11 @@ func main() {
 	}
 
 	s := grpc.NewServer(grpcServerLogOpt(logger))
-	metadataSub, err := fs.Sub(metaSources, "sources/metadata")
+	sub, err := fs.Sub(metaSources, "sources/metadata")
 	if err != nil {
-		logger.Fatal("could not create sub directory for sources/metadata", zap.Error(err))
+		logger.Fatal("could not create sub for sources/metadata", zap.Error(err))
 	}
-	releaseNotesSub, err := fs.Sub(releaseNoteSources, "sources/release-notes")
-	if err != nil {
-		logger.Fatal("could not create sub directory for sources/release-notes", zap.Error(err))
-	}
-
-	backend, err := server.New(metadataSub, releaseNotesSub)
+	backend, err := server.New(sub)
 	if err != nil {
 		logger.Fatal("could not create backend", zap.Error(err))
 	}
@@ -125,7 +117,7 @@ func main() {
 	gwServer := &http.Server{
 		Addr: gatewayAddr,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/versions") || strings.HasPrefix(r.URL.Path, "/metadata") || strings.HasPrefix(r.URL.Path, "/release-notes") {
+			if strings.HasPrefix(r.URL.Path, "/versions") || strings.HasPrefix(r.URL.Path, "/metadata") {
 				gwmux.ServeHTTP(w, r)
 				return
 			}

@@ -9,7 +9,7 @@ import (
 	"path"
 	"strings"
 
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/encoding/protojson"
