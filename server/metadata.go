@@ -118,7 +118,10 @@ func (m *Metadata) parseFile(c []byte, fileExt string) (*pbVersion.MetadataV2Ver
 		}
 
 	case ".json":
-		if err := protojson.Unmarshal(c, meta); err != nil {
+		options := protojson.UnmarshalOptions{
+			AllowPartial: true,
+		}
+		if err := options.Unmarshal(c, meta); err != nil {
 			return nil, errors.Join(err, errors.New("could not unmarshal json"))
 		}
 	default:
