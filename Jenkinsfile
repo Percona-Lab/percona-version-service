@@ -27,7 +27,7 @@ pipeline {
                 }
             }
             agent {
-                label 'docker-32gb'
+                label 'docker'
             }
             steps {
                 script {
