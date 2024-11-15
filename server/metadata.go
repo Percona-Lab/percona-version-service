@@ -13,8 +13,9 @@ import (
 )
 
 type Metadata struct {
-	data map[string]*pbVersion.MetadataResponse
-	fs   fs.FS
+	v1Data map[string]*pbVersion.MetadataResponse
+	v2Data map[string]*pbVersion.MetadataV2Response
+	fs     fs.FS
 }
 
 func NewMetadata(fs fs.FS) (*Metadata, error) {
@@ -26,7 +27,7 @@ func NewMetadata(fs fs.FS) (*Metadata, error) {
 }
 
 func (m *Metadata) Product(product string) (*pbVersion.MetadataResponse, error) {
-	res, ok := m.data[product]
+	res, ok := m.v1Data[product]
 	if !ok {
 		return &pbVersion.MetadataResponse{}, nil
 	}
@@ -34,8 +35,18 @@ func (m *Metadata) Product(product string) (*pbVersion.MetadataResponse, error) 
 	return res, nil
 }
 
+func (m *Metadata) ProductV2(product string) (*pbVersion.MetadataV2Response, error) {
+	res, ok := m.v2Data[product]
+	if !ok {
+		return &pbVersion.MetadataV2Response{}, nil
+	}
+
+	return res, nil
+}
+
 func (m *Metadata) readAll() error {
-	m.data = make(map[string]*pbVersion.MetadataResponse)
+	m.v1Data = make(map[string]*pbVersion.MetadataResponse)
+	m.v2Data = make(map[string]*pbVersion.MetadataV2Response)
 
 	files, err := fs.ReadDir(m.fs, ".")
 	if err != nil {
@@ -49,47 +60,51 @@ func (m *Metadata) readAll() error {
 		if !f.IsDir() {
 			continue
 		}
-		d, err := m.getAllMetadataFromFiles(f.Name())
+		v1Data, v2Data, err := m.getAllMetadataFromFiles(f.Name())
 		if err != nil {
 			return err
 		}
-		m.data[f.Name()] = &pbVersion.MetadataResponse{Versions: d}
+		m.v1Data[f.Name()] = &pbVersion.MetadataResponse{Versions: v1Data}
+		m.v2Data[f.Name()] = &pbVersion.MetadataV2Response{Versions: v2Data}
 	}
-
 	return nil
 }
 
-func (m *Metadata) getAllMetadataFromFiles(product string) ([]*pbVersion.MetadataVersion, error) {
+func (m *Metadata) getAllMetadataFromFiles(product string) ([]*pbVersion.MetadataVersion, []*pbVersion.MetadataV2Version, error) {
 	if !filepath.IsLocal(product) {
-		return nil, errors.New("product name is invalid")
+		return nil, nil, errors.New("product name is invalid")
 	}
 
 	dir := filepath.Join(".", product)
 	files, err := fs.ReadDir(m.fs, dir)
 	if err != nil {
-		return nil, errors.Join(err, errors.New("could not read metadata from directory"))
+		return nil, nil, errors.Join(err, errors.New("could not read metadata from directory"))
 	}
-
-	ret := make([]*pbVersion.MetadataVersion, 0, len(files))
+	v1Data := make([]*pbVersion.MetadataVersion, 0, len(files))
+	v2Data := make([]*pbVersion.MetadataV2Version, 0, len(files))
 	for _, f := range files {
 		p := filepath.Join(dir, f.Name())
 		c, err := fs.ReadFile(m.fs, p)
 		if err != nil {
-			return nil, errors.Join(err, fmt.Errorf("could not read file %s", p))
+			return nil, nil, errors.Join(err, fmt.Errorf("could not read file %s", p))
 		}
 
 		metaV, err := m.parseFile(c, filepath.Ext(f.Name()))
 		if err != nil {
-			return nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
+			return nil, nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
 		}
-		ret = append(ret, metaV)
+		v2Data = append(v2Data, metaV)
+		v1Data = append(v1Data, &pbVersion.MetadataVersion{
+			Version:     metaV.Version,
+			Recommended: metaV.Recommended,
+			Supported:   metaV.Supported,
+		})
 	}
-
-	return ret, nil
+	return v1Data, v2Data, nil
 }
 
-func (m *Metadata) parseFile(c []byte, fileExt string) (*pbVersion.MetadataVersion, error) {
-	meta := &pbVersion.MetadataVersion{}
+func (m *Metadata) parseFile(c []byte, fileExt string) (*pbVersion.MetadataV2Version, error) {
+	meta := &pbVersion.MetadataV2Version{}
 	switch fileExt {
 	case ".yaml", ".yml":
 		if err := protoyaml.Unmarshal(c, meta); err != nil {
@@ -97,7 +112,10 @@ func (m *Metadata) parseFile(c []byte, fileExt string) (*pbVersion.MetadataVersi
 		}
 
 	case ".json":
-		if err := protojson.Unmarshal(c, meta); err != nil {
+		options := protojson.UnmarshalOptions{
+			AllowPartial: true,
+		}
+		if err := options.Unmarshal(c, meta); err != nil {
 			return nil, errors.Join(err, errors.New("could not unmarshal json"))
 		}
 	default:
