@@ -36,7 +36,7 @@ paths:
   /metadata/v2/{product}:
     get:
       summary: v2 metadata for a product
-      description: Return metadata information based with additional image information (v2) for a product
+      description: Return metadata information with additional image information for a product
       operationId: VersionService_MetadataV2
       responses:
         "200":
