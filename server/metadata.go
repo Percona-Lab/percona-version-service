@@ -94,13 +94,11 @@ func (m *Metadata) getAllMetadataFromFiles(product string) ([]*pbVersion.Metadat
 			return nil, nil, errors.Join(err, fmt.Errorf("could not parse file %s", f.Name()))
 		}
 		v2Data = append(v2Data, metaV)
-		if metaV.ImageInfo == nil {
-			v1Data = append(v1Data, &pbVersion.MetadataVersion{
-				Version:     metaV.Version,
-				Recommended: metaV.Recommended,
-				Supported:   metaV.Supported,
-			})
-		}
+		v1Data = append(v1Data, &pbVersion.MetadataVersion{
+			Version:     metaV.Version,
+			Recommended: metaV.Recommended,
+			Supported:   metaV.Supported,
+		})
 	}
 	return v1Data, v2Data, nil
 }
