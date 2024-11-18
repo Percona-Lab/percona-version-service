@@ -6,32 +6,26 @@ IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
 
 init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
-	go build -modfile=tools/go.mod -o tools/bin/modvendor github.com/goware/modvendor
+	go build -modfile=tools/go.mod -o bin/protoc-gen-go google.golang.org/protobuf/cmd/protoc-gen-go
+	go build -modfile=tools/go.mod -o bin/protoc-gen-go-grpc google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	go build -modfile=tools/go.mod -o bin/protoc-gen-grpc-gateway github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+	go build -modfile=tools/go.mod -o bin/protoc-gen-openapiv2 github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
 
-	curl -L https://github.com/uber/prototool/releases/download/v1.10.0/prototool-$(shell uname -s)-$(shell uname -m) -o ./bin/prototool
-	chmod +x ./bin/prototool
+	curl -L "https://github.com/bufbuild/buf/releases/download/v1.34.0/buf-$(shell uname -s)-$(shell uname -m)" -o "./bin/buf"
+	chmod +x ./bin/buf
 
-	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.25.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
+	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
 	chmod +x ./bin/swagger
 
 gen:
-	pushd ${CURDIR}/tools; \
-	go mod vendor; \
-	./bin/modvendor -copy="**/*.proto" -v \
-		-include="github.com/grpc-ecosystem/grpc-gateway/v2/third_party/googleapis/google/api,github.com/grpc-ecosystem/grpc-gateway/v2/third_party/googleapis/google/rpc"; \
-	go install \
-		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
-		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
-		github.com/golang/protobuf/protoc-gen-go
+	bin/buf dep update
 
-	./bin/prototool all ./api
+	bin/buf generate
 
 	bin/yq r --prettyPrint third_party/OpenAPI/api/version.swagger.json > third_party/OpenAPI/api/version.swagger.yaml
 	rm third_party/OpenAPI/api/version.swagger.json
 	cp third_party/OpenAPI/api/version.swagger.yaml api/
 
-	mv ./versionpb/github.com/Percona-Lab/percona-version-service/version/* ./versionpb/
-	rm -r ./versionpb/github.com
 
 	rm -rf ./client
 	./bin/swagger generate client -m client/models -f ./api/version.swagger.yaml -t ./
@@ -48,7 +42,7 @@ docker-run-it:
 	docker run -it --rm -p 10000:10000 -p 11000:11000 -e SERVE_HTTP=true ${IMG}
 
 build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o ./bin/app
+	CGO_ENABLED=0 go build -a -o ./bin/app
 
 run: build
 	SERVE_HTTP=true ./bin/app
