@@ -153,6 +153,10 @@ func (b *Backend) Metadata(ctx context.Context, req *pbVersion.MetadataRequest) 
 	return b.metadata.Product(req.Product)
 }
 
+func (b *Backend) MetadataV2(ctx context.Context, req *pbVersion.MetadataRequest) (*pbVersion.MetadataV2Response, error) {
+	return b.metadata.ProductV2(req.Product)
+}
+
 func (b *Backend) GetReleaseNotes(ctx context.Context, req *pbVersion.GetReleaseNotesRequest) (*pbVersion.GetReleaseNotesResponse, error) {
 	return b.releaseNotes.GetReleaseNote(req.Product, req.Version)
 }
