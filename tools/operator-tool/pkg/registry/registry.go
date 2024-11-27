@@ -10,6 +10,8 @@ import (
 	"path"
 	"strconv"
 	"strings"
+
+	"operator-tool/internal/util"
 )
 
 type tagResp struct {
@@ -172,13 +174,16 @@ func NewClient() *RegistryClient {
 	}
 }
 
-func (r *RegistryClient) GetLatestImage(imageName string) (Image, error) {
+func (r *RegistryClient) GetLatestImage(imageName string, includeArchSuffix bool) (Image, error) {
 	resp, err := r.listTags(imageName, 1)
 	if err != nil {
 		return Image{}, fmt.Errorf("failed to get latest image: %w", err)
 	}
 	for _, result := range resp.Results {
 		if result.Name == "latest" {
+			continue
+		}
+		if !includeArchSuffix && util.HasArchSuffix(result.Name) {
 			continue
 		}
 		if strings.Count(result.Name, ".") == 2 {

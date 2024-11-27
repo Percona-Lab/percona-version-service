@@ -15,13 +15,6 @@ import (
 	"operator-tool/pkg/registry"
 )
 
-var archSuffixes = []string{
-	"-arm64",
-	"-aarch64",
-	"-multi",
-	"-amd64",
-}
-
 // VersionFiller is a helper type for creating a map[string]*vsAPI.Version
 // using information retrieved from Docker Hub.
 type VersionFiller struct {
@@ -62,7 +55,7 @@ func (f *VersionFiller) addVersionsFromRegistry(image string, versions []string)
 	}
 
 	// getVersionMap will search for images with these suffixes. We don't need them in this function
-	ignoredSuffixes := append(archSuffixes, "-debug")
+	ignoredSuffixes := append(util.GetArchSuffixes(), "-debug")
 
 	hasIgnoredSuffix := func(tag string) bool {
 		for _, s := range ignoredSuffixes {
@@ -159,7 +152,7 @@ func (f *VersionFiller) Regex(image string, regex string, versions []string) map
 //
 // The map may include image tags with the following suffixes: "", "-amd64", "-arm64", and "-multi".
 func (f *VersionFiller) Latest(image string) map[string]*vsAPI.Version {
-	return f.exec(getVersionMapLatestVer(f.RegistryClient, image))
+	return f.exec(getVersionMapLatestVer(f.RegistryClient, image, f.IncludeArchSuffixes))
 }
 
 func (f *VersionFiller) Error() error {
@@ -205,7 +198,7 @@ func getVersionMap(rc *registry.RegistryClient, image string, versions []string,
 		images, err := rc.GetImages(image, func(tag string) bool {
 			allowedSuffixes := []string{""}
 			if includeArchSuffixes {
-				allowedSuffixes = append(allowedSuffixes, archSuffixes...)
+				allowedSuffixes = append(allowedSuffixes, util.GetArchSuffixes()...)
 			}
 			for _, s := range allowedSuffixes {
 				tagWithoutSuffix := tag
@@ -243,8 +236,8 @@ func getVersionMap(rc *registry.RegistryClient, image string, versions []string,
 	return m, nil
 }
 
-func getVersionMapLatestVer(rc *registry.RegistryClient, imageName string) (map[string]*vsAPI.Version, error) {
-	image, err := rc.GetLatestImage(imageName)
+func getVersionMapLatestVer(rc *registry.RegistryClient, imageName string, includeArchSuffixes bool) (map[string]*vsAPI.Version, error) {
+	image, err := rc.GetLatestImage(imageName, includeArchSuffixes)
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +322,7 @@ func trimArchSuffix(tag string) string {
 }
 
 func getArchSuffix(tag string) string {
-	for _, suffix := range archSuffixes {
+	for _, suffix := range util.GetArchSuffixes() {
 		if strings.HasSuffix(tag, suffix) {
 			return suffix
 		}
