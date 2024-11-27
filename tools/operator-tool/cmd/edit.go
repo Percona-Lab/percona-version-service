@@ -12,7 +12,7 @@ import (
 	"operator-tool/internal/util"
 )
 
-// deleteOldVersionsWithMap removes versions from the matrix that are older than those specified in the file.
+// deleteOldVersions removes versions from the matrix that are older than those specified in the file.
 func deleteOldVersions(file string, m *vsAPI.VersionMatrix) error {
 	oldestVersions, err := getOldestVersions(file)
 	if err != nil {
@@ -33,6 +33,34 @@ func deleteOldVersions(file string, m *vsAPI.VersionMatrix) error {
 		for k := range m {
 			if util.Goversion(k).Compare(oldestVersion) < 0 {
 				fieldValue.SetMapIndex(reflect.ValueOf(k), reflect.Value{}) // delete old version from map
+			}
+		}
+		return nil
+	})
+}
+
+func keepOnlyLatestVersions(m *vsAPI.VersionMatrix) error {
+	return matrix.Iterate(m, func(fieldName string, fieldValue reflect.Value) error {
+		versionMap := fieldValue.Interface().(map[string]*vsAPI.Version)
+		if len(versionMap) == 0 {
+			return nil
+		}
+
+		latestByMajorVer := make(map[int]string)
+		for v := range versionMap {
+			majorVer := util.Goversion(v).Segments()[0]
+
+			curLatest, ok := latestByMajorVer[majorVer]
+			if !ok || util.Goversion(v).Compare(util.Goversion(curLatest)) > 0 {
+				latestByMajorVer[majorVer] = v
+				continue
+			}
+		}
+
+		for v := range versionMap {
+			majorVer := util.Goversion(v).Segments()[0]
+			if latestByMajorVer[majorVer] != v {
+				fieldValue.SetMapIndex(reflect.ValueOf(v), reflect.Value{}) // delete non-latest version from map
 			}
 		}
 		return nil

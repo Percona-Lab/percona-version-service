@@ -41,6 +41,7 @@ var (
 	verbose            = flag.Bool("verbose", false, "Show logs")
 	includeMultiImages = flag.Bool("include-arch-images", false, `Include images with "-multi", "-arm64", "-aarch64" suffixes in the output file`)
 	versionCap         = flag.Int("cap", 0, `Sets a limit on the number of versions allowed for each major version of a product`)
+	onlyLatest         = flag.Bool("only-latest", false, `Add only latest images to the specified "-file"`)
 )
 
 func main() {
@@ -71,7 +72,7 @@ func main() {
 			log.SetOutput(io.Discard)
 		}
 
-		if err := printSourceFile(*operatorName, *version, *filePath, *patch, *includeMultiImages, *versionCap); err != nil {
+		if err := printSourceFile(*operatorName, *version, *filePath, *patch, *includeMultiImages, *versionCap, *onlyLatest); err != nil {
 			log.SetOutput(os.Stderr)
 			log.Fatalln("ERROR: failed to generate source file:", err.Error())
 		}
@@ -80,7 +81,7 @@ func main() {
 	}
 }
 
-func printSourceFile(operatorName, version, file, patchFile string, includeArchSuffixes bool, capacity int) error {
+func printSourceFile(operatorName, version, file, patchFile string, includeArchSuffixes bool, capacity int, onlyLatest bool) error {
 	var productResponse *vsAPI.ProductResponse
 	var err error
 
@@ -92,12 +93,27 @@ func printSourceFile(operatorName, version, file, patchFile string, includeArchS
 			return fmt.Errorf("failed to get product response: %w", err)
 		}
 		if file != "" {
-			if err := deleteOldVersions(file, productResponse.Versions[0].Matrix); err != nil {
-				return fmt.Errorf("failed to delete old verisons from version matrix: %w", err)
+			if onlyLatest {
+				if err := keepOnlyLatestVersions(productResponse.Versions[0].Matrix); err != nil {
+					return fmt.Errorf("failed to delete old verisons from version matrix: %w", err)
+				}
+
+				productResponse, err = patchProductResponse(registryClient, file, productResponse.Versions[0].Matrix, version)
+				if err != nil {
+					return fmt.Errorf("failed to patch product response: %w", err)
+				}
+			} else {
+				if err := deleteOldVersions(file, productResponse.Versions[0].Matrix); err != nil {
+					return fmt.Errorf("failed to delete old verisons from version matrix: %w", err)
+				}
 			}
 		}
 	} else {
-		productResponse, err = patchProductResponse(registryClient, file, patchFile)
+		patchMatrix, err := util.ReadPatchFile(patchFile)
+		if err != nil {
+			return fmt.Errorf("failed to read patch file: %w", err)
+		}
+		productResponse, err = patchProductResponse(registryClient, file, patchMatrix, version)
 		if err != nil {
 			return fmt.Errorf("failed to patch product response: %w", err)
 		}

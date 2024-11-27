@@ -14,16 +14,12 @@ import (
 	"operator-tool/pkg/registry"
 )
 
-func patchProductResponse(rc *registry.RegistryClient, baseFilepath, patchFilepath string) (*vsAPI.ProductResponse, error) {
+func patchProductResponse(rc *registry.RegistryClient, baseFilepath string, patchMatrix *vsAPI.VersionMatrix, operatorVersion string) (*vsAPI.ProductResponse, error) {
 	baseFile, err := util.ReadBaseFile(baseFilepath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read base file: %w", err)
 	}
-	patchFile, err := util.ReadPatchFile(patchFilepath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read patch file: %w", err)
-	}
-	if err := updateMatrixData(rc, patchFile); err != nil {
+	if err := updateMatrixData(rc, patchMatrix); err != nil {
 		return nil, fmt.Errorf("failed to update patch matrix hashes: %w", err)
 	}
 
@@ -44,12 +40,12 @@ func patchProductResponse(rc *registry.RegistryClient, baseFilepath, patchFilepa
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert base matrix to map: %w", err)
 	}
-	patchMatrix, err := matrixToMap(patchFile)
+	patchMatrixMap, err := matrixToMap(patchMatrix)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert patch matrix to map: %w", err)
 	}
 
-	for product, versions := range patchMatrix {
+	for product, versions := range patchMatrixMap {
 		for version, verInfo := range versions {
 			if _, ok := baseMatrix[product]; !ok {
 				baseMatrix[product] = make(map[string]map[string]any)
@@ -75,6 +71,9 @@ func patchProductResponse(rc *registry.RegistryClient, baseFilepath, patchFilepa
 	baseFile.Versions[0].Matrix, err = mapToMatrix(baseMatrix)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert patched map to matrix: %w", err)
+	}
+	if operatorVersion == "" {
+		baseFile.Versions[0].Operator = operatorVersion
 	}
 	return baseFile, nil
 }

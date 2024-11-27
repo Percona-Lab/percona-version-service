@@ -17,6 +17,8 @@ Usage of ./bin/operator-tool:
         Specify an older source file. The operator-tool will exclude any versions that are older than those listed in this file
   -include-arch-images
         Include images with "-multi", "-arm64", "-aarch64" suffixes in the output file
+  -only-latest
+        Add only latest images to the specified "-file"
   -operator string
         Operator name. Available values: [psmdb pxc ps pg]
   -patch string
