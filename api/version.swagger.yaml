@@ -33,6 +33,27 @@ paths:
           type: string
       tags:
         - VersionService
+  /metadata/v2/{product}:
+    get:
+      summary: v2 metadata for a product
+      description: Return metadata information with additional image information for a product
+      operationId: VersionService_MetadataV2
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/versionMetadataV2Response'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/googlerpcStatus'
+      parameters:
+        - name: product
+          in: path
+          required: true
+          type: string
+      tags:
+        - VersionService
   /release-notes/v1/{product}/{version}:
     get:
       summary: Gets the release notes for a product version
@@ -168,6 +189,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -282,6 +307,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -400,6 +429,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
 definitions:
@@ -441,7 +474,15 @@ definitions:
         items:
           type: object
           $ref: '#/definitions/versionMetadataVersion'
-  versionMetadataVersion:
+  versionMetadataV2Response:
+    type: object
+    properties:
+      versions:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/versionMetadataV2Version'
+  versionMetadataV2Version:
     type: object
     properties:
       version:
@@ -457,8 +498,24 @@ definitions:
           type: string
         description: Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
       imageInfo:
-        $ref: '#/definitions/versionVersion'
+        $ref: '#/definitions/versionVersionV2'
         description: ImageInfo holds information about the docker image for this version.
+    description: MetadataV2Version represents metadata for a given version with additional fields.
+  versionMetadataVersion:
+    type: object
+    properties:
+      version:
+        type: string
+      recommended:
+        type: object
+        additionalProperties:
+          type: string
+        description: Recommended is the recommended version for a given component.
+      supported:
+        type: object
+        additionalProperties:
+          type: string
+        description: Supported holds semver constraint per component, such as ">= 1.0, < 1.4".
     description: MetadataVersion represents metadata for a given version.
   versionOperatorResponse:
     type: object
@@ -505,10 +562,6 @@ definitions:
         type: string
       imageHashArm64:
         type: string
-      imageReleaseTimestamp:
-        type: string
-        format: date-time
-        description: release_timestamp is the release time of this image.
       status:
         $ref: '#/definitions/versionStatus'
       critical:
@@ -634,6 +687,24 @@ definitions:
         items:
           type: object
           $ref: '#/definitions/versionOperatorVersion'
+  versionVersionV2:
+    type: object
+    properties:
+      imagePath:
+        type: string
+      imageHash:
+        type: string
+      imageHashArm64:
+        type: string
+      imageReleaseTimestamp:
+        type: string
+        format: date-time
+        description: release_timestamp is the release time of this image.
+      status:
+        $ref: '#/definitions/versionStatus'
+      critical:
+        type: boolean
+    description: Version represents product version information.
 externalDocs:
   description: This service provides version information and image paths for supporting the use of Percona Kubernetes Operators in a variety of scenarios while enabling specific version deployments and automated upgrades.
   url: https://github.com/Percona-Lab/percona-version-service

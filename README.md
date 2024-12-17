@@ -85,3 +85,9 @@ Each of them should be based on the branch related to the environment you want t
 
 e.g.: To publish your changes to the `development` environment, you should create new branch from `main` branch and then create a PR to get your changes merged to the `main` branch.  
 Once your PR is merged, our CI will automatically publish these changes to corresponding environment.
+
+## How to update gRPC API
+
+Add you're new fields to appropriate messages in the `api/version.proto` file.
+
+In order to compile the proto file and generate all the necessary code, first run `make init` to ensure all the tooling in installed. After that run `make gen` in order to generate everything.

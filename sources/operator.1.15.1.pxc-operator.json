@@ -1,13 +1,13 @@
 {
   "versions": [
     {
-      "operator": "1.15.0",
+      "operator": "1.15.1",
       "product": "pxc-operator",
       "matrix": {
         "pxc": {
           "8.0.36-28.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.36-28.1",
-            "image_hash": "ed99f585a27257726a985fee5f50cd957f94f5b9ae70a5d2f0fa1e68336f3abe",
+            "image_hash": "b5cc4034ccfb0186d6a734cb749ae17f013b027e9e64746b2c876e8beef379b3",
             "status": "recommended",
             "critical": false
           },
@@ -85,38 +85,38 @@
         "haproxy": {
           "2.8.5": {
             "image_path": "percona/haproxy:2.8.5",
-            "image_hash": "fe63b0e7d503b25ab3d6f4aeb2e983868fe50bf85ebc91c713a990306718a8a2",
+            "image_hash": "941f3bd0977bff9145e904bf8f8298a1a024d7f03152edaea0cf65fd1c137340",
             "status": "recommended",
             "critical": false
           }
         },
         "backup": {
           "8.0.35": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0-pxc8.0-backup-pxb8.0.35",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.1-pxc8.0-backup-pxb8.0.35",
             "image_hash": "6395019766db6118f61b8085c720d1d574c73511f84c9db5d222460f790649fb",
             "status": "recommended",
             "critical": false
           },
           "2.4.29": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0-pxc5.7-backup-pxb2.4.29",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.1-pxc5.7-backup-pxb2.4.29",
             "image_hash": "dfe6545b83b18450a3243441e6b43c3a6ed05dcc24a464286ffb9a7328fdb13f",
             "status": "recommended",
             "critical": false
           }
         },
         "log_collector": {
-          "1.15.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0-logcollector-fluentbit3.1.4",
+          "1.15.1": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.1-logcollector-fluentbit3.1.4",
             "image_hash": "24b068d55559cbe5dbadc2f52e5c096f7df60374e47c6b4d1a5e331fd2a75014",
             "status": "recommended",
             "critical": false
           }
         },
         "operator": {
-          "1.15.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.15.0",
-            "image_hash": "b8c271e3a53b86b4a5201e051d211b8ef27601b8c06848fde7d2056efbd635bf",
-            "image_hash_arm64": "7cf8004be6c4754857dd7e8c2f108c1473c32cdba0251b5d5e73a0b6046d147f",
+          "1.15.1": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.15.1",
+            "image_hash": "16a0078b5ededc4ae346168ee005aedf17f9ddddebf1eca067244d2f907bb7fa",
+            "image_hash_arm64": "862c0be9f278aed33c521dabb55986b33da5eddb52cc99e205c7bb8feac9b22f",
             "status": "recommended",
             "critical": false
           }
