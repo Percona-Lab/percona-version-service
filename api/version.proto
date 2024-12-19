@@ -115,6 +115,7 @@ message ApplyRequest {
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
   string extensions = 25;
+  bool user_management_enabled = 26;
 }
 
 message OperatorRequest {
@@ -142,6 +143,7 @@ message OperatorRequest {
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
   string extensions = 25;
+  bool user_management_enabled = 26;
 }
 
 message ProductRequest {
@@ -168,6 +170,7 @@ message ProductRequest {
   bool pitr_enabled = 23;
   bool physical_backup_scheduled = 24;
   string extensions = 25;
+  bool user_management_enabled = 26;
 }
 
 message MetadataRequest {
