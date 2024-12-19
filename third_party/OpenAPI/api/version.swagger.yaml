@@ -189,6 +189,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -303,6 +307,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -421,6 +429,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: userManagementEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
 definitions:
