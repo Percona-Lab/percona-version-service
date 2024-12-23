@@ -15,7 +15,7 @@ init:
 	curl -L "https://github.com/bufbuild/buf/releases/download/v1.34.0/buf-$(shell uname -s)-$(shell uname -m)" -o "./bin/buf"
 	chmod +x ./bin/buf
 
-	curl -L "https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_$(shell uname -m)" -o ./bin/swagger
+	curl -L "https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname -s)_$(shell uname -m | sed 's/aarch64/arm64/')" -o ./bin/swagger
 	chmod +x ./bin/swagger
 
 gen:
@@ -36,13 +36,7 @@ cert:
 
 # Build docker image
 docker-build:
-	docker buildx build \
-		--platform "$(DOCKER_DEFAULT_PLATFORM)" \
-		--progress plain \
-		--no-cache \
-		-t "$(IMG)" \
-		-f ./Dockerfile \
-		.
+	DOCKER_DEFAULT_PLATFORM="$(DOCKER_DEFAULT_PLATFORM)" IMG="$(IMG)" ./tools/build.sh
 
 # Run docker image
 docker-run-it:
