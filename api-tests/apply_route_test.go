@@ -393,6 +393,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 	v44 := "4.4"
 	v50 := "5.0"
 	v60 := "6.0"
+	v70 := "7.0"
 
 	cases := []struct {
 		apply     string
@@ -417,6 +418,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.7.0", nil, "4.4.3-5"},
 		{"latest", "1.6.0", nil, "4.4.2-4"},
 		{"latest", "1.5.0", nil, "4.2.8-8"},
+		{"latest", "1.18.0", &v70, "7.0.14-8"},
+		{"latest", "1.17.0", &v70, "7.0.12-7"},
+		{"latest", "1.16.2", &v70, "7.0.8-5"},
+		{"latest", "1.16.1", &v70, "7.0.8-5"},
+		{"latest", "1.16.0", &v70, "7.0.8-5"},
 		{"latest", "1.18.0", &v60, "6.0.18-15"},
 		{"latest", "1.17.0", &v60, "6.0.16-13"},
 		{"latest", "1.16.2", &v60, "6.0.15-12"},
@@ -479,6 +485,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.7.0", nil, "4.4.3-5"},
 		{"recommended", "1.6.0", nil, "4.4.2-4"},
 		{"recommended", "1.5.0", nil, "4.2.8-8"},
+		{"recommended", "1.18.0", &v70, "7.0.14-8"},
+		{"recommended", "1.17.0", &v70, "7.0.12-7"},
+		{"recommended", "1.16.2", &v70, "7.0.8-5"},
+		{"recommended", "1.16.1", &v70, "7.0.8-5"},
+		{"recommended", "1.16.0", &v70, "7.0.8-5"},
 		{"recommended", "1.18.0", &v60, "6.0.18-15"},
 		{"recommended", "1.17.0", &v60, "6.0.16-13"},
 		{"recommended", "1.16.2", &v60, "6.0.15-12"},
@@ -646,6 +657,12 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"6.0-recommended", "1.16.0", nil, "6.0.15-12"},
 		{"6.0-recommended", "1.15.0", nil, "6.0.9-7"},
 		{"6.0-recommended", "1.14.0", nil, "6.0.5-4"},
+		{"5.0-recommended", "1.18.0", nil, "5.0.29-25"},
+		{"5.0-recommended", "1.17.0", nil, "5.0.28-24"},
+		{"5.0-recommended", "1.16.2", nil, "5.0.26-22"},
+		{"5.0-recommended", "1.16.1", nil, "5.0.26-22"},
+		{"5.0-recommended", "1.16.0", nil, "5.0.26-22"},
+		{"5.0-recommended", "1.15.0", nil, "5.0.20-17"},
 		{"5.0-recommended", "1.14.0", nil, "5.0.15-13"},
 		{"5.0-recommended", "1.13.0", nil, "5.0.11-10"},
 		{"5.0-recommended", "1.12.0", nil, "5.0.7-6"},
