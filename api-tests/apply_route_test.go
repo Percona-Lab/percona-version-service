@@ -52,7 +52,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "2.4.1",
+		OperatorVersion: "2.5.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -393,6 +393,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 	v44 := "4.4"
 	v50 := "5.0"
 	v60 := "6.0"
+	v70 := "7.0"
 
 	cases := []struct {
 		apply     string
@@ -417,6 +418,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.7.0", nil, "4.4.3-5"},
 		{"latest", "1.6.0", nil, "4.4.2-4"},
 		{"latest", "1.5.0", nil, "4.2.8-8"},
+		{"latest", "1.18.0", &v70, "7.0.14-8"},
+		{"latest", "1.17.0", &v70, "7.0.12-7"},
+		{"latest", "1.16.2", &v70, "7.0.8-5"},
+		{"latest", "1.16.1", &v70, "7.0.8-5"},
+		{"latest", "1.16.0", &v70, "7.0.8-5"},
 		{"latest", "1.18.0", &v60, "6.0.18-15"},
 		{"latest", "1.17.0", &v60, "6.0.16-13"},
 		{"latest", "1.16.2", &v60, "6.0.15-12"},
@@ -479,6 +485,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.7.0", nil, "4.4.3-5"},
 		{"recommended", "1.6.0", nil, "4.4.2-4"},
 		{"recommended", "1.5.0", nil, "4.2.8-8"},
+		{"recommended", "1.18.0", &v70, "7.0.14-8"},
+		{"recommended", "1.17.0", &v70, "7.0.12-7"},
+		{"recommended", "1.16.2", &v70, "7.0.8-5"},
+		{"recommended", "1.16.1", &v70, "7.0.8-5"},
+		{"recommended", "1.16.0", &v70, "7.0.8-5"},
 		{"recommended", "1.18.0", &v60, "6.0.18-15"},
 		{"recommended", "1.17.0", &v60, "6.0.16-13"},
 		{"recommended", "1.16.2", &v60, "6.0.15-12"},
