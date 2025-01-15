@@ -83,8 +83,8 @@
         "backup": {
           "2.8.0": {
             "image_path": "percona/percona-backup-mongodb:2.8.0-multi",
-            "image_hash": "61b01eb034d6b8af50f1d30ba6aee7c235da15302cebf11455875116896a5de0",
-            "image_hash_arm64": "06e54732d9db6feea8f56cec5bd5b2c3b6cb4c27873fcfb9e30aadd18c0447eb",
+            "image_hash": "808045c4b328a90eea1c74bb213e06a56ebf5d5c6fff98193b7dfb63aa98f4e8",
+            "image_hash_arm64": "d9d2d8cc1fd06c4d49dc230bfd7709895231ceccb3bc4094779cbe36ccf44227",
             "status": "recommended",
             "critical": false
           }
