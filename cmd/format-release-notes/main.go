@@ -19,13 +19,13 @@ func main() {
 		log.Fatalf("failed to parse command %+v", err)
 	}
 
-	if err := transformMarkdownLinks(*markdownDir); err != nil {
+	if err := formatReleaseNotes(*markdownDir); err != nil {
 		log.Fatalf("failed to update relative paths %+v", err)
 	}
 }
 
-// transformMarkdownLinks replaces relative links in every markdown file in dir with absolute ones.
-func transformMarkdownLinks(dir string) error {
+// formatReleaseNotes formats the markdown source of the available release notes.
+func formatReleaseNotes(dir string) error {
 	root := os.DirFS(dir)
 	matches, err := fs.Glob(root, "*.md")
 	log.Println("Using path: ", dir)
@@ -40,7 +40,7 @@ func transformMarkdownLinks(dir string) error {
 			return err
 		}
 
-		output, err := server.TransformReleaseNoteLinks(b)
+		output, err := server.FormatReleaseNotes(b)
 		if err != nil {
 			return err
 		}

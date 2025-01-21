@@ -2,12 +2,11 @@ package server
 
 import (
 	"embed"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"io/fs"
 	"path/filepath"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 )
@@ -55,6 +54,46 @@ func TestGetReleaseNote(t *testing.T) {
 	}
 }
 
+func TestTransformMarkdownVariables(t *testing.T) {
+	type testCase struct {
+		name     string
+		markdown string
+		expected string
+	}
+	cases := []testCase{{
+		name: "transforms icon variables",
+		markdown: `Navigate to the **Main** menu and hover on the {{icon.inventory}} _Dashboards_ icon.
+2.	Click **New folder**.
+3.	Provide a name for your folder, and then select **Create**.
+4.	Navigate to {{icon.inventory}} _Dashboards_ from the **Main** menu and click **Browse**.`,
+		expected: "Navigate to the **Main** menu and hover on the <i class=\"uil uil-clipboard-notes\"></i> *Dashboards* icon." +
+			"2. Click **New folder**." +
+			"3. Provide a name for your folder, and then select **Create**." +
+			"4. Navigate to <i class=\"uil uil-clipboard-notes\"></i> *Dashboards* from the **Main** menu and click **Browse**.\n",
+	},
+		{
+			name: "transforms admonition variables",
+			markdown: `!!! hint alert alert-success "Tip"
+	    Tip
+!!! hint alert alert-success "Tips"
+- One
+- Two
+	`,
+			expected: `### Tip
+Tip
+### Tips
+- One
+- Two`,
+		}}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			output, err := FormatReleaseNotes([]byte(tc.markdown))
+			require.NoError(t, err)
+			assert.Equal(t, tc.expected, string(output))
+		})
+	}
+}
+
 func TestTransformReleaseNotes(t *testing.T) {
 	t.Parallel()
 
@@ -65,7 +104,7 @@ func TestTransformReleaseNotes(t *testing.T) {
 	b, err := fs.ReadFile(sub, path) //nolint:gosec
 	require.NoError(t, err)
 
-	output, err := TransformReleaseNoteLinks(b)
+	output, err := FormatReleaseNotes(b)
 	require.NoError(t, err)
 
 	expected := "### PMM 2.42.0\n\n" +
