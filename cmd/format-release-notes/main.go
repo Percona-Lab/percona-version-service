@@ -6,18 +6,26 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/alecthomas/kingpin/v2"
+	"github.com/alecthomas/kong"
 )
 
+type flags struct {
+	Dir string `default:"sources/release-notes/pmm" help:"Directory where target markdown files are stored"`
+}
+
 func main() {
-	app := kingpin.New("format-release-notes", "Formats the markdown source of the available release notes.")
-	markdownDir := app.Flag("dir", "Directory where target markdown files are stored").Default("sources/release-notes/pmm").String()
+	var opts flags
+	kong.Parse(
+		&opts,
+		kong.Name("format-release-notes"),
+		kong.Description("Formats the markdown source of the available release notes."),
+		kong.UsageOnError(),
+		kong.ConfigureHelp(kong.HelpOptions{
+			Compact: true,
+		}),
+	)
 
-	if _, err := app.Parse(os.Args[1:]); err != nil {
-		log.Fatalf("failed to parse command %+v", err)
-	}
-
-	if err := formatReleaseNotes(*markdownDir); err != nil {
+	if err := formatReleaseNotes(opts.Dir); err != nil {
 		log.Fatalf("failed to update relative paths %+v", err)
 	}
 }

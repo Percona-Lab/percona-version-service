@@ -4,14 +4,15 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"regexp"
+	"strings"
+
 	"github.com/Kunde21/markdownfmt/v3/markdown"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/text"
-	"regexp"
-	"strings"
 )
 
 // createMarkdownRender creates a new goldmark.Markdown renderer that allows us re-format markdown files.

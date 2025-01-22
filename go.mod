@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/Kunde21/markdownfmt/v3 v3.1.0
 	github.com/Masterminds/semver v1.5.0
-	github.com/alecthomas/kingpin/v2 v2.4.0
+	github.com/alecthomas/kong v1.6.1
 	github.com/bufbuild/protoyaml-go v0.1.7
 	github.com/diegoholiveira/jsonlogic v2.3.1+incompatible
 	github.com/go-openapi/errors v0.22.0
@@ -28,7 +28,6 @@ require (
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20231115204500-e097f827e652.1 // indirect
-	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/bufbuild/protovalidate-go v0.5.0 // indirect
@@ -52,7 +51,6 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stoewer/go-strcase v1.3.0 // indirect
-	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
 	go.mongodb.org/mongo-driver v1.17.1 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.33.0 // indirect
