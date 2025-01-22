@@ -1,7 +1,7 @@
 {
   "versions": [
     {
-      "operator": "1.16.0",
+      "operator": "1.16.1",
       "product": "pxc-operator",
       "matrix": {
         "pxc": {
@@ -92,31 +92,31 @@
         },
         "backup": {
           "8.0.35": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.16.0-pxc8.0-backup-pxb8.0.35",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.16.1-pxc8.0-backup-pxb8.0.35",
             "image_hash": "55281c818a78162cac0c87257915d74f321a4663f3f60457da2566c64610bf49",
             "status": "recommended",
             "critical": false
           },
           "2.4.29": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.16.0-pxc5.7-backup-pxb2.4.29",
+            "image_path": "percona/percona-xtradb-cluster-operator:1.16.1-pxc5.7-backup-pxb2.4.29",
             "image_hash": "ddcec747748dccfbf4d7a6ba9c6a34f09cb7814ab59c49e73dff239949012039",
             "status": "recommended",
             "critical": false
           }
         },
         "log_collector": {
-          "1.16.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.16.0-logcollector-fluentbit3.2.2",
+          "1.16.1": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.16.1-logcollector-fluentbit3.2.2",
             "image_hash": "122a103902d27890dceaf1855f175ea706a126aac940feb1089520029937f4a9",
             "status": "recommended",
             "critical": false
           }
         },
         "operator": {
-          "1.16.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.16.0",
-            "image_hash": "ddab83ee4610df03636bbbfb159379b96ef36593681879997d74ebe0d08e0ef9",
-            "image_hash_arm64": "c0a75755218c19834e586643f75f61efd4964199147fa969d01fd3d881d03fbe",
+          "1.16.1": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.16.1",
+            "image_hash": "43fd8ced51adad59394d69e3a1fc8be897668d789049be8f5dd9984672223e72",
+            "image_hash_arm64": "dcba85dd7a8a164498362c2d3a73af3411e894dd6c01e600a92ddd3fb12122de",
             "status": "recommended",
             "critical": false
           }
