@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-// createMarkdownRender creates a new goldmark.Markdown renderer that converts a markdown AST back to markdown.
+// createMarkdownRender creates a new goldmark.Markdown renderer that allows us re-format markdown files.
 func createMarkdownRenderer(opts ...markdown.Option) goldmark.Markdown {
 	mr := markdown.NewRenderer()
 	mr.AddMarkdownOptions(opts...)
@@ -97,8 +97,7 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-// isRelativePath checks if a given image or link contains a relative URL
-// isRelativeLink checks if a link is relative
+// isRelativeLink checks if a given image or link uses a relative path.
 func isRelativeLink(link string) bool {
 	return strings.HasPrefix(link, "../") || strings.HasPrefix(link, "#")
 }
