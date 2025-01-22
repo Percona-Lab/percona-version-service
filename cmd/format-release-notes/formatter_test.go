@@ -2,7 +2,7 @@ package main
 
 import (
 	"testing"
-	
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -23,7 +23,7 @@ Welcome to PMM [v2.42](../index.md)
 -![!image](../_images/Max_Connection_Limit.png)`),
 			expected: []byte(`### PMM 2.42.0
 
-Welcome to PMM [v2.42](https://github.com/percona/pmm-doc/tree/main/docs/index.md)
+Welcome to PMM [v2.42](https://github.com/percona/pmm/tree/main/documentation/docs/index.md)
 
 -![!image](https://docs.percona.com/percona-monitoring-and-management/_images/Max_Connection_Limit.png)` + "\n"),
 		},
@@ -66,30 +66,35 @@ Tip
 	}
 }
 
-func TestIsRelativeLink(t *testing.T) {
+func TestExtractRelativeURL(t *testing.T) {
 	type testCases struct {
-		name     string
-		link     string
-		expected bool
+		name           string
+		link           string
+		isRelativeLink bool
 	}
 
 	tests := []testCases{
 		{
-			name:     "relative link returns true",
-			link:     "../index.md",
-			expected: true,
+			name:           "relative link returns true",
+			link:           "../index.md",
+			isRelativeLink: true,
 		},
 		{
-			name:     "absolute link returns false",
-			link:     "https://docs.percona.com/index.md",
-			expected: false,
+			name:           "absolute link returns false",
+			link:           "https://docs.percona.com/index.md",
+			isRelativeLink: false,
+		},
+		{
+			name:           "hash links returns true",
+			link:           "#heading",
+			isRelativeLink: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := isRelativeLink(tt.link)
-			assert.Equal(t, tt.expected, got)
+			_, isRelativeLink := extractRelativeURL(tt.link)
+			assert.Equal(t, tt.isRelativeLink, isRelativeLink)
 		})
 	}
 }

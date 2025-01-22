@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"log"
+	"net/url"
 	"regexp"
 	"strings"
 
@@ -68,22 +70,29 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 	md := createMarkdownRenderer()
 	reader := text.NewReader(sourceContent)
 	doc := md.Parser().Parse(reader)
-	baseMarkdownURL := "https://github.com/percona/pmm-doc/tree/main/docs/" // use GitHub since these are still raw markdown files.
-	baseImageURL := "https://docs.percona.com/percona-monitoring-and-management/"
+	// add an extra slash to the URL, else the last path will get removed by url.ResolveReference()
+	baseMarkdownURL, err := url.Parse("https://github.com/percona/pmm/tree/main/documentation/docs//")
+	if err != nil {
+		return nil, err
+	}
+	baseImageURL, err := url.Parse("https://docs.percona.com/percona-monitoring-and-management//")
+	if err != nil {
+		return nil, err
+	}
 
 	var buffer bytes.Buffer
 	if err := ast.Walk(doc, func(node ast.Node, entering bool) (ast.WalkStatus, error) {
 		if link, ok := node.(*ast.Link); ok && entering {
-			target := string(link.Destination)
-			if isRelativeLink(target) && strings.HasPrefix(target, "../") {
-				newDestination := baseMarkdownURL + strings.Replace(target, "../", "", 1)
-				link.Destination = []byte(newDestination)
+			dest := string(link.Destination)
+			if target, isRelativeLink := extractRelativeURL(dest); isRelativeLink {
+				newDestination := baseMarkdownURL.ResolveReference(target)
+				link.Destination = []byte(newDestination.String())
 			}
 		} else if image, ok := node.(*ast.Image); ok && entering {
-			target := string(image.Destination)
-			if isRelativeLink(target) && strings.HasPrefix(target, "../") {
-				newDestination := baseImageURL + strings.Replace(target, "../", "", 1)
-				image.Destination = []byte(newDestination)
+			dest := string(image.Destination)
+			if target, isRelativeLink := extractRelativeURL(dest); isRelativeLink {
+				newDestination := baseImageURL.ResolveReference(target)
+				image.Destination = []byte(newDestination.String())
 			}
 		}
 		return ast.WalkContinue, nil
@@ -98,7 +107,11 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-// isRelativeLink checks if a given image or link uses a relative path.
-func isRelativeLink(link string) bool {
-	return strings.HasPrefix(link, "../") || strings.HasPrefix(link, "#")
+func extractRelativeURL(link string) (*url.URL, bool) {
+	target, err := url.Parse(link)
+	if err != nil {
+		log.Println(err)
+		return nil, false
+	}
+	return target, !target.IsAbs()
 }
