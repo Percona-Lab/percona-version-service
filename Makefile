@@ -33,7 +33,7 @@ gen:
 	./bin/swagger generate client -m client/models -f ./api/version.swagger.yaml -t ./
 
 format-release-notes:
-	./bin/format-release-notes --dir=docs/release-notes
+	./bin/format-release-notes --dir=sources/release-notes/pmm
 
 cert:
 	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem 0.0.0.0
