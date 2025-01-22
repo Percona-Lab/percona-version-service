@@ -1,4 +1,4 @@
-package server
+package main
 
 var iconsMap = map[string]string{
 	"{{icon.configuration}}":    `<i class="uil uil-cog"></i>`,

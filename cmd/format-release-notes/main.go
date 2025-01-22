@@ -7,8 +7,6 @@ import (
 	"path/filepath"
 
 	"github.com/alecthomas/kingpin/v2"
-
-	"github.com/Percona-Lab/percona-version-service/server"
 )
 
 func main() {
@@ -40,7 +38,7 @@ func formatReleaseNotes(dir string) error {
 			return err
 		}
 
-		output, err := server.FormatReleaseNotes(b)
+		output, err := FormatReleaseNotes(b)
 		if err != nil {
 			return err
 		}

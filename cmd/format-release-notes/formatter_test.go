@@ -1,0 +1,94 @@
+package main
+
+import (
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"testing"
+)
+
+func TestFormatReleaseNotesMarkdown(t *testing.T) {
+	type testCase struct {
+		name     string
+		markdown []byte
+		expected []byte
+	}
+	cases := []testCase{
+		{
+			name: "transforms relative links",
+			markdown: []byte(`### PMM 2.42.0
+
+Welcome to PMM [v2.42](../index.md)
+
+-![!image](../_images/Max_Connection_Limit.png)`),
+			expected: []byte(`### PMM 2.42.0
+
+Welcome to PMM [v2.42](https://github.com/percona/pmm-doc/tree/main/docs/index.md)
+
+-![!image](https://docs.percona.com/percona-monitoring-and-management/_images/Max_Connection_Limit.png)` + "\n"),
+		},
+		{
+			name: "transforms icon variables",
+			markdown: []byte(`Navigate to the **Main** menu and hover on the {{icon.inventory}} _Dashboards_ icon.
+2. Click **New folder**.
+3. Provide a name for your folder, and then select **Create**.
+4. Navigate to {{icon.inventory}} _Dashboards_ from the **Main** menu and click **Browse**.`),
+			expected: []byte("Navigate to the **Main** menu and hover on the <i class=\"uil uil-clipboard-notes\"></i> *Dashboards* icon." +
+				" 2. Click **New folder**." +
+				" 3. Provide a name for your folder, and then select **Create**." +
+				" 4. Navigate to <i class=\"uil uil-clipboard-notes\"></i> *Dashboards* from the **Main** menu and click **Browse**.\n"),
+		},
+		{
+			name: "transforms admonition variables",
+			markdown: []byte(
+				`
+!!! hint alert alert-success "Tip"
+Tip
+!!! hint alert alert-success "Tips"
+- One
+- Two
+	`),
+			expected: []byte(
+				`### Tip
+
+Tip
+
+### Tips
+- One
+- Two` + "\n"),
+		}}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			output, err := FormatReleaseNotes(tc.markdown)
+			require.NoError(t, err)
+			assert.Equal(t, string(tc.expected), string(output))
+		})
+	}
+}
+
+func TestIsRelativeLink(t *testing.T) {
+	type testCases struct {
+		name     string
+		link     string
+		expected bool
+	}
+
+	tests := []testCases{
+		{
+			name:     "relative link returns true",
+			link:     "../index.md",
+			expected: true,
+		},
+		{
+			name:     "absolute link returns false",
+			link:     "https://docs.percona.com/index.md",
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := isRelativeLink(tt.link)
+			assert.Equal(t, tt.expected, got)
+		})
+	}
+}
