@@ -34,18 +34,6 @@ func createMarkdownRenderer(opts ...markdown.Option) goldmark.Markdown {
 	return gm
 }
 
-// TransformMarkdownVariables is a walker function that replaces icon variables in markdown files with the corresponding HTML code.
-func TransformMarkdownVariables(sourceContent []byte, n ast.Node, entering bool) (ast.WalkStatus, error) {
-	if entering {
-		if t, ok := n.(*ast.String); ok {
-			for search, replace := range iconsMap {
-				t.Value = bytes.ReplaceAll(t.Value, []byte(search), []byte(replace))
-			}
-		}
-	}
-	return ast.WalkContinue, nil
-}
-
 func replaceAdmonitionText(sourceContent []byte) ([]byte, error) {
 	var builder strings.Builder
 	scanner := bufio.NewScanner(bytes.NewReader(sourceContent))
@@ -72,7 +60,6 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 	for search, replace := range iconsMap {
 		sourceContent = bytes.ReplaceAll(sourceContent, []byte(search), []byte(replace))
 	}
-
 	sourceContent, err := replaceAdmonitionText(sourceContent)
 	if err != nil {
 		return nil, err

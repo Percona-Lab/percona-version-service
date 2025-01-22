@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	app := kingpin.New("format-release-notes", "Modifies release notes by replacing relative links with absolute ones")
+	app := kingpin.New("format-release-notes", "Formats the markdown source of the available release notes.")
 	markdownDir := app.Flag("dir", "Directory where target markdown files are stored").Default("sources/release-notes/pmm").String()
 
 	if _, err := app.Parse(os.Args[1:]); err != nil {

@@ -64,6 +64,8 @@ Add a file to `sources/release-notes/{product_name}/{version-tag}.md`.
 Making a request to `/release-notes/v1/{product}/{version-tag}` will return the release note for that version in raw markdown format.
 You can also run `make format-release-notes` to format the release notes. This command will:
 - Replace all relative links and image sources with absolute links.
+- Replace custom variables with their corresponding SVG/HTML values.
+- Replace hints and admonitions with a matching markdown header.
 
 ## How to create a new docker image
 `make docker-push` will create and push a docker image with your changes.  
