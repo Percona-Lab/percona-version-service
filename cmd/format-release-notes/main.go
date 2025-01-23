@@ -26,7 +26,7 @@ func main() {
 	)
 
 	if err := formatReleaseNotes(opts.Dir); err != nil {
-		log.Fatalf("failed to update relative paths %+v", err)
+		log.Fatalf("failed to format release notes %+v", err)
 	}
 }
 
