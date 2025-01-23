@@ -17,8 +17,6 @@ init:
 	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
 	chmod +x ./bin/swagger
 
-	go build -race -o bin/format-release-notes ./cmd/format-release-notes
-
 gen:
 	bin/buf dep update
 
