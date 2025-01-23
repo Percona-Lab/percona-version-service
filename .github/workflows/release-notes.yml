@@ -34,6 +34,7 @@ jobs:
 
       - name: Check that PMM readme files are formatted
         run: |
+          make build-format-release-notes
           make format-release-notes
           git status
           git diff --exit-code
