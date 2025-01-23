@@ -32,6 +32,9 @@ gen:
 	rm -rf ./client
 	./bin/swagger generate client -m client/models -f ./api/version.swagger.yaml -t ./
 
+build-format-release-notes:
+	go build -race -o bin/format-release-notes ./cmd/format-release-notes
+
 format-release-notes:
 	./bin/format-release-notes --dir=sources/release-notes/pmm
 
