@@ -33,7 +33,8 @@
         "pmm": {
           "2.44.0": {
             "image_path": "percona/pmm-client:2.44.0",
-            "image_hash": "4dd7843b99fefc05fc2b3ae4a126b379b1596cf2f1232a728c8aff2f9ac2b068",
+            "image_hash": "19a07dfa8c12a0554308cd11d7d38494ea02a14cfac6c051ce8ff254b7d0a4a7",
+            "image_hash_arm64": "43a542f24bdbd11d0c363c1d5002244b0b4840961a8e219a56df1becad77b068",
             "status": "recommended",
             "critical": false
           }
