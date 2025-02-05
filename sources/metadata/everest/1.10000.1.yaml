@@ -1,0 +1,4 @@
+version: 1.10000.1
+supported:
+  cli: '>= 1.10000.1'
+  kubernetes: '>= 1.27'
