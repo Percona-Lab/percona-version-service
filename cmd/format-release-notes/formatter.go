@@ -71,7 +71,7 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 	reader := text.NewReader(sourceContent)
 	doc := md.Parser().Parse(reader)
 	// add an extra slash to the URL, else the last path will get removed by url.ResolveReference()
-	baseMarkdownURL, err := url.Parse("https://github.com/percona/pmm/tree/main/documentation/docs//")
+	baseMarkdownURL, err := url.Parse("https://docs.percona.com/percona-monitoring-and-management/3//")
 	if err != nil {
 		return nil, err
 	}
@@ -85,8 +85,11 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 		if link, ok := node.(*ast.Link); ok && entering {
 			dest := string(link.Destination)
 			if target, isRelativeLink := extractRelativeURL(dest); isRelativeLink {
-				newDestination := baseMarkdownURL.ResolveReference(target)
-				link.Destination = []byte(newDestination.String())
+				newDestination := baseMarkdownURL.ResolveReference(target).String()
+				if strings.HasSuffix(newDestination, ".md") {
+					newDestination = strings.TrimSuffix(newDestination, ".md") + ".html"
+				}
+				link.Destination = []byte(newDestination)
 			}
 		} else if image, ok := node.(*ast.Image); ok && entering {
 			dest := string(image.Destination)

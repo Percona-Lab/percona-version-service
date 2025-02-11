@@ -18,12 +18,16 @@ func TestFormatReleaseNotesMarkdown(t *testing.T) {
 			name: "transforms relative links",
 			markdown: []byte(`### PMM 2.42.0
 
-Welcome to PMM [v2.42](../index.md)
+Welcome to PMM [v3.0.0](../index.md)
+
+- [Helm](../install-pmm/install-pmm-server/baremetal/helm/index.md) (Technical Preview) | 1. Quick<br>2. Simple<br>3. Cloud-compatible <br> 4. Rootless| Requires running a Kubernetes cluster.
 
 -![!image](../_images/Max_Connection_Limit.png)`),
 			expected: []byte(`### PMM 2.42.0
 
-Welcome to PMM [v2.42](https://github.com/percona/pmm/tree/main/documentation/docs/index.md)
+Welcome to PMM [v3.0.0](https://docs.percona.com/percona-monitoring-and-management/3/index.html)
+
+- [Helm](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-server/baremetal/helm/index.html) (Technical Preview) | 1. Quick<br>2. Simple<br>3. Cloud-compatible <br> 4. Rootless| Requires running a Kubernetes cluster.
 
 -![!image](https://docs.percona.com/percona-monitoring-and-management/_images/Max_Connection_Limit.png)` + "\n"),
 		},
