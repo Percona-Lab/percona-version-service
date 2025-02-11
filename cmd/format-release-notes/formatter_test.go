@@ -22,14 +22,14 @@ Welcome to PMM [v3.0.0](../index.md)
 
 - [Helm](../install-pmm/install-pmm-server/baremetal/helm/index.md) (Technical Preview) | 1. Quick<br>2. Simple<br>3. Cloud-compatible <br> 4. Rootless| Requires running a Kubernetes cluster.
 
--![!image](../_images/Max_Connection_Limit.png)`),
+![Service Accounts page](../images/Service_Accounts.png)`),
 			expected: []byte(`### PMM 2.42.0
 
 Welcome to PMM [v3.0.0](https://docs.percona.com/percona-monitoring-and-management/3/index.html)
 
 - [Helm](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-server/baremetal/helm/index.html) (Technical Preview) | 1. Quick<br>2. Simple<br>3. Cloud-compatible <br> 4. Rootless| Requires running a Kubernetes cluster.
 
--![!image](https://docs.percona.com/percona-monitoring-and-management/_images/Max_Connection_Limit.png)` + "\n"),
+![Service Accounts page](https://docs.percona.com/percona-monitoring-and-management/3/images/Service_Accounts.png)` + "\n"),
 		},
 		{
 			name: "transforms icon variables",
