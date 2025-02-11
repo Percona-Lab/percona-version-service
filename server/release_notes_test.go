@@ -2,12 +2,13 @@ package server
 
 import (
 	"embed"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"io/fs"
 	"testing"
 
 	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 //go:embed release_notes_test
