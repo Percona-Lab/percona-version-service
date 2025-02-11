@@ -20,6 +20,7 @@ require (
 	github.com/hashicorp/go-version v1.6.0
 	github.com/stretchr/testify v1.10.0
 	github.com/yuin/goldmark v1.7.8
+	github.com/yuin/goldmark-meta v1.1.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20241219192143-6b3ec007d9bb
 	google.golang.org/grpc v1.69.2
@@ -63,6 +64,7 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241219192143-6b3ec007d9bb // indirect
+	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 

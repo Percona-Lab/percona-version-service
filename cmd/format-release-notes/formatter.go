@@ -11,6 +11,7 @@ import (
 
 	"github.com/Kunde21/markdownfmt/v3/markdown"
 	"github.com/yuin/goldmark"
+	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
@@ -23,6 +24,7 @@ func createMarkdownRenderer(opts ...markdown.Option) goldmark.Markdown {
 	mr.AddMarkdownOptions(opts...)
 	extensions := []goldmark.Extender{
 		extension.GFM,
+		meta.Meta,
 	}
 	parserOptions := []parser.Option{
 		parser.WithAttribute(), // We need this to enable # headers {#custom-ids}.
