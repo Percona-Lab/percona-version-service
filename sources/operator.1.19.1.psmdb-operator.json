@@ -1,7 +1,7 @@
 {
   "versions": [
     {
-      "operator": "1.19.0",
+      "operator": "1.19.1",
       "product": "psmdb-operator",
       "matrix": {
         "mongod": {
@@ -90,10 +90,10 @@
           }
         },
         "operator": {
-          "1.19.0": {
-            "image_path": "percona/percona-server-mongodb-operator:1.19.0",
-            "image_hash": "22078e92009503d2089803cc8b1cc21c7d7d510313180cae3b4e1125d1322af3",
-            "image_hash_arm64": "ac62fd793c399811a6fa75a9a452f1d86a5c2f5544b333c153d79c41db17d862",
+          "1.19.1": {
+            "image_path": "percona/percona-server-mongodb-operator:1.19.1",
+            "image_hash": "e822a948aa69baa6fe414622fab12a9e8d661296d0d7e7c3feef610d92e334b3",
+            "image_hash_arm64": "27a280b44733db6ccbe0e77cca524c3f1c74d20045c7906517a8349cfc89e7f1",
             "status": "recommended",
             "critical": false
           }
