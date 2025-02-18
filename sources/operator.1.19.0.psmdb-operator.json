@@ -9,7 +9,7 @@
             "image_path": "percona/percona-server-mongodb:8.0.4-1-multi",
             "image_hash": "873b201ce3d66d97b1225c26db392c5043a73cc19ee8db6f2dc1b8efd4783bcf",
             "image_hash_arm64": "222ccf746ad4ffdfccf41b41edaa0d318d28f663e13c9629f8dad5a5078434e5",
-            "status": "recommended",
+            "status": "available",
             "critical": false
           },
           "7.0.15-9": {
