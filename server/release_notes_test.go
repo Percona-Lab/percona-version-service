@@ -5,16 +5,16 @@ import (
 	"io/fs"
 	"testing"
 
+	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	pbVersion "github.com/Percona-Lab/percona-version-service/versionpb/api"
 )
 
 //go:embed release_notes_test
 var testReleaseNotesFS embed.FS
 
-func TestReleaseNotes_GetReleaseNote(t *testing.T) {
+func TestGetReleaseNote(t *testing.T) {
 	t.Parallel()
 	sub, err := fs.Sub(testReleaseNotesFS, "release_notes_test")
 	require.NoError(t, err)
