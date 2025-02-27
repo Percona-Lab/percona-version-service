@@ -8,7 +8,7 @@ import (
 )
 
 func PG(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
-	pgVersions, err := productsapi.GetProductVersions("", "postgresql-distribution-16", "postgresql-distribution-15", "postgresql-distribution-14", "postgresql-distribution-13", "postgresql-distribution-12")
+	pgVersions, err := productsapi.GetProductVersions("", "postgresql-distribution-17", "postgresql-distribution-16", "postgresql-distribution-15", "postgresql-distribution-14", "postgresql-distribution-13")
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func PS(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
 }
 
 func PSMDB(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
-	mongoVersions, err := productsapi.GetProductVersions("percona-server-mongodb-", "percona-server-mongodb-7.0", "percona-server-mongodb-6.0", "percona-server-mongodb-5.0")
+	mongoVersions, err := productsapi.GetProductVersions("percona-server-mongodb-", "percona-server-mongodb-8.0", "percona-server-mongodb-7.0", "percona-server-mongodb-6.0")
 	if err != nil {
 		return nil, err
 	}
@@ -71,12 +71,12 @@ func PSMDB(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error
 }
 
 func PXC(f *filler.VersionFiller, version string) (*vsAPI.VersionMatrix, error) {
-	pxcVersions, err := productsapi.GetProductVersions("Percona-XtraDB-Cluster-", "Percona-XtraDB-Cluster-80", "Percona-XtraDB-Cluster-57")
+	pxcVersions, err := productsapi.GetProductVersions("Percona-XtraDB-Cluster-", "Percona-XtraDB-Cluster-84", "Percona-XtraDB-Cluster-80", "Percona-XtraDB-Cluster-57")
 	if err != nil {
 		return nil, err
 	}
 
-	xtrabackupVersions, err := productsapi.GetProductVersions("Percona-XtraBackup-", "Percona-XtraBackup-8.0", "Percona-XtraBackup-2.4")
+	xtrabackupVersions, err := productsapi.GetProductVersions("Percona-XtraBackup-", "Percona-XtraBackup-8.4", "Percona-XtraBackup-8.0", "Percona-XtraBackup-2.4")
 	if err != nil {
 		return nil, err
 	}
