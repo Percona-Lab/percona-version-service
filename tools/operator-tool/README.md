@@ -18,7 +18,7 @@ Usage of ./bin/operator-tool:
   -include-arch-images
         Include images with "-multi", "-arm64", "-aarch64" suffixes in the output file
   -only-latest
-        Add only latest images to the specified "-file"
+        Add only latest major version images to the specified "-file". If "-file" is not specified, returns a file with latest major versions.
   -operator string
         Operator name. Available values: [psmdb pxc ps pg]
   -patch string
