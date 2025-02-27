@@ -27,7 +27,11 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"pxc-operator", "1.12.0"},
 		{"pxc-operator", "1.13.0"},
 		{"pxc-operator", "1.14.0"},
+		{"pxc-operator", "1.14.1"},
 		{"pxc-operator", "1.15.0"},
+		{"pxc-operator", "1.15.1"},
+		{"pxc-operator", "1.16.0"},
+		{"pxc-operator", "1.16.1"},
 		{"psmdb-operator", "1.5.0"},
 		{"psmdb-operator", "1.6.0"},
 		{"psmdb-operator", "1.7.0"},
@@ -43,6 +47,9 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"psmdb-operator", "1.16.1"},
 		{"psmdb-operator", "1.16.2"},
 		{"psmdb-operator", "1.17.0"},
+		{"psmdb-operator", "1.18.0"},
+		{"psmdb-operator", "1.19.0"},
+		{"psmdb-operator", "1.19.1"},
 		{"pg-operator", "1.1.0"},
 		{"pg-operator", "1.2.0"},
 		{"pg-operator", "1.3.0"},
@@ -60,6 +67,7 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
 		{"ps-operator", "0.8.0"},
+		{"ps-operator", "0.9.0"},
 	}
 
 	for _, c := range cases {
@@ -97,7 +105,11 @@ func TestOperatorRoutePxcShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pxc-operator", "1.12.0"},
 		{"pxc-operator", "1.13.0"},
 		{"pxc-operator", "1.14.0"},
+		{"pxc-operator", "1.14.1"},
 		{"pxc-operator", "1.15.0"},
+		{"pxc-operator", "1.15.1"},
+		{"pxc-operator", "1.16.0"},
+		{"pxc-operator", "1.16.1"},
 	}
 
 	for _, c := range cases {
@@ -147,6 +159,9 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		{"psmdb-operator", "1.16.1"},
 		{"psmdb-operator", "1.16.2"},
 		{"psmdb-operator", "1.17.0"},
+		{"psmdb-operator", "1.18.0"},
+		{"psmdb-operator", "1.19.0"},
+		{"psmdb-operator", "1.19.1"},
 	}
 
 	for _, c := range cases {
@@ -245,6 +260,7 @@ func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
 		{"ps-operator", "0.8.0"},
+		{"ps-operator", "0.9.0"},
 	}
 
 	for _, c := range cases {
