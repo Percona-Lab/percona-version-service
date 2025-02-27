@@ -254,12 +254,19 @@ func getVersionMapLatestVer(rc *registry.RegistryClient, imageName string, inclu
 // Some images on Docker Hub are tagged like <name>, <name>-arm64, <name>-aarch64, <name>-amd64, and <name>-multi.
 // This function adds images with amd64 and arm64 builds to the provided map.
 //
+// Specify includedArchSuffixes to include images with suffixes in resulting map.
+// By default includedArchSuffixes includes only <name>-multi and <name>-amd64 images.
+//
 // Logic:
 //   - If an image supports both amd64 and arm64 architectures and has a "-multi" suffix in its tag,
 //     the function includes a version of the image tag without the "-multi" suffix in the map.
 //   - If no image with both amd64 and arm64 builds is found, separate images for amd64 and arm64
-//     are added individually.
-func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*vsAPI.Version, error) {
+//     are added individually. (if both amd64 and arm64 image suffixes are specified in the includedArchSuffixes)
+func versionMapFromImages(baseTag string, images []registry.Image, includedArchSuffixes ...string) (map[string]*vsAPI.Version, error) {
+	if len(includedArchSuffixes) == 0 {
+		includedArchSuffixes = []string{"-multi", "-amd64"}
+	}
+
 	baseTag = trimArchSuffix(baseTag)
 
 	slices.SortFunc(images, func(a, b registry.Image) int {
@@ -290,7 +297,7 @@ func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*
 	}
 
 	versions := make(map[string]*vsAPI.Version)
-	if multiImage != nil {
+	if multiImage != nil && slices.Contains(includedArchSuffixes, "-multi") {
 		versions[baseTag+getArchSuffix(multiImage.Tag)] = &vsAPI.Version{
 			ImagePath:      multiImage.FullName(),
 			ImageHash:      multiImage.DigestAMD64,
@@ -300,14 +307,14 @@ func versionMapFromImages(baseTag string, images []registry.Image) (map[string]*
 			return versions, nil
 		}
 	}
-	if amd64Image != nil {
+	if amd64Image != nil && slices.Contains(includedArchSuffixes, "-amd64") {
 		versions[baseTag+getArchSuffix(amd64Image.Tag)] = &vsAPI.Version{
 			ImagePath: amd64Image.FullName(),
 			ImageHash: amd64Image.DigestAMD64,
 		}
 	}
 	// Include arm64 if multi image is not specified
-	if multiImage == nil && arm64Image != nil {
+	if multiImage == nil && arm64Image != nil && slices.Contains(includedArchSuffixes, "-arm64") && slices.Contains(includedArchSuffixes, "-aarch64") {
 		versions[baseTag+getArchSuffix(arm64Image.Tag)] = &vsAPI.Version{
 			ImagePath:      arm64Image.FullName(),
 			ImageHashArm64: arm64Image.DigestARM64,
