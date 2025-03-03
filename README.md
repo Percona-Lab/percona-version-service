@@ -89,7 +89,7 @@ In order to compile the proto file and generate all the necessary code, first ru
 ## How to add new release notes for a product
 Add a file to `sources/release-notes/{product_name}/{version-tag}.md`.
 
-Making a request to `/release-notes/v1/{product}/{version-tag}` will return the release note for that version in raw markdown format.
+Making a request to `/release-notes/v1/{product}/{version-tag}` will return the release notes for that version in raw markdown format.
 Run `make format-release-notes` to format the release notes. This command will:
 - Replace all relative links and image sources with absolute links.
 - Replace custom variables with their corresponding SVG/HTML values.

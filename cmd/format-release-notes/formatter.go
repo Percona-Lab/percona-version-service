@@ -59,8 +59,8 @@ func replaceAdmonitionText(sourceContent []byte) ([]byte, error) {
 
 // FormatReleaseNotes rewrites the markdown source of a release note to a GitHub-flavoured markdown with the following changes:
 // - relative links are converted to absolute links pointing to percona docs.
-// - custom icon variables are changed to their SVG/HTML equivalent as described in:
-// - Admonitions are transformed to headings (see: )
+// - custom icon variables are changed to their SVG/HTML equivalent based on the iconsMap specified in variables.go.
+// - Admonitions are transformed to headings.
 func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 	for search, replace := range iconsMap {
 		sourceContent = bytes.ReplaceAll(sourceContent, []byte(search), []byte(replace))
