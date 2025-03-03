@@ -85,3 +85,12 @@ Once your PR is merged, our CI will automatically publish these changes to corre
 Add you're new fields to appropriate messages in the `api/version.proto` file.
 
 In order to compile the proto file and generate all the necessary code, first run `make init` to ensure all the tooling in installed. After that run `make gen` in order to generate everything.
+
+## How to add new release notes for a product
+Add a file to `sources/release-notes/{product_name}/{version-tag}.md`.
+
+Making a request to `/release-notes/v1/{product}/{version-tag}` will return the release notes for that version in raw markdown format.
+Run `make format-release-notes` to format the release notes. This command will:
+- Replace all relative links and image sources with absolute links.
+- Replace custom variables with their corresponding SVG/HTML values.
+- Replace hints and admonitions with a matching markdown header.
