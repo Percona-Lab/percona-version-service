@@ -3,6 +3,7 @@ SHELL = /bin/bash
 GIT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD | sed -e 's^/^-^g; s^[.]^-^g;' | tr '[:upper:]' '[:lower:]')
 GIT_COMMIT:=$(shell git rev-parse --short HEAD)
 IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
+DOCKER_DEFAULT_PLATFORM ?= linux/amd64,linux/arm64
 
 init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
@@ -14,7 +15,7 @@ init:
 	curl -L "https://github.com/bufbuild/buf/releases/download/v1.34.0/buf-$(shell uname -s)-$(shell uname -m)" -o "./bin/buf"
 	chmod +x ./bin/buf
 
-	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
+	curl -L "https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname -s)_$(shell uname -m | sed 's/aarch64/arm64/')" -o ./bin/swagger
 	chmod +x ./bin/swagger
 
 gen:
@@ -41,7 +42,7 @@ cert:
 
 # Build docker image
 docker-build:
-	docker build --platform=linux/amd64 . -t ${IMG}
+	DOCKER_DEFAULT_PLATFORM="$(DOCKER_DEFAULT_PLATFORM)" IMG="$(IMG)" ./tools/build.sh
 
 # Run docker image
 docker-run-it:
