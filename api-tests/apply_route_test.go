@@ -802,7 +802,7 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"latest", "2.2.0", "12.14", "12.14"},
 
 		// test recommended
-		{"recommended", "2.6.0", "", "17.2"},
+		{"recommended", "2.6.0", "", "16.8"},
 		{"recommended", "2.6.0", "16.8", "16.8"},
 		{"recommended", "2.6.0", "15.12", "15.12"},
 		{"recommended", "2.6.0", "14.17", "14.17"},
