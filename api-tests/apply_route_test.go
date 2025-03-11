@@ -745,10 +745,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 	}{
 		// test latest
 		{"latest", "2.6.0", "", "17.2"},
-		{"latest", "2.6.0", "16.6", "16.6"},
-		{"latest", "2.6.0", "15.10", "15.10"},
-		{"latest", "2.6.0", "14.15", "14.15"},
-		{"latest", "2.6.0", "13.18", "13.18"},
+		{"latest", "2.6.0", "16.8", "16.8"},
+		{"latest", "2.6.0", "15.12", "15.12"},
+		{"latest", "2.6.0", "14.17", "14.17"},
+		{"latest", "2.6.0", "13.20", "13.20"},
 		{"latest", "2.5.0", "", "16.4"},
 		{"latest", "2.5.0", "15.8", "15.8"},
 		{"latest", "2.5.0", "14.13", "14.13"},
@@ -781,10 +781,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 
 		// test recommended
 		{"recommended", "2.6.0", "", "17.2"},
-		{"recommended", "2.6.0", "16.6", "16.6"},
-		{"recommended", "2.6.0", "15.10", "15.10"},
-		{"recommended", "2.6.0", "14.15", "14.15"},
-		{"recommended", "2.6.0", "13.18", "13.18"},
+		{"recommended", "2.6.0", "16.8", "16.8"},
+		{"recommended", "2.6.0", "15.12", "15.12"},
+		{"recommended", "2.6.0", "14.17", "14.17"},
+		{"recommended", "2.6.0", "13.20", "13.20"},
 		{"recommended", "2.5.0", "", "16.4"},
 		{"recommended", "2.5.0", "15.8", "15.8"},
 		{"recommended", "2.5.0", "14.13", "14.13"},
@@ -817,10 +817,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 
 		// test exact
 		{"17.2", "2.6.0", "", "17.2"},
-		{"16.6", "2.6.0", "", "16.6"},
-		{"15.10", "2.6.0", "", "15.10"},
-		{"14.15", "2.6.0", "", "14.15"},
-		{"13.18", "2.6.0", "", "13.18"},
+		{"16.8", "2.6.0", "", "16.8"},
+		{"15.12", "2.6.0", "", "15.12"},
+		{"14.17", "2.6.0", "", "14.17"},
+		{"13.20", "2.6.0", "", "13.20"},
 		{"16.4", "2.5.0", "", "16.4"},
 		{"15.8", "2.5.0", "", "15.8"},
 		{"14.13", "2.5.0", "", "14.13"},
@@ -870,10 +870,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"14.11", "1.6.0", "", "14.11"},
 
 		//test with suffix
-		{"13-latest", "2.6.0", "", "13.18"},
-		{"14-latest", "2.6.0", "", "14.15"},
-		{"15-latest", "2.6.0", "", "15.10"},
-		{"16-latest", "2.6.0", "", "16.6"},
+		{"13-latest", "2.6.0", "", "13.20"},
+		{"14-latest", "2.6.0", "", "14.17"},
+		{"15-latest", "2.6.0", "", "15.12"},
+		{"16-latest", "2.6.0", "", "16.8"},
 		{"17-latest", "2.6.0", "", "17.2"},
 		{"12-latest", "2.5.0", "", "12.20"},
 		{"13-latest", "2.5.0", "", "13.16"},
@@ -924,10 +924,10 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"14-latest", "1.6.0", "", "14.11"},
 
 		// test with distribution suffix
-		{"latest", "2.6.0", "13.18 - Percona Distribution", "13.18"},
-		{"latest", "2.6.0", "14.15 - Percona Distribution", "14.15"},
-		{"latest", "2.6.0", "15.10 - Percona Distribution", "15.10"},
-		{"latest", "2.6.0", "16.6 - Percona Distribution", "16.6"},
+		{"latest", "2.6.0", "13.20 - Percona Distribution", "13.20"},
+		{"latest", "2.6.0", "14.17 - Percona Distribution", "14.17"},
+		{"latest", "2.6.0", "15.12 - Percona Distribution", "15.12"},
+		{"latest", "2.6.0", "16.8 - Percona Distribution", "16.8"},
 		{"latest", "2.6.0", "17.2 - Percona Distribution", "17.2"},
 		{"latest", "2.5.0", "12.20 - Percona Distribution", "12.20"},
 		{"latest", "2.5.0", "13.16 - Percona Distribution", "13.16"},
