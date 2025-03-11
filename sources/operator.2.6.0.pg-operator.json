@@ -1,6 +1,8 @@
 {
   "versions": [
     {
+      "operator": "2.6.0",
+      "product": "pg-operator",
       "matrix": {
         "operator": {
           "2.6.0": {
@@ -244,9 +246,7 @@
             "status": "available"
           }
         }
-      },
-      "operator": "2.6.0",
-      "product": "pg-operator"
+      }
     }
   ]
 }
