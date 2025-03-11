@@ -1,0 +1,40 @@
+name: Format release notes
+
+on:
+  push:
+    paths:
+      sources/release-notes/pmm/**
+    branches:
+      - main
+  pull_request:
+    paths:
+      sources/release-notes/pmm/**
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        env:
+          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+        run: |
+          git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
+          git config user.name "GitHub Action"
+          git config user.email "github-action@users.noreply.github.com"
+          git config user.password "${ROBOT_TOKEN}"
+          echo "GIT_USER=percona-platform-robot:${ROBOT_TOKEN}" >> $GITHUB_ENV
+
+      - name: Check that PMM readme files are formatted
+        run: |
+          make build-format-release-notes
+          make format-release-notes
+          git status
+          git diff --exit-code

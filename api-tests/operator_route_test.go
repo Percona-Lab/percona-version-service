@@ -49,6 +49,7 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"psmdb-operator", "1.17.0"},
 		{"psmdb-operator", "1.18.0"},
 		{"psmdb-operator", "1.19.0"},
+		{"psmdb-operator", "1.19.1"},
 		{"pg-operator", "1.1.0"},
 		{"pg-operator", "1.2.0"},
 		{"pg-operator", "1.3.0"},
@@ -63,10 +64,12 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"pg-operator", "2.4.1"},
 		{"pg-operator", "2.5.0"},
 		{"pg-operator", "2.6.0"},
+		{"pg-operator", "2.5.1"},
 		{"ps-operator", "0.5.0"},
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
 		{"ps-operator", "0.8.0"},
+		{"ps-operator", "0.9.0"},
 	}
 
 	for _, c := range cases {
@@ -160,6 +163,7 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		{"psmdb-operator", "1.17.0"},
 		{"psmdb-operator", "1.18.0"},
 		{"psmdb-operator", "1.19.0"},
+		{"psmdb-operator", "1.19.1"},
 	}
 
 	for _, c := range cases {
@@ -226,7 +230,8 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pg-operator", "2.4.0"},
 		{"pg-operator", "2.4.1"},
 		{"pg-operator", "2.5.0"},
-		{"pg-operator", "2.6.0"},
+		{"pg-operator", "2.5.1"},
+    {"pg-operator", "2.6.0"},
 	}
 
 	for _, c := range cases_v2 {
@@ -259,6 +264,7 @@ func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
 		{"ps-operator", "0.8.0"},
+		{"ps-operator", "0.9.0"},
 	}
 
 	for _, c := range cases {
