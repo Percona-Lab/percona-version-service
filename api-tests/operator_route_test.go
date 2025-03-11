@@ -231,7 +231,7 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pg-operator", "2.4.1"},
 		{"pg-operator", "2.5.0"},
 		{"pg-operator", "2.5.1"},
-    {"pg-operator", "2.6.0"},
+		{"pg-operator", "2.6.0"},
 	}
 
 	for _, c := range cases_v2 {
