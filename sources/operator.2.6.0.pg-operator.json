@@ -65,7 +65,7 @@
           "17.2": {
             "critical": false,
             "image_hash": "a3641d58a49fe4f771f3638c9fa18c71dd2f9aba1054e5693d3756134676cb3e",
-            "image_path": "percona/percona-postgresql-operator:2.6.0-ppg17.2-pgbackrest2.54.2",
+            "image_path": "percona/percona-postgresql-operator:2.6.0-ppg17.2-pgbackrest2.54.0",
             "status": "available"
           }
         },
