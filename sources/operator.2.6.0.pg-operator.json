@@ -14,7 +14,7 @@
           }
         },
         "pgbackrest": {
-          "13.20": {
+          "13.16": {
             "critical": false,
             "image_hash": "c3240d08ec86d3dcf7a30e500b23ada7c766b6785a5360f1d28fb1fb02d0a940",
             "image_path": "percona/percona-postgresql-operator:2.5.0-ppg13.16-pgbackrest2.53-1",
