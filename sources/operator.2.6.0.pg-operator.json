@@ -7,14 +7,14 @@
         "operator": {
           "2.6.0": {
             "critical": false,
-            "image_hash": "0c90ef9a5a2f4a7fbdd3ddec679e63579591f922079401e26708a854e741cfcf",
-            "image_hash_arm64": "757875629f7b2682d167cb6888f611d0cad3c581c565a1597834ea47024aa45d",
+            "image_hash": "fb1b6b08e986a21b30ce5e538c54e92e5fd978cd62abf17856c74582a237e931",
+            "image_hash_arm64": "4e545bebaa66e43c1c0707bb576b4047ca5dd6fc0f4fb326b553cba744b337ae",
             "image_path": "percona/percona-postgresql-operator:2.6.0",
             "status": "recommended"
           }
         },
         "pgbackrest": {
-          "13.16": {
+          "13.20": {
             "critical": false,
             "image_hash": "c3240d08ec86d3dcf7a30e500b23ada7c766b6785a5360f1d28fb1fb02d0a940",
             "image_path": "percona/percona-postgresql-operator:2.5.0-ppg13.16-pgbackrest2.53-1",
