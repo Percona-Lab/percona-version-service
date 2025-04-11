@@ -7,7 +7,7 @@
         "pxc": {
           "8.0.41-32.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.41-32.1",
-            "image_hash": "ff2ed3506aabcfd6be99c2548004716ceec1b285ec81a85331eaec507dc3f45b",
+            "image_hash": "8a6799cbded5524c6979442f8d7097831c8c6481f5106a856b44b2791ccaf0fb",
             "status": "recommended",
             "critical": false
           },
@@ -85,7 +85,7 @@
         "haproxy": {
           "2.8.14": {
             "image_path": "percona/haproxy:2.8.14",
-            "image_hash": "5c2d8505fcd04bb01f3f374496c5f7805b3731cbb44addc7cc5f2603e1fed46f",
+            "image_hash": "6de8c402d83b88dae7403c05183fd75100774defa887c05a57ec04bc25be2305",
             "status": "recommended",
             "critical": false
           }
