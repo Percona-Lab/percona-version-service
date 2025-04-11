@@ -7,7 +7,7 @@
         "pxc": {
           "8.0.41-32.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.41-32.1",
-            "image_hash": "ff2ed3506aabcfd6be99c2548004716ceec1b285ec81a85331eaec507dc3f45b",
+            "image_hash": "8a6799cbded5524c6979442f8d7097831c8c6481f5106a856b44b2791ccaf0fb",
             "status": "recommended",
             "critical": false
           },
@@ -69,7 +69,7 @@
         "pmm": {
           "2.44.0": {
             "image_path": "percona/pmm-client:2.44.0",
-            "image_hash": "sha256:19a07dfa8c12a0554308cd11d7d38494ea02a14cfac6c051ce8ff254b7d0a4a7",
+            "image_hash": "19a07dfa8c12a0554308cd11d7d38494ea02a14cfac6c051ce8ff254b7d0a4a7",
             "status": "recommended",
             "critical": false
           }
@@ -83,9 +83,9 @@
           }
         },
         "haproxy": {
-          "2.8.11": {
-            "image_path": "percona/haproxy:2.8.11",
-            "image_hash": "422a210b4170a973f8582ef3d7ddcc879c32bc48f6c66fad8b3154bce4e79b84",
+          "2.8.14": {
+            "image_path": "percona/haproxy:2.8.14",
+            "image_hash": "6de8c402d83b88dae7403c05183fd75100774defa887c05a57ec04bc25be2305",
             "status": "recommended",
             "critical": false
           }
@@ -93,7 +93,7 @@
         "backup": {
           "8.0.35": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.17.0-pxc8.0-backup-pxb8.0.35",
-            "image_hash": "f9e44843b5c5fe6dd6eeb224a04aa934ddde5477742d135e8719334bb53912a1",
+            "image_hash": "2f28c09027a249426b2f4393aa8b76971583d80e0c56be37f77dad49cb5cd5c4",
             "status": "recommended",
             "critical": false
           },
@@ -107,7 +107,7 @@
         "log_collector": {
           "1.17.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.17.0-logcollector-fluentbit4.0.0",
-            "image_hash": "54d70cfc63bb67d370ec510f154d410e65a95606a07260073adf1f815f5a6c67",
+            "image_hash": "9fc0b4097c93f6dba8441d9bcb2803dc62dd8328b84288294444fbadb347f6d7",
             "status": "recommended",
             "critical": false
           }
