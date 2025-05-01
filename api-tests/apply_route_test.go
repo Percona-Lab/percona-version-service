@@ -414,7 +414,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.20.0", nil, "8.0.4-2"},
+		{"latest", "1.20.0", nil, "8.0.8-3"},
 		{"latest", "1.19.1", nil, "8.0.4-1"},
 		{"latest", "1.19.0", nil, "8.0.4-1"},
 		{"latest", "1.18.0", nil, "7.0.14-8"},
@@ -433,7 +433,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.7.0", nil, "4.4.3-5"},
 		{"latest", "1.6.0", nil, "4.4.2-4"},
 		{"latest", "1.5.0", nil, "4.2.8-8"},
-		{"latest", "1.20.0", &v80, "8.0.4-2"},
+		{"latest", "1.20.0", &v80, "8.0.8-3"},
 		{"latest", "1.19.1", &v80, "8.0.4-1"},
 		{"latest", "1.19.0", &v80, "8.0.4-1"},
 		{"latest", "1.20.0", &v70, "7.0.18-11"},
@@ -493,7 +493,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test recommended
-		{"recommended", "1.20.0", nil, "8.0.4-2"},
+		{"recommended", "1.20.0", nil, "8.0.8-3"},
 		{"recommended", "1.19.1", nil, "7.0.15-9"},
 		{"recommended", "1.19.0", nil, "7.0.15-9"},
 		{"recommended", "1.18.0", nil, "7.0.14-8"},
@@ -571,7 +571,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test exact
-		{"8.0.4-2", "1.20.0", nil, "8.0.4-2"},
+		{"8.0.8-3", "1.20.0", nil, "8.0.8-3"},
 		{"8.0.4-1", "1.19.1", nil, "8.0.4-1"},
 		{"8.0.4-1", "1.19.0", nil, "8.0.4-1"},
 		{"7.0.18-11", "1.20.0", nil, "7.0.18-11"},
@@ -635,7 +635,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
 		//test with suffix
-		{"8.0-latest", "1.20.0", nil, "8.0.4-2"},
+		{"8.0-latest", "1.20.0", nil, "8.0.8-3"},
 		{"8.0-latest", "1.19.1", nil, "8.0.4-1"},
 		{"8.0-latest", "1.19.0", nil, "8.0.4-1"},
 		{"7.0-latest", "1.20.0", nil, "7.0.18-11"},
@@ -700,7 +700,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		// Due to issue with PBM restore PBM-1493 we remove 8.0 from recommended
 		// {"8.0-recommended", "1.19.1", nil, "8.0.4-1"},
 		// {"8.0-recommended", "1.19.0", nil, "8.0.4-1"},
-		{"8.0-recommended", "1.20.0", nil, "8.0.4-2"},
+		{"8.0-recommended", "1.20.0", nil, "8.0.8-3"},
 		{"7.0-recommended", "1.20.0", nil, "7.0.18-11"},
 		{"7.0-recommended", "1.19.1", nil, "7.0.15-9"},
 		{"7.0-recommended", "1.19.0", nil, "7.0.15-9"},
