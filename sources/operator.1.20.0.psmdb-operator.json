@@ -101,8 +101,8 @@
         "operator": {
           "1.20.0": {
             "image_path": "percona/percona-server-mongodb-operator:1.20.0",
-            "image_hash": "b9cc1cbf29db0346a0f6fcd2225ff01506874f99c6b9c9d34bf9dc9cf7766ecb",
-            "image_hash_arm64": "1260b6733595c8d0a54ded0bcdea51511cc05d623e253c72e50769009cf94ee0",
+            "image_hash": "8636e0966969b9aef4055f52f3ed139a3057790dcc59332652772d5b28f0e047",
+            "image_hash_arm64": "99d3bdede540d638036e0e9fd7f1db18b14da751d77f78a5e1bd612607b02486",
             "status": "recommended",
             "critical": false
           }
