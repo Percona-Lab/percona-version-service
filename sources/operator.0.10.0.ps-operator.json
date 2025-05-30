@@ -80,7 +80,7 @@
         "backup": {
           "8.0.35-33": {
             "image_path": "percona/percona-xtrabackup:8.0.35-33",
-            "image_hash": "e2d10f66f5e1e74dc62835e8a87a7e98446147473f02627538e6b5796337e01c",
+            "image_hash": "57518571b4663ab492bbd2dc8369fea7e8d358b8e544ea8fa1c1eda12207b8e2",
             "status": "recommended",
             "critical": false
           }
