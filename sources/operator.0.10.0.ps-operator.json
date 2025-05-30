@@ -1,0 +1,100 @@
+{
+  "versions": [
+    {
+      "operator": "0.10.0",
+      "product": "ps-operator",
+      "matrix": {
+        "mysql": {
+          "8.0.42-33": {
+            "image_path": "percona/percona-server:8.0.42-33",
+            "image_hash": "e30ad4bd3729f6a1ab443341a0a9ce10bbe70cb80d14e5e24a25da4bae4305da",
+            "status": "recommended",
+            "critical": false
+          },
+          "8.0.40-31": {
+            "image_path": "percona/percona-server:8.0.40-31",
+            "image_hash": "09276abecbc7c38ce9c5453da1728f3e7d81722c56e2837574ace3a021ee92f2",
+            "status": "available",
+            "critical": false
+          },
+          "8.0.36-28": {
+            "image_path": "percona/percona-server:8.0.36-28",
+            "image_hash": "423acd206f94b34288d10ed041c3ba42543e26e44f3706621320504a010dd41f",
+            "status": "available",
+            "critical": false
+          },
+          "8.0.33-25": {
+            "image_path": "percona/percona-server:8.0.33-25",
+            "image_hash": "14ef81039f2dfa5e19a9bf20e39aaf367aae4370db70899bc5217118d6fd2171",
+            "status": "available",
+            "critical": false
+          },
+          "8.0.32-24": {
+            "image_path": "percona/percona-server:8.0.32-24",
+            "image_hash": "2107838f98d41172f37c7fc9689095e9ebd0a1af557b687396d92cf00f54ec3f",
+            "status": "available",
+            "critical": false
+          }
+        },
+        "pmm": {
+          "3.2.0": {
+            "image_path": "percona/pmm-client:3.2.0",
+            "image_hash": "7b1d1798b6446d6c3d5e4005fd9c07be9f4be5859ac2fae908be387cf7b0f50c",
+            "image_hash_arm64": "1a36eb47e39dcd275c5ed62da8415c862e560933f48790bbf9b78f41cd3dfd10",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "haproxy": {
+          "2.8.14": {
+            "image_path": "percona/haproxy:2.8.14",
+            "image_hash": "6de8c402d83b88dae7403c05183fd75100774defa887c05a57ec04bc25be2305",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "orchestrator": {
+          "3.2.6-17": {
+            "image_path": "percona/percona-orchestrator:3.2.6-17",
+            "image_hash": "c1871ddc6ff3eaca7bb03c3aa11db880ae02d623db1203d0858f8566f56ea5f7",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "router": {
+          "8.0.42": {
+            "image_path": "percona/percona-mysql-router:8.0.42",
+            "image_hash": "a6351fc5774086400f1d1dcf08f4f2d5975b97bc943d3dd98fb870e364066968",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "toolkit": {
+          "3.7.0": {
+            "image_path": "percona/percona-toolkit:3.7.0",
+            "image_hash": "17ef2b69a97fa546d1f925c74ca09587ac215085c392761bb4d51f188baa6c0e",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "backup": {
+          "8.0.35-33": {
+            "image_path": "percona/percona-xtrabackup:8.0.35-33",
+            "image_hash": "e2d10f66f5e1e74dc62835e8a87a7e98446147473f02627538e6b5796337e01c",
+            "status": "recommended",
+            "critical": false
+          }
+        },
+        "operator": {
+          "0.10.0": {
+            "image_path": "percona/percona-server-mysql-operator:0.10.0",
+            "image_hash": "406cf9b929eb42a158fc05d6bbde3435d2c46c7fed0a53889d82b335334e8df2",
+            "image_hash_arm64": "0889abb9ef079efb164a1046393a5266cd30701fcd53c32db439a2ca93c6dceb",
+            "status": "recommended",
+            "critical": false
+          }
+        }
+      }
+    }
+  ]
+}
