@@ -1,0 +1,4 @@
+version: 1.8.0-rc1
+supported:
+  cli: '>= 1.4.0'
+  kubernetes: '>= 1.27'
