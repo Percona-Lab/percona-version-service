@@ -1,0 +1,6 @@
+version: 3.3.0
+imageInfo:
+  image_path: "percona/pmm-server:3.3.0"
+  image_hash: "sha256:f6a99f8614abe520caa5310d36aa858a91d670a16ec668b2a2c5aa9a29c4dd37"
+  image_release_timestamp: "2025-07-09T10:40:33.343594Z"
+  status: "available"
