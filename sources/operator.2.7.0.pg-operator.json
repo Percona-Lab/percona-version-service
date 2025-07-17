@@ -172,7 +172,7 @@
           },
           "13.21": {
             "critical": false,
-            "image_hash": "541d669678869cc1de11657eb9cc7a6144637d62859add0469160367852c7d95",
+            "image_hash": "3df44c1089563b42198ef929e27b9797ef2b04d92736293952163fa7541c0068",
             "image_path": "percona/percona-postgresql-operator:2.7.0-ppg13.21-postgres-gis3.3.8",
             "status": "recommended"
           },
@@ -234,7 +234,7 @@
           },
           "13.21": {
             "critical": false,
-            "image_hash": "1c6ab49d2a0c5aaa3e1c167715d1f101a69025fd2a8357f199610a78b8591fd7",
+            "image_hash": "2c9a05399b34cfe79698bdaab66db8fdaece0db7b1fa34441124cccdbe375255",
             "image_path": "percona/percona-postgresql-operator:2.7.0-ppg13.21-postgres",
             "status": "recommended"
           },
