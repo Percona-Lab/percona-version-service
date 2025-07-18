@@ -68,6 +68,7 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"pg-operator", "2.5.0"},
 		{"pg-operator", "2.5.1"},
 		{"pg-operator", "2.6.0"},
+		{"pg-operator", "2.7.0"},
 		{"ps-operator", "0.5.0"},
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
@@ -239,6 +240,7 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pg-operator", "2.5.0"},
 		{"pg-operator", "2.5.1"},
 		{"pg-operator", "2.6.0"},
+		{"pg-operator", "2.7.0"},
 	}
 
 	for _, c := range cases_v2 {
