@@ -70,8 +70,14 @@
           "2.44.0": {
             "image_path": "percona/pmm-client:2.44.0",
             "image_hash": "19a07dfa8c12a0554308cd11d7d38494ea02a14cfac6c051ce8ff254b7d0a4a7",
-            "status": "recommended",
+            "status": "available",
             "critical": false
+          },
+          "2.44.1-1": {
+            "image_path": "percona/pmm-client:2.44.1-1",
+            "image_hash": "2f9c79934b85541afe815a1e1e58a03c66bf953abea3932ddd8486408b867c41",
+            "status": "recommended",
+            "critical": true
           }
         },
         "proxysql": {
