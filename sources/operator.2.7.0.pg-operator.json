@@ -155,6 +155,12 @@
             "image_path": "percona/pmm-client:2.44.1",
             "status": "available"
           },
+          "2.44.1-1": {
+            "image_path": "percona/pmm-client:2.44.1-1",
+            "image_hash": "2f9c79934b85541afe815a1e1e58a03c66bf953abea3932ddd8486408b867c41",
+            "status": "recommended",
+            "critical": true
+          },
           "3.3.0": {
             "critical": false,
             "image_hash": "0f4ef6a814946f83ef1ed26cf3526ff606fc7815007f84995492d3e4eaa15a0e",
