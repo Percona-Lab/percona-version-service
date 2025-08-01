@@ -30,7 +30,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Pxc, 1)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Backup, 1)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Proxysql, 1)
-	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Pmm, 2)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Pmm, 1)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Haproxy, 1)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Operator, 1)
 
@@ -47,7 +47,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psmdbResp.Payload.Versions, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Mongod, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Backup, 1)
-	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 3)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	pgParams := &version_service.VersionServiceApplyParams{
@@ -80,7 +80,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	assert.Len(t, psResp.Payload.Versions, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Mysql, 1)
-	assert.Len(t, psResp.Payload.Versions[0].Matrix.Pmm, 2)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Pmm, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Backup, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Orchestrator, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Router, 1)
