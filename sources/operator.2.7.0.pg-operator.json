@@ -166,6 +166,13 @@
             "image_hash": "0f4ef6a814946f83ef1ed26cf3526ff606fc7815007f84995492d3e4eaa15a0e",
             "image_hash_arm64": "c03aa678d26faf783c3598b3a139a8f3154e5bf1bc9f5a3c9abf0533922f79d6",
             "image_path": "percona/pmm-client:3.3.0",
+            "status": "available"
+          },
+          "3.3.1": {
+            "critical": true,
+            "image_hash": "29a9bb1c69fef8bedc4d4a9ed0ae8224a8623fd3eb8676ef40b13fd044188cb4",
+            "image_hash_arm64": "50bccba4cb2c33bd3f6c5e37553bb70345de3f328b23a64ecfa63893f9025c83",
+            "image_path": "percona/pmm-client:3.3.1",
             "status": "recommended"
           }
         },
