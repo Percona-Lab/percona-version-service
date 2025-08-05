@@ -171,6 +171,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 	cli := cli()
 
 	v57 := "5.7"
+	v80 := "8.0"
 	vPreRel := "5.7.31-99-99"
 
 	cases := []struct {
