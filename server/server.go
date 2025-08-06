@@ -182,11 +182,7 @@ func pxc(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) 
 		return err
 	}
 
-	pmmVersion, err := depFilter(deps.PMM, productVersion)
-	if err != nil {
-		return err
-	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion, true)
+	err = pmmFilter(vs.Versions[0].Matrix.Pmm, true)
 	if err != nil {
 		return err
 	}
@@ -242,11 +238,7 @@ func psmdb(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest
 		return err
 	}
 
-	pmmVersion, err := depFilter(deps.PMM, productVersion)
-	if err != nil {
-		return err
-	}
-	err = defaultFilter(vs.Versions[0].Matrix.Pmm, pmmVersion, true)
+	err = pmmFilter(vs.Versions[0].Matrix.Pmm, true)
 	if err != nil {
 		return err
 	}
@@ -307,6 +299,11 @@ func pg(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 		return err
 	}
 	err = defaultFilter(vs.Versions[0].Matrix.Postgis, depVer, true)
+	if err != nil {
+		return err
+	}
+
+	err = pmmFilter(vs.Versions[0].Matrix.Pmm, true)
 	if err != nil {
 		return err
 	}
