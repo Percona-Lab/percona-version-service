@@ -74,7 +74,7 @@
         "pmm": {
           "2.44.1-1": {
             "image_path": "percona/pmm-client:2.44.1-1",
-            "image_hash": "2f9c79934b85541afe815a1e1e58a03c66bf953abea3932ddd8486408b867c41",
+            "image_hash": "52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3",
             "status": "recommended",
             "critical": false
           },
@@ -104,13 +104,13 @@
         "backup": {
           "8.4.0": {
             "image_path": "percona/percona-xtrabackup:8.4.0-3.1",
-            "image_hash": "f9085558d196357b37689c1cb2c8c9e184dc8862d6642b980b6fbfa0dba899ff",
+            "image_hash": "01071522753ad94e11a897859bba4713316d08e493e23555c0094d68da223730",
             "status": "available",
             "critical": false
           },
           "8.0.35": {
             "image_path": "percona/percona-xtrabackup:8.0.35-33.1",
-            "image_hash": "01e06df79cdf3650284eaca0b49fd7dff63556c667d21bd0a31c8cebd4e36049",
+            "image_hash": "ae56852f0343726409633268cf8c6af92754ea2b5aacbecbec93fa980f8e724d",
             "status": "recommended",
             "critical": false
           },
@@ -132,8 +132,8 @@
         "operator": {
           "1.18.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.18.0",
-            "image_hash": "b4e783b6672a0710905a114260e1e68bc64bba0cfbccd218d77b2b7ceffa89bf",
-            "image_hash_arm64": "929ca4586699dffbd9806c18f2fac8c3b3d6f6871a00c0206ce2c7ab70ac5d3d",
+            "image_hash": "29e49020c2f58d634dde4e648d2f850733b4166de4c8a1c1ae63849d893c7da6",
+            "image_hash_arm64": "4e5c2c3a31f52a1d170adb45c871647cbccc9ef48c454758587a08f7f82f31c2",
             "status": "recommended",
             "critical": false
           }
