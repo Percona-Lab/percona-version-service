@@ -19,6 +19,7 @@
           },
           "8.0.41-32.1": {
             "image_path": "percona/percona-xtradb-cluster:8.0.41-32.1",
+            "image_hash": "d9c84884a12631306d5a33a079e30bf7b65d3d380b07b397d7b1b6a642cc6bff",
             "status": "available",
             "critical": false
           },
