@@ -1,8 +1,17 @@
-FROM golang:1.23 AS build-env
-ADD . /src
+FROM --platform=$BUILDPLATFORM golang:1.23 AS build-env
+
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETARCH
+ARG TARGETOS
+
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
+
 ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
+ENV GOOS=${TARGETOS}
+ENV GOARCH=${TARGETARCH}
+
+ADD . /src
 WORKDIR /src
 RUN go mod download
 RUN make init
