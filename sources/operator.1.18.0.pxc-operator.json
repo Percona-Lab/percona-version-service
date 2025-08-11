@@ -110,8 +110,8 @@
             "critical": false
           },
           "8.0.35": {
-            "image_path": "percona/percona-xtrabackup:8.0.35-33.1",
-            "image_hash": "ae56852f0343726409633268cf8c6af92754ea2b5aacbecbec93fa980f8e724d",
+            "image_path": "percona/percona-xtrabackup:8.0.35-34.1",
+            "image_hash": "2dc127b08971051296d421b22aa861bb0330cf702b4b0246ae31053b0f01911e",
             "status": "recommended",
             "critical": false
           },
@@ -134,7 +134,7 @@
           "1.18.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.18.0",
             "image_hash": "29e49020c2f58d634dde4e648d2f850733b4166de4c8a1c1ae63849d893c7da6",
-            "image_hash_arm64": "4e5c2c3a31f52a1d170adb45c871647cbccc9ef48c454758587a08f7f82f31c2",
+            "image_hash_arm64": "696a6474b74a439b3102e8bcedcdaca2548071633acc09453b2c906547b85b9d",
             "status": "recommended",
             "critical": false
           }
