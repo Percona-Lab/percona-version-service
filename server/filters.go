@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+	"slices"
 	"sort"
 	"strings"
 
@@ -270,6 +271,44 @@ func psFilter(versions map[string]*pbVersion.Version, apply string, current stri
 	return nil
 }
 
+// pmmFilter returns the highest versions of each major PMM release (2 and 3)
+func pmmFilter(versions map[string]*pbVersion.Version, preVerIsLower bool) error {
+	if len(versions) == 0 {
+		return nil
+	}
+
+	ver2 := make([]string, 0)
+	ver3 := make([]string, 0)
+	for k := range versions {
+		if strings.HasPrefix(k, "2.") {
+			ver2 = append(ver2, k)
+		}
+		if strings.HasPrefix(k, "3.") {
+			ver3 = append(ver3, k)
+		}
+	}
+
+	keep := make([]string, 0)
+
+	if len(ver2) > 0 {
+		sortedVer2, err := sortedVersionsDesc(ver2, preVerIsLower)
+		if err != nil {
+			return status.Errorf(codes.Internal, "failed to sort pmm2 versions: %v", err)
+		}
+		keep = append(keep, sortedVer2[0].String())
+	}
+
+	if len(ver3) > 0 {
+		sortedVer3, err := sortedVersionsDesc(ver3, preVerIsLower)
+		if err != nil {
+			return status.Errorf(codes.Internal, "failed to sort pmm3 versions: %v", err)
+		}
+		keep = append(keep, sortedVer3[0].String())
+	}
+
+	return deleteOtherButThese(keep, versions)
+}
+
 func defaultFilter(versions map[string]*pbVersion.Version, apply string, preVerIsLower bool) error {
 	if len(versions) == 0 {
 		return nil
@@ -401,6 +440,16 @@ func deleteOtherBut(v string, versions map[string]*pbVersion.Version) error {
 			if k != v {
 				delete(versions, k)
 			}
+		}
+	}
+
+	return nil
+}
+
+func deleteOtherButThese(keep []string, versions map[string]*pbVersion.Version) error {
+	for k := range versions {
+		if !slices.Contains(keep, k) {
+			delete(versions, k)
 		}
 	}
 
