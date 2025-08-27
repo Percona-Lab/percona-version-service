@@ -105,7 +105,7 @@
           },
           "8.0.35-33": {
             "image_path": "percona/percona-xtrabackup:8.0.35-33",
-            "image_hash": "57518571b4663ab492bbd2dc8369fea7e8d358b8e544ea8fa1c1eda12207b8e2",
+            "image_hash": "ae56852f0343726409633268cf8c6af92754ea2b5aacbecbec93fa980f8e724d",
             "status": "recommended",
             "critical": false
           }
@@ -113,8 +113,8 @@
         "operator": {
           "0.11.0": {
             "image_path": "percona/percona-server-mysql-operator:0.11.0",
-            "image_hash": "7a1f13d25265775a1d5c91cdc44536c30345331e6ebf1a6fcc285b28e18883c3",
-            "image_hash_arm64": "1abc9f4fb9ec0faaf0951c4df55bfac6012500e522ac4d4696c2affe3357167f",
+            "image_hash": "3068b1a4d81b5da7676e071040d3b44ff9fec5532cbfabb17f9c7612e8c9d35d",
+            "image_hash_arm64": "b50f215869ca3d9f6a52561171851e8ffa033ca30d0276556e220ad448418b61",
             "status": "recommended",
             "critical": false
           }

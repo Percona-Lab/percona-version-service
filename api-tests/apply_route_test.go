@@ -1137,6 +1137,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 
 		//test with suffix
 		{"8.4-latest", "0.11.0", "8.4.5-5"},
+		{"8.0-latest", "0.11.0", "8.0.42-33"},
 		{"8.0-latest", "0.10.0", "8.0.42-33"},
 		{"8.0-latest", "0.9.0", "8.0.40-31"},
 		{"8.0-latest", "0.8.0", "8.0.36-28"},
