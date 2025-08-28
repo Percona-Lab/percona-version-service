@@ -70,7 +70,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "0.10.0",
+		OperatorVersion: "0.11.0",
 		Product:         "ps-operator",
 	}
 	psParams.WithTimeout(2 * time.Second)
@@ -152,12 +152,12 @@ func TestApplyPsShouldReturnSameMajorVersion(t *testing.T) {
 
 	params := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "0.10.0",
+		OperatorVersion: "0.11.0",
 		Product:         "ps-operator",
 	}
 	params.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"8.0"} {
+	for _, v := range []string{"8.0", "8.4"} {
 		params.DatabaseVersion = &v
 		resp, err := cli.VersionService.VersionServiceApply(params)
 		assert.NoError(t, err)
@@ -1102,49 +1102,62 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 
 func TestApplyPSReturnedVersions(t *testing.T) {
 	cli := cli()
+	
+	v80 := "8.0"
+	v84 := "8.4"
 
 	cases := []struct {
 		apply    string
 		operator string
+		dbVersion *string
 		version  string
 	}{
 		// test latest
-		{"latest", "0.10.0", "8.0.42-33"},
-		{"latest", "0.9.0", "8.0.40-31"},
-		{"latest", "0.8.0", "8.0.36-28"},
-		{"latest", "0.7.0", "8.0.36-28"},
-		{"latest", "0.6.0", "8.0.33-25"},
-		{"latest", "0.5.0", "8.0.32-24"},
+		{"latest", "0.11.0", nil, "8.4.5-5"},
+		{"latest", "0.10.0", nil, "8.0.42-33"},
+		{"latest", "0.9.0", nil, "8.0.40-31"},
+		{"latest", "0.8.0", nil, "8.0.36-28"},
+		{"latest", "0.7.0", nil, "8.0.36-28"},
+		{"latest", "0.6.0", nil, "8.0.33-25"},
+		{"latest", "0.5.0", nil, "8.0.32-24"},
+		{"latest", "0.11.0", &v80, "8.0.42-33"},
+		{"latest", "0.11.0", &v84, "8.4.5-5"},
 
 		// test recommended
-		{"recommended", "0.10.0", "8.0.42-33"},
-		{"recommended", "0.9.0", "8.0.40-31"},
-		{"recommended", "0.8.0", "8.0.36-28"},
-		{"recommended", "0.7.0", "8.0.36-28"},
-		{"recommended", "0.6.0", "8.0.33-25"},
-		{"recommended", "0.5.0", "8.0.32-24"},
+		{"recommended", "0.11.0", nil, "8.0.42-33"},
+		{"recommended", "0.10.0", nil, "8.0.42-33"},
+		{"recommended", "0.9.0", nil, "8.0.40-31"},
+		{"recommended", "0.8.0", nil, "8.0.36-28"},
+		{"recommended", "0.7.0", nil, "8.0.36-28"},
+		{"recommended", "0.6.0", nil, "8.0.33-25"},
+		{"recommended", "0.5.0", nil, "8.0.32-24"},
+		{"recommended", "0.11.0", &v80, "8.0.42-33"},
 
 		// test exact
-		{"8.0.42", "0.10.0", "8.0.42-33"},
-		{"8.0.40", "0.9.0", "8.0.40-31"},
-		{"8.0.36", "0.8.0", "8.0.36-28"},
-		{"8.0.32", "0.7.0", "8.0.32-24"},
-		{"8.0.32", "0.6.0", "8.0.32-24"},
-		{"8.0.30", "0.5.0", "8.0.30-22"},
+		{"8.0.42", "0.11.0", nil, "8.0.42-33"},
+		{"8.0.42", "0.10.0", nil, "8.0.42-33"},
+		{"8.0.40", "0.9.0", nil, "8.0.40-31"},
+		{"8.0.36", "0.8.0", nil, "8.0.36-28"},
+		{"8.0.32", "0.7.0", nil, "8.0.32-24"},
+		{"8.0.32", "0.6.0", nil, "8.0.32-24"},
+		{"8.0.30", "0.5.0", nil, "8.0.30-22"},
 
 		//test with suffix
-		{"8.0-latest", "0.10.0", "8.0.42-33"},
-		{"8.0-latest", "0.9.0", "8.0.40-31"},
-		{"8.0-latest", "0.8.0", "8.0.36-28"},
-		{"8.0-latest", "0.7.0", "8.0.36-28"},
-		{"8.0-latest", "0.6.0", "8.0.33-25"},
-		{"8.0-latest", "0.5.0", "8.0.32-24"},
-		{"8.0-recommended", "0.10.0", "8.0.42-33"},
-		{"8.0-recommended", "0.9.0", "8.0.40-31"},
-		{"8.0-recommended", "0.8.0", "8.0.36-28"},
-		{"8.0-recommended", "0.7.0", "8.0.36-28"},
-		{"8.0-recommended", "0.6.0", "8.0.33-25"},
-		{"8.0-recommended", "0.5.0", "8.0.32-24"},
+		{"8.4-latest", "0.11.0", nil, "8.4.5-5"},
+		{"8.0-latest", "0.11.0", nil, "8.0.42-33"},
+		{"8.0-latest", "0.10.0", nil, "8.0.42-33"},
+		{"8.0-latest", "0.9.0", nil, "8.0.40-31"},
+		{"8.0-latest", "0.8.0", nil, "8.0.36-28"},
+		{"8.0-latest", "0.7.0", nil, "8.0.36-28"},
+		{"8.0-latest", "0.6.0", nil, "8.0.33-25"},
+		{"8.0-latest", "0.5.0", nil, "8.0.32-24"},
+		{"8.0-recommended", "0.11.0", nil, "8.0.42-33"},
+		{"8.0-recommended", "0.10.0", nil, "8.0.42-33"},
+		{"8.0-recommended", "0.9.0", nil, "8.0.40-31"},
+		{"8.0-recommended", "0.8.0", nil, "8.0.36-28"},
+		{"8.0-recommended", "0.7.0", nil, "8.0.36-28"},
+		{"8.0-recommended", "0.6.0", nil, "8.0.33-25"},
+		{"8.0-recommended", "0.5.0", nil, "8.0.32-24"},
 	}
 
 	for _, c := range cases {
@@ -1154,6 +1167,10 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 			Product:         "ps-operator",
 		}
 		params.WithTimeout(2 * time.Second)
+
+		if c.dbVersion != nil {
+			params.DatabaseVersion = c.dbVersion
+		}
 
 		resp, err := cli.VersionService.VersionServiceApply(params)
 		assert.NoError(t, err)
