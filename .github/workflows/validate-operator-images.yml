@@ -1,0 +1,27 @@
+name: Validate Operator Image Hashes
+
+on:
+  pull_request:
+    paths:
+      - 'sources/operator*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: pip install requests
+
+      - name: Validate
+        run: |
+          for file in $(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^sources/operator.*\.json$'); do
+            python .github/workflows/images_hash_check.py -f "$file"
+          done
+
