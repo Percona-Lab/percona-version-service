@@ -42,8 +42,7 @@ for version in data["versions"]:
             image = details["image_path"]
 
             expected_amd = details.get("image_hash")
-            if expected_amd:
-                print(f"🔎 Checking {image} (amd64) ...")
+            if expected_amd is not None:
                 try:
                     digest = get_digest(image, "amd64")
                     if digest == f"sha256:{expected_amd}":
@@ -56,8 +55,7 @@ for version in data["versions"]:
                     errors.append((image, "amd64", expected_amd, "ERROR"))
 
             expected_arm = details.get("image_hash_arm64")
-            if expected_arm:
-                print(f"🔎 Checking {image} (arm64) ...")
+            if expected_arm is not None:
                 try:
                     digest = get_digest(image, "arm64")
                     if digest == f"sha256:{expected_arm}":
