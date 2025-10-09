@@ -47,7 +47,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psmdbResp.Payload.Versions, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Mongod, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Backup, 1)
-	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 1)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 2)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	pgParams := &version_service.VersionServiceApplyParams{
@@ -601,7 +601,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test exact
-		{"8.0.12-4", "1.20.1", nil, "8.0.12-4"},
+		{"8.0.12-4", "1.21.0", nil, "8.0.12-4"},
 		{"8.0.8-3", "1.20.1", nil, "8.0.8-3"},
 		{"8.0.8-3", "1.20.0", nil, "8.0.8-3"},
 		{"8.0.4-1", "1.19.1", nil, "8.0.4-1"},
@@ -671,7 +671,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
 		//test with suffix
-		{"8.0-latest", "1.20.1", nil, "8.0.12-4"},
+		{"8.0-latest", "1.21.0", nil, "8.0.12-4"},
 		{"8.0-latest", "1.20.1", nil, "8.0.8-3"},
 		{"8.0-latest", "1.20.0", nil, "8.0.8-3"},
 		{"8.0-latest", "1.19.1", nil, "8.0.4-1"},
@@ -751,7 +751,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"7.0-recommended", "1.16.2", nil, "7.0.8-5"},
 		{"7.0-recommended", "1.16.1", nil, "7.0.8-5"},
 		{"7.0-recommended", "1.16.0", nil, "7.0.8-5"},
-		{"6.0-recommended", "1.20.1", nil, "6.0.25-20"},
+		{"6.0-recommended", "1.21.0", nil, "6.0.25-20"},
 		{"6.0-recommended", "1.20.1", nil, "6.0.21-18"},
 		{"6.0-recommended", "1.20.0", nil, "6.0.21-18"},
 		{"6.0-recommended", "1.19.1", nil, "6.0.19-16"},
