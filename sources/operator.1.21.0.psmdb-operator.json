@@ -118,6 +118,14 @@
             "critical": false
           }
         },
+        "log_collector": {
+          "1.17.0": {
+            "image_path": "percona/percona-xtradb-cluster-operator:1.17.0-logcollector-fluentbit4.0.0",
+            "image_hash": "9fc0b4097c93f6dba8441d9bcb2803dc62dd8328b84288294444fbadb347f6d7",
+            "status": "recommended",
+            "critical": false
+          }
+        },
         "operator": {
           "1.21.0": {
             "image_path": "percona/percona-server-mongodb-operator:1.21.0",
