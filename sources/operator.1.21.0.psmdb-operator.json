@@ -120,8 +120,8 @@
         },
         "log_collector": {
           "1.17.0": {
-            "image_path": "percona/percona-xtradb-cluster-operator:1.17.0-logcollector-fluentbit4.0.0",
-            "image_hash": "9fc0b4097c93f6dba8441d9bcb2803dc62dd8328b84288294444fbadb347f6d7",
+            "image_path": "percona/fluentbit:4.0.1",
+            "image_hash": "a4ab7dd10379ccf74607f6b05225c4996eeff53b628bda94e615781a1f58b779",
             "status": "recommended",
             "critical": false
           }
