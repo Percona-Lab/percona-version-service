@@ -102,9 +102,9 @@
             "status": "available",
             "critical": false
           },
-          "3.4.0": {
-            "image_hash": "9e8bf020be35eddc2a9e3a22e974234ce02c4818353e87e0522191df2743af3c",
-            "image_path": "percona/pmm-client:3.4.0",
+          "3.4.1": {
+            "image_hash": "1c59d7188f8404e0294f4bfb3d2c3600107f808a023668a170a6b8036c56619b",
+            "image_path": "percona/pmm-client:3.4.1",
             "status": "recommended",
             "critical": false
           }
