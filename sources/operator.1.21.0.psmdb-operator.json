@@ -99,7 +99,7 @@
           "2.44.1-1": {
             "image_path": "percona/pmm-client:2.44.1-1",
             "image_hash": "52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3",
-            "status": "available",
+            "status": "recommended",
             "critical": false
           },
           "3.4.1": {
