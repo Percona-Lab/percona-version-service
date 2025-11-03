@@ -52,7 +52,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "2.7.0",
+		OperatorVersion: "2.8.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -132,7 +132,7 @@ func TestApplyPgShouldReturnSameMajorVersion(t *testing.T) {
 
 	pgParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "2.7.0",
+		OperatorVersion: "2.8.0",
 		Product:         "pg-operator",
 	}
 	pgParams.WithTimeout(2 * time.Second)
@@ -849,6 +849,11 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "2.8.0", "", "17.6"},
+		{"latest", "2.8.0", "16.10", "16.10"},
+		{"latest", "2.8.0", "15.14", "15.14"},
+		{"latest", "2.8.0", "14.19", "14.19"},
+		{"latest", "2.8.0", "13.22", "13.22"},
 		{"latest", "2.7.0", "", "17.5.2"},
 		{"latest", "2.7.0", "16.9", "16.9"},
 		{"latest", "2.7.0", "15.13", "15.13"},
@@ -895,6 +900,11 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"latest", "2.2.0", "12.14", "12.14"},
 
 		// test recommended
+		{"recommended", "2.8.0", "", "17.6"},
+		{"recommended", "2.8.0", "16.10", "16.10"},
+		{"recommended", "2.8.0", "15.14", "15.14"},
+		{"recommended", "2.8.0", "14.19", "14.19"},
+		{"recommended", "2.8.0", "13.22", "13.22"},
 		{"recommended", "2.7.0", "", "17.5.2"},
 		{"recommended", "2.7.0", "16.9", "16.9"},
 		{"recommended", "2.7.0", "15.13", "15.13"},
@@ -940,6 +950,11 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"recommended", "2.2.0", "12.14", "12.14"},
 
 		// test exact
+		{"17.6", "2.8.0", "", "17.6"},
+		{"16.10", "2.8.0", "", "16.10"},
+		{"15.14", "2.8.0", "", "15.14"},
+		{"14.19", "2.8.0", "", "14.19"},
+		{"13.22", "2.8.0", "", "13.22"},
 		{"17.5.2", "2.7.0", "", "17.5.2"},
 		{"16.9", "2.7.0", "", "16.9"},
 		{"15.13", "2.7.0", "", "15.13"},
@@ -1004,6 +1019,11 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"14.11", "1.6.0", "", "14.11"},
 
 		//test with suffix
+		{"13-latest", "2.8.0", "", "13.22"},
+		{"14-latest", "2.8.0", "", "14.19"},
+		{"15-latest", "2.8.0", "", "15.14"},
+		{"16-latest", "2.8.0", "", "16.10"},
+		{"17-latest", "2.8.0", "", "17.6"},
 		{"13-latest", "2.7.0", "", "13.21"},
 		{"14-latest", "2.7.0", "", "14.18"},
 		{"15-latest", "2.7.0", "", "15.13"},
@@ -1068,6 +1088,11 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 		{"14-latest", "1.6.0", "", "14.11"},
 
 		// test with distribution suffix
+		{"latest", "2.8.0", "13.22 - Percona Distribution", "13.22"},
+		{"latest", "2.8.0", "14.19 - Percona Distribution", "14.19"},
+		{"latest", "2.8.0", "15.14 - Percona Distribution", "15.14"},
+		{"latest", "2.8.0", "16.10 - Percona Distribution", "16.10"},
+		{"latest", "2.8.0", "17.6 - Percona Distribution", "17.6"},
 		{"latest", "2.7.0", "13.21 - Percona Distribution", "13.21"},
 		{"latest", "2.7.0", "14.18 - Percona Distribution", "14.18"},
 		{"latest", "2.7.0", "15.13 - Percona Distribution", "15.13"},
