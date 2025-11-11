@@ -1198,7 +1198,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"recommended", "0.5.0", nil, "8.0.32-24"},
 		{"recommended", "1.0.0", &v84, "8.4.6-6"},
 		{"recommended", "0.12.0", &v84, "8.4.6-6"},
-		{"recommended", "1.0.0", &v80, "8.0.43-34"}
+		{"recommended", "1.0.0", &v80, "8.0.43-34"},
 		{"recommended", "0.12.0", &v80, "8.0.43-34"},
 		{"recommended", "0.11.0", &v80, "8.0.42-33"},
 
