@@ -7,8 +7,8 @@
         "operator": {
           "2.8.0": {
             "critical": false,
-            "image_hash": "0a4f8eddb87746c0749fe198ec97046f0ba7d8d845face9d3bc1001729fd7013",
-            "image_hash_arm64": "38d8ad1ffd41347c43b35f0696a060e28b743c83f17d6277339941c9bc587d10",
+            "image_hash": "e34a185e1b295ff627facd3cfbdfc31f32bab714eac550de5e6da00abd9053e2",
+            "image_hash_arm64": "18445bd761ac3f77901f0e9eddd79b295d28b779779a29bb2d69eb51c32e3815",
             "image_path": "percona/percona-postgresql-operator:2.8.0",
             "status": "recommended"
           }
