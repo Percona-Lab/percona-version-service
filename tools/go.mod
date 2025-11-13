@@ -1,6 +1,6 @@
 module github.com/Percona-Lab/percona-version-service/tools
 
-go 1.23.4
+go 1.25.4
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0
