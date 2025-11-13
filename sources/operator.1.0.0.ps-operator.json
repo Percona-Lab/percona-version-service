@@ -112,8 +112,8 @@
         "operator": {
           "1.0.0": {
             "image_path": "percona/percona-server-mysql-operator:1.0.0",
-            "image_hash": "36d82324630c7b2030c6f96df8dc8433726c1236f915e790825a54571dbca7f3",
-            "image_hash_arm64": "fa9e3082d51d3c52f6cefbd1be129f4585effba7ca6221fd1234a481ddcd61a5",
+            "image_hash": "71850c11e72e87c09e2f423c57963c143f5e3fac9ac7d062119f5e4254f158f7",
+            "image_hash_arm64": "5a55332a1a25ba6bbde306684d4ee77277a23e3933c17cac61b37615acb9ec85",
             "status": "recommended",
             "critical": false
           }
