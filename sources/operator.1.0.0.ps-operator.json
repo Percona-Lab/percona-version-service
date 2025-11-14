@@ -7,7 +7,7 @@
         "mysql": {
           "8.4.6-6": {
             "image_path": "percona/percona-server:8.4.6-6.1",
-            "image_hash": "3654cdd74646f11afe15b48de61ed3224ab72e7cd9ddea560725b77e2fa0ec93",
+            "image_hash": "ea97c9df3e362728fc3819c28c841498f5a1765945b9556bc964b218b7d4dc97",
             "status": "recommended",
             "critical": false
           },
@@ -19,7 +19,7 @@
           },
           "8.0.43-34": {
             "image_path": "percona/percona-server:8.0.43-34.1",
-            "image_hash": "aef5deeef0dbaddce47cb0045c6064faab9f501b3a914d42fc40240314607df9",
+            "image_hash": "315efeac572c48cc6f118bba7e0b2545ad396142f60328f2db9620ae0ad57e45",
             "status": "recommended",
             "critical": false
           },
@@ -68,7 +68,7 @@
         "orchestrator": {
           "3.2.6-18": {
             "image_path": "percona/percona-orchestrator:3.2.6-18",
-            "image_hash": "6fa4c515363c2a89a13accb0a58ba66519329afc04ad31c400775ced96bc8c09",
+            "image_hash": "a8a70f8882925b0a1a46893376e29af73646117b22e1eeb5a0a89876a907651f",
             "status": "recommended",
             "critical": false
           }
@@ -76,13 +76,13 @@
         "router": {
           "8.4.6": {
             "image_path": "percona/percona-mysql-router:8.4.6",
-            "image_hash": "59df1dcbecb636a67bcbb1dfcfd8f5710f8e516a44bfc68b936f24947a0f7b6e",
+            "image_hash": "e083c632c118cd4af472d9030a7900401f4b338e069c91996fe33747b77be985",
             "status": "recommended",
             "critical": false
           },
           "8.0.43": {
             "image_path": "percona/percona-mysql-router:8.0.43",
-            "image_hash": "1f246c634547c5efdf26cba0f037500b347709d78d8759bd6c0ccc903ffc31a4",
+            "image_hash": "3a420b803cd39c7c2a3ff414d45d1858df39599961339f5c02df0681f558ccdd",
             "status": "available",
             "critical": false
           }
@@ -90,7 +90,7 @@
         "toolkit": {
           "3.7.0": {
             "image_path": "percona/percona-toolkit:3.7.0-2",
-            "image_hash": "17ef2b69a97fa546d1f925c74ca09587ac215085c392761bb4d51f188baa6c0e",
+            "image_hash": "b7a4a2ca71ebf2b35786ab614221cbefb032fd5dfb5c5a478efcdd23931dd70b",
             "status": "recommended",
             "critical": false
           }
