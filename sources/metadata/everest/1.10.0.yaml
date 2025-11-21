@@ -1,4 +1,4 @@
-version: 1.10.0-rc1
+version: 1.10.0
 supported:
   cli: '>= 1.9.0'
   kubernetes: '>= 1.27'
