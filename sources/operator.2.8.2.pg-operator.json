@@ -1,0 +1,328 @@
+{
+  "versions": [
+    {
+      "operator": "2.8.2",
+      "product": "pg-operator",
+      "matrix": {
+        "operator": {
+          "2.8.2": {
+            "critical": false,
+            "image_hash": "e2a6f66f0a5ad5e91bbf9ca32da5ab88b21c47444cd6d044eb70d9d7676419db",
+            "image_hash_arm64": "ea615828b4284e008e2b551c1943f06d72b064b27c137dd27b5cb1b64742f600",
+            "image_path": "percona/percona-postgresql-operator:2.8.2",
+            "status": "recommended"
+          }
+        },
+        "pgbackrest": {
+          "13.21": {
+            "critical": false,
+            "image_hash": "b0d2defbc7a07cf395b1fa6c6e13d9d3267c3a2d3c52362ac440db26ea4a4bad",
+            "image_hash_arm64": "bc15d058e7820499bf67ccec2fe51c583fe67a6e3ed55ec28adf3e252828924a",
+            "image_path": "percona/percona-pgbackrest:2.55.0",
+            "status": "available"
+          },
+          "13.23": {
+            "critical": false,
+            "image_hash": "2bf7265f84210671bc5c0928cc772202c0e6054d426eb6ecf86279d69e831b96",
+            "image_hash_arm64": "59245b25fd5d0c1a2540b465e846b69f4c91b6cd183c3bfd96aa856d3e7ffbf3",
+            "image_path": "percona/percona-pgbackrest:2.57.0-1",
+            "status": "recommended"
+          },
+          "14.18": {
+            "critical": false,
+            "image_hash": "b0d2defbc7a07cf395b1fa6c6e13d9d3267c3a2d3c52362ac440db26ea4a4bad",
+            "image_hash_arm64": "bc15d058e7820499bf67ccec2fe51c583fe67a6e3ed55ec28adf3e252828924a",
+            "image_path": "percona/percona-pgbackrest:2.55.0",
+            "status": "available"
+          },
+          "14.20": {
+            "critical": false,
+            "image_hash": "2bf7265f84210671bc5c0928cc772202c0e6054d426eb6ecf86279d69e831b96",
+            "image_hash_arm64": "59245b25fd5d0c1a2540b465e846b69f4c91b6cd183c3bfd96aa856d3e7ffbf3",
+            "image_path": "percona/percona-pgbackrest:2.57.0-1",
+            "status": "recommended"
+          },
+          "15.13": {
+            "critical": false,
+            "image_hash": "b0d2defbc7a07cf395b1fa6c6e13d9d3267c3a2d3c52362ac440db26ea4a4bad",
+            "image_hash_arm64": "bc15d058e7820499bf67ccec2fe51c583fe67a6e3ed55ec28adf3e252828924a",
+            "image_path": "percona/percona-pgbackrest:2.55.0",
+            "status": "available"
+          },
+          "15.15": {
+            "critical": false,
+            "image_hash": "2bf7265f84210671bc5c0928cc772202c0e6054d426eb6ecf86279d69e831b96",
+            "image_hash_arm64": "59245b25fd5d0c1a2540b465e846b69f4c91b6cd183c3bfd96aa856d3e7ffbf3",
+            "image_path": "percona/percona-pgbackrest:2.57.0-1",
+            "status": "recommended"
+          },
+          "16.9": {
+            "critical": false,
+            "image_hash": "b0d2defbc7a07cf395b1fa6c6e13d9d3267c3a2d3c52362ac440db26ea4a4bad",
+            "image_hash_arm64": "bc15d058e7820499bf67ccec2fe51c583fe67a6e3ed55ec28adf3e252828924a",
+            "image_path": "percona/percona-pgbackrest:2.55.0",
+            "status": "available"
+          },
+          "16.11": {
+            "critical": false,
+            "image_hash": "2bf7265f84210671bc5c0928cc772202c0e6054d426eb6ecf86279d69e831b96",
+            "image_hash_arm64": "59245b25fd5d0c1a2540b465e846b69f4c91b6cd183c3bfd96aa856d3e7ffbf3",
+            "image_path": "percona/percona-pgbackrest:2.57.0-1",
+            "status": "recommended"
+          },
+          "17.5.2": {
+            "critical": false,
+            "image_hash": "b0d2defbc7a07cf395b1fa6c6e13d9d3267c3a2d3c52362ac440db26ea4a4bad",
+            "image_hash_arm64": "bc15d058e7820499bf67ccec2fe51c583fe67a6e3ed55ec28adf3e252828924a",
+            "image_path": "percona/percona-pgbackrest:2.55.0",
+            "status": "available"
+          },
+          "17.7": {
+            "critical": false,
+            "image_hash": "2bf7265f84210671bc5c0928cc772202c0e6054d426eb6ecf86279d69e831b96",
+            "image_hash_arm64": "59245b25fd5d0c1a2540b465e846b69f4c91b6cd183c3bfd96aa856d3e7ffbf3",
+            "image_path": "percona/percona-pgbackrest:2.57.0-1",
+            "status": "recommended"
+          },
+          "18.1": {
+            "critical": false,
+            "image_hash": "2bf7265f84210671bc5c0928cc772202c0e6054d426eb6ecf86279d69e831b96",
+            "image_hash_arm64": "59245b25fd5d0c1a2540b465e846b69f4c91b6cd183c3bfd96aa856d3e7ffbf3",
+            "image_path": "percona/percona-pgbackrest:2.57.0-1",
+            "status": "available"
+          }
+        },
+        "pgbouncer": {
+          "13.21": {
+            "critical": false,
+            "image_hash": "39bd093ec83ca4eaeb93b43b286d39daae4cc4b3b32956d627d242d30a5ad6f5",
+            "image_hash_arm64": "84d34843180d852182790ce6175f1407a0438b3a415a21741212701706808ac0",
+            "image_path": "percona/percona-pgbouncer:1.24.1",
+            "status": "available"
+          },
+          "13.23": {
+            "critical": false,
+            "image_hash": "bf2f325cc733b96dc360c2386c8931ed9e3513f55cb425e59033e1e56737134f",
+            "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286",
+            "image_path": "percona/percona-pgbouncer:1.25.0-1",
+            "status": "recommended"
+          },
+          "14.18": {
+            "critical": false,
+            "image_hash": "39bd093ec83ca4eaeb93b43b286d39daae4cc4b3b32956d627d242d30a5ad6f5",
+            "image_hash_arm64": "84d34843180d852182790ce6175f1407a0438b3a415a21741212701706808ac0",
+            "image_path": "percona/percona-pgbouncer:1.24.1",
+            "status": "available"
+          },
+          "14.20": {
+            "critical": false,
+            "image_hash": "bf2f325cc733b96dc360c2386c8931ed9e3513f55cb425e59033e1e56737134f",
+            "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286",
+            "image_path": "percona/percona-pgbouncer:1.25.0-1",
+            "status": "recommended"
+          },
+          "15.13": {
+            "critical": false,
+            "image_hash": "39bd093ec83ca4eaeb93b43b286d39daae4cc4b3b32956d627d242d30a5ad6f5",
+            "image_hash_arm64": "84d34843180d852182790ce6175f1407a0438b3a415a21741212701706808ac0",
+            "image_path": "percona/percona-pgbouncer:1.24.1",
+            "status": "available"
+          },
+          "15.15": {
+            "critical": false,
+            "image_hash": "bf2f325cc733b96dc360c2386c8931ed9e3513f55cb425e59033e1e56737134f",
+            "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286",
+            "image_path": "percona/percona-pgbouncer:1.25.0-1",
+            "status": "recommended"
+          },
+          "16.9": {
+            "critical": false,
+            "image_hash": "39bd093ec83ca4eaeb93b43b286d39daae4cc4b3b32956d627d242d30a5ad6f5",
+            "image_hash_arm64": "84d34843180d852182790ce6175f1407a0438b3a415a21741212701706808ac0",
+            "image_path": "percona/percona-pgbouncer:1.24.1",
+            "status": "available"
+          },
+          "16.11": {
+            "critical": false,
+            "image_hash": "bf2f325cc733b96dc360c2386c8931ed9e3513f55cb425e59033e1e56737134f",
+            "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286",
+            "image_path": "percona/percona-pgbouncer:1.25.0-1",
+            "status": "recommended"
+          },
+          "17.5.2": {
+            "critical": false,
+            "image_hash": "39bd093ec83ca4eaeb93b43b286d39daae4cc4b3b32956d627d242d30a5ad6f5",
+            "image_hash_arm64": "84d34843180d852182790ce6175f1407a0438b3a415a21741212701706808ac0",
+            "image_path": "percona/percona-pgbouncer:1.24.1",
+            "status": "available"
+          },
+          "17.7": {
+            "critical": false,
+            "image_hash": "bf2f325cc733b96dc360c2386c8931ed9e3513f55cb425e59033e1e56737134f",
+            "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286",
+            "image_path": "percona/percona-pgbouncer:1.25.0-1",
+            "status": "recommended"
+          },
+          "18.1": {
+            "critical": false,
+            "image_hash": "bf2f325cc733b96dc360c2386c8931ed9e3513f55cb425e59033e1e56737134f",
+            "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286",
+            "image_path": "percona/percona-pgbouncer:1.25.0-1",
+            "status": "available"
+          }
+        },
+        "pmm": {
+          "2.44.1-1": {
+            "image_path": "percona/pmm-client:2.44.1-1",
+            "image_hash": "52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3",
+            "status": "recommended",
+            "critical": false
+          },
+          "3.5.0": {
+            "critical": false,
+            "image_hash": "352aee74f25b3c1c4cd9dff1f378a0c3940b315e551d170c09953bf168531e4a",
+            "image_hash_arm64": "cbbb074d51d90a5f2d6f1d98a05024f6de2ffdcb5acab632324cea4349a820bd",
+            "image_path": "percona/pmm-client:3.5.0",
+            "status": "recommended"
+          }
+        },
+        "postgis": {
+          "13.21": {
+            "critical": false,
+            "image_hash": "3df44c1089563b42198ef929e27b9797ef2b04d92736293952163fa7541c0068",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg13.21-postgres-gis3.3.8",
+            "status": "available"
+          },
+          "13.23": {
+            "critical": false,
+            "image_hash": "9b75f33ee9d7e95a0d9ea9e619533878d92814183a0ed9ad59bc69813b11a84d",
+            "image_path": "percona/percona-postgresql-operator:2.8.2-ppg13.23-postgres-gis3.3.8",
+            "status": "recommended"
+          },
+          "14.18": {
+            "critical": false,
+            "image_hash": "c3b55d1394d8f0a476cea29340442313c9c08dcd8c83f31ccfc66afdbde42488",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg14.18-postgres-gis3.3.8",
+            "status": "available"
+          },
+          "14.20": {
+            "critical": false,
+            "image_hash": "71947a799ea4e957bf6a9dd6a4ff055037a335d9d71186452b64e05d1ce68c38",
+            "image_path": "percona/percona-postgresql-operator:2.8.2-ppg14.20-postgres-gis3.3.8",
+            "status": "recommended"
+          },
+           "15.13": {
+            "critical": false,
+            "image_hash": "bb6707fd12ea430708e2eb22f6c7dadf3ab4258fcfd31e86f1f78c66ba211742",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg15.13-postgres-gis3.3.8",
+            "status": "available"
+          },
+          "15.15": {
+            "critical": false,
+            "image_hash": "d9680938ae31bc0c2d1fd89cda306b1bdb9b4aef424d706896460de71a2311e2",
+            "image_path": "percona/percona-postgresql-operator:2.8.2-ppg15.15-postgres-gis3.3.8",
+            "status": "recommended"
+          },
+          "16.9": {
+            "critical": false,
+            "image_hash": "ca50f560bc7b3e18ec3360dc1a6b8c860e0346472af051cb0d2aec2a7a45d8b3",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg16.9-postgres-gis3.3.8",
+            "status": "available"
+          },
+          "16.11": {
+            "critical": false,
+            "image_hash": "d4467fe931e6403538a1f9831c7c97f84177027bfb226a9a7e021026506bb4d7",
+            "image_path": "percona/percona-postgresql-operator:2.8.2-ppg16.11-postgres-gis3.3.8",
+            "status": "recommended"
+          },
+          "17.5.2": {
+            "critical": false,
+            "image_hash": "860ccc180c1ac6be3c34c354d6ba9148b00330e183ba5913954e34d49c95d22f",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg17.5.2-postgres-gis3.3.8",
+            "status": "available"
+          },
+          "17.7": {
+            "critical": false,
+            "image_hash": "64246fa0fe2213f2321bdd565181578fd84e8d745b044553b60d45c41dbf3e5c",
+            "image_path": "percona/percona-postgresql-operator:2.8.2-ppg17.7-postgres-gis3.3.8",
+            "status": "recommended"
+          },
+          "18.1": {
+            "critical": false,
+            "image_hash": "a9c58611e1660a1377a579370c0684a5bc12a37df69031bdcf7dac5332d016ad",
+            "image_path": "percona/percona-postgresql-operator:2.8.2-ppg18.1-postgres-gis3.5.4",
+            "status": "available"
+          }
+        },
+        "postgresql": {
+          "13.21": {
+            "critical": false,
+            "image_hash": "2c9a05399b34cfe79698bdaab66db8fdaece0db7b1fa34441124cccdbe375255",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg13.21-postgres",
+            "status": "available"
+          },
+          "13.23": {
+            "critical": false,
+            "image_hash": "39ef40f72704e8e782ed43fb5a5072ee557fd410b85b9d2177b332ce39b888f5",
+            "image_path": "percona/percona-distribution-postgresql:13.23-2",
+            "status": "recommended"
+          },
+          "14.18": {
+            "critical": false,
+            "image_hash": "a24059edd9864f7dc9607c3e2964844f417718a5b9f471ceb98c0a0d774a4bca",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg14.18-postgres",
+            "status": "available"
+          },
+          "14.20": {
+            "critical": false,
+            "image_hash": "011bae00abeb266352aa6c8e127396b0a3fb5877f0112f5291172624b5556120",
+            "image_path": "percona/percona-distribution-postgresql:14.20-2",
+            "status": "recommended"
+          },
+          "15.13": {
+            "critical": false,
+            "image_hash": "c93f52ea1d6ec955a368c4539b843a9c57ee4a5acc907f0dfb59ae3018560d1b",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg15.13-postgres",
+            "status": "available"
+          },
+          "15.15": {
+            "critical": false,
+            "image_hash": "100ef9920d70d0ff53a0466f9b077ba3f1828c31b330a08a6e6e11802b870178",
+            "image_path": "percona/percona-distribution-postgresql:15.15-2",
+            "status": "recommended"
+          },
+          "16.9": {
+            "critical": false,
+            "image_hash": "0787088575b4e4fec368acbcf4dd7aea49620ec4524451e3b44ed424fb0eeebb",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg16.9-postgres",
+            "status": "available"
+          },
+          "16.11": {
+            "critical": false,
+            "image_hash": "80882a55997c58b7a4dd5defc6482d99dc31c11fbd206f788e540a74ffab4823",
+            "image_path": "percona/percona-distribution-postgresql:16.11-2",
+            "status": "recommended"
+          },
+          "17.5.2": {
+            "critical": false,
+            "image_hash": "cfb99ebeec00ab6efb4fca4a8da2b8c3b489dd792bd2f907848197ba09bc9553",
+            "image_path": "percona/percona-postgresql-operator:2.7.0-ppg17.5.2-postgres",
+            "status": "available"
+          },
+          "17.7": {
+            "critical": false,
+            "image_hash": "7beb6a0d9fd4c4e8125c5cb43c48e8b189a4dca7b4f1ec1e433b49956d4203d6",
+            "image_path": "percona/percona-distribution-postgresql:17.7-2",
+            "status": "recommended"
+          },
+          "18.1": {
+            "critical": false,
+            "image_hash": "940859b7c45d1217ba852e8c5e5500832daf61c6914d5af33808251cb23f0102",
+            "image_path": "percona/percona-distribution-postgresql:18.1-3",
+            "status": "available"
+          }
+        }
+      }
+    }
+  ]
+}
