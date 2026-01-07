@@ -147,8 +147,8 @@
         "operator": {
           "1.19.0": {
             "image_path": "percona/percona-xtradb-cluster-operator:1.19.0",
-            "image_hash": "",
-            "image_hash_arm64": "",
+            "image_hash": "4f3e0823af80488ff2f5d1e8fc034f5638a78bdcbd431610daccd4dc3c2a7a03",
+            "image_hash_arm64": "b747573292d44cf1d93e4e3cb289ed764a7914fdab98ef4824bb1517c28e4760",
             "status": "recommended",
             "critical": false
           }
