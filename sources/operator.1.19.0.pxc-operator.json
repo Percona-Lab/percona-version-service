@@ -5,7 +5,7 @@
       "product": "pxc-operator",
       "matrix": {
         "pxc": {
-          "8.4.6-6.1": {
+          "8.4.7-7.1": {
             "image_path": "percona/percona-xtradb-cluster:8.4.7-7.1",
             "status": "recommended",
             "critical": false,
