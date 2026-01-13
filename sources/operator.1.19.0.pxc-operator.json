@@ -119,8 +119,8 @@
             "image_path": "percona/percona-xtrabackup:8.4.0-5.1",
             "status": "recommended",
             "critical": false,
-            "image_hash": "d76e8beaa228e278818f85104ee5280ae6b76784f951c2199002e23e11efacde",
-            "image_hash_arm64": "e3ad94427e180672b51b1923de0e193ab101291e369412d15b96a6862f26e4ed"
+            "image_hash": "1b81d06b1beb6a126b493d11532a5c71d1b1c2a1d13cb655e3cc5760c0896035",
+            "image_hash_arm64": "ca40d7975ae39bd5dd652487a1389b823cbf788e9948db6cf53ebb0d3f57c51b"
           },
           "8.0.35-34.1": {
             "image_path": "percona/percona-xtrabackup:8.0.35-34.1",
