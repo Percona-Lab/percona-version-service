@@ -137,9 +137,10 @@
           }
         },
         "log_collector": {
-          "4.0.1": {
-            "image_path": "percona/fluentbit:4.0.1",
-            "image_hash": "a4ab7dd10379ccf74607f6b05225c4996eeff53b628bda94e615781a1f58b779",
+          "4.0.1-1": {
+            "image_path": "percona/fluentbit:4.0.1-1",
+            "image_hash": "65bdf7d38cbceed6b6aa6412aea3fb4a196000ac6c66185f114a0a62c4a442ad",
+            "image_hash_arm64": "dabda77b298b67d30d7f53b5cdb7215ad19dabb22b9543e3fd8aedb74ab24733",
             "status": "recommended",
             "critical": false
           }
