@@ -139,12 +139,12 @@
           }
         },
         "log_collector": {
-          "4.0.1-1": {
-            "image_path": "percona/fluentbit:4.0.1-1",
+          "4.0.1-2": {
+            "image_path": "percona/fluentbit:4.0.1-2",
             "status": "recommended",
             "critical": false,
-            "image_hash": "65bdf7d38cbceed6b6aa6412aea3fb4a196000ac6c66185f114a0a62c4a442ad",
-            "image_hash_arm64": "dabda77b298b67d30d7f53b5cdb7215ad19dabb22b9543e3fd8aedb74ab24733"
+            "image_hash": "d732be16b7f3d0eea8d9c0a50f72136db83c2aed74262300d97abd2cfaefbc26",
+            "image_hash_arm64": "805c102d3646b8499b74ea9864d4c29137f94e4603470c23da1c032276193a36"
           }
         }
       }
