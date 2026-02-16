@@ -36,7 +36,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.21.2",
+		OperatorVersion: "1.22.0",
 		Product:         "psmdb-operator",
 	}
 	psmdbParams.WithTimeout(2 * time.Second)
@@ -450,6 +450,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "1.22.0", nil, "8.0.17-6"},
 		{"latest", "1.21.2", nil, "8.0.17-6"},
 		{"latest", "1.21.1", nil, "8.0.12-4"},
 		{"latest", "1.21.0", nil, "8.0.12-4"},
@@ -473,6 +474,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.7.0", nil, "4.4.3-5"},
 		{"latest", "1.6.0", nil, "4.4.2-4"},
 		{"latest", "1.5.0", nil, "4.2.8-8"},
+		{"latest", "1.22.0", &v80, "8.0.17-6"},
 		{"latest", "1.21.2", &v80, "8.0.17-6"},
 		{"latest", "1.21.1", &v80, "8.0.12-4"},
 		{"latest", "1.21.0", &v80, "8.0.12-4"},
@@ -480,6 +482,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.20.0", &v80, "8.0.8-3"},
 		{"latest", "1.19.1", &v80, "8.0.4-1"},
 		{"latest", "1.19.0", &v80, "8.0.4-1"},
+		{"latest", "1.22.0", &v70, "7.0.28-15"},
 		{"latest", "1.21.2", &v70, "7.0.28-15"},
 		{"latest", "1.21.1", &v70, "7.0.24-13"},
 		{"latest", "1.21.0", &v70, "7.0.24-13"},
@@ -492,6 +495,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.16.2", &v70, "7.0.8-5"},
 		{"latest", "1.16.1", &v70, "7.0.8-5"},
 		{"latest", "1.16.0", &v70, "7.0.8-5"},
+		{"latest", "1.22.0", &v60, "6.0.27-21"},
 		{"latest", "1.21.2", &v60, "6.0.27-21"},
 		{"latest", "1.21.1", &v60, "6.0.25-20"},
 		{"latest", "1.21.0", &v60, "6.0.25-20"},
@@ -545,6 +549,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"latest", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test recommended
+		{"recommended", "1.22.0", nil, "8.0.17-6"},
 		{"recommended", "1.21.2", nil, "8.0.17-6"},
 		{"recommended", "1.21.1", nil, "8.0.12-4"},
 		{"recommended", "1.21.0", nil, "8.0.12-4"},
@@ -568,9 +573,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.7.0", nil, "4.4.3-5"},
 		{"recommended", "1.6.0", nil, "4.4.2-4"},
 		{"recommended", "1.5.0", nil, "4.2.8-8"},
+		{"recommended", "1.22.0", &v80, "8.0.17-6"},
 		{"recommended", "1.21.2", &v80, "8.0.17-6"},
 		{"recommended", "1.21.1", &v80, "8.0.12-4"},
 		{"recommended", "1.21.0", &v80, "8.0.12-4"},
+		{"recommended", "1.22.0", &v70, "7.0.28-15"},
 		{"recommended", "1.21.2", &v70, "7.0.28-15"},
 		{"recommended", "1.21.1", &v70, "7.0.24-13"},
 		{"recommended", "1.21.0", &v70, "7.0.24-13"},
@@ -582,6 +589,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.16.2", &v70, "7.0.8-5"},
 		{"recommended", "1.16.1", &v70, "7.0.8-5"},
 		{"recommended", "1.16.0", &v70, "7.0.8-5"},
+		{"recommended", "1.22.0", &v60, "6.0.27-21"},
 		{"recommended", "1.21.2", &v60, "6.0.27-21"},
 		{"recommended", "1.21.1", &v60, "6.0.25-20"},
 		{"recommended", "1.21.0", &v60, "6.0.25-20"},
@@ -636,6 +644,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"recommended", "1.5.0", &v36, "3.6.19-7.0"},
 
 		// test exact
+		{"8.0.17-6", "1.22.0", nil, "8.0.17-6"},
 		{"8.0.17-6", "1.21.2", nil, "8.0.17-6"},
 		{"8.0.12-4", "1.21.1", nil, "8.0.12-4"},
 		{"8.0.12-4", "1.21.0", nil, "8.0.12-4"},
@@ -643,6 +652,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"8.0.8-3", "1.20.0", nil, "8.0.8-3"},
 		{"8.0.4-1", "1.19.1", nil, "8.0.4-1"},
 		{"8.0.4-1", "1.19.0", nil, "8.0.4-1"},
+		{"7.0.28-15", "1.22.0", nil, "7.0.28-15"},
 		{"7.0.28-15", "1.21.2", nil, "7.0.28-15"},
 		{"7.0.24-13", "1.21.1", nil, "7.0.24-13"},
 		{"7.0.24-13", "1.21.0", nil, "7.0.24-13"},
@@ -655,6 +665,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"7.0.8-5", "1.16.2", nil, "7.0.8-5"},
 		{"7.0.8-5", "1.16.1", nil, "7.0.8-5"},
 		{"7.0.8-5", "1.16.0", nil, "7.0.8-5"},
+		{"6.0.27-21", "1.22.0", nil, "6.0.27-21"},
 		{"6.0.27-21", "1.21.2", nil, "6.0.27-21"},
 		{"6.0.25-20", "1.21.1", nil, "6.0.25-20"},
 		{"6.0.25-20", "1.21.0", nil, "6.0.25-20"},
@@ -712,6 +723,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6.18-5.0", "1.5.0", nil, "3.6.18-5.0"},
 
 		//test with suffix
+		{"8.0-latest", "1.22.0", nil, "8.0.17-6"},
 		{"8.0-latest", "1.21.2", nil, "8.0.17-6"},
 		{"8.0-latest", "1.21.1", nil, "8.0.12-4"},
 		{"8.0-latest", "1.21.0", nil, "8.0.12-4"},
@@ -719,6 +731,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"8.0-latest", "1.20.0", nil, "8.0.8-3"},
 		{"8.0-latest", "1.19.1", nil, "8.0.4-1"},
 		{"8.0-latest", "1.19.0", nil, "8.0.4-1"},
+		{"7.0-latest", "1.22.0", nil, "7.0.28-15"},
 		{"7.0-latest", "1.21.2", nil, "7.0.28-15"},
 		{"7.0-latest", "1.21.1", nil, "7.0.24-13"},
 		{"7.0-latest", "1.21.0", nil, "7.0.24-13"},
@@ -731,6 +744,7 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"7.0-latest", "1.16.2", nil, "7.0.8-5"},
 		{"7.0-latest", "1.16.1", nil, "7.0.8-5"},
 		{"7.0-latest", "1.16.0", nil, "7.0.8-5"},
+		{"6.0-latest", "1.22.0", nil, "6.0.27-21"},
 		{"6.0-latest", "1.21.2", nil, "6.0.27-21"},
 		{"6.0-latest", "1.21.1", nil, "6.0.25-20"},
 		{"6.0-latest", "1.21.0", nil, "6.0.25-20"},
@@ -787,9 +801,11 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"3.6-latest", "1.6.0", nil, "3.6.21-10.0"},
 		{"3.6-latest", "1.5.0", nil, "3.6.19-7.0"},
 
+		{"8.0-recommended", "1.22.0", nil, "8.0.17-6"},
 		{"8.0-recommended", "1.21.2", nil, "8.0.17-6"},
 		{"8.0-recommended", "1.21.1", nil, "8.0.12-4"},
 		{"8.0-recommended", "1.21.0", nil, "8.0.12-4"},
+		{"7.0-recommended", "1.22.0", nil, "7.0.28-15"},
 		{"7.0-recommended", "1.21.2", nil, "7.0.28-15"},
 		{"7.0-recommended", "1.21.1", nil, "7.0.24-13"},
 		{"7.0-recommended", "1.21.0", nil, "7.0.24-13"},
@@ -802,6 +818,8 @@ func TestApplyPsmdbReturnedVersions(t *testing.T) {
 		{"7.0-recommended", "1.16.2", nil, "7.0.8-5"},
 		{"7.0-recommended", "1.16.1", nil, "7.0.8-5"},
 		{"7.0-recommended", "1.16.0", nil, "7.0.8-5"},
+		{"6.0-recommended", "1.22.0", nil, "6.0.27-21"},
+		{"6.0-recommended", "1.21.2", nil, "6.0.27-21"},
 		{"6.0-recommended", "1.21.1", nil, "6.0.25-20"},
 		{"6.0-recommended", "1.21.0", nil, "6.0.25-20"},
 		{"6.0-recommended", "1.20.1", nil, "6.0.21-18"},
