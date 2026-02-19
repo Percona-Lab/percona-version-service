@@ -125,8 +125,8 @@
             "image_path": "percona/percona-backup-mongodb:2.12.0",
             "status": "recommended",
             "critical": false,
-            "image_hash": "d95282fb38f949bfe03aba978e97e1928a039d5108185f9170ead6d7a58675ef",
-            "image_hash_arm64": "6bdde7240e3eaef2d77e306350d47e81528a987a2012d9d874967ac4a2005c0b"
+            "image_hash": "6d56b787c2dc532c9c19cc607a2bc1855a722cdaa52024ea38d4de4aae777f8a",
+            "image_hash_arm64": "e2177fa6fef0e47ee8392ca7044a6781150ccf7297383239f813558323aa0a8e"
           }
         },
         "operator": {
@@ -134,8 +134,8 @@
             "image_path": "percona/percona-server-mongodb-operator:1.22.0",
             "status": "recommended",
             "critical": false,
-            "image_hash": "717e37d0219d9b9c3fa8ac9c2b4b28fb270ec35ac0007e7b4b3323e7358c3e69",
-            "image_hash_arm64": "0d045ff899d239877e27561eb619a8eb5fa3e6cc79d705ec94ac829541c1f6ae"
+            "image_hash": "d4384b3853dc5026cc33de1dfd68ac11aaf5d54f4e84b115e05d7d473f4c6188",
+            "image_hash_arm64": "be97aad4c0642bc4e2e5c7c31b4d123d9f6135070682b8fbd6024c7620315e72"
           }
         },
         "log_collector": {
