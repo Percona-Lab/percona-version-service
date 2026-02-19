@@ -5,9 +5,16 @@
       "product": "psmdb-operator",
       "matrix": {
         "mongod": {
+          "8.0.19-7": {
+            "image_path": "percona/percona-server-mongodb:8.0.19-7",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "779378a9f52cd9e617d0c356053b4b9c97209b0b759aa819300427836f6f2c66",
+            "image_hash_arm64": "531793543992d2e502d3187b778f8468462dd9cdb16a58fa157fe86626594ede"
+          },
           "8.0.17-6": {
             "image_path": "percona/percona-server-mongodb:8.0.17-6",
-            "status": "recommended",
+            "status": "available",
             "critical": false,
             "image_hash": "ae6380469f6b73d3517ec4eae7b2f12ff6310dc2deae8e52fe514276c45e9440",
             "image_hash_arm64": "f1170f8bf68d051816cd4d956ca1f6ee9885c6cf0e1e5db5dc00a137af3603ee"
