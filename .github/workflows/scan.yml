@@ -37,4 +37,4 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-          version: 'v0.67.2'
+          version: 'v0.69.2'
