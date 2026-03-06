@@ -372,6 +372,7 @@ func TestApplyPxcReturnedVersions(t *testing.T) {
 		{"5.7-latest", "1.4.0", nil, "5.7.28-31.41.2"},
 		{"8.4-recommended", "1.19.0", nil, "8.4.7-7.1"},
 		// 8.4-recommended is skipped for 1.18.0 and earlier as not recommended at that time
+		// test
 		{"8.0-recommended", "1.19.0", nil, "8.0.44-35.1"},
 		{"8.0-recommended", "1.18.0", nil, "8.0.42-33.1"},
 		{"8.0-recommended", "1.17.0", nil, "8.0.41-32.1"},
