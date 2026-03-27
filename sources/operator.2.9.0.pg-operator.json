@@ -104,7 +104,7 @@
             "image_path": "percona/percona-distribution-postgresql:18.1-3",
             "status": "available",
             "critical": false,
-            "image_hash": "940859b7c45d1217ba852e8c5e5500832daf61c6914d5af33808251cb23f0102"
+            "image_hash": "eb3472dac500816d155d7e18b314c1e614b201ecc68912b31fb5144c7b91cacb"
           },
           "17.9": {
             "image_path": "percona/percona-distribution-postgresql:17.9-1",
@@ -117,7 +117,7 @@
             "image_path": "percona/percona-distribution-postgresql:17.7-2",
             "status": "available",
             "critical": false,
-            "image_hash": "7beb6a0d9fd4c4e8125c5cb43c48e8b189a4dca7b4f1ec1e433b49956d4203d6"
+            "image_hash": "418739df35451d22cc4742fee8f12597bb469304300d7d78ba437ecd3ad03f35"
           },
           "16.13": {
             "image_path": "percona/percona-distribution-postgresql:16.13-1",
