@@ -163,7 +163,9 @@
           "2.9.0": {
             "image_path": "percona/percona-postgresql-operator:2.9.0",
             "status": "recommended",
-            "critical": false
+            "critical": false,
+            "image_hash": "db0be1330c875af86a31c74dfc6d05c6813873eff6f395f0566586c07eb1dc2c",
+            "image_hash_arm64": "36bbad1fc65cc35b7c628a22684bc7de5acb18406fbcd860273b342ca61928f7"
           }
         },
         "postgis": {
