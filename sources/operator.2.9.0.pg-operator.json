@@ -164,8 +164,8 @@
             "image_path": "percona/percona-postgresql-operator:2.9.0",
             "status": "recommended",
             "critical": false,
-            "image_hash": "db0be1330c875af86a31c74dfc6d05c6813873eff6f395f0566586c07eb1dc2c",
-            "image_hash_arm64": "36bbad1fc65cc35b7c628a22684bc7de5acb18406fbcd860273b342ca61928f7"
+            "image_hash": "1990ab3568a25fbe4fbb85bc0a524c72458b6d4419f2d96a6ef61874da83ea96",
+            "image_hash_arm64": "470f0a141973c91474b9337c92773aa467a2145ff5ad74fc4731a11beb446083"
           }
         },
         "postgis": {
