@@ -70,7 +70,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.0.0",
+		OperatorVersion: "1.1.0",
 		Product:         "ps-operator",
 	}
 	psParams.WithTimeout(2 * time.Second)
@@ -85,6 +85,9 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Orchestrator, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Router, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Operator, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Haproxy, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Toolkit, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.Binlogserver, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
@@ -152,7 +155,7 @@ func TestApplyPsShouldReturnSameMajorVersion(t *testing.T) {
 
 	params := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.0.0",
+		OperatorVersion: "1.1.0",
 		Product:         "ps-operator",
 	}
 	params.WithTimeout(2 * time.Second)
@@ -1324,6 +1327,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "1.1.0", nil, "8.4.8-8.1"},
 		{"latest", "1.0.0", nil, "8.4.6-6"},
 		{"latest", "0.12.0", nil, "8.4.6-6"},
 		{"latest", "0.11.0", nil, "8.4.5-5"},
@@ -1333,14 +1337,17 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"latest", "0.7.0", nil, "8.0.36-28"},
 		{"latest", "0.6.0", nil, "8.0.33-25"},
 		{"latest", "0.5.0", nil, "8.0.32-24"},
+		{"latest", "1.1.0", &v84, "8.4.8-8.1"},
 		{"latest", "1.0.0", &v84, "8.4.6-6"},
 		{"latest", "0.12.0", &v84, "8.4.6-6"},
 		{"latest", "0.11.0", &v84, "8.4.5-5"},
+		{"latest", "1.1.0", &v80, "8.0.45-36.1"},
 		{"latest", "1.0.0", &v80, "8.0.43-34"},
 		{"latest", "0.12.0", &v80, "8.0.43-34"},
 		{"latest", "0.11.0", &v80, "8.0.42-33"},
 
 		// test recommended
+		{"recommended", "1.1.0", nil, "8.4.8-8.1"},
 		{"recommended", "1.0.0", nil, "8.4.6-6"},
 		{"recommended", "0.12.0", nil, "8.4.6-6"},
 		{"recommended", "0.11.0", nil, "8.0.42-33"},
@@ -1350,17 +1357,23 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"recommended", "0.7.0", nil, "8.0.36-28"},
 		{"recommended", "0.6.0", nil, "8.0.33-25"},
 		{"recommended", "0.5.0", nil, "8.0.32-24"},
+		{"recommended", "1.1.0", &v84, "8.4.8-8.1"},
 		{"recommended", "1.0.0", &v84, "8.4.6-6"},
 		{"recommended", "0.12.0", &v84, "8.4.6-6"},
+		{"recommended", "1.1.0", &v80, "8.0.45-36.1"},
 		{"recommended", "1.0.0", &v80, "8.0.43-34"},
 		{"recommended", "0.12.0", &v80, "8.0.43-34"},
 		{"recommended", "0.11.0", &v80, "8.0.42-33"},
 
 		// test exact
+		{"8.4.6", "1.1.0", nil, "8.4.6-6"},
 		{"8.4.6", "1.0.0", nil, "8.4.6-6"},
 		{"8.4.6", "0.12.0", nil, "8.4.6-6"},
+		{"8.4.8", "1.1.0", nil, "8.4.8-8.1"},
+		{"8.0.43", "1.1.0", nil, "8.0.43-34"},
 		{"8.0.43", "1.0.0", nil, "8.0.43-34"},
 		{"8.0.43", "0.12.0", nil, "8.0.43-34"},
+		{"8.0.45", "1.1.0", nil, "8.0.45-36.1"},
 		{"8.0.42", "0.11.0", nil, "8.0.42-33"},
 		{"8.0.42", "0.10.0", nil, "8.0.42-33"},
 		{"8.0.40", "0.9.0", nil, "8.0.40-31"},
@@ -1370,9 +1383,11 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0.30", "0.5.0", nil, "8.0.30-22"},
 
 		//test with suffix
+		{"8.4-latest", "1.1.0", nil, "8.4.8-8.1"},
 		{"8.4-latest", "1.0.0", nil, "8.4.6-6"},
 		{"8.4-latest", "0.12.0", nil, "8.4.6-6"},
 		{"8.4-latest", "0.11.0", nil, "8.4.5-5"},
+		{"8.0-latest", "1.1.0", nil, "8.0.45-36.1"},
 		{"8.0-latest", "1.0.0", nil, "8.0.43-34"},
 		{"8.0-latest", "0.12.0", nil, "8.0.43-34"},
 		{"8.0-latest", "0.11.0", nil, "8.0.42-33"},
@@ -1382,8 +1397,10 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0-latest", "0.7.0", nil, "8.0.36-28"},
 		{"8.0-latest", "0.6.0", nil, "8.0.33-25"},
 		{"8.0-latest", "0.5.0", nil, "8.0.32-24"},
+		{"8.4-recommended", "1.1.0", nil, "8.4.8-8.1"},
 		{"8.4-recommended", "1.0.0", nil, "8.4.6-6"},
 		{"8.4-recommended", "0.12.0", nil, "8.4.6-6"},
+		{"8.0-recommended", "1.1.0", nil, "8.0.45-36.1"},
 		{"8.0-recommended", "1.0.0", nil, "8.0.43-34"},
 		{"8.0-recommended", "0.12.0", nil, "8.0.43-34"},
 		{"8.0-recommended", "0.11.0", nil, "8.0.42-33"},
