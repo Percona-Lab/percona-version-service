@@ -247,6 +247,7 @@ message VersionMatrix {
   map<string, Version> orchestrator = 25;
   map<string, Version> toolkit = 26;
   map<string, Version> postgis = 27;
+  map<string, Version> binlogserver = 28;
 }
 
 // OperatorVersion represents operator version.

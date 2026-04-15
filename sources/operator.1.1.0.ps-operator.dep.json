@@ -1,0 +1,62 @@
+{
+  "backup": {
+    "8.4.0-4": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "8.4"
+      ]
+    },
+    "8.0.35-34": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "8.0"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "8.4"
+          ]
+        }
+      ]
+    }
+  },
+  "router": {
+    "8.4.6": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "8.4"
+      ]
+    },
+    "8.0.43": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "8.0"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "8.4"
+          ]
+        }
+      ]
+    }
+  }
+}
