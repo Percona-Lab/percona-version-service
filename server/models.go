@@ -14,4 +14,5 @@ type Deps struct {
 	Orchestrator   map[string]interface{} `json:"orchestrator,omitempty"`
 	Router         map[string]interface{} `json:"router,omitempty"`
 	Toolkit        map[string]interface{} `json:"toolkit,omitempty"`
+	BinlogServer   map[string]interface{} `json:"binlog_server,omitempty"`
 }
