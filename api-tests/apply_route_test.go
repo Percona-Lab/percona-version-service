@@ -87,7 +87,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Operator, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Haproxy, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Toolkit, 1)
-	assert.Len(t, psResp.Payload.Versions[0].Matrix.Binlogserver, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.BinlogServer, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
