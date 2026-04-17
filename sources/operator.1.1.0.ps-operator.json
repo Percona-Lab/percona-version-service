@@ -86,7 +86,8 @@
             "image_path": "percona/percona-server-mysql-operator:1.1.0-binlog-server-0.2.1",
             "status": "recommended",
             "critical": false,
-            "image_hash": "8b8d70f6969a201b1a6f87df2c65d7ff6c9525a5eda1f870dbfbfb88a751611c"
+            "image_hash": "9ffb7db0094dc0c39f6ec794b70a33db6e4cd19aa4ca38cd6a9b05bc5bbea63c",
+            "image_hash_arm64": "97ad1244d08773eb6e6121c4b45424d88d2a624fbd26eb40ab907d054999e154"
           }
         },
         "mysql": {
