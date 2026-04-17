@@ -364,6 +364,14 @@ func ps(vs *pbVersion.VersionResponse, deps Deps, req *pbVersion.ApplyRequest) e
 	if err != nil {
 		return err
 	}
+	binlogServerVersion, err := depFilter(deps.BinlogServer, productVersion)
+	if err != nil {
+		return err
+	}
+	err = defaultFilter(vs.Versions[0].Matrix.BinlogServer, binlogServerVersion, true)
+	if err != nil {
+		return err
+	}
 	toolkitVersion, err := depFilter(deps.Toolkit, productVersion)
 	if err != nil {
 		return err
