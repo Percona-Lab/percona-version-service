@@ -164,6 +164,14 @@
             "image_hash_arm64": "902feac78cf98fbd6a7aece1761371dd1a43faaed88b63be0e0d54dd524b8286"
           }
         },
+        "pgupgrade": {
+          "3.0.0": {
+            "image_path": "percona/percona-postgresql-operator:3.0.0-upgrade",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "99701e33c70f3c07c59a0d9e3ea340e6a3529e88c6db474d8fd1db7fc335722e"
+          }
+        },
         "operator": {
           "3.0.0": {
             "image_path": "percona/percona-postgresql-operator:3.0.0",
