@@ -1,0 +1,272 @@
+{
+  "pgbackrest": {
+    "14.22": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "14.22"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "15.0"
+          ]
+        }
+      ]
+    },
+    "15.17": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "15.17"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "16.0"
+          ]
+        }
+      ]
+    },
+    "16.13": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "16.13"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "17.0"
+          ]
+        }
+      ]
+    },
+    "17.9": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "17.9"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "18.0"
+          ]
+        }
+      ]
+    },
+    "18.3": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "18.3"
+      ]
+    }
+  },
+  "pgbouncer": {
+    "14.22": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "14.22"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "15.0"
+          ]
+        }
+      ]
+    },
+    "15.17": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "15.17"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "16.0"
+          ]
+        }
+      ]
+    },
+    "16.13": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "16.13"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "17.0"
+          ]
+        }
+      ]
+    },
+    "17.9": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "17.9"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "18.0"
+          ]
+        }
+      ]
+    },
+    "18.3": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "18.3"
+      ]
+    }
+  },
+  "postgis": {
+    "14.22": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "14.22"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "15.0"
+          ]
+        }
+      ]
+    },
+    "15.17": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "15.17"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "16.0"
+          ]
+        }
+      ]
+    },
+    "16.13": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "16.13"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "17.0"
+          ]
+        }
+      ]
+    },
+    "17.9": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "17.9"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "18.0"
+          ]
+        }
+      ]
+    },
+    "18.3": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "18.3"
+      ]
+    }
+  }
+}
