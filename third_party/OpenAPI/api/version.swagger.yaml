@@ -658,6 +658,10 @@ definitions:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
+      pgupgrade:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
       pxcOperator:
         type: object
         additionalProperties:

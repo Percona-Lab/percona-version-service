@@ -288,6 +288,32 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
 	}
+
+	cases_v3 := []struct {
+		product string
+		version string
+	}{
+		{"pg-operator", "3.0.0"},
+	}
+
+		for _, c := range cases_v3 {
+		params := &version_service.VersionServiceOperatorParams{
+			OperatorVersion: c.version,
+			Product:         c.product,
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceOperator(params)
+		assert.NoError(t, err)
+
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.Operator, 1)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Postgresql), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgupgrade), 0)
+	}
 }
 
 func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
