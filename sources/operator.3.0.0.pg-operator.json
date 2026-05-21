@@ -7,14 +7,14 @@
         "pmm": {
           "3.7.1": {
             "image_path": "percona/pmm-client:3.7.1",
-            "status": "available",
+            "status": "recommended",
             "critical": false,
             "image_hash": "8b98629a469bf6360b14eb3ea121687737870261296f64e4587f6a6723a6845b",
             "image_hash_arm64": "9951a74522a6bd70531457628daca758ffa3363941938539d164e592188e23e3"
           },
           "2.44.1-1": {
             "image_path": "percona/pmm-client:2.44.1-1",
-            "status": "recommended",
+            "status": "available",
             "critical": false,
             "image_hash": "52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3",
             "image_hash_arm64": "390bfd12f981e8b3890550c4927a3ece071377065e001894458047602c744e3b"
