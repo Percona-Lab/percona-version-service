@@ -236,10 +236,11 @@
         },
         "pgupgrade": {
           "3.0.0": {
-            "image_path": "percona/percona-postgresql-operator:3.0.0-upgrade",
+            "image_path": "percona/percona-distribution-postgresql-upgrade:18.4-17.10-16.14-15.18-14.23-1",
             "status": "recommended",
             "critical": false,
-            "image_hash": "1b5d990e236cb4e4fb2f10b1447e1c1afe934e87f5181c4a4fe70abdea1fcc2a"
+            "image_hash": "31a9612320d3b08cb74d5e98f86b054c4562e4b900140152b28476be62f086f5",
+            "image_hash_arm64": "81a831086fc4aaee83af8d86b1422b64ce77e200a8f27627c27282c9af6ad9b8"
           }
         },
         "operator": {
