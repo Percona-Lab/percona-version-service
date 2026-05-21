@@ -278,7 +278,7 @@
             "status": "recommended",
             "critical": false,
             "image_hash": "aa217c9563d5a372f6bd3ce9ac06ec198393cf1299760f458f02aeb94b7e5b51",
-            "image_hash_arm64": "9aa1bf71193d11a53da6a70586aee92cdfe27cfc5f68f1d03bac751226be4116"
+            "image_hash_arm64": "e4c00ec25549c14b9a3665b0481b9a7df173bff8ca92cb79daf1a2abd2ef391e"
           },
           "17.9": {
             "image_path": "percona/percona-distribution-postgresql-with-postgis:17.9-1",
@@ -380,7 +380,7 @@
             "status": "recommended",
             "critical": false,
             "image_hash": "720bf87ef8cda340f833981a674d5dc71283cb39af3fd4ef97eff4ccf910b87a",
-            "image_hash_arm64": "055474ccc68a4a9885e0a6fed78129ffa8faefd451dc7643ac22dd266babc35f"
+            "image_hash_arm64": "6416424e58765b9434f18905f0338d466cb79bafc42e6a5570030c71a1323eee"
           },
           "17.9": {
             "image_path": "percona/percona-distribution-postgresql:17.9-1",
