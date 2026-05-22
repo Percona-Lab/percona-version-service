@@ -5,11 +5,7 @@ GIT_COMMIT:=$(shell git rev-parse --short HEAD)
 IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
 
 init:
-	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
-	go build -modfile=tools/go.mod -o bin/protoc-gen-go google.golang.org/protobuf/cmd/protoc-gen-go
-	go build -modfile=tools/go.mod -o bin/protoc-gen-go-grpc google.golang.org/grpc/cmd/protoc-gen-go-grpc
-	go build -modfile=tools/go.mod -o bin/protoc-gen-grpc-gateway github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
-	go build -modfile=tools/go.mod -o bin/protoc-gen-openapiv2 github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+	cd tools && go generate -x -tags=tools
 
 	curl -L "https://github.com/bufbuild/buf/releases/download/v1.34.0/buf-$(shell uname -s)-$(shell uname -m)" -o "./bin/buf"
 	chmod +x ./bin/buf
