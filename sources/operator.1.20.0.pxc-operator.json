@@ -11,13 +11,6 @@
             "critical": false,
             "image_hash": "50381e9798b99e9af0898614001370c965ac5393cee9023d9e9f90003442e321",
             "image_hash_arm64": "f4addf63bd8e3b846d63f1277e1a2316d0d88591cb42bd95497957406ef0b43a"
-          },
-          "3.0.6-1.1": {
-            "image_path": "percona/proxysql3:3.0.6-1.1",
-            "status": "available",
-            "critical": false,
-            "image_hash": "062bb7d717053b6325ed8277da3b85e39b4345de44a76ad3cd52456fe710d75c",
-            "image_hash_arm64": "c5048c1a1e07436266720fb2119a1c0e774c0546a99b8fe4ca9742951c9d5902"
           }
         },
         "backup": {
@@ -73,8 +66,8 @@
             "image_path": "percona/percona-xtradb-cluster-operator:1.20.0",
             "status": "recommended",
             "critical": false,
-            "image_hash": "98e7a58a65b80c3cb76cff7285d4ee25bf17bd881c70763061521cd0076057f4",
-            "image_hash_arm64": "dff802c01f504397ad96c12eb96c22785b389652a497c82aa1860b66e74a0d6a"
+            "image_hash": "d33f956cabb221808512def602f27e1d8c33883e04353ee8f2a3412df9a9ac81",
+            "image_hash_arm64": "be5a849048acbc1df6a7d402c9e47f747a04c1a073eaced08f3f71f04403c3aa"
           }
         },
         "pxc": {
