@@ -11,13 +11,6 @@
             "critical": false,
             "image_hash": "50381e9798b99e9af0898614001370c965ac5393cee9023d9e9f90003442e321",
             "image_hash_arm64": "f4addf63bd8e3b846d63f1277e1a2316d0d88591cb42bd95497957406ef0b43a"
-          },
-          "3.0.6-1.1": {
-            "image_path": "percona/proxysql3:3.0.6-1.1",
-            "status": "available",
-            "critical": false,
-            "image_hash": "062bb7d717053b6325ed8277da3b85e39b4345de44a76ad3cd52456fe710d75c",
-            "image_hash_arm64": "c5048c1a1e07436266720fb2119a1c0e774c0546a99b8fe4ca9742951c9d5902"
           }
         },
         "backup": {
