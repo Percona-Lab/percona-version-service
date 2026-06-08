@@ -3,6 +3,7 @@ SHELL = /bin/bash
 GIT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD | sed -e 's^/^-^g; s^[.]^-^g;' | tr '[:upper:]' '[:lower:]')
 GIT_COMMIT:=$(shell git rev-parse --short HEAD)
 IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
+PLATFORMS ?= linux/amd64,linux/arm64
 
 init:
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
@@ -53,9 +54,9 @@ build:
 run: build
 	SERVE_HTTP=true ./bin/app
 
-# Build and push docker image
-docker-push: docker-build
-	docker push ${IMG}
+# Build and push multi-arch docker image
+docker-push:
+	docker buildx build --platform=$(PLATFORMS) -t ${IMG} $(if $(IMG_LATEST),-t $(IMG_LATEST)) --push .
 
 test:
 	docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
