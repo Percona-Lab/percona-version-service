@@ -6,6 +6,7 @@ IMG ?= perconalab/version-service:$(GIT_BRANCH)-$(GIT_COMMIT)
 PLATFORMS ?= linux/amd64,linux/arm64
 
 init:
+	mkdir -p bin
 	go build -modfile=tools/go.mod -o bin/yq github.com/mikefarah/yq/v3
 	go build -modfile=tools/go.mod -o bin/protoc-gen-go google.golang.org/protobuf/cmd/protoc-gen-go
 	go build -modfile=tools/go.mod -o bin/protoc-gen-go-grpc google.golang.org/grpc/cmd/protoc-gen-go-grpc
@@ -15,7 +16,13 @@ init:
 	curl -L "https://github.com/bufbuild/buf/releases/download/v1.34.0/buf-$(shell uname -s)-$(shell uname -m)" -o "./bin/buf"
 	chmod +x ./bin/buf
 
-	curl -L  https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_amd64 -o ./bin/swagger
+	SWAGGER_ARCH=$$(uname -m); \
+	case "$${SWAGGER_ARCH}" in \
+		x86_64) SWAGGER_ARCH=amd64 ;; \
+		aarch64|arm64) SWAGGER_ARCH=arm64 ;; \
+		*) echo "unsupported swagger architecture: $${SWAGGER_ARCH}"; exit 1 ;; \
+	esac; \
+	curl -L "https://github.com/go-swagger/go-swagger/releases/download/v0.31.0/swagger_$(shell uname | tr '[:upper:]' '[:lower:]')_$${SWAGGER_ARCH}" -o ./bin/swagger
 	chmod +x ./bin/swagger
 
 gen:
