@@ -205,6 +205,15 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: distribution
+          description: PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet).
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - percona
+            - community
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -335,6 +344,15 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: distribution
+          description: PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet).
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - percona
+            - community
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -469,6 +487,15 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: distribution
+          description: PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet).
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - percona
+            - community
       tags:
         - VersionService
 definitions:
@@ -658,10 +685,6 @@ definitions:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
-      pgupgrade:
-        type: object
-        additionalProperties:
-          $ref: '#/definitions/versionVersion'
       pxcOperator:
         type: object
         additionalProperties:
@@ -719,6 +742,10 @@ definitions:
         additionalProperties:
           $ref: '#/definitions/versionVersion'
       binlogServer:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgupgrade:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
