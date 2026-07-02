@@ -9,8 +9,8 @@
             "image_path": "percona/percona-server-mysql-operator:1.2.0",
             "status": "recommended",
             "critical": false,
-            "image_hash": "a9ab659068574c247151427178dd05ea9cf11a3789acc0b84a3cb6713a7916eb",
-            "image_hash_arm64": "482d6757d2d7697889e2538c5b229aa4253a936cc08257860ed18357a05b82af"
+            "image_hash": "76deed6a6daca2846fba6046b6646e25d22bca2d6d58a0b567e0a2c1240fe103",
+            "image_hash_arm64": "e0dd1e6bf1fd90b2149290500997ee791101f4500b5162bcea5694b1b9d7ab58"
           }
         },
         "haproxy": {
