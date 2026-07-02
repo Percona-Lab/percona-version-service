@@ -96,8 +96,8 @@
             "image_path": "percona/percona-toolkit:3.7.1-4",
             "status": "recommended",
             "critical": false,
-            "image_hash": "ed86efb798fd0995c059f19281171614b1e507e747e69b5b0101c53b22fd9c5d",
-            "image_hash_arm64": "05900c454b975e15424da144bcaf305fa3747d6093254732f4bfa2e637c467d6"
+            "image_hash": "0865492cb600f1092618de63e91ae480606a0459d86e5eb876c7e7fb6e6cdda1",
+            "image_hash_arm64": "c0ebb11297c3bd83bbbc7acd9195dfa754e7e9be9da70800d146381a7d652129"
           }
         },
         "orchestrator": {
