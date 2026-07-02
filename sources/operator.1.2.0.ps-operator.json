@@ -62,8 +62,8 @@
             "image_path": "percona/percona-server:8.0.46-37.1",
             "status": "recommended",
             "critical": false,
-            "image_hash": "a9bca94cb483502b03a54866d15c597b5043ee95d95370e8dcc7253c202e096b",
-            "image_hash_arm64": "c3cf8d599e1e8fdcf4f9a178e0d65efd2e3d07ea61f127a109e928917e155542"
+            "image_hash": "1552a3b1860bb12325755295fb833890eb920c34fc212dbadb34c59baf0c378a",
+            "image_hash_arm64": "e41dfb981de432da1a117077e7230008422ab49d6c0e9dd8d17a03d7ffde5dc0"
           },
           "8.0.45-36": {
             "image_path": "percona/percona-server:8.0.45-36.1",
