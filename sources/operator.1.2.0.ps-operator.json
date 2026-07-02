@@ -92,8 +92,8 @@
           }
         },
         "toolkit": {
-          "3.7.1-3": {
-            "image_path": "percona/percona-toolkit:3.7.1-3",
+          "3.7.1-4": {
+            "image_path": "percona/percona-toolkit:3.7.1-4",
             "status": "recommended",
             "critical": false,
             "image_hash": "7fd2092b0ac8addf44163a5a7e1999acf5ae34ccffe77aeb005aa6ea8a8cfc5d",
