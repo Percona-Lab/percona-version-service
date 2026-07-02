@@ -24,7 +24,7 @@
         },
         "binlog_server": {
           "0.3.1": {
-            "image_path": "perconalab/percona-binlog-server:0.3.1",
+            "image_path": "percona/percona-server-mysql-operator:1.2.0-binlog-server-0.3.1",
             "status": "recommended",
             "critical": false,
             "image_hash": "53336b6ccbe463c255f7ca9caaf9390ceba2b9c7672b91998cbe5f44d84dc4e4",
