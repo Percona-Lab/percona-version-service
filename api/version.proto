@@ -119,6 +119,12 @@ message ApplyRequest {
   bool role_management_enabled = 27;
   bool mcs_enabled = 28;
   bool volume_expansion_enabled = 29;
+  string distribution = 30 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet)."
+      enum: ["", "percona", "community"]
+    }
+  ];
 }
 
 message OperatorRequest {
@@ -150,6 +156,12 @@ message OperatorRequest {
   bool role_management_enabled = 27;
   bool mcs_enabled = 28;
   bool volume_expansion_enabled = 29;
+  string distribution = 30 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet)."
+      enum: ["", "percona", "community"]
+    }
+  ];
 }
 
 message ProductRequest {
@@ -180,6 +192,12 @@ message ProductRequest {
   bool role_management_enabled = 27;
   bool mcs_enabled = 28;
   bool volume_expansion_enabled = 29;
+  string distribution = 30 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet)."
+      enum: ["", "percona", "community"]
+    }
+  ];
 }
 
 message MetadataRequest {
