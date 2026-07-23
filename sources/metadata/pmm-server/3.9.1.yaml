@@ -1,4 +1,4 @@
-version: 3.9.0
+version: 3.9.1
 imageInfo:
   image_path: "perconalab/pmm-server:3-dev-latest"
   image_hash: "sha256:ca7ff57b088f93836d9214bcc2726164fc16340387e7faa819c8bea0d7e9affc"
