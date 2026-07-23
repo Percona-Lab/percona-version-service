@@ -1,9 +1,27 @@
 ---
 version: 2
 updates:
-# main branch
+  # main branch
   - package-ecosystem: "gomod"
     directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+
+  - package-ecosystem: "gomod"
+    directory: "/api"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+
+  - package-ecosystem: "gomod"
+    directory: "/tools"
     target-branch: "main"
     schedule:
       interval: "weekly"
