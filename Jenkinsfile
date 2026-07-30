@@ -37,7 +37,7 @@ pipeline {
                     testsReportMap['api-tests'] = 'failed'
                 }
                 sh '''
-                   sudo curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                   sudo curl -SL "https://github.com/docker/compose/releases/download/v2.29.7/docker-compose-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)" -o /usr/local/bin/docker-compose
                    sudo chmod +x /usr/local/bin/docker-compose
 
                    docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
