@@ -64,6 +64,7 @@ pipeline {
                 }
             }
             sh '''
+                docker-compose -f docker-compose.test.yml down --volumes --remove-orphans || true
                 sudo docker rmi -f \$(sudo docker images -q) || true
                 sudo rm -rf ./*
             '''
