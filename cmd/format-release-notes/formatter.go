@@ -86,6 +86,11 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 				resolved := docsURLPrefix.ResolveReference(target)
 				if strings.HasSuffix(resolved.Path, ".md") {
 					resolved.Path = strings.TrimSuffix(resolved.Path, ".md") + ".html"
+					// Path and RawPath must stay in sync, else String() re-encodes from Path
+					// and drops the original escaping (e.g. %2F -> /).
+					if resolved.RawPath != "" {
+						resolved.RawPath = strings.TrimSuffix(resolved.RawPath, ".md") + ".html"
+					}
 				}
 				link.Destination = []byte(resolved.String())
 			}
