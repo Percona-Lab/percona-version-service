@@ -83,11 +83,16 @@ func FormatReleaseNotes(sourceContent []byte) ([]byte, error) {
 		if link, ok := node.(*ast.Link); ok && entering {
 			dest := string(link.Destination)
 			if target, isRelativeLink := extractRelativeURL(dest); isRelativeLink {
-				newDestination := docsURLPrefix.ResolveReference(target).String()
-				if strings.HasSuffix(newDestination, ".md") {
-					newDestination = strings.TrimSuffix(newDestination, ".md") + ".html"
+				resolved := docsURLPrefix.ResolveReference(target)
+				if strings.HasSuffix(resolved.Path, ".md") {
+					resolved.Path = strings.TrimSuffix(resolved.Path, ".md") + ".html"
+					// Path and RawPath must stay in sync, else String() re-encodes from Path
+					// and drops the original escaping (e.g. %2F -> /).
+					if resolved.RawPath != "" {
+						resolved.RawPath = strings.TrimSuffix(resolved.RawPath, ".md") + ".html"
+					}
 				}
-				link.Destination = []byte(newDestination)
+				link.Destination = []byte(resolved.String())
 			}
 		} else if image, ok := node.(*ast.Image); ok && entering {
 			dest := string(image.Destination)
