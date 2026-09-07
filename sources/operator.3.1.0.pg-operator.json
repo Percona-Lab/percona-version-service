@@ -594,8 +594,8 @@
             "image_path": "percona/fluentbit:5.1.1-1",
             "status": "recommended",
             "critical": false,
-            "image_hash": "1ca02c2c820697ea943b39ab3e033446eca383343bb61acc71981548d31f4c7f",
-            "image_hash_arm64": "1814577514a49b851c59d1bf6ad5ec360ebd04d53ce9f5ece5209498b5c6a64b"
+            "image_hash": "332ac2386031925cef314367366abea5cb6ec1ac0bc601b824422753346bc5df",
+            "image_hash_arm64": "1d528ec4a8c9bab32762c83eb4e33458f2e48d9af94f0aa59bba0ce4e89904dd"
           }
         }
       }
