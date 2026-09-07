@@ -588,6 +588,15 @@
             "image_hash": "6b4309035f1fc4c0dcb6b7374ac7a01526319374a071759282a21eb016f754bf",
             "image_hash_arm64": "ab419b7e10cd81fa44dd198e4a10c44dc056e87ea73fd836a66b6a2356bc4efc"
           }
+        },
+        "log_collector": {
+          "5.1.1": {
+            "image_path": "percona/fluentbit:5.1.1-1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "332ac2386031925cef314367366abea5cb6ec1ac0bc601b824422753346bc5df",
+            "image_hash_arm64": "1d528ec4a8c9bab32762c83eb4e33458f2e48d9af94f0aa59bba0ce4e89904dd"
+          }
         }
       }
     }

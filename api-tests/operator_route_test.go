@@ -319,6 +319,12 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgupgrade), 0)
+
+		if c.version != "3.0.0" {
+			assert.Greater(t, len(resp.Payload.Versions[0].Matrix.LogCollector), 0)
+		} else {
+			assert.Equal(t, 0, len(resp.Payload.Versions[0].Matrix.LogCollector))
+		}
 	}
 }
 
