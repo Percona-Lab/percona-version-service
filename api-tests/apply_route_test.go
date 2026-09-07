@@ -32,6 +32,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Proxysql, 1)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Pmm, 2)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Haproxy, 1)
+	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.LogCollector, 1)
 	assert.Len(t, pxcResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	psmdbParams := &version_service.VersionServiceApplyParams{
@@ -48,6 +49,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Mongod, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Backup, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Pmm, 2)
+	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.LogCollector, 1)
 	assert.Len(t, psmdbResp.Payload.Versions[0].Matrix.Operator, 1)
 
 	pgParams := &version_service.VersionServiceApplyParams{
@@ -68,6 +70,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Postgis, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Operator, 1)
 	assert.Len(t, pgResp.Payload.Versions[0].Matrix.Pgupgrade, 1)
+	assert.Len(t, pgResp.Payload.Versions[0].Matrix.LogCollector, 1)
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
