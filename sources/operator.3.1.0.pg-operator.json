@@ -151,8 +151,8 @@
             "image_path": "percona/percona-postgresql-operator:3.1.0",
             "status": "recommended",
             "critical": false,
-            "image_hash": "0f8ae7286e331e2c1d26b3fb8c8df69e9e6076fa4367edc68ed995c639f76af8",
-            "image_hash_arm64": "8b48095df20d35558882b7677ea3292695670daa0db70f4c719f161d3ce33596"
+            "image_hash": "a15ac0f3fc4183e6f3096a2ae5802454846721ba92c4462c472fc5bc33151f52",
+            "image_hash_arm64": "29e063555a7ae437be1a04e369424eaa9ac4bcc7bd94ed20b94f952615f4980e"
           }
         },
         "pgupgrade": {
