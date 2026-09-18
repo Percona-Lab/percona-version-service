@@ -88,3 +88,77 @@ func TestPMMFilter(t *testing.T) {
 		})
 	}
 }
+
+func TestPSFilter(t *testing.T) {
+	// mirrors the ps-operator 1.3.0 matrix: 8.0 and 8.4 carry a recommended
+	// version, the freshly added 9.7 branch is available only
+	matrix := func() map[string]*pbVersion.Version {
+		return map[string]*pbVersion.Version{
+			"9.7.1-1":   {Status: pbVersion.Status_available},
+			"8.4.10-10": {Status: pbVersion.Status_recommended},
+			"8.4.8-8":   {Status: pbVersion.Status_available},
+			"8.0.46-37": {Status: pbVersion.Status_recommended},
+			"8.0.45-36": {Status: pbVersion.Status_available},
+		}
+	}
+
+	tests := map[string]struct {
+		versions map[string]*pbVersion.Version
+		apply    string
+		current  string
+		expected string
+	}{
+		"recommended stays on the latest recommended branch": {
+			versions: matrix(), apply: "recommended", current: "", expected: "8.4.10-10",
+		},
+		"latest picks the newest branch": {
+			versions: matrix(), apply: "latest", current: "", expected: "9.7.1-1",
+		},
+		"8.0-recommended": {
+			versions: matrix(), apply: "recommended", current: "8.0", expected: "8.0.46-37",
+		},
+		"8.4-recommended": {
+			versions: matrix(), apply: "recommended", current: "8.4", expected: "8.4.10-10",
+		},
+		"9.7-recommended falls back to the newest 9.7": {
+			versions: matrix(), apply: "recommended", current: "9.7", expected: "9.7.1-1",
+		},
+		"9.7-latest": {
+			versions: matrix(), apply: "latest", current: "9.7", expected: "9.7.1-1",
+		},
+		"branch without a recommended version resolves to its newest": {
+			versions: map[string]*pbVersion.Version{
+				"9.7.2-2":   {Status: pbVersion.Status_available},
+				"9.7.1-1":   {Status: pbVersion.Status_available},
+				"8.4.10-10": {Status: pbVersion.Status_recommended},
+			},
+			apply: "recommended", current: "9.7", expected: "9.7.2-2",
+		},
+		"disabled versions are skipped in the fallback": {
+			versions: map[string]*pbVersion.Version{
+				"9.7.2-2":   {Status: pbVersion.Status_disabled},
+				"9.7.1-1":   {Status: pbVersion.Status_available},
+				"8.4.10-10": {Status: pbVersion.Status_recommended},
+			},
+			apply: "recommended", current: "9.7", expected: "9.7.1-1",
+		},
+	}
+
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			err := psFilter(tt.versions, tt.apply, tt.current)
+			require.NoError(t, err)
+			require.Len(t, tt.versions, 1)
+			_, ok := tt.versions[tt.expected]
+			assert.True(t, ok, "expected %s, got %v", tt.expected, keysOf(tt.versions))
+		})
+	}
+}
+
+func keysOf(m map[string]*pbVersion.Version) []string {
+	k := make([]string, 0, len(m))
+	for v := range m {
+		k = append(k, v)
+	}
+	return k
+}
