@@ -1,0 +1,102 @@
+{
+  "backup": {
+    "8.0.35-36.1": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "8.0"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "8.4"
+          ]
+        }
+      ]
+    },
+    "8.4.0-7.1": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "8.4"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "9"
+          ]
+        }
+      ]
+    },
+    "9.7.1": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "9.7"
+      ]
+    }
+  },
+  "router": {
+    "8.0.46-37.1": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "8.0"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "8.4"
+          ]
+        }
+      ]
+    },
+    "8.4.11-11.1": {
+      "and": [
+        {
+          ">=": [
+            {
+              "var": "productVersion"
+            },
+            "8.4"
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "productVersion"
+            },
+            "9"
+          ]
+        }
+      ]
+    },
+    "9.7.1-1.1": {
+      ">=": [
+        {
+          "var": "productVersion"
+        },
+        "9.7"
+      ]
+    }
+  }
+}
