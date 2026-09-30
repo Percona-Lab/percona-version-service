@@ -5,12 +5,12 @@
       "product": "psmdb-operator",
       "matrix": {
         "log_collector": {
-          "5.1.1-1": {
-            "image_path": "percona/fluentbit:5.1.1-1",
+          "5.1.2-1": {
+            "image_path": "percona/fluentbit:5.1.2-1",
             "status": "recommended",
             "critical": false,
-            "image_hash": "332ac2386031925cef314367366abea5cb6ec1ac0bc601b824422753346bc5df",
-            "image_hash_arm64": "1d528ec4a8c9bab32762c83eb4e33458f2e48d9af94f0aa59bba0ce4e89904dd"
+            "image_hash": "aff34602ff0e94115943d2a3c9888d167c415ca4f46ea0a41811e057901de632",
+            "image_hash_arm64": "690b3ce2fac56a2d112fc8c3b40945f2c72ae3f7a43622fb083cbc6e839cf1d6"
           }
         },
         "operator": {
