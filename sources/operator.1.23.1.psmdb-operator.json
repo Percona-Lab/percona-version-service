@@ -17,7 +17,9 @@
           "1.23.1": {
             "image_path": "percona/percona-server-mongodb-operator:1.23.1",
             "status": "recommended",
-            "critical": false
+            "critical": false,
+            "image_hash": "cdb60f9b30c5126602c5fddfb9e8af3523022580dc1ad8760c6ff7c55227f385",
+            "image_hash_arm64": "21dd29afd7ac3a9311988823ff80d7ef25057163cc1a1ad875d8f5589535d33a"
           }
         },
         "mongod": {
