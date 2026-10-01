@@ -1,0 +1,184 @@
+{
+  "versions": [
+    {
+      "operator": "1.3.0",
+      "product": "ps-operator",
+      "matrix": {
+        "operator": {
+          "1.3.0": {
+            "image_path": "percona/percona-server-mysql-operator:1.3.0",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "TBD",
+            "image_hash_arm64": "TBD"
+          }
+        },
+        "haproxy": {
+          "2.8.26-1": {
+            "image_path": "percona/haproxy:2.8.26-1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "a8f8a5e79869146895d74d1736cde345d16309dfba247de228b6babf30cc0ad5",
+            "image_hash_arm64": "c2861711fc9599c6d1ef597b7ba49c4de5d8c088320b62f37a74d87cd64d0edf"
+          }
+        },
+        "binlog_server": {
+          "0.4.1": {
+            "image_path": "percona/percona-server-mysql-operator:1.2.0-binlog-server-0.4.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "8bc7dd1d6c45165391457b4bcebf00d71baab8436d07afe77aa2e29fd88c61ed",
+            "image_hash_arm64": "031de91f947f003cbd4e84940c39fe9173bb472498c585ede9b0082667b1002b"
+          }
+        },
+        "mysql": {
+          "9.7.1-1": {
+            "image_path": "percona/percona-server:9.7.1-1.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "f3d980274305a5726e95f6d92c646b3d1a1441669b79cbbad831f906788847bd",
+            "image_hash_arm64": "9d088a12ea42664104ae74630a8151e7ebead210d734557ac6fa4d22bca57256"
+          },
+          "8.4.11-11": {
+            "image_path": "percona/percona-server:8.4.11-11.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "8f6845e655db52d6e480b6c4eddecb0faa8d1f7317dee5ac4018fc08ecb13e2f",
+            "image_hash_arm64": "839cd17c8fbd91d9e80bb8f78e29764f48fd066256c8a75e511cb734a2c00776"
+          },
+          "8.4.10-10": {
+            "image_path": "percona/percona-server:8.4.10-10.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "d24391a363426239220c35b9707d6b26ce7522ac27abe55689baebfb48bd9fb3",
+            "image_hash_arm64": "70f6c4d01b5807737cdd423ab32af1feb1d00513b5420a84361773b167aeca87"
+          },
+          "8.4.8-8": {
+            "image_path": "percona/percona-server:8.4.8-8.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "5203959150b5afe769f04f17453ae22d63ea889dfbbdef6acc013e999cc31552",
+            "image_hash_arm64": "831ac32171d0b794826e276745cf3e7526b63c62447fdb266b9e308e7028319e"
+          },
+          "8.4.6-6": {
+            "image_path": "percona/percona-server:8.4.6-6.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "ea97c9df3e362728fc3819c28c841498f5a1765945b9556bc964b218b7d4dc97"
+          },
+          "8.4.5-5": {
+            "image_path": "percona/percona-server:8.4.5-5",
+            "status": "available",
+            "critical": false,
+            "image_hash": "61a6811372d919316640990922188005f92d58639a2472865d59e56b2a6050a1"
+          },
+          "8.0.46-37": {
+            "image_path": "percona/percona-server:8.0.46-37.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "1552a3b1860bb12325755295fb833890eb920c34fc212dbadb34c59baf0c378a",
+            "image_hash_arm64": "e41dfb981de432da1a117077e7230008422ab49d6c0e9dd8d17a03d7ffde5dc0"
+          },
+          "8.0.45-36": {
+            "image_path": "percona/percona-server:8.0.45-36.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "27845b5451a1b707df70e832d51bcd3c384e6cb3cc02799a7bc01ec6cd578c2d",
+            "image_hash_arm64": "1dae69344a18d21800fd65752a1450ddaac31b50d733d3eb1507f28ec824172d"
+          },
+          "8.0.43-34": {
+            "image_path": "percona/percona-server:8.0.43-34.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "315efeac572c48cc6f118bba7e0b2545ad396142f60328f2db9620ae0ad57e45"
+          },
+          "8.0.42-33": {
+            "image_path": "percona/percona-server:8.0.42-33",
+            "status": "available",
+            "critical": false,
+            "image_hash": "a7cbaa50c43483a07506f7cd5cccc4e587611f6500e1be5df0a93e339b9d3bc5"
+          },
+          "8.0.40-31": {
+            "image_path": "percona/percona-server:8.0.40-31",
+            "status": "available",
+            "critical": false,
+            "image_hash": "09276abecbc7c38ce9c5453da1728f3e7d81722c56e2837574ace3a021ee92f2"
+          }
+        },
+        "toolkit": {
+          "3.7.1-4": {
+            "image_path": "percona/percona-toolkit:3.7.1-4",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "0865492cb600f1092618de63e91ae480606a0459d86e5eb876c7e7fb6e6cdda1",
+            "image_hash_arm64": "c0ebb11297c3bd83bbbc7acd9195dfa754e7e9be9da70800d146381a7d652129"
+          }
+        },
+        "orchestrator": {
+          "3.2.6-24": {
+            "image_path": "percona/percona-orchestrator:3.2.6-24",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "3a859c5f87127323be66f7e568b3a1d7de58258eadd2250cf6b74827c62dbb70",
+            "image_hash_arm64": "73fd456e1aa794e99ede4d868faebf48c248448736dad30e2ad367ab4fd7e0ae"
+          }
+        },
+        "router": {
+          "9.7.1-1.1": {
+            "image_path": "percona/percona-mysql-router:9.7.1-1.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "3822829a8fc02cefd52265faf9451df73666aacb9d782118f4c92745e17bf4e5",
+            "image_hash_arm64": "2fba75434e31d48262f090667f8aa15ba51729d066df7dd2235baf2b9c7d8501"
+          },
+          "8.4.11-11.1": {
+            "image_path": "percona/percona-mysql-router:8.4.11-11.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "6e653065a28a0da0fd54199511803adcdfe8bf5fe2b5717d7b2c05b9f96a1c15",
+            "image_hash_arm64": "1610c23e99bdd44c10e642f29ecf3dcf438c0dd82e6f872235aac4f75ea81dbf"
+          },
+          "8.0.46-37.1": {
+            "image_path": "percona/percona-mysql-router:8.0.46-37.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "826cd7a26e918fc5b75cad6ba19d74b508dd1a73f93e49cfac727f6f40b74a02",
+            "image_hash_arm64": "d7a835fff71c6fa881d35cc54fb126c4027ccd9692575c6b95c2cd6329915b90"
+          }
+        },
+        "backup": {
+          "9.7.1": {
+            "image_path": "percona/percona-xtrabackup:9.7.1",
+            "status": "available",
+            "critical": false,
+            "image_hash": "e165865d07c3482b5a02bb99301f74c0f75c64e9dcfbe59d2841234ad011c91c",
+            "image_hash_arm64": "35b417cdc57f3d2552b3f772067bb077458fd27b639a4bb2c1de84e6cd1a8870"
+          },
+          "8.4.0-7.1": {
+            "image_path": "percona/percona-xtrabackup:8.4.0-7.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "f3202bdea0dbf0c551f9f465c4b468c0c6a6b35a6511e7d110ececd1a5dd3e41",
+            "image_hash_arm64": "ad0cc24643f9e4a13c7bf73afcb371f47587a2961f514b924e8f5ebd947b898d"
+          },
+          "8.0.35-36.1": {
+            "image_path": "percona/percona-xtrabackup:8.0.35-36.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "5416f19ac087e4d8e06eeff63cf1e075dc3b4e45577abbb9c3d87ae1ea3816c5",
+            "image_hash_arm64": "b604421b30bdd7ddfbc716220a8f8f32077c12a762d1eae622dcf4e5085b115a"
+          }
+        },
+        "pmm": {
+          "3.9.1": {
+            "image_path": "percona/pmm-client:3.9.1",
+            "status": "recommended",
+            "critical": false,
+            "image_hash": "6b4309035f1fc4c0dcb6b7374ac7a01526319374a071759282a21eb016f754bf",
+            "image_hash_arm64": "ab419b7e10cd81fa44dd198e4a10c44dc056e87ea73fd836a66b6a2356bc4efc"
+          }
+        }
+      }
+    }
+  ]
+}

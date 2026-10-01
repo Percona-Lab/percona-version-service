@@ -216,21 +216,33 @@ func psFilter(versions map[string]*pbVersion.Version, apply string, current stri
 		return status.Error(codes.Internal, "no versions to filter")
 	}
 
+	apply = strings.ToLower(apply)
+
 	keys := make([]string, 0, len(versions))
 	for k, v := range versions {
-		if strings.ToLower(apply) == recommended && v.Status != pbVersion.Status_recommended {
+		if apply == recommended && v.Status != pbVersion.Status_recommended {
 			continue
 		}
 
 		keys = append(keys, k)
 	}
 
+	// A database release branch can be offered before any of its versions is
+	// promoted to recommended, e.g. right after 9.7 is added next to 8.0 and 8.4.
+	// Asking for <branch>-recommended must not fail in that case, so fall back to
+	// every version of that branch and pick its newest one.
+	branchFallback := apply == recommended && current != "" && !hasBranch(keys, current)
+	if branchFallback {
+		keys = keys[:0]
+		for k := range versions {
+			keys = append(keys, k)
+		}
+	}
+
 	sorted, err := sortedVersionsDesc(keys, true)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
-
-	apply = strings.ToLower(apply)
 
 	if (apply == recommended || apply == latest) && current == "" {
 		return deleteOtherBut(sorted[0].String(), versions)
@@ -253,7 +265,7 @@ func psFilter(versions map[string]*pbVersion.Version, apply string, current stri
 			if versions[s.String()].Status != pbVersion.Status_disabled &&
 				c.Major() == s.Major() && c.Minor() == s.Minor() {
 				desired = s.String()
-				if strings.ToLower(apply) == latest {
+				if apply == latest || branchFallback {
 					break
 				}
 			}
@@ -481,4 +493,26 @@ func sortedVersionsDesc(versions []string, preVerIsLower bool) ([]*semver.Versio
 	})
 
 	return v, nil
+}
+
+// hasBranch reports whether any of the given versions belongs to the same
+// major.minor release branch as ver.
+func hasBranch(versions []string, ver string) bool {
+	c, err := semver.NewVersion(ver)
+	if err != nil {
+		return false
+	}
+
+	for _, v := range versions {
+		s, err := semver.NewVersion(v)
+		if err != nil {
+			continue
+		}
+
+		if s.Major() == c.Major() && s.Minor() == c.Minor() {
+			return true
+		}
+	}
+
+	return false
 }
