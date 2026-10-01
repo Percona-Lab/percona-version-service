@@ -1,13 +1,12 @@
-FROM golang:1.25 AS build-env
+FROM --platform=$BUILDPLATFORM golang:1.25 AS build-env
+ARG TARGETOS
+ARG TARGETARCH
 ADD . /src
-ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
 WORKDIR /src
 RUN go mod download
 RUN make init
 RUN make gen
-RUN go build -o /app
+RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build -o /app
 
 FROM scratch
 COPY --from=build-env /app /
