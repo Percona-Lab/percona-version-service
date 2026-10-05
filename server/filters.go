@@ -349,14 +349,21 @@ func pgDepFilter(versions map[string]interface{}, productVersion string) (string
 		return "", status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
 
-	desired := sorted[0].String()
+	desired := sorted[0].Original()
 	for _, s := range sorted {
-		versStr := s.String()
-		if strings.HasSuffix(versStr, ".0") {
-			versStr = strings.TrimSuffix(versStr, ".0")
-
+		versStr := s.Original()
+		rule, ok := versions[versStr]
+		if !ok {
+			versStr = s.String()
+			if strings.HasSuffix(versStr, ".0") {
+				versStr = strings.TrimSuffix(versStr, ".0")
+			}
+			rule, ok = versions[versStr]
+			if !ok {
+				return "", status.Errorf(codes.Internal, "failed to find deps logic for version %s", s.Original())
+			}
 		}
-		b, err := json.Marshal(versions[versStr])
+		b, err := json.Marshal(rule)
 		if err != nil {
 			return "", status.Errorf(codes.Internal, "failed to marshal deps logic: %v", err)
 		}
@@ -371,7 +378,7 @@ func pgDepFilter(versions map[string]interface{}, productVersion string) (string
 		}
 
 		if strings.TrimSuffix(result.String(), "\n") == "true" {
-			desired = s.String()
+			desired = versStr
 			break
 		}
 	}

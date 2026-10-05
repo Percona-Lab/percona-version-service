@@ -1441,6 +1441,67 @@ func TestApplyPGReturnedVersions(t *testing.T) {
 	}
 }
 
+func TestApplyPGReturnedDependencies(t *testing.T) {
+	cli := cli()
+
+	cases := []struct {
+		apply     string
+		operator  string
+		dbVersion string
+		pg        string
+		sidecar   string
+	}{
+		{"latest", "3.1.0", "", "18.6.1-3", "18.6.1-3"},
+		{"recommended", "3.1.0", "", "18.6.1-3", "18.6.1-3"},
+		{"latest", "3.1.0", "18.6.1-3", "18.6.1-3", "18.6.1-3"},
+		{"latest", "3.1.0", "17.11.1-3", "17.11.1-3", "17.11.1-3"},
+		{"latest", "3.1.0", "16.15-3", "16.15-3", "16.15-3"},
+		{"latest", "3.1.0", "15.19-3", "15.19-3", "15.19-3"},
+		{"latest", "3.1.0", "14.24-3", "14.24-3", "14.24-3"},
+		{"16-latest", "3.1.0", "", "16.15-3", "16.15-3"},
+		{"15-latest", "3.1.0", "", "15.19-3", "15.19-3"},
+		{"14-latest", "3.1.0", "", "14.24-3", "14.24-3"},
+		{"18.6.1-3", "3.1.0", "", "18.6.1-3", "18.6.1-3"},
+		{"17.11.1-3", "3.1.0", "", "17.11.1-3", "17.11.1-3"},
+		{"16.15-3", "3.1.0", "", "16.15-3", "16.15-3"},
+		{"15.19-3", "3.1.0", "", "15.19-3", "15.19-3"},
+		{"14.24-3", "3.1.0", "", "14.24-3", "14.24-3"},
+		{"18.6.1", "3.1.0", "", "18.6.1", "18.6.1"},
+		{"17.11.1", "3.1.0", "", "17.11.1", "17.11.1"},
+		{"16.15", "3.1.0", "", "16.15", "16.15"},
+		{"15.19", "3.1.0", "", "15.19", "15.19"},
+		{"14.24", "3.1.0", "", "14.24", "14.24"},
+		{"latest", "3.0.0", "", "18.4", "18.4"},
+		{"latest", "3.0.0", "16.14", "16.14", "16.14"},
+	}
+
+	for _, c := range cases {
+		t.Run(c.apply+"/"+c.operator+"/"+c.dbVersion, func(t *testing.T) {
+			params := &version_service.VersionServiceApplyParams{
+				Apply:           c.apply,
+				OperatorVersion: c.operator,
+				Product:         "pg-operator",
+			}
+			params.WithTimeout(2 * time.Second)
+			if c.dbVersion != "" {
+				params.DatabaseVersion = &c.dbVersion
+			}
+
+			resp, err := cli.VersionService.VersionServiceApply(params)
+			assert.NoError(t, err)
+
+			matrix := resp.Payload.Versions[0].Matrix
+			assert.Equal(t, c.pg, getVersion(matrix.Postgresql), "postgresql")
+			assert.Len(t, matrix.Pgbackrest, 1)
+			assert.Len(t, matrix.Pgbouncer, 1)
+			assert.Len(t, matrix.Postgis, 1)
+			assert.Equal(t, c.sidecar, getVersion(matrix.Pgbackrest), "pgbackrest")
+			assert.Equal(t, c.sidecar, getVersion(matrix.Pgbouncer), "pgbouncer")
+			assert.Equal(t, c.sidecar, getVersion(matrix.Postgis), "postgis")
+		})
+	}
+}
+
 func TestApplyPSReturnedVersions(t *testing.T) {
 	cli := cli()
 	v80 := "8.0"

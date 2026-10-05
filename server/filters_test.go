@@ -88,3 +88,51 @@ func TestPMMFilter(t *testing.T) {
 		})
 	}
 }
+
+func TestPgDepFilterImageRebuildKeys(t *testing.T) {
+	andRange := func(lo, hi string) map[string]interface{} {
+		return map[string]interface{}{
+			"and": []interface{}{
+				map[string]interface{}{">=": []interface{}{map[string]interface{}{"var": "productVersion"}, lo}},
+				map[string]interface{}{"<": []interface{}{map[string]interface{}{"var": "productVersion"}, hi}},
+			},
+		}
+	}
+
+	deps := map[string]interface{}{
+		"18.6.1-3": map[string]interface{}{">=": []interface{}{map[string]interface{}{"var": "productVersion"}, "18.6.1-3"}},
+		"18.6.1":   andRange("18.6.1", "18.6.1-3"),
+		"17.11.1-3": andRange("17.11.1-3", "18.0"),
+		"17.11.1":   andRange("17.11.1", "17.11.1-3"),
+		"16.15-3":   andRange("16.15-3", "17.0"),
+		"16.15":     andRange("16.15", "16.15-3"),
+		"15.19-3":   andRange("15.19-3", "16.0"),
+		"15.19":     andRange("15.19", "15.19-3"),
+		"14.24-3":   andRange("14.24-3", "15.0"),
+		"14.24":     andRange("14.24", "14.24-3"),
+	}
+
+	cases := []struct {
+		productVersion string
+		want           string
+	}{
+		{"18.6.1-3", "18.6.1-3"},
+		{"18.6.1", "18.6.1"},
+		{"17.11.1-3", "17.11.1-3"},
+		{"17.11.1", "17.11.1"},
+		{"16.15-3", "16.15-3"},
+		{"16.15", "16.15"},
+		{"15.19-3", "15.19-3"},
+		{"15.19", "15.19"},
+		{"14.24-3", "14.24-3"},
+		{"14.24", "14.24"},
+	}
+
+	for _, c := range cases {
+		t.Run(c.productVersion, func(t *testing.T) {
+			got, err := pgDepFilter(deps, c.productVersion)
+			require.NoError(t, err)
+			assert.Equal(t, c.want, got)
+		})
+	}
+}
