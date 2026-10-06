@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/Masterminds/semver"
@@ -473,7 +474,18 @@ func pgImageNewer(a, b *semver.Version) bool {
 	if a.Major() != b.Major() || a.Minor() != b.Minor() || a.Patch() != b.Patch() {
 		return a.GreaterThan(b)
 	}
-	return a.Prerelease() > b.Prerelease()
+	return pgPrereleaseNewer(a.Prerelease(), b.Prerelease())
+}
+
+// pgPrereleaseNewer compares -N rebuild suffixes as integers when both sides
+// are numeric so that -10 is newer than -9 (Go string compare would reverse that).
+func pgPrereleaseNewer(a, b string) bool {
+	ai, aErr := strconv.Atoi(a)
+	bi, bErr := strconv.Atoi(b)
+	if aErr == nil && bErr == nil {
+		return ai > bi
+	}
+	return a > b
 }
 
 func sortedPGImageVersionsDesc(versions []string) ([]*semver.Version, error) {

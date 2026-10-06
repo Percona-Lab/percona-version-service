@@ -3,6 +3,7 @@ package server
 import (
 	"testing"
 
+	"github.com/Masterminds/semver"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -87,6 +88,28 @@ func TestPMMFilter(t *testing.T) {
 			assert.Equal(t, tt.expected, tt.versions)
 		})
 	}
+}
+
+func TestPgImageNewer(t *testing.T) {
+	must := func(s string) *semver.Version {
+		t.Helper()
+		v, err := semver.NewVersion(s)
+		require.NoError(t, err)
+		return v
+	}
+
+	assert.True(t, pgImageNewer(must("17.11.1-3"), must("17.11.1")))
+	assert.False(t, pgImageNewer(must("17.11.1"), must("17.11.1-3")))
+	assert.True(t, pgImageNewer(must("17.11.1-10"), must("17.11.1-9")))
+	assert.False(t, pgImageNewer(must("17.11.1-9"), must("17.11.1-10")))
+	assert.True(t, pgImageNewer(must("18.0.0"), must("17.11.1-10")))
+	assert.False(t, pgImageNewer(must("17.11.1-10"), must("18.0.0")))
+
+	sorted, err := sortedPGImageVersionsDesc([]string{"17.11.1-9", "17.11.1", "17.11.1-10"})
+	require.NoError(t, err)
+	assert.Equal(t, []string{"17.11.1-10", "17.11.1-9", "17.11.1"}, []string{
+		sorted[0].Original(), sorted[1].Original(), sorted[2].Original(),
+	})
 }
 
 func TestPgDepFilterImageRebuildKeys(t *testing.T) {
