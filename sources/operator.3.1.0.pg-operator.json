@@ -49,7 +49,7 @@
           },
           "17.11.1": {
             "image_path": "percona/percona-pgbackrest:2.59.0-1",
-            "status": "recommended",
+            "status": "available",
             "critical": false,
             "image_hash": "c43a1e6444d3ea6d7f6421be7d030f6fb8e77692029042a1ab7975a5ac29fb20",
             "image_hash_arm64": "cde0676aabe64866471b6ba91a283ffcb4f507356b9554c175d9048cd4475b1c"
