@@ -9,9 +9,12 @@ import (
 )
 
 func TestBackend_create(t *testing.T) {
-	sub, err := fs.Sub(metaSources, "sources/metadata")
+	metadataSub, err := fs.Sub(metaSources, "sources/metadata")
 	require.NoError(t, err)
 
-	_, err = server.New(sub)
+	releaseNotesSub, err := fs.Sub(releaseNoteSources, "sources/release-notes")
+	require.NoError(t, err)
+
+	_, err = server.New(metadataSub, releaseNotesSub)
 	require.NoError(t, err)
 }

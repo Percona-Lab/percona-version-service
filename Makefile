@@ -60,3 +60,6 @@ docker-push: docker-build
 test:
 	docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
 	docker-compose -f docker-compose.test.yml down
+
+unit-test:
+	go test -race -count=1 $$(go list ./... | grep -v '/api-tests')
