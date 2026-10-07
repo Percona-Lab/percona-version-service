@@ -34,6 +34,9 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"pxc-operator", "1.16.1"},
 		{"pxc-operator", "1.17.0"},
 		{"pxc-operator", "1.18.0"},
+		{"pxc-operator", "1.19.0"},
+		{"pxc-operator", "1.19.1"},
+		{"pxc-operator", "1.20.0"},
 		{"psmdb-operator", "1.5.0"},
 		{"psmdb-operator", "1.6.0"},
 		{"psmdb-operator", "1.7.0"},
@@ -56,6 +59,10 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"psmdb-operator", "1.20.1"},
 		{"psmdb-operator", "1.21.0"},
 		{"psmdb-operator", "1.21.1"},
+		{"psmdb-operator", "1.21.2"},
+		{"psmdb-operator", "1.22.0"},
+		{"psmdb-operator", "1.23.0"},
+		{"psmdb-operator", "1.23.1"},
 		{"pg-operator", "1.1.0"},
 		{"pg-operator", "1.2.0"},
 		{"pg-operator", "1.3.0"},
@@ -73,6 +80,11 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"pg-operator", "2.6.0"},
 		{"pg-operator", "2.7.0"},
 		{"pg-operator", "2.8.0"},
+		{"pg-operator", "2.8.1"},
+		{"pg-operator", "2.8.2"},
+		{"pg-operator", "2.9.0"},
+		{"pg-operator", "3.0.0"},
+		{"pg-operator", "3.1.0"},
 		{"ps-operator", "0.5.0"},
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
@@ -81,6 +93,9 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"ps-operator", "0.10.0"},
 		{"ps-operator", "0.11.0"},
 		{"ps-operator", "0.12.0"},
+		{"ps-operator", "1.0.0"},
+		{"ps-operator", "1.1.0"},
+		{"ps-operator", "1.2.0"},
 	}
 
 	for _, c := range cases {
@@ -125,6 +140,9 @@ func TestOperatorRoutePxcShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pxc-operator", "1.16.1"},
 		{"pxc-operator", "1.17.0"},
 		{"pxc-operator", "1.18.0"},
+		{"pxc-operator", "1.19.0"},
+		{"pxc-operator", "1.19.1"},
+		{"pxc-operator", "1.20.0"},
 	}
 
 	for _, c := range cases {
@@ -181,6 +199,10 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		{"psmdb-operator", "1.20.1"},
 		{"psmdb-operator", "1.21.0"},
 		{"psmdb-operator", "1.21.1"},
+		{"psmdb-operator", "1.21.2"},
+		{"psmdb-operator", "1.22.0"},
+		{"psmdb-operator", "1.23.0"},
+		{"psmdb-operator", "1.23.1"},
 	}
 
 	for _, c := range cases {
@@ -251,6 +273,9 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pg-operator", "2.6.0"},
 		{"pg-operator", "2.7.0"},
 		{"pg-operator", "2.8.0"},
+		{"pg-operator", "2.8.1"},
+		{"pg-operator", "2.8.2"},
+		{"pg-operator", "2.9.0"},
 	}
 
 	for _, c := range cases_v2 {
@@ -270,6 +295,39 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
 	}
+
+	cases_v3 := []struct {
+		product string
+		version string
+	}{
+		{"pg-operator", "3.0.0"},
+		{"pg-operator", "3.1.0"},
+	}
+
+	for _, c := range cases_v3 {
+		params := &version_service.VersionServiceOperatorParams{
+			OperatorVersion: c.version,
+			Product:         c.product,
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceOperator(params)
+		assert.NoError(t, err)
+
+		assert.Len(t, resp.Payload.Versions, 1)
+		assert.Len(t, resp.Payload.Versions[0].Matrix.Operator, 1)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Postgresql), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pmm), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
+		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgupgrade), 0)
+
+		if c.version != "3.0.0" {
+			assert.Greater(t, len(resp.Payload.Versions[0].Matrix.LogCollector), 0)
+		} else {
+			assert.Equal(t, 0, len(resp.Payload.Versions[0].Matrix.LogCollector))
+		}
+	}
 }
 
 func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
@@ -286,6 +344,10 @@ func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
 		{"ps-operator", "0.9.0"},
 		{"ps-operator", "0.10.0"},
 		{"ps-operator", "0.11.0"},
+		{"ps-operator", "0.12.0"},
+		{"ps-operator", "1.0.0"},
+		{"ps-operator", "1.1.0"},
+		{"ps-operator", "1.2.0"},
 	}
 
 	for _, c := range cases {

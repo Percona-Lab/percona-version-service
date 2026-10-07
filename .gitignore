@@ -6,3 +6,4 @@ bin
 tools/vendor
 client
 .idea
+vendor

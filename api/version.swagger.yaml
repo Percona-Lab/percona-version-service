@@ -205,6 +205,15 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: distribution
+          description: PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet).
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - percona
+            - community
         - name: vectorSearchEnabled
           in: query
           required: false
@@ -237,7 +246,7 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: tlsMode
+        - name: mongoTlsMode
           description: MongoDB TLS mode configured in the cluster. Empty string means unknown.
           in: query
           required: false
@@ -383,6 +392,15 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: distribution
+          description: PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet).
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - percona
+            - community
         - name: vectorSearchEnabled
           in: query
           required: false
@@ -415,7 +433,7 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: tlsMode
+        - name: mongoTlsMode
           description: MongoDB TLS mode configured in the cluster. Empty string means unknown.
           in: query
           required: false
@@ -565,6 +583,15 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: distribution
+          description: PostgreSQL distribution running in the cluster. Empty string means unknown (e.g. no running pods yet).
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - percona
+            - community
         - name: vectorSearchEnabled
           in: query
           required: false
@@ -597,7 +624,7 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: tlsMode
+        - name: mongoTlsMode
           description: MongoDB TLS mode configured in the cluster. Empty string means unknown.
           in: query
           required: false
@@ -855,6 +882,14 @@ definitions:
         additionalProperties:
           $ref: '#/definitions/versionVersion'
       postgis:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      binlogServer:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/versionVersion'
+      pgupgrade:
         type: object
         additionalProperties:
           $ref: '#/definitions/versionVersion'
