@@ -119,6 +119,27 @@ message ApplyRequest {
   bool role_management_enabled = 27;
   bool mcs_enabled = 28;
   bool volume_expansion_enabled = 29;
+  bool vector_search_enabled = 30;
+  bool cluster_sync_enabled = 31;
+  bool encryption_enabled = 32;
+  bool encryption_explicitly_set = 33;
+  bool oci_backup_enabled = 34;
+  bool alibaba_backup_enabled = 35;
+  bool arbiter_enabled = 36;
+  bool non_voting_enabled = 37;
+  string tls_mode = 38 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "MongoDB TLS mode configured in the cluster. Empty string means unknown."
+      enum: [
+        "",
+        "disabled",
+        "allowTLS",
+        "preferTLS",
+        "requireTLS"
+      ]
+    }
+  ];
+  int32 mongos_size = 39;
 }
 
 message OperatorRequest {
@@ -150,6 +171,27 @@ message OperatorRequest {
   bool role_management_enabled = 27;
   bool mcs_enabled = 28;
   bool volume_expansion_enabled = 29;
+  bool vector_search_enabled = 30;
+  bool cluster_sync_enabled = 31;
+  bool encryption_enabled = 32;
+  bool encryption_explicitly_set = 33;
+  bool oci_backup_enabled = 34;
+  bool alibaba_backup_enabled = 35;
+  bool arbiter_enabled = 36;
+  bool non_voting_enabled = 37;
+  string tls_mode = 38 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "MongoDB TLS mode configured in the cluster. Empty string means unknown."
+      enum: [
+        "",
+        "disabled",
+        "allowTLS",
+        "preferTLS",
+        "requireTLS"
+      ]
+    }
+  ];
+  int32 mongos_size = 39;
 }
 
 message ProductRequest {
@@ -180,6 +222,27 @@ message ProductRequest {
   bool role_management_enabled = 27;
   bool mcs_enabled = 28;
   bool volume_expansion_enabled = 29;
+  bool vector_search_enabled = 30;
+  bool cluster_sync_enabled = 31;
+  bool encryption_enabled = 32;
+  bool encryption_explicitly_set = 33;
+  bool oci_backup_enabled = 34;
+  bool alibaba_backup_enabled = 35;
+  bool arbiter_enabled = 36;
+  bool non_voting_enabled = 37;
+  string tls_mode = 38 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "MongoDB TLS mode configured in the cluster. Empty string means unknown."
+      enum: [
+        "",
+        "disabled",
+        "allowTLS",
+        "preferTLS",
+        "requireTLS"
+      ]
+    }
+  ];
+  int32 mongos_size = 39;
 }
 
 message MetadataRequest {
