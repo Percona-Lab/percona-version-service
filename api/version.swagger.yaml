@@ -226,10 +226,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: encryptionExplicitlySet
-          in: query
-          required: false
-          type: boolean
         - name: ociBackupEnabled
           in: query
           required: false
@@ -410,10 +406,6 @@ paths:
           required: false
           type: boolean
         - name: encryptionEnabled
-          in: query
-          required: false
-          type: boolean
-        - name: encryptionExplicitlySet
           in: query
           required: false
           type: boolean
@@ -601,10 +593,6 @@ paths:
           required: false
           type: boolean
         - name: encryptionEnabled
-          in: query
-          required: false
-          type: boolean
-        - name: encryptionExplicitlySet
           in: query
           required: false
           type: boolean
