@@ -40,6 +40,7 @@ pipeline {
                    sudo curl -SL "https://github.com/docker/compose/releases/download/v2.29.7/docker-compose-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)" -o /usr/local/bin/docker-compose
                    sudo chmod +x /usr/local/bin/docker-compose
 
+                   docker-compose -f docker-compose.test.yml down --volumes --remove-orphans || true
                    docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
                    '''
                 script {
@@ -64,6 +65,7 @@ pipeline {
                 }
             }
             sh '''
+                docker-compose -f docker-compose.test.yml down --volumes --remove-orphans || true
                 sudo docker rmi -f \$(sudo docker images -q) || true
                 sudo rm -rf ./*
             '''
