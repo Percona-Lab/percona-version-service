@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/Masterminds/semver"
@@ -152,7 +153,7 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 		keys = append(keys, k)
 	}
 
-	sorted, err := sortedVersionsDesc(keys, true)
+	sorted, err := sortedPGImageVersionsDesc(keys)
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
@@ -160,7 +161,7 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 	apply = strings.ToLower(apply)
 
 	if (apply == recommended || apply == latest) && current == "" {
-		return deleteOtherBut(sorted[0].String(), versions)
+		return deleteOtherBut(sorted[0].Original(), versions)
 	}
 
 	currentVer := majorMinorRegexp.FindString(current)
@@ -175,16 +176,19 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 		}
 
 		for _, s := range sorted {
-			if s.Equal(c) || s.LessThan(c) {
+			// A -N image rebuild on the same X.Y.Z is newer than the unsuffixed version.
+			if !pgImageNewer(s, c) {
 				break
 			}
 
-			str := s.String()
-			v, ok := versions[str]
+			key := s.Original()
+			v, ok := versions[key]
 			if !ok {
 				// let's try to find version witout Patch if Patch is equal to zero
+				str := s.String()
 				if strings.HasSuffix(str, ".0") {
-					v, ok = versions[strings.TrimSuffix(str, ".0")]
+					key = strings.TrimSuffix(str, ".0")
+					v, ok = versions[key]
 					if !ok {
 						return status.Errorf(codes.Internal, "failed to filter version %s", str)
 					}
@@ -194,7 +198,7 @@ func pgFilter(versions map[string]*pbVersion.Version, apply string, current stri
 			}
 
 			if v.Status != pbVersion.Status_disabled && c.Major() == s.Major() {
-				desired = s.String()
+				desired = key
 				break
 			}
 		}
@@ -346,14 +350,21 @@ func pgDepFilter(versions map[string]interface{}, productVersion string) (string
 		return "", status.Errorf(codes.Internal, "failed to sort versions: %v", err)
 	}
 
-	desired := sorted[0].String()
+	desired := sorted[0].Original()
 	for _, s := range sorted {
-		versStr := s.String()
-		if strings.HasSuffix(versStr, ".0") {
-			versStr = strings.TrimSuffix(versStr, ".0")
-
+		versStr := s.Original()
+		rule, ok := versions[versStr]
+		if !ok {
+			versStr = s.String()
+			if strings.HasSuffix(versStr, ".0") {
+				versStr = strings.TrimSuffix(versStr, ".0")
+			}
+			rule, ok = versions[versStr]
+			if !ok {
+				return "", status.Errorf(codes.Internal, "failed to find deps logic for version %s", s.Original())
+			}
 		}
-		b, err := json.Marshal(versions[versStr])
+		b, err := json.Marshal(rule)
 		if err != nil {
 			return "", status.Errorf(codes.Internal, "failed to marshal deps logic: %v", err)
 		}
@@ -368,7 +379,7 @@ func pgDepFilter(versions map[string]interface{}, productVersion string) (string
 		}
 
 		if strings.TrimSuffix(result.String(), "\n") == "true" {
-			desired = s.String()
+			desired = versStr
 			break
 		}
 	}
@@ -454,6 +465,48 @@ func deleteOtherButThese(keep []string, versions map[string]*pbVersion.Version) 
 	}
 
 	return nil
+}
+
+// pgImageNewer reports whether a is a newer PostgreSQL image than b.
+// A -N suffix on the same X.Y.Z (for example 17.11.1-3 vs 17.11.1) is a newer
+// rebuild used by latest/recommended, not an older semver prerelease.
+func pgImageNewer(a, b *semver.Version) bool {
+	if a.Major() != b.Major() || a.Minor() != b.Minor() || a.Patch() != b.Patch() {
+		return a.GreaterThan(b)
+	}
+	return pgPrereleaseNewer(a.Prerelease(), b.Prerelease())
+}
+
+// pgPrereleaseNewer compares -N rebuild suffixes as integers when both sides
+// are numeric so that -10 is newer than -9 (Go string compare would reverse that).
+func pgPrereleaseNewer(a, b string) bool {
+	ai, aErr := strconv.Atoi(a)
+	bi, bErr := strconv.Atoi(b)
+	if aErr == nil && bErr == nil {
+		return ai > bi
+	}
+	return a > b
+}
+
+func sortedPGImageVersionsDesc(versions []string) ([]*semver.Version, error) {
+	v := make([]*semver.Version, 0, len(versions))
+	for _, k := range versions {
+		sv, err := semver.NewVersion(k)
+		if err != nil {
+			return nil, err
+		}
+		v = append(v, sv)
+	}
+	sort.Slice(v, func(i, j int) bool {
+		if pgImageNewer(v[i], v[j]) {
+			return true
+		}
+		if pgImageNewer(v[j], v[i]) {
+			return false
+		}
+		return v[i].Original() > v[j].Original()
+	})
+	return v, nil
 }
 
 // sortedVersionsDesc sorts versions and returns array of *semver.Version.
