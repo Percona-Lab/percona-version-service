@@ -214,6 +214,50 @@ paths:
             - ""
             - percona
             - community
+        - name: vectorSearchEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: clusterSyncEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: encryptionEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: ociBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: alibabaBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: arbiterEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: nonVotingEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: mongoTlsMode
+          description: MongoDB TLS mode configured in the cluster. Empty string means unknown.
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - disabled
+            - allowTLS
+            - preferTLS
+            - requireTLS
+        - name: mongosSize
+          in: query
+          required: false
+          type: integer
+          format: int32
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -353,6 +397,50 @@ paths:
             - ""
             - percona
             - community
+        - name: vectorSearchEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: clusterSyncEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: encryptionEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: ociBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: alibabaBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: arbiterEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: nonVotingEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: mongoTlsMode
+          description: MongoDB TLS mode configured in the cluster. Empty string means unknown.
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - disabled
+            - allowTLS
+            - preferTLS
+            - requireTLS
+        - name: mongosSize
+          in: query
+          required: false
+          type: integer
+          format: int32
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -496,6 +584,50 @@ paths:
             - ""
             - percona
             - community
+        - name: vectorSearchEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: clusterSyncEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: encryptionEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: ociBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: alibabaBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: arbiterEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: nonVotingEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: mongoTlsMode
+          description: MongoDB TLS mode configured in the cluster. Empty string means unknown.
+          in: query
+          required: false
+          type: string
+          enum:
+            - ""
+            - disabled
+            - allowTLS
+            - preferTLS
+            - requireTLS
+        - name: mongosSize
+          in: query
+          required: false
+          type: integer
+          format: int32
       tags:
         - VersionService
 definitions:
