@@ -1,6 +1,6 @@
 module github.com/Percona-Lab/percona-version-service
 
-go 1.26.0
+go 1.26.9
 
 require (
 	github.com/Kunde21/markdownfmt/v3 v3.1.0
