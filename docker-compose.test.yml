@@ -21,12 +21,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: version-service
     hostname: version-service
     networks:
       - integration-tests
-    ports:
-      - "11000:11000"
     expose:
       - "11000"
     environment:
