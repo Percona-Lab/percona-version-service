@@ -46,6 +46,12 @@ pipeline {
                     testsReportMap['api-tests'] = 'passed'
                 }
             }
+            post {
+                always {
+                    // Runs on the 'docker' agent; the pipeline-level post runs on 'micro-amazon'
+                    sh 'docker-compose -f docker-compose.test.yml down --remove-orphans --rmi local || true'
+                }
+            }
         }
     }
     post {
