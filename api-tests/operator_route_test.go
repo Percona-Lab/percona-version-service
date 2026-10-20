@@ -62,6 +62,7 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"psmdb-operator", "1.21.2"},
 		{"psmdb-operator", "1.22.0"},
 		{"psmdb-operator", "1.23.0"},
+		{"psmdb-operator", "1.23.1"},
 		{"pg-operator", "1.1.0"},
 		{"pg-operator", "1.2.0"},
 		{"pg-operator", "1.3.0"},
@@ -83,6 +84,7 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"pg-operator", "2.8.2"},
 		{"pg-operator", "2.9.0"},
 		{"pg-operator", "3.0.0"},
+		{"pg-operator", "3.1.0"},
 		{"ps-operator", "0.5.0"},
 		{"ps-operator", "0.6.0"},
 		{"ps-operator", "0.7.0"},
@@ -200,6 +202,7 @@ func TestOperatorRoutePsmdbShouldReturnNotEmptyResponses(t *testing.T) {
 		{"psmdb-operator", "1.21.2"},
 		{"psmdb-operator", "1.22.0"},
 		{"psmdb-operator", "1.23.0"},
+		{"psmdb-operator", "1.23.1"},
 	}
 
 	for _, c := range cases {
@@ -273,7 +276,6 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		{"pg-operator", "2.8.1"},
 		{"pg-operator", "2.8.2"},
 		{"pg-operator", "2.9.0"},
-		{"pg-operator", "3.0.0"},
 	}
 
 	for _, c := range cases_v2 {
@@ -299,6 +301,7 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		version string
 	}{
 		{"pg-operator", "3.0.0"},
+		{"pg-operator", "3.1.0"},
 	}
 
 	for _, c := range cases_v3 {
@@ -318,6 +321,12 @@ func TestOperatorRoutePgShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbackrest), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgbouncer), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Pgupgrade), 0)
+
+		if c.version != "3.0.0" {
+			assert.Greater(t, len(resp.Payload.Versions[0].Matrix.LogCollector), 0)
+		} else {
+			assert.Equal(t, 0, len(resp.Payload.Versions[0].Matrix.LogCollector))
+		}
 	}
 }
 

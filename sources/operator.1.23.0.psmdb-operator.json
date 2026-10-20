@@ -7,8 +7,8 @@
         "operator": {
           "1.23.0": {
             "image_path": "percona/percona-server-mongodb-operator:1.23.0",
-            "image_hash": "21e9fed2c4309d3e88c6ec64ddf5dce6c0e86ce4be20531ab83c0b838739f89b",
-            "image_hash_arm64": "9747f69b64119ce343cb01ac47fa4b7af8050266852f4faef612908b02d554a2",
+            "image_hash": "a358e2b1f9045b9e7cf1283c8f812edb79082cb72e802de16a71bb99eeef111c",
+            "image_hash_arm64": "c912bc013a7474fdfe5b01fe841fa185006ef22e3c13de0d07669e5664973f9f",
             "status": "recommended",
             "critical": false
           }

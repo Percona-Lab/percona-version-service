@@ -32,6 +32,11 @@ Welcome to PMM [v3.0.0](https://docs.percona.com/percona-monitoring-and-manageme
 ![Service Accounts page](https://docs.percona.com/percona-monitoring-and-management/3/images/Service_Accounts.png)` + "\n"),
 		},
 		{
+			name: "transforms relative links with a fragment",
+			markdown: []byte(`See [Export RTA data](../use/qan/QAN-realtime-analytics.md#export-rta-data) for details.`),
+			expected: []byte(`See [Export RTA data](https://docs.percona.com/percona-monitoring-and-management/3/use/qan/QAN-realtime-analytics.html#export-rta-data) for details.` + "\n"),
+		},
+		{
 			name: "transforms icon variables",
 			markdown: []byte(`Navigate to the **Main** menu and hover on the {{icon.inventory}} _Dashboards_ icon.
 2. Click **New folder**.
