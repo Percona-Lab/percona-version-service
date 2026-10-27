@@ -35,6 +35,7 @@ func TestApplyRequestLoggingOmitsUnsetFields(t *testing.T) {
 				IncrementalBackupScheduled: true,
 				LogicalBackupScheduled:     true,
 				SnapshotBackupScheduled:    true,
+				S3CompatibleBackupEnabled:  true,
 			},
 			wantFields: map[string]any{
 				"vectorSearchEnabled":        true,
@@ -53,6 +54,7 @@ func TestApplyRequestLoggingOmitsUnsetFields(t *testing.T) {
 				"incrementalBackupScheduled": true,
 				"logicalBackupScheduled":     true,
 				"snapshotBackupScheduled":    true,
+				"s3CompatibleBackupEnabled":  true,
 			},
 		},
 		"unset telemetry fields are omitted entirely": {
@@ -63,6 +65,7 @@ func TestApplyRequestLoggingOmitsUnsetFields(t *testing.T) {
 				"ociBackupEnabled", "alibabaBackupEnabled",
 				"s3BackupEnabled", "azureBackupEnabled", "gcsBackupEnabled", "filesystemBackupEnabled",
 				"incrementalBackupScheduled", "logicalBackupScheduled", "snapshotBackupScheduled",
+				"s3CompatibleBackupEnabled",
 				"arbiterEnabled", "nonVotingEnabled", "mongoTlsMode", "mongosSize",
 			},
 		},

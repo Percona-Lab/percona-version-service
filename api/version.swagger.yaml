@@ -283,7 +283,10 @@ paths:
           required: false
           type: boolean
         - name: snapshotBackupScheduled
-          description: 'Scheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set.'
+          in: query
+          required: false
+          type: boolean
+        - name: s3CompatibleBackupEnabled
           in: query
           required: false
           type: boolean
@@ -495,7 +498,10 @@ paths:
           required: false
           type: boolean
         - name: snapshotBackupScheduled
-          description: 'Scheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set.'
+          in: query
+          required: false
+          type: boolean
+        - name: s3CompatibleBackupEnabled
           in: query
           required: false
           type: boolean
@@ -711,7 +717,10 @@ paths:
           required: false
           type: boolean
         - name: snapshotBackupScheduled
-          description: 'Scheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set.'
+          in: query
+          required: false
+          type: boolean
+        - name: s3CompatibleBackupEnabled
           in: query
           required: false
           type: boolean

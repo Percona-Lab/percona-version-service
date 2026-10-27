@@ -128,6 +128,7 @@ type ApplyRequest struct {
 	IncrementalBackupScheduled bool                   `protobuf:"varint,44,opt,name=incremental_backup_scheduled,json=incrementalBackupScheduled,proto3" json:"incremental_backup_scheduled,omitempty"`
 	LogicalBackupScheduled     bool                   `protobuf:"varint,45,opt,name=logical_backup_scheduled,json=logicalBackupScheduled,proto3" json:"logical_backup_scheduled,omitempty"`
 	SnapshotBackupScheduled    bool                   `protobuf:"varint,46,opt,name=snapshot_backup_scheduled,json=snapshotBackupScheduled,proto3" json:"snapshot_backup_scheduled,omitempty"`
+	S3CompatibleBackupEnabled  bool                   `protobuf:"varint,47,opt,name=s3_compatible_backup_enabled,json=s3CompatibleBackupEnabled,proto3" json:"s3_compatible_backup_enabled,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -484,6 +485,13 @@ func (x *ApplyRequest) GetSnapshotBackupScheduled() bool {
 	return false
 }
 
+func (x *ApplyRequest) GetS3CompatibleBackupEnabled() bool {
+	if x != nil {
+		return x.S3CompatibleBackupEnabled
+	}
+	return false
+}
+
 type OperatorRequest struct {
 	state                      protoimpl.MessageState `protogen:"open.v1"`
 	Product                    string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
@@ -531,6 +539,7 @@ type OperatorRequest struct {
 	IncrementalBackupScheduled bool                   `protobuf:"varint,44,opt,name=incremental_backup_scheduled,json=incrementalBackupScheduled,proto3" json:"incremental_backup_scheduled,omitempty"`
 	LogicalBackupScheduled     bool                   `protobuf:"varint,45,opt,name=logical_backup_scheduled,json=logicalBackupScheduled,proto3" json:"logical_backup_scheduled,omitempty"`
 	SnapshotBackupScheduled    bool                   `protobuf:"varint,46,opt,name=snapshot_backup_scheduled,json=snapshotBackupScheduled,proto3" json:"snapshot_backup_scheduled,omitempty"`
+	S3CompatibleBackupEnabled  bool                   `protobuf:"varint,47,opt,name=s3_compatible_backup_enabled,json=s3CompatibleBackupEnabled,proto3" json:"s3_compatible_backup_enabled,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -880,6 +889,13 @@ func (x *OperatorRequest) GetSnapshotBackupScheduled() bool {
 	return false
 }
 
+func (x *OperatorRequest) GetS3CompatibleBackupEnabled() bool {
+	if x != nil {
+		return x.S3CompatibleBackupEnabled
+	}
+	return false
+}
+
 type ProductRequest struct {
 	state                      protoimpl.MessageState `protogen:"open.v1"`
 	Product                    string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
@@ -926,6 +942,7 @@ type ProductRequest struct {
 	IncrementalBackupScheduled bool                   `protobuf:"varint,44,opt,name=incremental_backup_scheduled,json=incrementalBackupScheduled,proto3" json:"incremental_backup_scheduled,omitempty"`
 	LogicalBackupScheduled     bool                   `protobuf:"varint,45,opt,name=logical_backup_scheduled,json=logicalBackupScheduled,proto3" json:"logical_backup_scheduled,omitempty"`
 	SnapshotBackupScheduled    bool                   `protobuf:"varint,46,opt,name=snapshot_backup_scheduled,json=snapshotBackupScheduled,proto3" json:"snapshot_backup_scheduled,omitempty"`
+	S3CompatibleBackupEnabled  bool                   `protobuf:"varint,47,opt,name=s3_compatible_backup_enabled,json=s3CompatibleBackupEnabled,proto3" json:"s3_compatible_backup_enabled,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -1264,6 +1281,13 @@ func (x *ProductRequest) GetLogicalBackupScheduled() bool {
 func (x *ProductRequest) GetSnapshotBackupScheduled() bool {
 	if x != nil {
 		return x.SnapshotBackupScheduled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetS3CompatibleBackupEnabled() bool {
+	if x != nil {
+		return x.S3CompatibleBackupEnabled
 	}
 	return false
 }
@@ -2280,7 +2304,7 @@ var File_api_version_proto protoreflect.FileDescriptor
 
 const file_api_version_proto_rawDesc = "" +
 	"\n" +
-	"\x11api/version.proto\x12\aversion\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe8\x12\n" +
+	"\x11api/version.proto\x12\aversion\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc7\x12\n" +
 	"\fApplyRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12)\n" +
 	"\x10operator_version\x18\x02 \x01(\tR\x0foperatorVersion\x12\x14\n" +
@@ -2334,8 +2358,9 @@ const file_api_version_proto_rawDesc = "" +
 	"\x12gcs_backup_enabled\x18* \x01(\bR\x10gcsBackupEnabled\x12:\n" +
 	"\x19filesystem_backup_enabled\x18+ \x01(\bR\x17filesystemBackupEnabled\x12@\n" +
 	"\x1cincremental_backup_scheduled\x18, \x01(\bR\x1aincrementalBackupScheduled\x128\n" +
-	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12\x9b\x01\n" +
-	"\x19snapshot_backup_scheduled\x18. \x01(\bB_\x92A\\2ZScheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set.R\x17snapshotBackupScheduled\"\xd5\x12\n" +
+	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12:\n" +
+	"\x19snapshot_backup_scheduled\x18. \x01(\bR\x17snapshotBackupScheduled\x12?\n" +
+	"\x1cs3_compatible_backup_enabled\x18/ \x01(\bR\x19s3CompatibleBackupEnabled\"\xb4\x12\n" +
 	"\x0fOperatorRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12)\n" +
 	"\x10operator_version\x18\x02 \x01(\tR\x0foperatorVersion\x12)\n" +
@@ -2388,8 +2413,9 @@ const file_api_version_proto_rawDesc = "" +
 	"\x12gcs_backup_enabled\x18* \x01(\bR\x10gcsBackupEnabled\x12:\n" +
 	"\x19filesystem_backup_enabled\x18+ \x01(\bR\x17filesystemBackupEnabled\x12@\n" +
 	"\x1cincremental_backup_scheduled\x18, \x01(\bR\x1aincrementalBackupScheduled\x128\n" +
-	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12\x9b\x01\n" +
-	"\x19snapshot_backup_scheduled\x18. \x01(\bB_\x92A\\2ZScheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set.R\x17snapshotBackupScheduled\"\xa9\x12\n" +
+	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12:\n" +
+	"\x19snapshot_backup_scheduled\x18. \x01(\bR\x17snapshotBackupScheduled\x12?\n" +
+	"\x1cs3_compatible_backup_enabled\x18/ \x01(\bR\x19s3CompatibleBackupEnabled\"\x88\x12\n" +
 	"\x0eProductRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12)\n" +
 	"\x10database_version\x18\x04 \x01(\tR\x0fdatabaseVersion\x12!\n" +
@@ -2441,8 +2467,9 @@ const file_api_version_proto_rawDesc = "" +
 	"\x12gcs_backup_enabled\x18* \x01(\bR\x10gcsBackupEnabled\x12:\n" +
 	"\x19filesystem_backup_enabled\x18+ \x01(\bR\x17filesystemBackupEnabled\x12@\n" +
 	"\x1cincremental_backup_scheduled\x18, \x01(\bR\x1aincrementalBackupScheduled\x128\n" +
-	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12\x9b\x01\n" +
-	"\x19snapshot_backup_scheduled\x18. \x01(\bB_\x92A\\2ZScheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set.R\x17snapshotBackupScheduled\"+\n" +
+	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12:\n" +
+	"\x19snapshot_backup_scheduled\x18. \x01(\bR\x17snapshotBackupScheduled\x12?\n" +
+	"\x1cs3_compatible_backup_enabled\x18/ \x01(\bR\x19s3CompatibleBackupEnabled\"+\n" +
 	"\x0fMetadataRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\"\xb6\x01\n" +
 	"\aVersion\x12\x1d\n" +

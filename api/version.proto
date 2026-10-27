@@ -145,11 +145,8 @@ message ApplyRequest {
   bool filesystem_backup_enabled = 43;
   bool incremental_backup_scheduled = 44;
   bool logical_backup_scheduled = 45;
-  bool snapshot_backup_scheduled = 46 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Scheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set."
-    }
-  ];
+  bool snapshot_backup_scheduled = 46;
+  bool s3_compatible_backup_enabled = 47;
 }
 
 message OperatorRequest {
@@ -207,11 +204,8 @@ message OperatorRequest {
   bool filesystem_backup_enabled = 43;
   bool incremental_backup_scheduled = 44;
   bool logical_backup_scheduled = 45;
-  bool snapshot_backup_scheduled = 46 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Scheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set."
-    }
-  ];
+  bool snapshot_backup_scheduled = 46;
+  bool s3_compatible_backup_enabled = 47;
 }
 
 message ProductRequest {
@@ -268,11 +262,8 @@ message ProductRequest {
   bool filesystem_backup_enabled = 43;
   bool incremental_backup_scheduled = 44;
   bool logical_backup_scheduled = 45;
-  bool snapshot_backup_scheduled = 46 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Scheduled volume-snapshot backups: an external backup task with a volumeSnapshotClass set."
-    }
-  ];
+  bool snapshot_backup_scheduled = 46;
+  bool s3_compatible_backup_enabled = 47;
 }
 
 message MetadataRequest {
