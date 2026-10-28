@@ -160,12 +160,12 @@ func TestApplyPsShouldReturnSameMajorVersion(t *testing.T) {
 
 	params := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.2.0",
+		OperatorVersion: "1.3.0",
 		Product:         "ps-operator",
 	}
 	params.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"8.0", "8.4"} {
+	for _, v := range []string{"8.0", "8.4", "9.7"} {
 		params.DatabaseVersion = &v
 		resp, err := cli.VersionService.VersionServiceApply(params)
 		assert.NoError(t, err)
@@ -1574,6 +1574,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"9.7.2", "1.3.0", nil, "9.7.2-2"},
 		{"8.4.11", "1.3.0", nil, "8.4.11-11"},
 		{"8.4.10", "1.3.0", nil, "8.4.10-10"},
+		{"8.0.46", "1.3.0", nil, "8.0.46-37"},
 		{"8.4.10", "1.2.0", nil, "8.4.10-10"},
 		{"8.0.46", "1.2.0", nil, "8.0.46-37"},
 		{"8.4.8", "1.1.0", nil, "8.4.8-8"},
