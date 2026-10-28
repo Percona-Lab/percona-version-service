@@ -369,6 +369,12 @@ func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Backup), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Orchestrator), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Router), 0)
+
+		if c.version == "1.3.0" {
+			assert.Greater(t, len(resp.Payload.Versions[0].Matrix.LogCollector), 0)
+		} else {
+			assert.Equal(t, 0, len(resp.Payload.Versions[0].Matrix.LogCollector))
+		}
 	}
 }
 

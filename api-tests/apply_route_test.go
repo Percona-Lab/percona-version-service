@@ -74,7 +74,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.2.0",
+		OperatorVersion: "1.3.0",
 		Product:         "ps-operator",
 	}
 	psParams.WithTimeout(2 * time.Second)
@@ -92,6 +92,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Haproxy, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Toolkit, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.BinlogServer, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.LogCollector, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
@@ -1571,7 +1572,6 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 
 		// test exact
 		{"9.7.2", "1.3.0", nil, "9.7.2-2"},
-		{"9.7.1", "1.3.0", nil, "9.7.1-1"},
 		{"8.4.11", "1.3.0", nil, "8.4.11-11"},
 		{"8.4.10", "1.3.0", nil, "8.4.10-10"},
 		{"8.4.10", "1.2.0", nil, "8.4.10-10"},
