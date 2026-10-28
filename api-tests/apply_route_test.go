@@ -1517,7 +1517,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
-		{"latest", "1.3.0", nil, "9.7.1-1"},
+		{"latest", "1.3.0", nil, "9.7.2-2"},
 		{"latest", "1.2.0", nil, "8.4.10-10"},
 		{"latest", "1.1.0", nil, "8.4.8-8"},
 		{"latest", "1.0.0", nil, "8.4.6-6"},
@@ -1529,7 +1529,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"latest", "0.7.0", nil, "8.0.36-28"},
 		{"latest", "0.6.0", nil, "8.0.33-25"},
 		{"latest", "0.5.0", nil, "8.0.32-24"},
-		{"latest", "1.3.0", &v97, "9.7.1-1"},
+		{"latest", "1.3.0", &v97, "9.7.2-2"},
 		{"latest", "1.3.0", &v84, "8.4.11-11"},
 		{"latest", "1.2.0", &v84, "8.4.10-10"},
 		{"latest", "1.1.0", &v84, "8.4.8-8"},
@@ -1556,7 +1556,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"recommended", "0.7.0", nil, "8.0.36-28"},
 		{"recommended", "0.6.0", nil, "8.0.33-25"},
 		{"recommended", "0.5.0", nil, "8.0.32-24"},
-		{"recommended", "1.3.0", &v97, "9.7.1-1"},
+		{"recommended", "1.3.0", &v97, "9.7.2-2"},
 		{"recommended", "1.3.0", &v84, "8.4.11-11"},
 		{"recommended", "1.2.0", &v84, "8.4.10-10"},
 		{"recommended", "1.1.0", &v84, "8.4.8-8"},
@@ -1570,6 +1570,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"recommended", "0.11.0", &v80, "8.0.42-33"},
 
 		// test exact
+		{"9.7.2", "1.3.0", nil, "9.7.2-2"},
 		{"9.7.1", "1.3.0", nil, "9.7.1-1"},
 		{"8.4.11", "1.3.0", nil, "8.4.11-11"},
 		{"8.4.10", "1.3.0", nil, "8.4.10-10"},
@@ -1590,7 +1591,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0.30", "0.5.0", nil, "8.0.30-22"},
 
 		//test with suffix
-		{"9.7-latest", "1.3.0", nil, "9.7.1-1"},
+		{"9.7-latest", "1.3.0", nil, "9.7.2-2"},
 		{"8.4-latest", "1.3.0", nil, "8.4.11-11"},
 		{"8.4-latest", "1.2.0", nil, "8.4.10-10"},
 		{"8.4-latest", "1.1.0", nil, "8.4.8-8"},
@@ -1609,7 +1610,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0-latest", "0.7.0", nil, "8.0.36-28"},
 		{"8.0-latest", "0.6.0", nil, "8.0.33-25"},
 		{"8.0-latest", "0.5.0", nil, "8.0.32-24"},
-		{"9.7-recommended", "1.3.0", nil, "9.7.1-1"},
+		{"9.7-recommended", "1.3.0", nil, "9.7.2-2"},
 		{"8.4-recommended", "1.3.0", nil, "8.4.11-11"},
 		{"8.4-recommended", "1.2.0", nil, "8.4.10-10"},
 		{"8.4-recommended", "1.1.0", nil, "8.4.8-8"},
@@ -1662,8 +1663,8 @@ func TestApplyPsBranchDependencies(t *testing.T) {
 	}{
 		{"8.0-recommended", "8.0.46-37", "8.0.46-37.1", "8.0.35-36.1"},
 		{"8.4-recommended", "8.4.11-11", "8.4.11-11.1", "8.4.0-7.1"},
-		{"9.7-recommended", "9.7.1-1", "9.7.1-1.1", "9.7.1"},
-		{"latest", "9.7.1-1", "9.7.1-1.1", "9.7.1"},
+		{"9.7-recommended", "9.7.2-2", "9.7.2-2.1", "9.7.1-rc1.1"},
+		{"latest", "9.7.2-2", "9.7.2-2.1", "9.7.1-rc1.1"},
 		{"recommended", "8.4.11-11", "8.4.11-11.1", "8.4.0-7.1"},
 	}
 
