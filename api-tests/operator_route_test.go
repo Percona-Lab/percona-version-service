@@ -96,6 +96,7 @@ func TestOperatorRouteShouldReturnRightOperatorVersion(t *testing.T) {
 		{"ps-operator", "1.0.0"},
 		{"ps-operator", "1.1.0"},
 		{"ps-operator", "1.2.0"},
+		{"ps-operator", "1.3.0"},
 	}
 
 	for _, c := range cases {
@@ -348,6 +349,7 @@ func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
 		{"ps-operator", "1.0.0"},
 		{"ps-operator", "1.1.0"},
 		{"ps-operator", "1.2.0"},
+		{"ps-operator", "1.3.0"},
 	}
 
 	for _, c := range cases {
@@ -367,6 +369,12 @@ func TestOperatorRoutePsShouldReturnNotEmptyResponses(t *testing.T) {
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Backup), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Orchestrator), 0)
 		assert.Greater(t, len(resp.Payload.Versions[0].Matrix.Router), 0)
+
+		if c.version == "1.3.0" {
+			assert.Greater(t, len(resp.Payload.Versions[0].Matrix.LogCollector), 0)
+		} else {
+			assert.Equal(t, 0, len(resp.Payload.Versions[0].Matrix.LogCollector))
+		}
 	}
 }
 
