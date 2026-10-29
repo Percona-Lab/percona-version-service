@@ -139,6 +139,14 @@ message ApplyRequest {
     }
   ];
   int32 mongos_size = 39;
+  bool s3_backup_enabled = 40;
+  bool azure_backup_enabled = 41;
+  bool gcs_backup_enabled = 42;
+  bool filesystem_backup_enabled = 43;
+  bool incremental_backup_scheduled = 44;
+  bool logical_backup_scheduled = 45;
+  bool snapshot_backup_scheduled = 46;
+  bool s3_compatible_backup_enabled = 47;
 }
 
 message OperatorRequest {
@@ -190,6 +198,14 @@ message OperatorRequest {
     }
   ];
   int32 mongos_size = 39;
+  bool s3_backup_enabled = 40;
+  bool azure_backup_enabled = 41;
+  bool gcs_backup_enabled = 42;
+  bool filesystem_backup_enabled = 43;
+  bool incremental_backup_scheduled = 44;
+  bool logical_backup_scheduled = 45;
+  bool snapshot_backup_scheduled = 46;
+  bool s3_compatible_backup_enabled = 47;
 }
 
 message ProductRequest {
@@ -240,6 +256,14 @@ message ProductRequest {
     }
   ];
   int32 mongos_size = 39;
+  bool s3_backup_enabled = 40;
+  bool azure_backup_enabled = 41;
+  bool gcs_backup_enabled = 42;
+  bool filesystem_backup_enabled = 43;
+  bool incremental_backup_scheduled = 44;
+  bool logical_backup_scheduled = 45;
+  bool snapshot_backup_scheduled = 46;
+  bool s3_compatible_backup_enabled = 47;
 }
 
 message MetadataRequest {

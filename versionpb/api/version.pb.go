@@ -81,48 +81,56 @@ func (Status) EnumDescriptor() ([]byte, []int) {
 }
 
 type ApplyRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Product                 string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
-	OperatorVersion         string                 `protobuf:"bytes,2,opt,name=operator_version,json=operatorVersion,proto3" json:"operator_version,omitempty"`
-	Apply                   string                 `protobuf:"bytes,3,opt,name=apply,proto3" json:"apply,omitempty"`
-	DatabaseVersion         string                 `protobuf:"bytes,4,opt,name=database_version,json=databaseVersion,proto3" json:"database_version,omitempty"`
-	KubeVersion             string                 `protobuf:"bytes,5,opt,name=kube_version,json=kubeVersion,proto3" json:"kube_version,omitempty"`
-	Platform                string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform,omitempty"`
-	PmmVersion              string                 `protobuf:"bytes,7,opt,name=pmm_version,json=pmmVersion,proto3" json:"pmm_version,omitempty"`
-	BackupVersion           string                 `protobuf:"bytes,8,opt,name=backup_version,json=backupVersion,proto3" json:"backup_version,omitempty"`
-	ProxysqlVersion         string                 `protobuf:"bytes,9,opt,name=proxysql_version,json=proxysqlVersion,proto3" json:"proxysql_version,omitempty"`
-	HaproxyVersion          string                 `protobuf:"bytes,10,opt,name=haproxy_version,json=haproxyVersion,proto3" json:"haproxy_version,omitempty"`
-	NamespaceUid            string                 `protobuf:"bytes,11,opt,name=namespace_uid,json=namespaceUid,proto3" json:"namespace_uid,omitempty"`
-	CustomResourceUid       string                 `protobuf:"bytes,12,opt,name=custom_resource_uid,json=customResourceUid,proto3" json:"custom_resource_uid,omitempty"`
-	LogCollectorVersion     string                 `protobuf:"bytes,13,opt,name=log_collector_version,json=logCollectorVersion,proto3" json:"log_collector_version,omitempty"`
-	ShardingEnabled         bool                   `protobuf:"varint,14,opt,name=sharding_enabled,json=shardingEnabled,proto3" json:"sharding_enabled,omitempty"`
-	HashicorpVaultEnabled   bool                   `protobuf:"varint,15,opt,name=hashicorp_vault_enabled,json=hashicorpVaultEnabled,proto3" json:"hashicorp_vault_enabled,omitempty"`
-	ClusterWideEnabled      bool                   `protobuf:"varint,16,opt,name=cluster_wide_enabled,json=clusterWideEnabled,proto3" json:"cluster_wide_enabled,omitempty"`
-	PmmEnabled              bool                   `protobuf:"varint,17,opt,name=pmm_enabled,json=pmmEnabled,proto3" json:"pmm_enabled,omitempty"`
-	HelmDeployOperator      bool                   `protobuf:"varint,18,opt,name=helm_deploy_operator,json=helmDeployOperator,proto3" json:"helm_deploy_operator,omitempty"`
-	HelmDeployCr            bool                   `protobuf:"varint,19,opt,name=helm_deploy_cr,json=helmDeployCr,proto3" json:"helm_deploy_cr,omitempty"`
-	SidecarsUsed            bool                   `protobuf:"varint,20,opt,name=sidecars_used,json=sidecarsUsed,proto3" json:"sidecars_used,omitempty"`
-	BackupsEnabled          bool                   `protobuf:"varint,21,opt,name=backups_enabled,json=backupsEnabled,proto3" json:"backups_enabled,omitempty"`
-	ClusterSize             int32                  `protobuf:"varint,22,opt,name=cluster_size,json=clusterSize,proto3" json:"cluster_size,omitempty"`
-	PitrEnabled             bool                   `protobuf:"varint,23,opt,name=pitr_enabled,json=pitrEnabled,proto3" json:"pitr_enabled,omitempty"`
-	PhysicalBackupScheduled bool                   `protobuf:"varint,24,opt,name=physical_backup_scheduled,json=physicalBackupScheduled,proto3" json:"physical_backup_scheduled,omitempty"`
-	Extensions              string                 `protobuf:"bytes,25,opt,name=extensions,proto3" json:"extensions,omitempty"`
-	UserManagementEnabled   bool                   `protobuf:"varint,26,opt,name=user_management_enabled,json=userManagementEnabled,proto3" json:"user_management_enabled,omitempty"`
-	RoleManagementEnabled   bool                   `protobuf:"varint,27,opt,name=role_management_enabled,json=roleManagementEnabled,proto3" json:"role_management_enabled,omitempty"`
-	McsEnabled              bool                   `protobuf:"varint,28,opt,name=mcs_enabled,json=mcsEnabled,proto3" json:"mcs_enabled,omitempty"`
-	VolumeExpansionEnabled  bool                   `protobuf:"varint,29,opt,name=volume_expansion_enabled,json=volumeExpansionEnabled,proto3" json:"volume_expansion_enabled,omitempty"`
-	Distribution            string                 `protobuf:"bytes,30,opt,name=distribution,proto3" json:"distribution,omitempty"`
-	VectorSearchEnabled     bool                   `protobuf:"varint,31,opt,name=vector_search_enabled,json=vectorSearchEnabled,proto3" json:"vector_search_enabled,omitempty"`
-	ClusterSyncEnabled      bool                   `protobuf:"varint,32,opt,name=cluster_sync_enabled,json=clusterSyncEnabled,proto3" json:"cluster_sync_enabled,omitempty"`
-	EncryptionEnabled       bool                   `protobuf:"varint,33,opt,name=encryption_enabled,json=encryptionEnabled,proto3" json:"encryption_enabled,omitempty"`
-	OciBackupEnabled        bool                   `protobuf:"varint,34,opt,name=oci_backup_enabled,json=ociBackupEnabled,proto3" json:"oci_backup_enabled,omitempty"`
-	AlibabaBackupEnabled    bool                   `protobuf:"varint,35,opt,name=alibaba_backup_enabled,json=alibabaBackupEnabled,proto3" json:"alibaba_backup_enabled,omitempty"`
-	ArbiterEnabled          bool                   `protobuf:"varint,36,opt,name=arbiter_enabled,json=arbiterEnabled,proto3" json:"arbiter_enabled,omitempty"`
-	NonVotingEnabled        bool                   `protobuf:"varint,37,opt,name=non_voting_enabled,json=nonVotingEnabled,proto3" json:"non_voting_enabled,omitempty"`
-	MongoTlsMode            string                 `protobuf:"bytes,38,opt,name=mongo_tls_mode,json=mongoTlsMode,proto3" json:"mongo_tls_mode,omitempty"`
-	MongosSize              int32                  `protobuf:"varint,39,opt,name=mongos_size,json=mongosSize,proto3" json:"mongos_size,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                      protoimpl.MessageState `protogen:"open.v1"`
+	Product                    string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
+	OperatorVersion            string                 `protobuf:"bytes,2,opt,name=operator_version,json=operatorVersion,proto3" json:"operator_version,omitempty"`
+	Apply                      string                 `protobuf:"bytes,3,opt,name=apply,proto3" json:"apply,omitempty"`
+	DatabaseVersion            string                 `protobuf:"bytes,4,opt,name=database_version,json=databaseVersion,proto3" json:"database_version,omitempty"`
+	KubeVersion                string                 `protobuf:"bytes,5,opt,name=kube_version,json=kubeVersion,proto3" json:"kube_version,omitempty"`
+	Platform                   string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform,omitempty"`
+	PmmVersion                 string                 `protobuf:"bytes,7,opt,name=pmm_version,json=pmmVersion,proto3" json:"pmm_version,omitempty"`
+	BackupVersion              string                 `protobuf:"bytes,8,opt,name=backup_version,json=backupVersion,proto3" json:"backup_version,omitempty"`
+	ProxysqlVersion            string                 `protobuf:"bytes,9,opt,name=proxysql_version,json=proxysqlVersion,proto3" json:"proxysql_version,omitempty"`
+	HaproxyVersion             string                 `protobuf:"bytes,10,opt,name=haproxy_version,json=haproxyVersion,proto3" json:"haproxy_version,omitempty"`
+	NamespaceUid               string                 `protobuf:"bytes,11,opt,name=namespace_uid,json=namespaceUid,proto3" json:"namespace_uid,omitempty"`
+	CustomResourceUid          string                 `protobuf:"bytes,12,opt,name=custom_resource_uid,json=customResourceUid,proto3" json:"custom_resource_uid,omitempty"`
+	LogCollectorVersion        string                 `protobuf:"bytes,13,opt,name=log_collector_version,json=logCollectorVersion,proto3" json:"log_collector_version,omitempty"`
+	ShardingEnabled            bool                   `protobuf:"varint,14,opt,name=sharding_enabled,json=shardingEnabled,proto3" json:"sharding_enabled,omitempty"`
+	HashicorpVaultEnabled      bool                   `protobuf:"varint,15,opt,name=hashicorp_vault_enabled,json=hashicorpVaultEnabled,proto3" json:"hashicorp_vault_enabled,omitempty"`
+	ClusterWideEnabled         bool                   `protobuf:"varint,16,opt,name=cluster_wide_enabled,json=clusterWideEnabled,proto3" json:"cluster_wide_enabled,omitempty"`
+	PmmEnabled                 bool                   `protobuf:"varint,17,opt,name=pmm_enabled,json=pmmEnabled,proto3" json:"pmm_enabled,omitempty"`
+	HelmDeployOperator         bool                   `protobuf:"varint,18,opt,name=helm_deploy_operator,json=helmDeployOperator,proto3" json:"helm_deploy_operator,omitempty"`
+	HelmDeployCr               bool                   `protobuf:"varint,19,opt,name=helm_deploy_cr,json=helmDeployCr,proto3" json:"helm_deploy_cr,omitempty"`
+	SidecarsUsed               bool                   `protobuf:"varint,20,opt,name=sidecars_used,json=sidecarsUsed,proto3" json:"sidecars_used,omitempty"`
+	BackupsEnabled             bool                   `protobuf:"varint,21,opt,name=backups_enabled,json=backupsEnabled,proto3" json:"backups_enabled,omitempty"`
+	ClusterSize                int32                  `protobuf:"varint,22,opt,name=cluster_size,json=clusterSize,proto3" json:"cluster_size,omitempty"`
+	PitrEnabled                bool                   `protobuf:"varint,23,opt,name=pitr_enabled,json=pitrEnabled,proto3" json:"pitr_enabled,omitempty"`
+	PhysicalBackupScheduled    bool                   `protobuf:"varint,24,opt,name=physical_backup_scheduled,json=physicalBackupScheduled,proto3" json:"physical_backup_scheduled,omitempty"`
+	Extensions                 string                 `protobuf:"bytes,25,opt,name=extensions,proto3" json:"extensions,omitempty"`
+	UserManagementEnabled      bool                   `protobuf:"varint,26,opt,name=user_management_enabled,json=userManagementEnabled,proto3" json:"user_management_enabled,omitempty"`
+	RoleManagementEnabled      bool                   `protobuf:"varint,27,opt,name=role_management_enabled,json=roleManagementEnabled,proto3" json:"role_management_enabled,omitempty"`
+	McsEnabled                 bool                   `protobuf:"varint,28,opt,name=mcs_enabled,json=mcsEnabled,proto3" json:"mcs_enabled,omitempty"`
+	VolumeExpansionEnabled     bool                   `protobuf:"varint,29,opt,name=volume_expansion_enabled,json=volumeExpansionEnabled,proto3" json:"volume_expansion_enabled,omitempty"`
+	Distribution               string                 `protobuf:"bytes,30,opt,name=distribution,proto3" json:"distribution,omitempty"`
+	VectorSearchEnabled        bool                   `protobuf:"varint,31,opt,name=vector_search_enabled,json=vectorSearchEnabled,proto3" json:"vector_search_enabled,omitempty"`
+	ClusterSyncEnabled         bool                   `protobuf:"varint,32,opt,name=cluster_sync_enabled,json=clusterSyncEnabled,proto3" json:"cluster_sync_enabled,omitempty"`
+	EncryptionEnabled          bool                   `protobuf:"varint,33,opt,name=encryption_enabled,json=encryptionEnabled,proto3" json:"encryption_enabled,omitempty"`
+	OciBackupEnabled           bool                   `protobuf:"varint,34,opt,name=oci_backup_enabled,json=ociBackupEnabled,proto3" json:"oci_backup_enabled,omitempty"`
+	AlibabaBackupEnabled       bool                   `protobuf:"varint,35,opt,name=alibaba_backup_enabled,json=alibabaBackupEnabled,proto3" json:"alibaba_backup_enabled,omitempty"`
+	ArbiterEnabled             bool                   `protobuf:"varint,36,opt,name=arbiter_enabled,json=arbiterEnabled,proto3" json:"arbiter_enabled,omitempty"`
+	NonVotingEnabled           bool                   `protobuf:"varint,37,opt,name=non_voting_enabled,json=nonVotingEnabled,proto3" json:"non_voting_enabled,omitempty"`
+	MongoTlsMode               string                 `protobuf:"bytes,38,opt,name=mongo_tls_mode,json=mongoTlsMode,proto3" json:"mongo_tls_mode,omitempty"`
+	MongosSize                 int32                  `protobuf:"varint,39,opt,name=mongos_size,json=mongosSize,proto3" json:"mongos_size,omitempty"`
+	S3BackupEnabled            bool                   `protobuf:"varint,40,opt,name=s3_backup_enabled,json=s3BackupEnabled,proto3" json:"s3_backup_enabled,omitempty"`
+	AzureBackupEnabled         bool                   `protobuf:"varint,41,opt,name=azure_backup_enabled,json=azureBackupEnabled,proto3" json:"azure_backup_enabled,omitempty"`
+	GcsBackupEnabled           bool                   `protobuf:"varint,42,opt,name=gcs_backup_enabled,json=gcsBackupEnabled,proto3" json:"gcs_backup_enabled,omitempty"`
+	FilesystemBackupEnabled    bool                   `protobuf:"varint,43,opt,name=filesystem_backup_enabled,json=filesystemBackupEnabled,proto3" json:"filesystem_backup_enabled,omitempty"`
+	IncrementalBackupScheduled bool                   `protobuf:"varint,44,opt,name=incremental_backup_scheduled,json=incrementalBackupScheduled,proto3" json:"incremental_backup_scheduled,omitempty"`
+	LogicalBackupScheduled     bool                   `protobuf:"varint,45,opt,name=logical_backup_scheduled,json=logicalBackupScheduled,proto3" json:"logical_backup_scheduled,omitempty"`
+	SnapshotBackupScheduled    bool                   `protobuf:"varint,46,opt,name=snapshot_backup_scheduled,json=snapshotBackupScheduled,proto3" json:"snapshot_backup_scheduled,omitempty"`
+	S3CompatibleBackupEnabled  bool                   `protobuf:"varint,47,opt,name=s3_compatible_backup_enabled,json=s3CompatibleBackupEnabled,proto3" json:"s3_compatible_backup_enabled,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *ApplyRequest) Reset() {
@@ -428,48 +436,112 @@ func (x *ApplyRequest) GetMongosSize() int32 {
 	return 0
 }
 
+func (x *ApplyRequest) GetS3BackupEnabled() bool {
+	if x != nil {
+		return x.S3BackupEnabled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetAzureBackupEnabled() bool {
+	if x != nil {
+		return x.AzureBackupEnabled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetGcsBackupEnabled() bool {
+	if x != nil {
+		return x.GcsBackupEnabled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetFilesystemBackupEnabled() bool {
+	if x != nil {
+		return x.FilesystemBackupEnabled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetIncrementalBackupScheduled() bool {
+	if x != nil {
+		return x.IncrementalBackupScheduled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetLogicalBackupScheduled() bool {
+	if x != nil {
+		return x.LogicalBackupScheduled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetSnapshotBackupScheduled() bool {
+	if x != nil {
+		return x.SnapshotBackupScheduled
+	}
+	return false
+}
+
+func (x *ApplyRequest) GetS3CompatibleBackupEnabled() bool {
+	if x != nil {
+		return x.S3CompatibleBackupEnabled
+	}
+	return false
+}
+
 type OperatorRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Product                 string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
-	OperatorVersion         string                 `protobuf:"bytes,2,opt,name=operator_version,json=operatorVersion,proto3" json:"operator_version,omitempty"`
-	DatabaseVersion         string                 `protobuf:"bytes,4,opt,name=database_version,json=databaseVersion,proto3" json:"database_version,omitempty"`
-	KubeVersion             string                 `protobuf:"bytes,5,opt,name=kube_version,json=kubeVersion,proto3" json:"kube_version,omitempty"`
-	Platform                string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform,omitempty"`
-	PmmVersion              string                 `protobuf:"bytes,7,opt,name=pmm_version,json=pmmVersion,proto3" json:"pmm_version,omitempty"`
-	BackupVersion           string                 `protobuf:"bytes,8,opt,name=backup_version,json=backupVersion,proto3" json:"backup_version,omitempty"`
-	ProxysqlVersion         string                 `protobuf:"bytes,9,opt,name=proxysql_version,json=proxysqlVersion,proto3" json:"proxysql_version,omitempty"`
-	HaproxyVersion          string                 `protobuf:"bytes,10,opt,name=haproxy_version,json=haproxyVersion,proto3" json:"haproxy_version,omitempty"`
-	NamespaceUid            string                 `protobuf:"bytes,11,opt,name=namespace_uid,json=namespaceUid,proto3" json:"namespace_uid,omitempty"`
-	CustomResourceUid       string                 `protobuf:"bytes,12,opt,name=custom_resource_uid,json=customResourceUid,proto3" json:"custom_resource_uid,omitempty"`
-	LogCollectorVersion     string                 `protobuf:"bytes,13,opt,name=log_collector_version,json=logCollectorVersion,proto3" json:"log_collector_version,omitempty"`
-	ShardingEnabled         bool                   `protobuf:"varint,14,opt,name=sharding_enabled,json=shardingEnabled,proto3" json:"sharding_enabled,omitempty"`
-	HashicorpVaultEnabled   bool                   `protobuf:"varint,15,opt,name=hashicorp_vault_enabled,json=hashicorpVaultEnabled,proto3" json:"hashicorp_vault_enabled,omitempty"`
-	ClusterWideEnabled      bool                   `protobuf:"varint,16,opt,name=cluster_wide_enabled,json=clusterWideEnabled,proto3" json:"cluster_wide_enabled,omitempty"`
-	PmmEnabled              bool                   `protobuf:"varint,17,opt,name=pmm_enabled,json=pmmEnabled,proto3" json:"pmm_enabled,omitempty"`
-	HelmDeployOperator      bool                   `protobuf:"varint,18,opt,name=helm_deploy_operator,json=helmDeployOperator,proto3" json:"helm_deploy_operator,omitempty"`
-	HelmDeployCr            bool                   `protobuf:"varint,19,opt,name=helm_deploy_cr,json=helmDeployCr,proto3" json:"helm_deploy_cr,omitempty"`
-	SidecarsUsed            bool                   `protobuf:"varint,20,opt,name=sidecars_used,json=sidecarsUsed,proto3" json:"sidecars_used,omitempty"`
-	BackupsEnabled          bool                   `protobuf:"varint,21,opt,name=backups_enabled,json=backupsEnabled,proto3" json:"backups_enabled,omitempty"`
-	ClusterSize             int32                  `protobuf:"varint,22,opt,name=cluster_size,json=clusterSize,proto3" json:"cluster_size,omitempty"`
-	PitrEnabled             bool                   `protobuf:"varint,23,opt,name=pitr_enabled,json=pitrEnabled,proto3" json:"pitr_enabled,omitempty"`
-	PhysicalBackupScheduled bool                   `protobuf:"varint,24,opt,name=physical_backup_scheduled,json=physicalBackupScheduled,proto3" json:"physical_backup_scheduled,omitempty"`
-	Extensions              string                 `protobuf:"bytes,25,opt,name=extensions,proto3" json:"extensions,omitempty"`
-	UserManagementEnabled   bool                   `protobuf:"varint,26,opt,name=user_management_enabled,json=userManagementEnabled,proto3" json:"user_management_enabled,omitempty"`
-	RoleManagementEnabled   bool                   `protobuf:"varint,27,opt,name=role_management_enabled,json=roleManagementEnabled,proto3" json:"role_management_enabled,omitempty"`
-	McsEnabled              bool                   `protobuf:"varint,28,opt,name=mcs_enabled,json=mcsEnabled,proto3" json:"mcs_enabled,omitempty"`
-	VolumeExpansionEnabled  bool                   `protobuf:"varint,29,opt,name=volume_expansion_enabled,json=volumeExpansionEnabled,proto3" json:"volume_expansion_enabled,omitempty"`
-	Distribution            string                 `protobuf:"bytes,30,opt,name=distribution,proto3" json:"distribution,omitempty"`
-	VectorSearchEnabled     bool                   `protobuf:"varint,31,opt,name=vector_search_enabled,json=vectorSearchEnabled,proto3" json:"vector_search_enabled,omitempty"`
-	ClusterSyncEnabled      bool                   `protobuf:"varint,32,opt,name=cluster_sync_enabled,json=clusterSyncEnabled,proto3" json:"cluster_sync_enabled,omitempty"`
-	EncryptionEnabled       bool                   `protobuf:"varint,33,opt,name=encryption_enabled,json=encryptionEnabled,proto3" json:"encryption_enabled,omitempty"`
-	OciBackupEnabled        bool                   `protobuf:"varint,34,opt,name=oci_backup_enabled,json=ociBackupEnabled,proto3" json:"oci_backup_enabled,omitempty"`
-	AlibabaBackupEnabled    bool                   `protobuf:"varint,35,opt,name=alibaba_backup_enabled,json=alibabaBackupEnabled,proto3" json:"alibaba_backup_enabled,omitempty"`
-	ArbiterEnabled          bool                   `protobuf:"varint,36,opt,name=arbiter_enabled,json=arbiterEnabled,proto3" json:"arbiter_enabled,omitempty"`
-	NonVotingEnabled        bool                   `protobuf:"varint,37,opt,name=non_voting_enabled,json=nonVotingEnabled,proto3" json:"non_voting_enabled,omitempty"`
-	MongoTlsMode            string                 `protobuf:"bytes,38,opt,name=mongo_tls_mode,json=mongoTlsMode,proto3" json:"mongo_tls_mode,omitempty"`
-	MongosSize              int32                  `protobuf:"varint,39,opt,name=mongos_size,json=mongosSize,proto3" json:"mongos_size,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                      protoimpl.MessageState `protogen:"open.v1"`
+	Product                    string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
+	OperatorVersion            string                 `protobuf:"bytes,2,opt,name=operator_version,json=operatorVersion,proto3" json:"operator_version,omitempty"`
+	DatabaseVersion            string                 `protobuf:"bytes,4,opt,name=database_version,json=databaseVersion,proto3" json:"database_version,omitempty"`
+	KubeVersion                string                 `protobuf:"bytes,5,opt,name=kube_version,json=kubeVersion,proto3" json:"kube_version,omitempty"`
+	Platform                   string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform,omitempty"`
+	PmmVersion                 string                 `protobuf:"bytes,7,opt,name=pmm_version,json=pmmVersion,proto3" json:"pmm_version,omitempty"`
+	BackupVersion              string                 `protobuf:"bytes,8,opt,name=backup_version,json=backupVersion,proto3" json:"backup_version,omitempty"`
+	ProxysqlVersion            string                 `protobuf:"bytes,9,opt,name=proxysql_version,json=proxysqlVersion,proto3" json:"proxysql_version,omitempty"`
+	HaproxyVersion             string                 `protobuf:"bytes,10,opt,name=haproxy_version,json=haproxyVersion,proto3" json:"haproxy_version,omitempty"`
+	NamespaceUid               string                 `protobuf:"bytes,11,opt,name=namespace_uid,json=namespaceUid,proto3" json:"namespace_uid,omitempty"`
+	CustomResourceUid          string                 `protobuf:"bytes,12,opt,name=custom_resource_uid,json=customResourceUid,proto3" json:"custom_resource_uid,omitempty"`
+	LogCollectorVersion        string                 `protobuf:"bytes,13,opt,name=log_collector_version,json=logCollectorVersion,proto3" json:"log_collector_version,omitempty"`
+	ShardingEnabled            bool                   `protobuf:"varint,14,opt,name=sharding_enabled,json=shardingEnabled,proto3" json:"sharding_enabled,omitempty"`
+	HashicorpVaultEnabled      bool                   `protobuf:"varint,15,opt,name=hashicorp_vault_enabled,json=hashicorpVaultEnabled,proto3" json:"hashicorp_vault_enabled,omitempty"`
+	ClusterWideEnabled         bool                   `protobuf:"varint,16,opt,name=cluster_wide_enabled,json=clusterWideEnabled,proto3" json:"cluster_wide_enabled,omitempty"`
+	PmmEnabled                 bool                   `protobuf:"varint,17,opt,name=pmm_enabled,json=pmmEnabled,proto3" json:"pmm_enabled,omitempty"`
+	HelmDeployOperator         bool                   `protobuf:"varint,18,opt,name=helm_deploy_operator,json=helmDeployOperator,proto3" json:"helm_deploy_operator,omitempty"`
+	HelmDeployCr               bool                   `protobuf:"varint,19,opt,name=helm_deploy_cr,json=helmDeployCr,proto3" json:"helm_deploy_cr,omitempty"`
+	SidecarsUsed               bool                   `protobuf:"varint,20,opt,name=sidecars_used,json=sidecarsUsed,proto3" json:"sidecars_used,omitempty"`
+	BackupsEnabled             bool                   `protobuf:"varint,21,opt,name=backups_enabled,json=backupsEnabled,proto3" json:"backups_enabled,omitempty"`
+	ClusterSize                int32                  `protobuf:"varint,22,opt,name=cluster_size,json=clusterSize,proto3" json:"cluster_size,omitempty"`
+	PitrEnabled                bool                   `protobuf:"varint,23,opt,name=pitr_enabled,json=pitrEnabled,proto3" json:"pitr_enabled,omitempty"`
+	PhysicalBackupScheduled    bool                   `protobuf:"varint,24,opt,name=physical_backup_scheduled,json=physicalBackupScheduled,proto3" json:"physical_backup_scheduled,omitempty"`
+	Extensions                 string                 `protobuf:"bytes,25,opt,name=extensions,proto3" json:"extensions,omitempty"`
+	UserManagementEnabled      bool                   `protobuf:"varint,26,opt,name=user_management_enabled,json=userManagementEnabled,proto3" json:"user_management_enabled,omitempty"`
+	RoleManagementEnabled      bool                   `protobuf:"varint,27,opt,name=role_management_enabled,json=roleManagementEnabled,proto3" json:"role_management_enabled,omitempty"`
+	McsEnabled                 bool                   `protobuf:"varint,28,opt,name=mcs_enabled,json=mcsEnabled,proto3" json:"mcs_enabled,omitempty"`
+	VolumeExpansionEnabled     bool                   `protobuf:"varint,29,opt,name=volume_expansion_enabled,json=volumeExpansionEnabled,proto3" json:"volume_expansion_enabled,omitempty"`
+	Distribution               string                 `protobuf:"bytes,30,opt,name=distribution,proto3" json:"distribution,omitempty"`
+	VectorSearchEnabled        bool                   `protobuf:"varint,31,opt,name=vector_search_enabled,json=vectorSearchEnabled,proto3" json:"vector_search_enabled,omitempty"`
+	ClusterSyncEnabled         bool                   `protobuf:"varint,32,opt,name=cluster_sync_enabled,json=clusterSyncEnabled,proto3" json:"cluster_sync_enabled,omitempty"`
+	EncryptionEnabled          bool                   `protobuf:"varint,33,opt,name=encryption_enabled,json=encryptionEnabled,proto3" json:"encryption_enabled,omitempty"`
+	OciBackupEnabled           bool                   `protobuf:"varint,34,opt,name=oci_backup_enabled,json=ociBackupEnabled,proto3" json:"oci_backup_enabled,omitempty"`
+	AlibabaBackupEnabled       bool                   `protobuf:"varint,35,opt,name=alibaba_backup_enabled,json=alibabaBackupEnabled,proto3" json:"alibaba_backup_enabled,omitempty"`
+	ArbiterEnabled             bool                   `protobuf:"varint,36,opt,name=arbiter_enabled,json=arbiterEnabled,proto3" json:"arbiter_enabled,omitempty"`
+	NonVotingEnabled           bool                   `protobuf:"varint,37,opt,name=non_voting_enabled,json=nonVotingEnabled,proto3" json:"non_voting_enabled,omitempty"`
+	MongoTlsMode               string                 `protobuf:"bytes,38,opt,name=mongo_tls_mode,json=mongoTlsMode,proto3" json:"mongo_tls_mode,omitempty"`
+	MongosSize                 int32                  `protobuf:"varint,39,opt,name=mongos_size,json=mongosSize,proto3" json:"mongos_size,omitempty"`
+	S3BackupEnabled            bool                   `protobuf:"varint,40,opt,name=s3_backup_enabled,json=s3BackupEnabled,proto3" json:"s3_backup_enabled,omitempty"`
+	AzureBackupEnabled         bool                   `protobuf:"varint,41,opt,name=azure_backup_enabled,json=azureBackupEnabled,proto3" json:"azure_backup_enabled,omitempty"`
+	GcsBackupEnabled           bool                   `protobuf:"varint,42,opt,name=gcs_backup_enabled,json=gcsBackupEnabled,proto3" json:"gcs_backup_enabled,omitempty"`
+	FilesystemBackupEnabled    bool                   `protobuf:"varint,43,opt,name=filesystem_backup_enabled,json=filesystemBackupEnabled,proto3" json:"filesystem_backup_enabled,omitempty"`
+	IncrementalBackupScheduled bool                   `protobuf:"varint,44,opt,name=incremental_backup_scheduled,json=incrementalBackupScheduled,proto3" json:"incremental_backup_scheduled,omitempty"`
+	LogicalBackupScheduled     bool                   `protobuf:"varint,45,opt,name=logical_backup_scheduled,json=logicalBackupScheduled,proto3" json:"logical_backup_scheduled,omitempty"`
+	SnapshotBackupScheduled    bool                   `protobuf:"varint,46,opt,name=snapshot_backup_scheduled,json=snapshotBackupScheduled,proto3" json:"snapshot_backup_scheduled,omitempty"`
+	S3CompatibleBackupEnabled  bool                   `protobuf:"varint,47,opt,name=s3_compatible_backup_enabled,json=s3CompatibleBackupEnabled,proto3" json:"s3_compatible_backup_enabled,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *OperatorRequest) Reset() {
@@ -768,47 +840,111 @@ func (x *OperatorRequest) GetMongosSize() int32 {
 	return 0
 }
 
+func (x *OperatorRequest) GetS3BackupEnabled() bool {
+	if x != nil {
+		return x.S3BackupEnabled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetAzureBackupEnabled() bool {
+	if x != nil {
+		return x.AzureBackupEnabled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetGcsBackupEnabled() bool {
+	if x != nil {
+		return x.GcsBackupEnabled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetFilesystemBackupEnabled() bool {
+	if x != nil {
+		return x.FilesystemBackupEnabled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetIncrementalBackupScheduled() bool {
+	if x != nil {
+		return x.IncrementalBackupScheduled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetLogicalBackupScheduled() bool {
+	if x != nil {
+		return x.LogicalBackupScheduled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetSnapshotBackupScheduled() bool {
+	if x != nil {
+		return x.SnapshotBackupScheduled
+	}
+	return false
+}
+
+func (x *OperatorRequest) GetS3CompatibleBackupEnabled() bool {
+	if x != nil {
+		return x.S3CompatibleBackupEnabled
+	}
+	return false
+}
+
 type ProductRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Product                 string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
-	DatabaseVersion         string                 `protobuf:"bytes,4,opt,name=database_version,json=databaseVersion,proto3" json:"database_version,omitempty"`
-	KubeVersion             string                 `protobuf:"bytes,5,opt,name=kube_version,json=kubeVersion,proto3" json:"kube_version,omitempty"`
-	Platform                string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform,omitempty"`
-	PmmVersion              string                 `protobuf:"bytes,7,opt,name=pmm_version,json=pmmVersion,proto3" json:"pmm_version,omitempty"`
-	BackupVersion           string                 `protobuf:"bytes,8,opt,name=backup_version,json=backupVersion,proto3" json:"backup_version,omitempty"`
-	ProxysqlVersion         string                 `protobuf:"bytes,9,opt,name=proxysql_version,json=proxysqlVersion,proto3" json:"proxysql_version,omitempty"`
-	HaproxyVersion          string                 `protobuf:"bytes,10,opt,name=haproxy_version,json=haproxyVersion,proto3" json:"haproxy_version,omitempty"`
-	NamespaceUid            string                 `protobuf:"bytes,11,opt,name=namespace_uid,json=namespaceUid,proto3" json:"namespace_uid,omitempty"`
-	CustomResourceUid       string                 `protobuf:"bytes,12,opt,name=custom_resource_uid,json=customResourceUid,proto3" json:"custom_resource_uid,omitempty"`
-	LogCollectorVersion     string                 `protobuf:"bytes,13,opt,name=log_collector_version,json=logCollectorVersion,proto3" json:"log_collector_version,omitempty"`
-	ShardingEnabled         bool                   `protobuf:"varint,14,opt,name=sharding_enabled,json=shardingEnabled,proto3" json:"sharding_enabled,omitempty"`
-	HashicorpVaultEnabled   bool                   `protobuf:"varint,15,opt,name=hashicorp_vault_enabled,json=hashicorpVaultEnabled,proto3" json:"hashicorp_vault_enabled,omitempty"`
-	ClusterWideEnabled      bool                   `protobuf:"varint,16,opt,name=cluster_wide_enabled,json=clusterWideEnabled,proto3" json:"cluster_wide_enabled,omitempty"`
-	PmmEnabled              bool                   `protobuf:"varint,17,opt,name=pmm_enabled,json=pmmEnabled,proto3" json:"pmm_enabled,omitempty"`
-	HelmDeployOperator      bool                   `protobuf:"varint,18,opt,name=helm_deploy_operator,json=helmDeployOperator,proto3" json:"helm_deploy_operator,omitempty"`
-	HelmDeployCr            bool                   `protobuf:"varint,19,opt,name=helm_deploy_cr,json=helmDeployCr,proto3" json:"helm_deploy_cr,omitempty"`
-	SidecarsUsed            bool                   `protobuf:"varint,20,opt,name=sidecars_used,json=sidecarsUsed,proto3" json:"sidecars_used,omitempty"`
-	BackupsEnabled          bool                   `protobuf:"varint,21,opt,name=backups_enabled,json=backupsEnabled,proto3" json:"backups_enabled,omitempty"`
-	ClusterSize             int32                  `protobuf:"varint,22,opt,name=cluster_size,json=clusterSize,proto3" json:"cluster_size,omitempty"`
-	PitrEnabled             bool                   `protobuf:"varint,23,opt,name=pitr_enabled,json=pitrEnabled,proto3" json:"pitr_enabled,omitempty"`
-	PhysicalBackupScheduled bool                   `protobuf:"varint,24,opt,name=physical_backup_scheduled,json=physicalBackupScheduled,proto3" json:"physical_backup_scheduled,omitempty"`
-	Extensions              string                 `protobuf:"bytes,25,opt,name=extensions,proto3" json:"extensions,omitempty"`
-	UserManagementEnabled   bool                   `protobuf:"varint,26,opt,name=user_management_enabled,json=userManagementEnabled,proto3" json:"user_management_enabled,omitempty"`
-	RoleManagementEnabled   bool                   `protobuf:"varint,27,opt,name=role_management_enabled,json=roleManagementEnabled,proto3" json:"role_management_enabled,omitempty"`
-	McsEnabled              bool                   `protobuf:"varint,28,opt,name=mcs_enabled,json=mcsEnabled,proto3" json:"mcs_enabled,omitempty"`
-	VolumeExpansionEnabled  bool                   `protobuf:"varint,29,opt,name=volume_expansion_enabled,json=volumeExpansionEnabled,proto3" json:"volume_expansion_enabled,omitempty"`
-	Distribution            string                 `protobuf:"bytes,30,opt,name=distribution,proto3" json:"distribution,omitempty"`
-	VectorSearchEnabled     bool                   `protobuf:"varint,31,opt,name=vector_search_enabled,json=vectorSearchEnabled,proto3" json:"vector_search_enabled,omitempty"`
-	ClusterSyncEnabled      bool                   `protobuf:"varint,32,opt,name=cluster_sync_enabled,json=clusterSyncEnabled,proto3" json:"cluster_sync_enabled,omitempty"`
-	EncryptionEnabled       bool                   `protobuf:"varint,33,opt,name=encryption_enabled,json=encryptionEnabled,proto3" json:"encryption_enabled,omitempty"`
-	OciBackupEnabled        bool                   `protobuf:"varint,34,opt,name=oci_backup_enabled,json=ociBackupEnabled,proto3" json:"oci_backup_enabled,omitempty"`
-	AlibabaBackupEnabled    bool                   `protobuf:"varint,35,opt,name=alibaba_backup_enabled,json=alibabaBackupEnabled,proto3" json:"alibaba_backup_enabled,omitempty"`
-	ArbiterEnabled          bool                   `protobuf:"varint,36,opt,name=arbiter_enabled,json=arbiterEnabled,proto3" json:"arbiter_enabled,omitempty"`
-	NonVotingEnabled        bool                   `protobuf:"varint,37,opt,name=non_voting_enabled,json=nonVotingEnabled,proto3" json:"non_voting_enabled,omitempty"`
-	MongoTlsMode            string                 `protobuf:"bytes,38,opt,name=mongo_tls_mode,json=mongoTlsMode,proto3" json:"mongo_tls_mode,omitempty"`
-	MongosSize              int32                  `protobuf:"varint,39,opt,name=mongos_size,json=mongosSize,proto3" json:"mongos_size,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                      protoimpl.MessageState `protogen:"open.v1"`
+	Product                    string                 `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
+	DatabaseVersion            string                 `protobuf:"bytes,4,opt,name=database_version,json=databaseVersion,proto3" json:"database_version,omitempty"`
+	KubeVersion                string                 `protobuf:"bytes,5,opt,name=kube_version,json=kubeVersion,proto3" json:"kube_version,omitempty"`
+	Platform                   string                 `protobuf:"bytes,6,opt,name=platform,proto3" json:"platform,omitempty"`
+	PmmVersion                 string                 `protobuf:"bytes,7,opt,name=pmm_version,json=pmmVersion,proto3" json:"pmm_version,omitempty"`
+	BackupVersion              string                 `protobuf:"bytes,8,opt,name=backup_version,json=backupVersion,proto3" json:"backup_version,omitempty"`
+	ProxysqlVersion            string                 `protobuf:"bytes,9,opt,name=proxysql_version,json=proxysqlVersion,proto3" json:"proxysql_version,omitempty"`
+	HaproxyVersion             string                 `protobuf:"bytes,10,opt,name=haproxy_version,json=haproxyVersion,proto3" json:"haproxy_version,omitempty"`
+	NamespaceUid               string                 `protobuf:"bytes,11,opt,name=namespace_uid,json=namespaceUid,proto3" json:"namespace_uid,omitempty"`
+	CustomResourceUid          string                 `protobuf:"bytes,12,opt,name=custom_resource_uid,json=customResourceUid,proto3" json:"custom_resource_uid,omitempty"`
+	LogCollectorVersion        string                 `protobuf:"bytes,13,opt,name=log_collector_version,json=logCollectorVersion,proto3" json:"log_collector_version,omitempty"`
+	ShardingEnabled            bool                   `protobuf:"varint,14,opt,name=sharding_enabled,json=shardingEnabled,proto3" json:"sharding_enabled,omitempty"`
+	HashicorpVaultEnabled      bool                   `protobuf:"varint,15,opt,name=hashicorp_vault_enabled,json=hashicorpVaultEnabled,proto3" json:"hashicorp_vault_enabled,omitempty"`
+	ClusterWideEnabled         bool                   `protobuf:"varint,16,opt,name=cluster_wide_enabled,json=clusterWideEnabled,proto3" json:"cluster_wide_enabled,omitempty"`
+	PmmEnabled                 bool                   `protobuf:"varint,17,opt,name=pmm_enabled,json=pmmEnabled,proto3" json:"pmm_enabled,omitempty"`
+	HelmDeployOperator         bool                   `protobuf:"varint,18,opt,name=helm_deploy_operator,json=helmDeployOperator,proto3" json:"helm_deploy_operator,omitempty"`
+	HelmDeployCr               bool                   `protobuf:"varint,19,opt,name=helm_deploy_cr,json=helmDeployCr,proto3" json:"helm_deploy_cr,omitempty"`
+	SidecarsUsed               bool                   `protobuf:"varint,20,opt,name=sidecars_used,json=sidecarsUsed,proto3" json:"sidecars_used,omitempty"`
+	BackupsEnabled             bool                   `protobuf:"varint,21,opt,name=backups_enabled,json=backupsEnabled,proto3" json:"backups_enabled,omitempty"`
+	ClusterSize                int32                  `protobuf:"varint,22,opt,name=cluster_size,json=clusterSize,proto3" json:"cluster_size,omitempty"`
+	PitrEnabled                bool                   `protobuf:"varint,23,opt,name=pitr_enabled,json=pitrEnabled,proto3" json:"pitr_enabled,omitempty"`
+	PhysicalBackupScheduled    bool                   `protobuf:"varint,24,opt,name=physical_backup_scheduled,json=physicalBackupScheduled,proto3" json:"physical_backup_scheduled,omitempty"`
+	Extensions                 string                 `protobuf:"bytes,25,opt,name=extensions,proto3" json:"extensions,omitempty"`
+	UserManagementEnabled      bool                   `protobuf:"varint,26,opt,name=user_management_enabled,json=userManagementEnabled,proto3" json:"user_management_enabled,omitempty"`
+	RoleManagementEnabled      bool                   `protobuf:"varint,27,opt,name=role_management_enabled,json=roleManagementEnabled,proto3" json:"role_management_enabled,omitempty"`
+	McsEnabled                 bool                   `protobuf:"varint,28,opt,name=mcs_enabled,json=mcsEnabled,proto3" json:"mcs_enabled,omitempty"`
+	VolumeExpansionEnabled     bool                   `protobuf:"varint,29,opt,name=volume_expansion_enabled,json=volumeExpansionEnabled,proto3" json:"volume_expansion_enabled,omitempty"`
+	Distribution               string                 `protobuf:"bytes,30,opt,name=distribution,proto3" json:"distribution,omitempty"`
+	VectorSearchEnabled        bool                   `protobuf:"varint,31,opt,name=vector_search_enabled,json=vectorSearchEnabled,proto3" json:"vector_search_enabled,omitempty"`
+	ClusterSyncEnabled         bool                   `protobuf:"varint,32,opt,name=cluster_sync_enabled,json=clusterSyncEnabled,proto3" json:"cluster_sync_enabled,omitempty"`
+	EncryptionEnabled          bool                   `protobuf:"varint,33,opt,name=encryption_enabled,json=encryptionEnabled,proto3" json:"encryption_enabled,omitempty"`
+	OciBackupEnabled           bool                   `protobuf:"varint,34,opt,name=oci_backup_enabled,json=ociBackupEnabled,proto3" json:"oci_backup_enabled,omitempty"`
+	AlibabaBackupEnabled       bool                   `protobuf:"varint,35,opt,name=alibaba_backup_enabled,json=alibabaBackupEnabled,proto3" json:"alibaba_backup_enabled,omitempty"`
+	ArbiterEnabled             bool                   `protobuf:"varint,36,opt,name=arbiter_enabled,json=arbiterEnabled,proto3" json:"arbiter_enabled,omitempty"`
+	NonVotingEnabled           bool                   `protobuf:"varint,37,opt,name=non_voting_enabled,json=nonVotingEnabled,proto3" json:"non_voting_enabled,omitempty"`
+	MongoTlsMode               string                 `protobuf:"bytes,38,opt,name=mongo_tls_mode,json=mongoTlsMode,proto3" json:"mongo_tls_mode,omitempty"`
+	MongosSize                 int32                  `protobuf:"varint,39,opt,name=mongos_size,json=mongosSize,proto3" json:"mongos_size,omitempty"`
+	S3BackupEnabled            bool                   `protobuf:"varint,40,opt,name=s3_backup_enabled,json=s3BackupEnabled,proto3" json:"s3_backup_enabled,omitempty"`
+	AzureBackupEnabled         bool                   `protobuf:"varint,41,opt,name=azure_backup_enabled,json=azureBackupEnabled,proto3" json:"azure_backup_enabled,omitempty"`
+	GcsBackupEnabled           bool                   `protobuf:"varint,42,opt,name=gcs_backup_enabled,json=gcsBackupEnabled,proto3" json:"gcs_backup_enabled,omitempty"`
+	FilesystemBackupEnabled    bool                   `protobuf:"varint,43,opt,name=filesystem_backup_enabled,json=filesystemBackupEnabled,proto3" json:"filesystem_backup_enabled,omitempty"`
+	IncrementalBackupScheduled bool                   `protobuf:"varint,44,opt,name=incremental_backup_scheduled,json=incrementalBackupScheduled,proto3" json:"incremental_backup_scheduled,omitempty"`
+	LogicalBackupScheduled     bool                   `protobuf:"varint,45,opt,name=logical_backup_scheduled,json=logicalBackupScheduled,proto3" json:"logical_backup_scheduled,omitempty"`
+	SnapshotBackupScheduled    bool                   `protobuf:"varint,46,opt,name=snapshot_backup_scheduled,json=snapshotBackupScheduled,proto3" json:"snapshot_backup_scheduled,omitempty"`
+	S3CompatibleBackupEnabled  bool                   `protobuf:"varint,47,opt,name=s3_compatible_backup_enabled,json=s3CompatibleBackupEnabled,proto3" json:"s3_compatible_backup_enabled,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *ProductRequest) Reset() {
@@ -1098,6 +1234,62 @@ func (x *ProductRequest) GetMongosSize() int32 {
 		return x.MongosSize
 	}
 	return 0
+}
+
+func (x *ProductRequest) GetS3BackupEnabled() bool {
+	if x != nil {
+		return x.S3BackupEnabled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetAzureBackupEnabled() bool {
+	if x != nil {
+		return x.AzureBackupEnabled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetGcsBackupEnabled() bool {
+	if x != nil {
+		return x.GcsBackupEnabled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetFilesystemBackupEnabled() bool {
+	if x != nil {
+		return x.FilesystemBackupEnabled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetIncrementalBackupScheduled() bool {
+	if x != nil {
+		return x.IncrementalBackupScheduled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetLogicalBackupScheduled() bool {
+	if x != nil {
+		return x.LogicalBackupScheduled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetSnapshotBackupScheduled() bool {
+	if x != nil {
+		return x.SnapshotBackupScheduled
+	}
+	return false
+}
+
+func (x *ProductRequest) GetS3CompatibleBackupEnabled() bool {
+	if x != nil {
+		return x.S3CompatibleBackupEnabled
+	}
+	return false
 }
 
 type MetadataRequest struct {
@@ -2112,7 +2304,7 @@ var File_api_version_proto protoreflect.FileDescriptor
 
 const file_api_version_proto_rawDesc = "" +
 	"\n" +
-	"\x11api/version.proto\x12\aversion\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x86\x0f\n" +
+	"\x11api/version.proto\x12\aversion\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc7\x12\n" +
 	"\fApplyRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12)\n" +
 	"\x10operator_version\x18\x02 \x01(\tR\x0foperatorVersion\x12\x14\n" +
@@ -2160,7 +2352,15 @@ const file_api_version_proto_rawDesc = "" +
 	"\x0emongo_tls_mode\x18& \x01(\tB~\x92A{2GMongoDB TLS mode configured in the cluster. Empty string means unknown.\xf2\x02\x00\xf2\x02\bdisabled\xf2\x02\ballowTLS\xf2\x02\tpreferTLS\xf2\x02\n" +
 	"requireTLSR\fmongoTlsMode\x12\x1f\n" +
 	"\vmongos_size\x18' \x01(\x05R\n" +
-	"mongosSize\"\xf3\x0e\n" +
+	"mongosSize\x12*\n" +
+	"\x11s3_backup_enabled\x18( \x01(\bR\x0fs3BackupEnabled\x120\n" +
+	"\x14azure_backup_enabled\x18) \x01(\bR\x12azureBackupEnabled\x12,\n" +
+	"\x12gcs_backup_enabled\x18* \x01(\bR\x10gcsBackupEnabled\x12:\n" +
+	"\x19filesystem_backup_enabled\x18+ \x01(\bR\x17filesystemBackupEnabled\x12@\n" +
+	"\x1cincremental_backup_scheduled\x18, \x01(\bR\x1aincrementalBackupScheduled\x128\n" +
+	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12:\n" +
+	"\x19snapshot_backup_scheduled\x18. \x01(\bR\x17snapshotBackupScheduled\x12?\n" +
+	"\x1cs3_compatible_backup_enabled\x18/ \x01(\bR\x19s3CompatibleBackupEnabled\"\xb4\x12\n" +
 	"\x0fOperatorRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12)\n" +
 	"\x10operator_version\x18\x02 \x01(\tR\x0foperatorVersion\x12)\n" +
@@ -2207,7 +2407,15 @@ const file_api_version_proto_rawDesc = "" +
 	"\x0emongo_tls_mode\x18& \x01(\tB~\x92A{2GMongoDB TLS mode configured in the cluster. Empty string means unknown.\xf2\x02\x00\xf2\x02\bdisabled\xf2\x02\ballowTLS\xf2\x02\tpreferTLS\xf2\x02\n" +
 	"requireTLSR\fmongoTlsMode\x12\x1f\n" +
 	"\vmongos_size\x18' \x01(\x05R\n" +
-	"mongosSize\"\xc7\x0e\n" +
+	"mongosSize\x12*\n" +
+	"\x11s3_backup_enabled\x18( \x01(\bR\x0fs3BackupEnabled\x120\n" +
+	"\x14azure_backup_enabled\x18) \x01(\bR\x12azureBackupEnabled\x12,\n" +
+	"\x12gcs_backup_enabled\x18* \x01(\bR\x10gcsBackupEnabled\x12:\n" +
+	"\x19filesystem_backup_enabled\x18+ \x01(\bR\x17filesystemBackupEnabled\x12@\n" +
+	"\x1cincremental_backup_scheduled\x18, \x01(\bR\x1aincrementalBackupScheduled\x128\n" +
+	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12:\n" +
+	"\x19snapshot_backup_scheduled\x18. \x01(\bR\x17snapshotBackupScheduled\x12?\n" +
+	"\x1cs3_compatible_backup_enabled\x18/ \x01(\bR\x19s3CompatibleBackupEnabled\"\x88\x12\n" +
 	"\x0eProductRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12)\n" +
 	"\x10database_version\x18\x04 \x01(\tR\x0fdatabaseVersion\x12!\n" +
@@ -2253,7 +2461,15 @@ const file_api_version_proto_rawDesc = "" +
 	"\x0emongo_tls_mode\x18& \x01(\tB~\x92A{2GMongoDB TLS mode configured in the cluster. Empty string means unknown.\xf2\x02\x00\xf2\x02\bdisabled\xf2\x02\ballowTLS\xf2\x02\tpreferTLS\xf2\x02\n" +
 	"requireTLSR\fmongoTlsMode\x12\x1f\n" +
 	"\vmongos_size\x18' \x01(\x05R\n" +
-	"mongosSize\"+\n" +
+	"mongosSize\x12*\n" +
+	"\x11s3_backup_enabled\x18( \x01(\bR\x0fs3BackupEnabled\x120\n" +
+	"\x14azure_backup_enabled\x18) \x01(\bR\x12azureBackupEnabled\x12,\n" +
+	"\x12gcs_backup_enabled\x18* \x01(\bR\x10gcsBackupEnabled\x12:\n" +
+	"\x19filesystem_backup_enabled\x18+ \x01(\bR\x17filesystemBackupEnabled\x12@\n" +
+	"\x1cincremental_backup_scheduled\x18, \x01(\bR\x1aincrementalBackupScheduled\x128\n" +
+	"\x18logical_backup_scheduled\x18- \x01(\bR\x16logicalBackupScheduled\x12:\n" +
+	"\x19snapshot_backup_scheduled\x18. \x01(\bR\x17snapshotBackupScheduled\x12?\n" +
+	"\x1cs3_compatible_backup_enabled\x18/ \x01(\bR\x19s3CompatibleBackupEnabled\"+\n" +
 	"\x0fMetadataRequest\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\"\xb6\x01\n" +
 	"\aVersion\x12\x1d\n" +

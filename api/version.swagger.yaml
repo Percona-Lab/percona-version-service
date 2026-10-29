@@ -258,6 +258,38 @@ paths:
           required: false
           type: integer
           format: int32
+        - name: s3BackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: azureBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: gcsBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: filesystemBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: incrementalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: logicalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: snapshotBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: s3CompatibleBackupEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}:
@@ -441,6 +473,38 @@ paths:
           required: false
           type: integer
           format: int32
+        - name: s3BackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: azureBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: gcsBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: filesystemBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: incrementalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: logicalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: snapshotBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: s3CompatibleBackupEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
   /versions/v1/{product}/{operatorVersion}/{apply}:
@@ -628,6 +692,38 @@ paths:
           required: false
           type: integer
           format: int32
+        - name: s3BackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: azureBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: gcsBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: filesystemBackupEnabled
+          in: query
+          required: false
+          type: boolean
+        - name: incrementalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: logicalBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: snapshotBackupScheduled
+          in: query
+          required: false
+          type: boolean
+        - name: s3CompatibleBackupEnabled
+          in: query
+          required: false
+          type: boolean
       tags:
         - VersionService
 definitions:
