@@ -74,7 +74,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 
 	psParams := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.2.0",
+		OperatorVersion: "1.3.0",
 		Product:         "ps-operator",
 	}
 	psParams.WithTimeout(2 * time.Second)
@@ -92,6 +92,7 @@ func TestApplyShouldReturnJustOneVersion(t *testing.T) {
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Haproxy, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.Toolkit, 1)
 	assert.Len(t, psResp.Payload.Versions[0].Matrix.BinlogServer, 1)
+	assert.Len(t, psResp.Payload.Versions[0].Matrix.LogCollector, 1)
 }
 
 func TestApplyPxcShouldReturnSameMajorVersion(t *testing.T) {
@@ -159,12 +160,12 @@ func TestApplyPsShouldReturnSameMajorVersion(t *testing.T) {
 
 	params := &version_service.VersionServiceApplyParams{
 		Apply:           "latest",
-		OperatorVersion: "1.2.0",
+		OperatorVersion: "1.3.0",
 		Product:         "ps-operator",
 	}
 	params.WithTimeout(2 * time.Second)
 
-	for _, v := range []string{"8.0", "8.4"} {
+	for _, v := range []string{"8.0", "8.4", "9.7"} {
 		params.DatabaseVersion = &v
 		resp, err := cli.VersionService.VersionServiceApply(params)
 		assert.NoError(t, err)
@@ -1508,6 +1509,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 	cli := cli()
 	v80 := "8.0"
 	v84 := "8.4"
+	v97 := "9.7"
 
 	cases := []struct {
 		apply     string
@@ -1516,6 +1518,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		version   string
 	}{
 		// test latest
+		{"latest", "1.3.0", nil, "9.7.2-2"},
 		{"latest", "1.2.0", nil, "8.4.10-10"},
 		{"latest", "1.1.0", nil, "8.4.8-8"},
 		{"latest", "1.0.0", nil, "8.4.6-6"},
@@ -1527,11 +1530,14 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"latest", "0.7.0", nil, "8.0.36-28"},
 		{"latest", "0.6.0", nil, "8.0.33-25"},
 		{"latest", "0.5.0", nil, "8.0.32-24"},
+		{"latest", "1.3.0", &v97, "9.7.2-2"},
+		{"latest", "1.3.0", &v84, "8.4.11-11"},
 		{"latest", "1.2.0", &v84, "8.4.10-10"},
 		{"latest", "1.1.0", &v84, "8.4.8-8"},
 		{"latest", "1.0.0", &v84, "8.4.6-6"},
 		{"latest", "0.12.0", &v84, "8.4.6-6"},
 		{"latest", "0.11.0", &v84, "8.4.5-5"},
+		{"latest", "1.3.0", &v80, "8.0.46-37"},
 		{"latest", "1.2.0", &v80, "8.0.46-37"},
 		{"latest", "1.1.0", &v80, "8.0.45-36"},
 		{"latest", "1.0.0", &v80, "8.0.43-34"},
@@ -1539,6 +1545,7 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"latest", "0.11.0", &v80, "8.0.42-33"},
 
 		// test recommended
+		{"recommended", "1.3.0", nil, "8.4.11-11"},
 		{"recommended", "1.2.0", nil, "8.4.10-10"},
 		{"recommended", "1.1.0", nil, "8.4.8-8"},
 		{"recommended", "1.0.0", nil, "8.4.6-6"},
@@ -1550,10 +1557,13 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"recommended", "0.7.0", nil, "8.0.36-28"},
 		{"recommended", "0.6.0", nil, "8.0.33-25"},
 		{"recommended", "0.5.0", nil, "8.0.32-24"},
+		{"recommended", "1.3.0", &v97, "9.7.2-2"},
+		{"recommended", "1.3.0", &v84, "8.4.11-11"},
 		{"recommended", "1.2.0", &v84, "8.4.10-10"},
 		{"recommended", "1.1.0", &v84, "8.4.8-8"},
 		{"recommended", "1.0.0", &v84, "8.4.6-6"},
 		{"recommended", "0.12.0", &v84, "8.4.6-6"},
+		{"recommended", "1.3.0", &v80, "8.0.46-37"},
 		{"recommended", "1.2.0", &v80, "8.0.46-37"},
 		{"recommended", "1.1.0", &v80, "8.0.45-36"},
 		{"recommended", "1.0.0", &v80, "8.0.43-34"},
@@ -1561,6 +1571,10 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"recommended", "0.11.0", &v80, "8.0.42-33"},
 
 		// test exact
+		{"9.7.2", "1.3.0", nil, "9.7.2-2"},
+		{"8.4.11", "1.3.0", nil, "8.4.11-11"},
+		{"8.4.10", "1.3.0", nil, "8.4.10-10"},
+		{"8.0.46", "1.3.0", nil, "8.0.46-37"},
 		{"8.4.10", "1.2.0", nil, "8.4.10-10"},
 		{"8.0.46", "1.2.0", nil, "8.0.46-37"},
 		{"8.4.8", "1.1.0", nil, "8.4.8-8"},
@@ -1578,11 +1592,14 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0.30", "0.5.0", nil, "8.0.30-22"},
 
 		//test with suffix
+		{"9.7-latest", "1.3.0", nil, "9.7.2-2"},
+		{"8.4-latest", "1.3.0", nil, "8.4.11-11"},
 		{"8.4-latest", "1.2.0", nil, "8.4.10-10"},
 		{"8.4-latest", "1.1.0", nil, "8.4.8-8"},
 		{"8.4-latest", "1.0.0", nil, "8.4.6-6"},
 		{"8.4-latest", "0.12.0", nil, "8.4.6-6"},
 		{"8.4-latest", "0.11.0", nil, "8.4.5-5"},
+		{"8.0-latest", "1.3.0", nil, "8.0.46-37"},
 		{"8.0-latest", "1.2.0", nil, "8.0.46-37"},
 		{"8.0-latest", "1.1.0", nil, "8.0.45-36"},
 		{"8.0-latest", "1.0.0", nil, "8.0.43-34"},
@@ -1594,10 +1611,13 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 		{"8.0-latest", "0.7.0", nil, "8.0.36-28"},
 		{"8.0-latest", "0.6.0", nil, "8.0.33-25"},
 		{"8.0-latest", "0.5.0", nil, "8.0.32-24"},
+		{"9.7-recommended", "1.3.0", nil, "9.7.2-2"},
+		{"8.4-recommended", "1.3.0", nil, "8.4.11-11"},
 		{"8.4-recommended", "1.2.0", nil, "8.4.10-10"},
 		{"8.4-recommended", "1.1.0", nil, "8.4.8-8"},
 		{"8.4-recommended", "1.0.0", nil, "8.4.6-6"},
 		{"8.4-recommended", "0.12.0", nil, "8.4.6-6"},
+		{"8.0-recommended", "1.3.0", nil, "8.0.46-37"},
 		{"8.0-recommended", "1.2.0", nil, "8.0.46-37"},
 		{"8.0-recommended", "1.1.0", nil, "8.0.45-36"},
 		{"8.0-recommended", "1.0.0", nil, "8.0.43-34"},
@@ -1628,6 +1648,43 @@ func TestApplyPSReturnedVersions(t *testing.T) {
 
 		v := getVersion(resp.Payload.Versions[0].Matrix.Mysql)
 		assert.Equal(t, c.version, v)
+	}
+}
+
+// ps-operator ships a router and a backup image per MySQL release branch, tied
+// to the resolved MySQL version by sources/operator.*.ps-operator.dep.json
+func TestApplyPsBranchDependencies(t *testing.T) {
+	cli := cli()
+
+	cases := []struct {
+		apply  string
+		mysql  string
+		router string
+		backup string
+	}{
+		{"8.0-recommended", "8.0.46-37", "8.0.46-37.1", "8.0.35-36.1"},
+		{"8.4-recommended", "8.4.11-11", "8.4.11-11.1", "8.4.0-7.1"},
+		{"9.7-recommended", "9.7.2-2", "9.7.2-2.1", "9.7.1-rc1.1"},
+		{"latest", "9.7.2-2", "9.7.2-2.1", "9.7.1-rc1.1"},
+		{"recommended", "8.4.11-11", "8.4.11-11.1", "8.4.0-7.1"},
+	}
+
+	for _, c := range cases {
+		params := &version_service.VersionServiceApplyParams{
+			Apply:           c.apply,
+			OperatorVersion: "1.3.0",
+			Product:         "ps-operator",
+		}
+		params.WithTimeout(2 * time.Second)
+
+		resp, err := cli.VersionService.VersionServiceApply(params)
+		if !assert.NoError(t, err, "apply %s", c.apply) {
+			continue
+		}
+
+		assert.Equal(t, c.mysql, getVersion(resp.Payload.Versions[0].Matrix.Mysql), "mysql for %s", c.apply)
+		assert.Equal(t, c.router, getVersion(resp.Payload.Versions[0].Matrix.Router), "router for %s", c.apply)
+		assert.Equal(t, c.backup, getVersion(resp.Payload.Versions[0].Matrix.Backup), "backup for %s", c.apply)
 	}
 }
 
